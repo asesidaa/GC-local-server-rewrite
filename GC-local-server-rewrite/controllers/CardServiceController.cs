@@ -520,7 +520,7 @@ public class CardServiceController : WebApiController
         WriteAvatar = 929,
         WriteItem = 931,
         WriteTitle = 935,
-        WriteMusicDetail = 94,
+        WriteMusicDetail = 941,
         WriteNavigator = 954,
         WriteCoin = 980,
         WriteSkin = 933,
