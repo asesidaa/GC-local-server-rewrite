@@ -266,7 +266,7 @@ public class CardServiceController : WebApiController
 
         var cardDetail = result.First();
 
-        return GenerateSingleXml(cardDetail, Configs.CARD_DETAIL_RECORD_XPATH);
+        return GenerateSingleXml(cardDetail, Configs.CARD_DETAIL_SINGLE_XPATH);
     }
 
     private string CardDetails(long cardId)
@@ -281,7 +281,7 @@ public class CardServiceController : WebApiController
 
         var cardDetails = result.ToList();
 
-        return GenerateRecordsXml(cardDetails, Configs.CARD_DETAIL_XPATH);
+        return GenerateRecordsXml(cardDetails, Configs.CARD_DETAIL_RECORD_XPATH);
     }
 
     private string CardBData(long cardId)

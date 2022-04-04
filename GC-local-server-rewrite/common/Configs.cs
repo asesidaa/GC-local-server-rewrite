@@ -48,9 +48,9 @@ public static class Configs
 
     public const string CARD_DETAIL = "card_detail";
 
-    public const string CARD_DETAIL_XPATH = $"{ROOT_XPATH}/{CARD_DETAIL}";
+    public const string CARD_DETAIL_SINGLE_XPATH = $"{ROOT_XPATH}/{CARD_DETAIL}";
 
-    public const string CARD_DETAIL_RECORD_XPATH = $"{CARD_DETAIL_XPATH}/record";
+    public const string CARD_DETAIL_RECORD_XPATH = $"{CARD_DETAIL_SINGLE_XPATH}/record";
 
     public const string CARD_BDATA = "card_bdata";
 
