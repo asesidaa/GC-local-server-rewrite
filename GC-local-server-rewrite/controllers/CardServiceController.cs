@@ -440,20 +440,21 @@ public class CardServiceController : WebApiController
     {
         var stringBuilder = new StringBuilder();
 
+        for (var i = 0; i < list.Count; i++)
+        {
+            var obj = list[i];
+            obj.RecordId = i + 1;
+        }
+
         using (var writer = new ChoXmlWriter<T>(stringBuilder))
         {
             writer.Configuration.OmitXmlDeclaration = false;
             writer.Configuration.UseXmlSerialization = true;
             writer.WithXPath(xpath);
-
-            for (var i = 0; i < list.Count; i++)
-            {
-                var obj = list[i];
-                obj.RecordId = i + 1;
-                writer.Write(obj);
-            }
+            writer.Write(list);
         }
 
+        stringBuilder.Insert(stringBuilder.Length - 5, "/");
         return stringBuilder.ToString();
     }
 
