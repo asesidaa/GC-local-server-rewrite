@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GC-local-server-rewrite", "GC-local-server-rewrite\GC-local-server-rewrite.csproj", "{D5FFF2E8-6591-4967-8883-A28F453F0524}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D5FFF2E8-6591-4967-8883-A28F453F0524}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5FFF2E8-6591-4967-8883-A28F453F0524}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5FFF2E8-6591-4967-8883-A28F453F0524}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5FFF2E8-6591-4967-8883-A28F453F0524}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

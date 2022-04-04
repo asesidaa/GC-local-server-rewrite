@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <appSettings>
+        <add key="AvatarCount" value="294"/>
+        <add key="NavigatorCount" value="71"/>
+        <add key="ItemCount" value="21"/>
+        <add key="SkinCount" value="21"/>
+        <add key="SeCount" value="25"/>
+        <add key="TitleCount" value="4942"/>
+    </appSettings>
+</configuration>

@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <RootNamespace>GCLocalServerRewrite</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CertificateManager" Version="1.0.8" />
+        <PackageReference Include="ChoETL" Version="1.2.1.44" />
+        <PackageReference Include="EmbedIO" Version="3.4.3" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+        <PackageReference Include="sqlite-net2" Version="2.0.7" />
+        <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.0.7" />
+        <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="log" />
+    </ItemGroup>
+
+</Project>
