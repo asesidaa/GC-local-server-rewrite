@@ -37,7 +37,7 @@
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
         <None Remove="GC-local-server-rewrite.exe.config.xml" />
-        <None Include="App.config">
+        <None Include="GC-local-server-rewrite.exe.config">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Remove="db\music4MAX.db3" />

@@ -1,4 +1,6 @@
 ﻿using System.Configuration;
+using Swan;
+using Swan.Logging;
 
 namespace GCLocalServerRewrite.common;
 
@@ -17,6 +19,8 @@ public static class Configs
     public const string LOG_BASE_NAME = "log";
 
     public const string STATIC_FOLDER = "static";
+
+    public const string CONFIG_FILE_NAME = "App.config";
 
     public const string CARD_SERVICE_BASE_ROUTE = "/service/card";
 
@@ -115,26 +119,64 @@ public static class Configs
     public const string SESSION_XPATH = $"{ROOT_XPATH}/session";
 
     public const string RANK_STATUS_XPATH = $"{ROOT_XPATH}/ranking_status";
-
+    
     public const int GC4_EX_GID = 303801;
+    
+    public static readonly int AVATAR_COUNT;
 
-    public static readonly int AVATAR_COUNT = int.Parse(
-        ConfigurationManager.AppSettings.Get("AvatarCount") ?? "294");
+    public static readonly int NAVIGATOR_COUNT;
 
-    public static readonly int NAVIGATOR_COUNT = int.Parse(
-        ConfigurationManager.AppSettings.Get("NavigatorCount") ?? "71");
+    public static readonly int ITEM_COUNT;
 
-    public static readonly int ITEM_COUNT = int.Parse(
-        ConfigurationManager.AppSettings.Get("ItemCount") ?? "21");
+    public static readonly int TITLE_COUNT;
 
-    public static readonly int TITLE_COUNT = int.Parse(
-        ConfigurationManager.AppSettings.Get("TitleCount") ?? "4942");
+    public static readonly int SKIN_COUNT;
 
-    public static readonly int SKIN_COUNT = int.Parse(
-        ConfigurationManager.AppSettings.Get("SkinCount") ?? "21");
+    public static readonly int SE_COUNT;
 
-    public static readonly int SE_COUNT = int.Parse(
-        ConfigurationManager.AppSettings.Get("SeCount") ?? "25");
+    public static readonly string MUSIC_DB_NAME;
 
-    public static readonly string MUSIC_DB_NAME = ConfigurationManager.AppSettings.Get("MusicDBName") ?? "music.db3";
+    private static readonly Configuration CONFIG = ConfigurationManager.OpenExeConfiguration(PathHelper.ConfigFilePath);
+
+    private const string AVATAR_COUNT_CONFIG_NAME = "AvatarCount";
+    private const string NAVIGATOR_COUNT_CONFIG_NAME = "NavigatorCount";
+    private const string ITEM_COUNT_CONFIG_NAME = "ItemCount";
+    private const string TITLE_COUNT_CONFIG_NAME = "TitleCount";
+    private const string SKIN_COUNT_CONFIG_NAME = "SkinCount";
+    private const string SE_COUNT_CONFIG_NAME = "SeCount";
+    private const string MUSIC_DB_CONFIG_NAME = "MusicDBName";
+
+    private const int AVATAR_DEFAULT_COUNT = 294;
+    private const int NAVIGATOR_DEFAULT_COUNT = 71;
+    private const int ITEM_DEFAULT_COUNT = 21;
+    private const int TITLE_DEFAULT_COUNT = 4942;
+    private const int SKIN_DEFAULT_COUNT = 21;
+    private const int SE_DEFAULT_COUNT = 25;
+    private const string MUSIC_DB_DEFAULT_NAME = "music.db3";
+
+
+    static Configs()
+    {
+        void GetIntValueFromConfig(string configFieldName, int defaultValue, out int field )
+        {
+            var success = int.TryParse(CONFIG.AppSettings.Settings[configFieldName].Value, out var count);
+
+            field = success ? count:defaultValue;
+        }
+        
+        GetIntValueFromConfig(AVATAR_COUNT_CONFIG_NAME, AVATAR_DEFAULT_COUNT, out AVATAR_COUNT);
+        GetIntValueFromConfig(NAVIGATOR_COUNT_CONFIG_NAME, NAVIGATOR_DEFAULT_COUNT, out NAVIGATOR_COUNT);
+        GetIntValueFromConfig(ITEM_COUNT_CONFIG_NAME, ITEM_DEFAULT_COUNT, out ITEM_COUNT);
+        GetIntValueFromConfig(TITLE_COUNT_CONFIG_NAME, TITLE_DEFAULT_COUNT, out TITLE_COUNT);
+        GetIntValueFromConfig(SKIN_COUNT_CONFIG_NAME, SKIN_DEFAULT_COUNT, out SKIN_COUNT);
+        GetIntValueFromConfig(SE_COUNT_CONFIG_NAME, SE_DEFAULT_COUNT, out SE_COUNT);
+
+        MUSIC_DB_NAME = CONFIG.AppSettings.Settings[MUSIC_DB_CONFIG_NAME].Value;
+
+        if (MUSIC_DB_NAME == string.Empty)
+        {
+            MUSIC_DB_NAME = MUSIC_DB_DEFAULT_NAME;
+        }
+
+    }
 }
