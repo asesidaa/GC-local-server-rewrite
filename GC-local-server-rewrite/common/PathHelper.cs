@@ -1,8 +1,9 @@
 ﻿using System.Diagnostics;
+using Swan;
 
 namespace GCLocalServerRewrite.common;
 
-public class PathHelper
+public static class PathHelper
 {
     /// <summary>
     ///     Gets the local path of html/static files.
@@ -32,7 +33,12 @@ public class PathHelper
 
             return parentFullName;
 #else
-            return assemblyPath;
+            if (assemblyPath != null)
+            {
+                return assemblyPath;
+            }
+
+            throw SelfCheck.Failure("Cannot get assembly path!");
 #endif
         }
     }

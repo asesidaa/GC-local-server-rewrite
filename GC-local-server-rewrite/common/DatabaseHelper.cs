@@ -2,7 +2,7 @@
 
 namespace GCLocalServerRewrite.common;
 
-public class DatabaseHelper
+public static class DatabaseHelper
 {
     /// <summary>
     ///     Static method to allow local data services to initialise their associated database conveniently.
