@@ -36,8 +36,6 @@ public static class Configs
 
     public const string CARD_DB_NAME = "card.db3";
 
-    public const string MUSIC_DB_NAME = "music.db3";
-
     public const string ROOT_XPATH = "/root";
 
     public const string DATA_XPATH = $"{ROOT_XPATH}/data";
@@ -137,4 +135,6 @@ public static class Configs
 
     public static readonly int SE_COUNT = int.Parse(
         ConfigurationManager.AppSettings.Get("SeCount") ?? "25");
+
+    public static readonly string MUSIC_DB_NAME = ConfigurationManager.AppSettings.Get("MusicDBName") ?? "music.db3";
 }

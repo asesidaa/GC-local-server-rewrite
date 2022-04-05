@@ -20,6 +20,26 @@
 
     <ItemGroup>
         <Folder Include="log" />
+        <None Remove="db\music.db3" />
+        <Content Include="db\music.db3">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <None Remove="static\favicon.ico" />
+        <Content Include="static\favicon.ico">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <None Remove="static\index.html" />
+        <Content Include="static\index.html">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <None Remove="static\news.png" />
+        <Content Include="static\news.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <None Remove="GC-local-server-rewrite.exe.config.xml" />
+        <None Include="App.config">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
 </Project>

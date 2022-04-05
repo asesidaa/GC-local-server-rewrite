@@ -13,6 +13,8 @@ internal class Program
         Batteries_V2.Init();
 
         InitializeLogging();
+        
+        LogConfigValues();
 
         var urlPrefixes = args.Length > 0 ? args : new[] { "http://*:80", "https://*:443" };
 
@@ -81,5 +83,17 @@ internal class Program
         }
 
         Console.ReadKey(true);
+    }
+
+    private static void LogConfigValues()
+    {
+       var log = $"Config values: {nameof(Configs.SE_COUNT)} : {Configs.SE_COUNT}\n" +
+            $"{nameof(Configs.ITEM_COUNT)} : {Configs.ITEM_COUNT}\n" +
+            $"{nameof(Configs.SKIN_COUNT)} : {Configs.SKIN_COUNT}\n" +
+            $"{nameof(Configs.TITLE_COUNT)} : {Configs.TITLE_COUNT}\n" +
+            $"{nameof(Configs.AVATAR_COUNT)} : {Configs.AVATAR_COUNT}\n" +
+            $"{nameof(Configs.NAVIGATOR_COUNT)} : {Configs.NAVIGATOR_COUNT}\n" +
+            $"{nameof(Configs.MUSIC_DB_NAME)} : {Configs.MUSIC_DB_NAME}\n";
+       log.Info();
     }
 }
