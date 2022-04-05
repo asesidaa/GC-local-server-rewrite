@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Swan;
+using System.Diagnostics;
 
 namespace GCLocalServerRewrite.common;
 
@@ -14,15 +15,19 @@ public static class PathHelper
     /// </summary>
     public static string DataBaseRootPath => Path.Combine(BasePath, Configs.DB_FOLDER);
 
-    public static string LogRootPath => Path.Combine(BasePath, Configs.LOG_FOLDER, Configs.LOG_BASE_NAME);
+    public static string LogRootPath => Path.Combine(BasePath, Configs.LOG_FOLDER);
 
-    public static string ConfigFilePath => Path.Combine(BasePath, Environment.ProcessPath ?? string.Empty);
+    public static string ConfigFilePath => Environment.ProcessPath ?? string.Empty;
 
     private static string BasePath
     {
         get
         {
-            var assemblyPath = AppContext.BaseDirectory;
+            var assemblyPath = Environment.ProcessPath;
+            if (assemblyPath == null)
+            {
+                throw SelfCheck.Failure("Cannot get assembly path!!!");
+            }
 
 #if DEBUG
             
@@ -33,7 +38,12 @@ public static class PathHelper
 
             return parentFullName;
 #else
-            return AppContext.BaseDirectory;
+            var parent = Directory.GetParent(assemblyPath);
+            if (parent == null)
+            {
+                throw SelfCheck.Failure("Cannot get assembly parent path!!!");
+            }
+            return parent.ToString();
 #endif
         }
     }

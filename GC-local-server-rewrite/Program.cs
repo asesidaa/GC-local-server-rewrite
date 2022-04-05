@@ -41,7 +41,7 @@ internal class Program
             Directory.CreateDirectory(PathHelper.LogRootPath);
         }
 
-        Logger.RegisterLogger(new FileLogger(PathHelper.LogRootPath, true));
+        Logger.RegisterLogger(new FileLogger(Path.Combine(PathHelper.LogRootPath, Configs.LOG_BASE_NAME), true));
     }
 
 
