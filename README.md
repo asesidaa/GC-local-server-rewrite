@@ -27,3 +27,13 @@ If you are using 4MAX data, first change MusicDBName to bundled music4MAX.db3
 To unlock new avatars/navgators/skins/sound effects/titles from 4MAX, change the corresponding count in config.
 
 You can get the corresponding count in data/boot/*.dat file.
+
+# Missing functions
+
+- [ ] Item/coin comsuming 
+- [ ] Unlocking system (I don't like these two so I just hardcode them, if you are interested you can implement that and add a switch to enable, PRs are welcome)
+- [ ] Ranking system (Is this really needed for a local server?) 
+
+# Difficulty unlocking
+
+This is processed on client side, so if you like to unlock all difficuties, just use bemani patcher.
