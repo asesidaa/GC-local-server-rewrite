@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using Swan;
 
 namespace GCLocalServerRewrite.common;
 
@@ -21,24 +20,18 @@ public static class PathHelper
     {
         get
         {
-            var assemblyPath = Path.GetDirectoryName(typeof(Program).Assembly.Location);
+            var assemblyPath = AppContext.BaseDirectory;
 
 #if DEBUG
+            
 
-            Debug.Assert(assemblyPath != null, $"{nameof(assemblyPath)} != null");
-
-            var parentFullName = Directory.GetParent(assemblyPath)?.Parent?.Parent?.FullName;
+            var parentFullName = Directory.GetParent(assemblyPath)?.Parent?.Parent?.Parent?.FullName;
 
             Debug.Assert(parentFullName != null, $"{nameof(parentFullName)} != null");
 
             return parentFullName;
 #else
-            if (assemblyPath != null)
-            {
-                return assemblyPath;
-            }
-
-            throw SelfCheck.Failure("Cannot get assembly path!");
+            return AppContext.BaseDirectory;
 #endif
         }
     }

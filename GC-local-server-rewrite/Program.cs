@@ -87,13 +87,19 @@ internal class Program
 
     private static void LogConfigValues()
     {
-       var log = $"Config values: {nameof(Configs.SE_COUNT)} : {Configs.SE_COUNT}\n" +
+       var configs = $"Config values: {nameof(Configs.SE_COUNT)} : {Configs.SE_COUNT}\n" +
             $"{nameof(Configs.ITEM_COUNT)} : {Configs.ITEM_COUNT}\n" +
             $"{nameof(Configs.SKIN_COUNT)} : {Configs.SKIN_COUNT}\n" +
             $"{nameof(Configs.TITLE_COUNT)} : {Configs.TITLE_COUNT}\n" +
             $"{nameof(Configs.AVATAR_COUNT)} : {Configs.AVATAR_COUNT}\n" +
             $"{nameof(Configs.NAVIGATOR_COUNT)} : {Configs.NAVIGATOR_COUNT}\n" +
             $"{nameof(Configs.MUSIC_DB_NAME)} : {Configs.MUSIC_DB_NAME}\n";
-       log.Info();
+       configs.Info();
+
+       var paths = $"Paths: {nameof(PathHelper.HtmlRootPath)}: {PathHelper.HtmlRootPath}\n" +
+                   $"{nameof(PathHelper.LogRootPath)}: {PathHelper.LogRootPath}\n" +
+                   $"{nameof(PathHelper.DataBaseRootPath)}: {PathHelper.DataBaseRootPath}\n";
+       paths.Info();
+
     }
 }
