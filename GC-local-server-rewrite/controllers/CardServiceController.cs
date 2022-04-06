@@ -33,10 +33,10 @@ public class CardServiceController : WebApiController
         HttpContext.Response.ContentEncoding = Encoding.Default;
         HttpContext.Response.KeepAlive = true;
 
-        if (gid != Configs.GC4_EX_GID)
+        /*if (gid != Configs.GC4_EX_GID)
         {
             throw new ArgumentOutOfRangeException(nameof(gid));
-        }
+        }*/
 
         if (!Enum.IsDefined(typeof(CardRequestType), type))
         {
