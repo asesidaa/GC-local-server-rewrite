@@ -69,8 +69,8 @@ public class ServerController : WebApiController
                        "pref=nesys\n" +
                        "addr=nesys@home\n" +
                        "x-next-time=15\n" +
-                       $"x-img=http://localhost{Configs.STATIC_BASE_ROUTE}/news.png\n" +
-                       $"x-ranking=http://localhost{Configs.RANK_BASE_ROUTE}/ranking.php\n" +
+                       $"x-img=http://{Configs.SERVER_ADDR}{Configs.STATIC_BASE_ROUTE}/news.png\n" +
+                       $"x-ranking=http://{Configs.SERVER_ADDR}{Configs.RANK_BASE_ROUTE}/ranking.php\n" +
                        $"ticket={ticket}";
 
         return response;

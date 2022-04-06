@@ -16,7 +16,7 @@ internal class Program
         
         LogConfigValues();
 
-        var urlPrefixes = args.Length > 0 ? args : new[] { "http://*:80", "https://*:443" };
+        var urlPrefixes = args.Length > 0 ? new List<string>(args) : new List<string> { "http://+:80", "https://+:443"};
 
         using (var cts = new CancellationTokenSource())
         {
@@ -50,7 +50,7 @@ internal class Program
     /// </summary>
     /// <param name="urlPrefixes"></param>
     /// <param name="cancellationToken"></param>
-    private static async Task RunWebServerAsync(string[] urlPrefixes, CancellationToken cancellationToken)
+    private static async Task RunWebServerAsync(IEnumerable<string> urlPrefixes, CancellationToken cancellationToken)
     {
         using var server = Server.CreateWebServer(urlPrefixes);
         await server.RunAsync(cancellationToken).ConfigureAwait(false);
@@ -93,7 +93,8 @@ internal class Program
             $"{nameof(Configs.TITLE_COUNT)} : {Configs.TITLE_COUNT}\n" +
             $"{nameof(Configs.AVATAR_COUNT)} : {Configs.AVATAR_COUNT}\n" +
             $"{nameof(Configs.NAVIGATOR_COUNT)} : {Configs.NAVIGATOR_COUNT}\n" +
-            $"{nameof(Configs.MUSIC_DB_NAME)} : {Configs.MUSIC_DB_NAME}\n";
+            $"{nameof(Configs.MUSIC_DB_NAME)} : {Configs.MUSIC_DB_NAME}\n" +
+            $"{nameof(Configs.SERVER_ADDR)} : {Configs.SERVER_ADDR}\n";
        configs.Info();
 
        var paths = $"Paths: {nameof(PathHelper.HtmlRootPath)}: {PathHelper.HtmlRootPath}\n" +

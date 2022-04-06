@@ -12,7 +12,7 @@ namespace GCLocalServerRewrite.server;
 
 public class Server
 {
-    public static WebServer CreateWebServer(string[] urlPrefixes)
+    public static WebServer CreateWebServer(IEnumerable<string> urlPrefixes)
     {
         InitializeDatabase();
         var cert = CertificateHelper.InitializeCertificate();

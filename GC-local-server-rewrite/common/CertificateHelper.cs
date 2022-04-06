@@ -15,8 +15,9 @@ public static class CertificateHelper
                                                                    X509KeyUsageFlags.KeyEncipherment |
                                                                    X509KeyUsageFlags.DigitalSignature;
 
-    private const X509KeyStorageFlags X509_KEY_STORAGE_FLAGS_MACHINE = X509KeyStorageFlags.PersistKeySet
-                                                               | X509KeyStorageFlags.MachineKeySet;
+    private const X509KeyStorageFlags X509_KEY_STORAGE_FLAGS_MACHINE = X509KeyStorageFlags.PersistKeySet |
+                                                                       X509KeyStorageFlags.MachineKeySet | 
+                                                                       X509KeyStorageFlags.Exportable;
 
     private const X509KeyUsageFlags CERT_X509_KEY_USAGE_FLAGS = X509KeyUsageFlags.DataEncipherment |
                                                                 X509KeyUsageFlags.KeyEncipherment |
@@ -50,10 +51,8 @@ public static class CertificateHelper
 
     private static readonly SubjectAlternativeName SUBJECT_ALTERNATIVE_NAME = new()
     {
-        DnsName = new List<string>
-        {
-            "localhost"
-        }
+        DnsName = Configs.DOMAINS,
+        IpAddress = System.Net.IPAddress.Parse(Configs.SERVER_ADDR)
     };
 
     private static readonly ValidityPeriod VALIDITY_PERIOD = new()
@@ -77,6 +76,7 @@ public static class CertificateHelper
             {
                 return existingCert;
             }
+            "Existing CN not found! Removing old certificates and genrate new ones...".Info();
         }
 
         RemovePreviousCert(StoreName.My, StoreLocation.LocalMachine);
