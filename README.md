@@ -12,6 +12,17 @@ Download latest release from release page.
 
 Extract anywhere.
 
+If you don't have the modified NesysService.exe, modify the host file, add the following lines
+
+```
+127.0.0.1 cert.nesys.jp
+127.0.0.1 data.nesys.jp
+127.0.0.1 nesys.taito.co.jp
+127.0.0.1 fjm170920zero.nesica.net
+```
+
+Open mmc.exe, delete any certificate in LocalMachine/My or LocalMachine/Trusted root named Taito Arcade Machine CA
+
 Open exe with **admin privileges** for certificate generating functionalities to work.
 
 Open game using teknoparrot loader (you can find that in discord). The loader should be also opened with **admin privileges**, otherwise it will not work.
@@ -33,7 +44,18 @@ You can get the corresponding count in data/boot/*.dat file.
 - [ ] Item/coin comsuming 
 - [ ] Unlocking system (I don't like these two so I just hardcode them, if you are interested you can implement that and add a switch to enable, PRs are welcome)
 - [ ] Ranking system (Is this really needed for a local server?) 
+- [ ] Proper update check response (now it will just throw 404)
 
 # Difficulty unlocking
 
 This is processed on client side, so if you like to unlock all difficuties, just use bemani patcher.
+
+# Local network
+
+If your game and server is not in the same computer, try modify in config, change ServerIp to your server IP.
+
+From server, open mmc.exe, export certificate named "Taito Arcade Machine CA" and "GC local server" with private key and import to game computer.
+
+The cert "Taito Arcade Machine CA" goes into LocalMachine/My and Trusted root, the other only LocalMachine/My.
+
+Note: this is currently not tested.
