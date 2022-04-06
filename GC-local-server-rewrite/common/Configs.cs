@@ -16,6 +16,8 @@ public static class Configs
 
     public const string LOG_FOLDER = "log";
 
+    public const string CERT_FOLDER = "certs";
+
     public const string LOG_BASE_NAME = "log";
 
     public const string STATIC_FOLDER = "static";

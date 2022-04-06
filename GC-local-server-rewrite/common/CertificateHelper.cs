@@ -129,9 +129,15 @@ public static class CertificateHelper
         var certWithPrivateKey = new X509Certificate2(certPfxBytes, (string)null!,
             X509_KEY_STORAGE_FLAGS_MACHINE);
 
+
         AddCertToStore(rootCaWithPrivateKey, StoreName.My, StoreLocation.LocalMachine);
         AddCertToStore(rootCaWithPrivateKey, StoreName.Root, StoreLocation.LocalMachine);
         AddCertToStore(certWithPrivateKey, StoreName.My, StoreLocation.LocalMachine);
+
+        Directory.CreateDirectory(PathHelper.CertRootPath);
+
+        File.WriteAllBytes(Path.Combine(PathHelper.CertRootPath, "root.pfx"), rootCaWithPrivateKey.Export(X509ContentType.Pfx));
+        File.WriteAllBytes(Path.Combine(PathHelper.CertRootPath, "cert.pfx"), certWithPrivateKey.Export(X509ContentType.Pfx));
 
         return certWithPrivateKey;
     }

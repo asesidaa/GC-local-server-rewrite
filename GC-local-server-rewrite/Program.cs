@@ -100,7 +100,8 @@ internal class Program
        var paths = $"Paths: {nameof(PathHelper.HtmlRootPath)}: {PathHelper.HtmlRootPath}\n" +
                    $"{nameof(PathHelper.LogRootPath)}: {PathHelper.LogRootPath}\n" +
                    $"{nameof(PathHelper.DataBaseRootPath)}: {PathHelper.DataBaseRootPath}\n" +
-                   $"{nameof(PathHelper.ConfigFilePath)}: {PathHelper.ConfigFilePath}\n";
+                   $"{nameof(PathHelper.ConfigFilePath)}: {PathHelper.ConfigFilePath}\n" +
+                   $"{nameof(PathHelper.CertRootPath)}: {PathHelper.CertRootPath}\n";
        paths.Info();
 
     }

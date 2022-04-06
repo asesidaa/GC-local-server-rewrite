@@ -17,6 +17,8 @@ public static class PathHelper
 
     public static string LogRootPath => Path.Combine(BasePath, Configs.LOG_FOLDER);
 
+    public static string CertRootPath => Path.Combine(BasePath, Configs.CERT_FOLDER);
+
     public static string ConfigFilePath => Environment.ProcessPath ?? string.Empty;
 
     private static string BasePath
