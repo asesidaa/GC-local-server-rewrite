@@ -21,7 +21,7 @@ If you don't have the modified NesysService.exe, modify the host file, add the f
 127.0.0.1 fjm170920zero.nesica.net
 ```
 
-Open mmc.exe, delete any certificate in LocalMachine/My or LocalMachine/Trusted root named Taito Arcade Machine CA
+Open mmc.exe, delete any certificate in LocalMachine/My or LocalMachine/Trusted root named Taito Arcade Machine CA (if present, most likely not)
 
 Open exe with **admin privileges** for certificate generating functionalities to work.
 
@@ -44,7 +44,8 @@ You can get the corresponding count in data/boot/*.dat file.
 - [ ] Item/coin comsuming 
 - [ ] Unlocking system (I don't like these two so I just hardcode them, if you are interested you can implement that and add a switch to enable, PRs are welcome)
 - [ ] Ranking system (Is this really needed for a local server?) 
-- [ ] Proper update check response (now it will just throw 404)
+- [ ] Proper update check response (Now it will just throw 404)
+- [ ] PlayInfo.php (Now it will just throw 404, I don't know what data it expext)
 
 # Difficulty unlocking
 
@@ -52,7 +53,7 @@ This is processed on client side, so if you like to unlock all difficuties, just
 
 # Local network
 
-If your game and server is not in the same computer, try modify in config, change ServerIp to your server IP.
+If your game and server is not on the same computer, try modify in config, change ServerIp to your server IP.
 
 From server, open mmc.exe, export certificate named "Taito Arcade Machine CA" and "GC local server" with private key and import to game computer.
 
