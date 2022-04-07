@@ -13,7 +13,7 @@ public class ResponeServiceController : WebApiController
     public string ResponeService()
     {
         HttpContext.Response.ContentType = MediaTypeNames.Text.Plain;
-        HttpContext.Response.ContentEncoding = Encoding.Default;
+        HttpContext.Response.ContentEncoding = new UTF8Encoding(false);
         HttpContext.Response.KeepAlive = true;
 
         return "1";

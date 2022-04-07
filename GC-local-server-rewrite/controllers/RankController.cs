@@ -19,7 +19,7 @@ public class RankController : WebApiController
     public string Rank([QueryField("cmd_type")] int type)
     {
         HttpContext.Response.ContentType = MediaTypeNames.Application.Octet;
-        HttpContext.Response.ContentEncoding = Encoding.Default;
+        HttpContext.Response.ContentEncoding = new UTF8Encoding(false);
         HttpContext.Response.KeepAlive = true;
 
         if (!Enum.IsDefined(typeof(RankType), type))

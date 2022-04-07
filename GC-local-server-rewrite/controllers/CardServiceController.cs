@@ -30,7 +30,7 @@ public class CardServiceController : WebApiController
         [FormField("card_no")] long cardId, [FormField("data")] string xmlData)
     {
         HttpContext.Response.ContentType = MediaTypeNames.Application.Octet;
-        HttpContext.Response.ContentEncoding = Encoding.Default;
+        HttpContext.Response.ContentEncoding = new UTF8Encoding(false);
         HttpContext.Response.KeepAlive = true;
 
         /*if (gid != Configs.GC4_EX_GID)

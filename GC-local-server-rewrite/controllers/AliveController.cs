@@ -14,7 +14,7 @@ public class AliveController : WebApiController
     public string Check()
     {
         HttpContext.Response.ContentType = MediaTypeNames.Text.Html;
-        HttpContext.Response.ContentEncoding = Encoding.Default;
+        HttpContext.Response.ContentEncoding = new UTF8Encoding(false);
         HttpContext.Response.KeepAlive = true;
 
         return "REMOTE ADDRESS: 127.0.0.1\n" +
@@ -28,7 +28,7 @@ public class AliveController : WebApiController
     {
         HttpContext.Response.SetEmptyResponse((int)HttpStatusCode.OK);
         HttpContext.Response.ContentType = MediaTypeNames.Text.Plain;
-        HttpContext.Response.ContentEncoding = Encoding.Default;
+        HttpContext.Response.ContentEncoding = new UTF8Encoding(false);
         HttpContext.Response.KeepAlive = true;
     }
 }

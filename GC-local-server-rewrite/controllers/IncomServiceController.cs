@@ -13,7 +13,7 @@ public class IncomServiceController : WebApiController
     public string IncomService()
     {
         HttpContext.Response.ContentType = MediaTypeNames.Text.Plain;
-        HttpContext.Response.ContentEncoding = Encoding.Default;
+        HttpContext.Response.ContentEncoding = new UTF8Encoding(false);
         HttpContext.Response.KeepAlive = true;
 
         return "1+1";
@@ -24,7 +24,7 @@ public class IncomServiceController : WebApiController
     public string IncomAllService()
     {
         HttpContext.Response.ContentType = MediaTypeNames.Text.Plain;
-        HttpContext.Response.ContentEncoding = Encoding.Default;
+        HttpContext.Response.ContentEncoding = new UTF8Encoding(false);
         HttpContext.Response.KeepAlive = true;
 
         return "1+1";

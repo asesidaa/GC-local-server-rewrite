@@ -19,7 +19,7 @@ public class ServerController : WebApiController
     public string Certify([QueryData] NameValueCollection parameters)
     {
         HttpContext.Response.ContentType = MediaTypeNames.Text.Plain;
-        HttpContext.Response.ContentEncoding = Encoding.Default;
+        HttpContext.Response.ContentEncoding = new UTF8Encoding(false);
         HttpContext.Response.KeepAlive = true;
 
         var gid = parameters["gid"];
@@ -80,7 +80,7 @@ public class ServerController : WebApiController
     public string Cursel()
     {
         HttpContext.Response.ContentType = MediaTypeNames.Text.Plain;
-        HttpContext.Response.ContentEncoding = Encoding.Default;
+        HttpContext.Response.ContentEncoding = new UTF8Encoding(false);
         HttpContext.Response.KeepAlive = true;
 
         return "1\n";
@@ -90,7 +90,7 @@ public class ServerController : WebApiController
     public string Data()
     {
         HttpContext.Response.ContentType = MediaTypeNames.Text.Plain;
-        HttpContext.Response.ContentEncoding = Encoding.Default;
+        HttpContext.Response.ContentEncoding = new UTF8Encoding(false);
         HttpContext.Response.KeepAlive = true;
 
         return "count=1\n" +
@@ -101,7 +101,7 @@ public class ServerController : WebApiController
     public string GameInfo()
     {
         HttpContext.Response.ContentType = MediaTypeNames.Text.Plain;
-        HttpContext.Response.ContentEncoding = Encoding.Default;
+        HttpContext.Response.ContentEncoding = new UTF8Encoding(false);
         HttpContext.Response.KeepAlive = true;
 
         return "0\n" +
