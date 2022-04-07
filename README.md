@@ -59,4 +59,12 @@ From server, open mmc.exe, export certificate named "Taito Arcade Machine CA" an
 
 The cert "Taito Arcade Machine CA" goes into LocalMachine/My and Trusted root, the other only LocalMachine/My.
 
-Note: this is currently not tested.
+# Windows XP
+
+If you are using Windows XP (e.g. using real machine), it will not recognize the generated certificate since it uses SHA256.
+
+You will have to generate the certificates yourself. 
+
+The root certificate should have CN=Taito Arcade Machine CA, while the server certificate should have DNS entries for the domains in the host file.
+
+The most important bit, **choose MD5 or SHA1 as signature algorithm**.
