@@ -1,0 +1,44 @@
+﻿@page "/fetchdata"
+@using global::Shared.models
+@inject HttpClient Http
+
+<PageTitle>Weather forecast</PageTitle>
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (playOption == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>CardId</th>
+                <th>Fast/Slow Indicator</th>
+                <th>Fever/Trance Show</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>@playOption.CardId</th>
+                <th>@playOption.FastSlowIndicator</th>
+                <th>@playOption.FeverTrance</th>
+            </tr>
+        </tbody>
+    </table>
+}
+
+@code {
+    private PlayOption? playOption;
+
+    protected override async Task OnInitializedAsync()
+    {
+        playOption = await Http.GetFromJsonAsync<PlayOption>("api/PlayOption?cardId=7020392010281502");
+    }
+}

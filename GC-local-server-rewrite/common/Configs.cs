@@ -22,7 +22,9 @@ public static class Configs
 
     public const string STATIC_FOLDER = "static";
 
-    public const string CONFIG_FILE_NAME = "App.config";
+    public const string API_BASE_ROUTE = "/api";
+    
+    public const string OPTION_SERVICE_BASE_ROUTE = "/service/option";
 
     public const string CARD_SERVICE_BASE_ROUTE = "/service/card";
 

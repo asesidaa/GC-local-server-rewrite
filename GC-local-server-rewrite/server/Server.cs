@@ -7,6 +7,7 @@ using GCLocalServerRewrite.common;
 using GCLocalServerRewrite.controllers;
 using GCLocalServerRewrite.models;
 using Swan.Logging;
+using System.Text;
 
 namespace GCLocalServerRewrite.server;
 
@@ -22,12 +23,12 @@ public class Server
                 .WithCertificate(cert)
                 .WithMode(HttpListenerMode.EmbedIO))
             .WithLocalSessionManager()
-            .WithCors(
-                "http://unosquare.github.io,http://run.plnkr.co",
-                "content-type, accept",
-                "post")
+            .WithCors()
+            .WithWebApi(Configs.API_BASE_ROUTE, module => module.WithController<ApiController>())
             .WithWebApi(Configs.CARD_SERVICE_BASE_ROUTE, CustomResponseSerializer.None(true),
                 module => module.WithController<CardServiceController>())
+            .WithWebApi(Configs.OPTION_SERVICE_BASE_ROUTE, CustomResponseSerializer.None(true),
+                module => module.WithController<OptionServiceController>())
             .WithWebApi(Configs.UPLOAD_SERVICE_BASE_ROUTE, CustomResponseSerializer.None(true),
                 module => module.WithController<UploadServiceController>())
             .WithWebApi(Configs.RESPONE_SERVICE_BASE_ROUTE, CustomResponseSerializer.None(true),
@@ -48,6 +49,20 @@ public class Server
                 .WithContentCaching(Configs.USE_FILE_CACHE))
             .WithModule(new ActionModule("/", HttpVerbs.Any,
                 ctx => ctx.SendDataAsync(new { Message = "Error" })));
+        server.HandleHttpException(async (context, exception) =>
+        {
+            context.Response.StatusCode = exception.StatusCode;
+
+            switch (exception.StatusCode)
+            {
+                case 404:
+                    await context.SendStringAsync("404 NOT FOUND!", "text/html", new UTF8Encoding(false));
+                    break;
+                default:
+                    await HttpExceptionHandler.Default(context, exception);
+                    break;
+            }
+        });
 
         // Listen for state changes.
         server.StateChanged += (_, e) => $"WebServer New State - {e.NewState}".Info();

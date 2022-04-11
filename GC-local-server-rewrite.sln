@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.32126.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GC-local-server-rewrite", "GC-local-server-rewrite\GC-local-server-rewrite.csproj", "{D5FFF2E8-6591-4967-8883-A28F453F0524}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GC-local-web-frontend", "GC-local-web-frontend\GC-local-web-frontend.csproj", "{DAA65FBF-4C21-4052-A772-7899A65B3227}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{C01D0576-9D4E-4535-8055-C4905433A1EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{D5FFF2E8-6591-4967-8883-A28F453F0524}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5FFF2E8-6591-4967-8883-A28F453F0524}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5FFF2E8-6591-4967-8883-A28F453F0524}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAA65FBF-4C21-4052-A772-7899A65B3227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAA65FBF-4C21-4052-A772-7899A65B3227}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAA65FBF-4C21-4052-A772-7899A65B3227}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAA65FBF-4C21-4052-A772-7899A65B3227}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C01D0576-9D4E-4535-8055-C4905433A1EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C01D0576-9D4E-4535-8055-C4905433A1EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C01D0576-9D4E-4535-8055-C4905433A1EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C01D0576-9D4E-4535-8055-C4905433A1EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

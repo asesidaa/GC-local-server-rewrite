@@ -11,7 +11,7 @@
 
     <ItemGroup>
         <PackageReference Include="CertificateManager" Version="1.0.8" />
-        <PackageReference Include="ChoETL" Version="1.2.1.44" />
+        <PackageReference Include="ChoETL" Version="1.2.1.45" />
         <PackageReference Include="EmbedIO" Version="3.4.3" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
         <PackageReference Include="sqlite-net2" Version="2.0.7" />
@@ -22,11 +22,16 @@
     <ItemGroup>
         <Folder Include="log" />
         <None Remove="db\music.db3" />
+        <None Remove="db\music4MAX465.db3" />
         <Content Include="db\music.db3">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         </Content>
         <None Remove="static\favicon.ico" />
+        <Content Include="db\music4MAX465.db3">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        </Content>
         <Content Include="static\favicon.ico">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
@@ -51,6 +56,10 @@
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Shared\Shared.csproj" />
     </ItemGroup>
 
 </Project>

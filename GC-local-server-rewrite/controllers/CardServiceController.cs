@@ -1,5 +1,4 @@
-﻿using System.Data;
-using System.Net.Mime;
+﻿using System.Net.Mime;
 using System.Text;
 using System.Xml.Linq;
 using ChoETL;
@@ -32,11 +31,6 @@ public class CardServiceController : WebApiController
         HttpContext.Response.ContentType = MediaTypeNames.Application.Octet;
         HttpContext.Response.ContentEncoding = new UTF8Encoding(false);
         HttpContext.Response.KeepAlive = true;
-
-        /*if (gid != Configs.GC4_EX_GID)
-        {
-            throw new ArgumentOutOfRangeException(nameof(gid));
-        }*/
 
         if (!Enum.IsDefined(typeof(CardRequestType), type))
         {
@@ -454,7 +448,6 @@ public class CardServiceController : WebApiController
             writer.Write(list);
         }
 
-        stringBuilder.Insert(stringBuilder.Length - 5, "/");
         return stringBuilder.ToString();
     }
 
