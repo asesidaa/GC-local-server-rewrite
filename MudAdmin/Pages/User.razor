@@ -1,0 +1,12 @@
+﻿@page "/user/{CardId:long}"
+
+<PageTitle>User</PageTitle>
+
+<MudText>@CardId</MudText>
+
+@code {
+    [Parameter]
+    public long CardId { get; set; }
+    
+    
+}

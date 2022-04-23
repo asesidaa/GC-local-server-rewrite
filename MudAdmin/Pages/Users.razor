@@ -1,0 +1,49 @@
+﻿@page "/users"
+@using models = SharedProject.models
+@inject NavigationManager NavigationManager
+
+<PageTitle>Users</PageTitle>
+
+<MudGrid>
+    @foreach (var user in users)
+    {
+        <MudItem>
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">@user.PlayerName</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudText Typo="Typo.h6">Card ID</MudText>
+                    <MudText>@user.CardId</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="() => OnClick(user)">Test</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    }
+</MudGrid>
+
+@code {
+    private List<models.User> users;
+
+    private static readonly Random RANDOM = Random.Shared;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        users = new List<models.User>();
+        for (var i = 0; i < 5; i++)
+        {
+            users.Add(new models.User(RANDOM.NextInt64(7000000000000000, 8000000000000000), i.ToString()));
+        }
+    }
+
+    private void OnClick(models.User user)
+    {
+        NavigationManager.NavigateTo($"user/{user.CardId}");
+    }
+
+}

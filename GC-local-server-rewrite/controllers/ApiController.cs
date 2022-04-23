@@ -3,10 +3,9 @@ using EmbedIO.Routing;
 using EmbedIO.WebApi;
 using GCLocalServerRewrite.common;
 using GCLocalServerRewrite.models;
-using Shared.enums;
-using Shared.models;
+using SharedProject.enums;
+using SharedProject.models;
 using SQLite.Net2;
-using Swan.Logging;
 
 namespace GCLocalServerRewrite.controllers;
 

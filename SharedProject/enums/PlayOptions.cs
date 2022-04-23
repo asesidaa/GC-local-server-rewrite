@@ -1,4 +1,4 @@
-﻿namespace Shared.enums;
+﻿namespace SharedProject.enums;
 
 public static class PlayOptions
 {

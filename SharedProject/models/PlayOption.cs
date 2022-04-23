@@ -1,6 +1,6 @@
-﻿using Shared.enums;
+﻿using SharedProject.enums;
 
-namespace Shared.models;
+namespace SharedProject.models;
 
 public class PlayOption
 {
