@@ -1,5 +1,7 @@
 ﻿@page "/users"
 @using models = SharedProject.models
+@using GenFu
+@using MudAdmin.Utils
 @inject NavigationManager NavigationManager
 
 <PageTitle>Users</PageTitle>
@@ -27,23 +29,16 @@
 </MudGrid>
 
 @code {
-    private List<models.User> users;
-
-    private static readonly Random RANDOM = Random.Shared;
+    private List<models.User> users = new();
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        users = new List<models.User>();
-        for (var i = 0; i < 5; i++)
-        {
-            users.Add(new models.User(RANDOM.NextInt64(7000000000000000, 8000000000000000), i.ToString()));
-        }
+        users = MockDataRepo.GetMockDataRepo().Users;
     }
 
     private void OnClick(models.User user)
     {
         NavigationManager.NavigateTo($"user/{user.CardId}");
     }
-
 }

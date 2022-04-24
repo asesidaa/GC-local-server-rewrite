@@ -59,7 +59,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Common\Common.csproj" />
       <ProjectReference Include="..\SharedProject\SharedProject.csproj" />
     </ItemGroup>
 

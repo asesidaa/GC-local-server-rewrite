@@ -1,12 +1,137 @@
 ﻿@page "/user/{CardId:long}"
+@using SharedProject.models
+@using MudAdmin.Utils
+@using SharedProject.enums
+@using GenFu
 
 <PageTitle>User</PageTitle>
 
-<MudText>@CardId</MudText>
+@if (userDetail == null)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
+}
+else
+{
+    <MudExpansionPanels>
+        <MudExpansionPanel Text="Total Result">
+            <MudList>
+                <MudListSubheader>Player Name: @userDetail.PlayerName</MudListSubheader>
+                <MudListItem>Total Score: @userDetail.TotalScore</MudListItem>
+                <MudListItem>Average Score: @userDetail.AverageScore</MudListItem>
+                <MudListItem>Played Song Count: @userDetail.PlayedSongCount / @userDetail.TotalSongCount</MudListItem>
+                <MudListItem>Cleared Stage Count: @userDetail.ClearedStageCount / @userDetail.TotalStageCount</MudListItem>
+                <MudListItem>No Miss Stage Count: @userDetail.NoMissStageCount / @userDetail.TotalStageCount</MudListItem>
+                <MudListItem>Full Chain Stage Count: @userDetail.FullChainStageCount / @userDetail.TotalStageCount</MudListItem>
+                <MudListItem>Perfect Stage Count: @userDetail.PerfectStageCount / @userDetail.TotalStageCount</MudListItem>
+                <MudListItem>S and Above Stage Count: @userDetail.SAboveStageCount / @userDetail.TotalStageCount</MudListItem>
+                <MudListItem>S+ and Above Stage Count: @userDetail.SPlusAboveStageCount / @userDetail.TotalStageCount</MudListItem>
+                <MudListItem>S++ and Above Stage Count: @userDetail.SPlusPlusAboveStageCount / @userDetail.TotalStageCount</MudListItem>
+            </MudList>
+        </MudExpansionPanel>
+        <MudExpansionPanel Text="PlayOptions">
+            <MudSelect @bind-Value="@fastSlowIndicator" Label="FAST/SLOW show setting">
+                @foreach (var item in Enum.GetValues<PlayOptions.FastSlowIndicator>())
+                {
+                    <MudSelectItem Value="@item">@item.GetHelpText()</MudSelectItem>
+                }
+            </MudSelect>
+
+            <MudSelect @bind-Value="@feverTranceShow" Label="FEVER/TRANCE show setting">
+                @foreach (var item in Enum.GetValues<PlayOptions.FeverTranceShow>())
+                {
+                    <MudSelectItem Value="@item">@item.GetHelpText()</MudSelectItem>
+                }
+            </MudSelect>
+        </MudExpansionPanel>
+        <MudExpansionPanel Text="SongPlayData">
+            <MudDataGrid T="SongPlayData" Items="@songPlayDataList" Sortable="true">
+                <ToolBarContent>
+                    <MudText Typo="Typo.h6">Played Songs</MudText>
+                </ToolBarContent>
+                <Columns>
+                    <Column T="SongPlayData">
+                        <CellTemplate>
+                            <MudButton Variant="Variant.Outlined" Size="Size.Small"
+                                       OnClick="@(() => OnClick(context.Item))">
+                                @(context.Item.ShowDetails ? "Hide" : "Show") Song Play Details
+                            </MudButton>
+                        </CellTemplate>
+                    </Column>
+                    <Column T="SongPlayData" Field="Title" Title="Song Title"/>
+                    <Column T="SongPlayData" Field="Artist" Title="Artist"/>
+                    <Column T="SongPlayData" Field="LastPlayTime" Title="Last Play Time"/>
+                    <Column T="SongPlayData" Field="TotalPlayCount" Title="Total Play Count"/>
+                </Columns>
+                <ChildRowContent>
+                    @if (context.ShowDetails)
+                    {
+                        <MudTr>
+                            <td colspan="5">
+                                <MudCard Elevation="0">
+                                    <MudCardHeader>
+                                        <CardHeaderContent>
+                                            <MudText Typo="Typo.body1">Song Play Details</MudText>
+                                        </CardHeaderContent>
+                                    </MudCardHeader>
+                                    <MudCardContent Class="pa-0">
+                                        <MudTable Items="@context.SongPlaySubDataList" Context="SongPlayDetail" Elevation="0">
+                                            <HeaderContent>
+                                                <MudTh>Difficulty</MudTh>
+                                                <MudTh>Score</MudTh>
+                                                <MudTh>Clear State</MudTh>
+                                                <MudTh>Play Count</MudTh>
+                                                <MudTh>Max Chain</MudTh>
+                                            </HeaderContent>
+                                            <RowTemplate>
+                                                <MudTd DataLabel="Difficulty">@SongPlayDetail.Difficulty</MudTd>
+                                                <MudTd DataLabel="Score">@SongPlayDetail.Score</MudTd>
+                                                <MudTd DataLabel="Clear State">@SongPlayDetail.ClearState</MudTd>
+                                                <MudTd DataLabel="Play Count">@SongPlayDetail.PlayCount</MudTd>
+                                                <MudTd DataLabel="Max Chain">@SongPlayDetail.MaxChain</MudTd>
+                                            </RowTemplate>
+                                        </MudTable>
+                                    </MudCardContent>
+                                </MudCard>
+                            </td>
+                        </MudTr>
+                    }
+                </ChildRowContent>
+                <PagerContent>
+                    <MudDataGridPager T="SongPlayData"/>
+                </PagerContent>
+            </MudDataGrid>
+        </MudExpansionPanel>
+    </MudExpansionPanels>
+}
 
 @code {
+
     [Parameter]
     public long CardId { get; set; }
-    
-    
+
+    private PlayOptions.FeverTranceShow feverTranceShow;
+
+    private PlayOptions.FastSlowIndicator fastSlowIndicator;
+
+    private UserDetail? userDetail;
+
+    private List<SongPlayData> songPlayDataList = null!;
+
+    protected override void OnInitialized()
+    {
+        var details = MockDataRepo.GetMockDataRepo().UserDetails;
+        userDetail = details.First(detail => detail.CardId == CardId);
+        if (userDetail != null)
+        {
+            feverTranceShow = userDetail.PlayOption.FeverTrance;
+            fastSlowIndicator = userDetail.PlayOption.FastSlowIndicator;
+        }
+        songPlayDataList = MockDataRepo.GetMockDataRepo().SongPlayDataList;
+    }
+
+    private void OnClick(SongPlayData data)
+    {
+        data.ShowDetails = !data.ShowDetails;
+    }
+
 }
