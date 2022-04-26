@@ -111,6 +111,12 @@ Other files like `news`, `option` and `cap` should also be possible, but I have
 
 This is processed on client side, so if you like to unlock all difficuties, just use bemani patcher.
 
+# Deteled songs
+
+If you see a lot of duplicate "Play Merrily" in the original tab, this is because in the songs db deleted songs are added back.
+
+To enable these, try use the omnimixed version of stage_param.dat. That can fix this issue
+
 # Local network
 
 If your game and server is not on the same computer, try modify in config, change ServerIp to your server IP.
