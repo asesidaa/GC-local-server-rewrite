@@ -29,25 +29,83 @@ Open game using teknoparrot loader (you can find that in discord). The loader sh
 
 # Config
 
-The config file is GC-local-server-rewrite.exe.config.
+The config file is ~~GC-local-server-rewrite.exe.config~~ config.json
 
 If you are using 4MAX 4.65 data, it should work out of box.
 
-If you are using 4MAX 4.61 data, first change MusicDBName to bundled music4MAX.db3
+If you are using 4MAX 4.61 data, first change MusicDbName to bundled music4MAX.db3
 
-If you are using 4EX 4.52 data, change MusicDBName to bundled music.db3
+If you are using 4EX 4.52 data, change MusicDbName to bundled music.db3
 
 To unlock new avatars/navgators/skins/sound effects/titles from other version, change the corresponding count in config.
 
 You can get the corresponding count in data/boot/*.dat file.
 
+# Event files
+
+You can now add solo events. In the config file, change the following section
+
+```json
+  "ResponseData": [
+    {
+      "FileName": "/event_031_20160112.evt", // This is the file name of the file to be read
+      "NotBeforeUnixTime": 1272260187, 
+      "NotAfterUnixTime": 1903412187,// Be sure that NotBeforeUnixTime<= current time <= NotAfterUnixTime
+      "Md5": "28a12ed884747db261b188bc2c97c555" // File MD5, must match
+    },
+    {
+      "FileName": "/telop_20201125.txt",
+      "NotBeforeUnixTime": 1272260187,
+      "NotAfterUnixTime": 1903412187,
+      "Md5": "86fb269d190d2c85f6e0468ceca42a20"
+    }
+  ]
+```
+
+There are several types of data. File name starts with `event` is event config file. Sample 
+
+```
+event_id = 1
+title = "Test event"
+comment = ""
+open_date = (2021, 10, 12)
+close_date = (2022, 12, 24)
+open_time = (8, 0, 0)
+close_time = (23, 59, 0)
+ver = "4.65.00"
+play_open_time = (0, 0, 0)
+play_close_time = (0, 0, 0)
+type = 0
+challenge_num = 0
+play_mode = 1 // 1 is solo, 0 is online so currently not availabe
+
+select_music_data = (185, 191, 257, 261, 263, 267, 357, 358, 363, 364, 412, 416, 419, 494, 517, 518, 558, 572, 578, 579, 580, 699, 712, 766, 775, 789, 811, 812, 813, 814) // Enabled music
+
+// Reward is not implemented, also everything has already been unlocked
+reward0.type = 2
+reward0.start = 1
+reward0.end = 50
+reward0.title = 5159
+reward0.avatar = 0
+reward0.item = 21
+reward0.item_num = 3
+reward0.trophy_num = 2
+reward0.music = 0
+reward0.navigator = 0 
+```
+
+File name starts with `telop` is the scrolling banner, it's just a plain text file with banner content.
+
+Other files like `news`, `option` and `cap` should also be possible, but I have not tested these.
+
 # Missing functions
 
-- [ ] Item/coin comsuming 
+- [ ] Item/coin consuming 
 - [ ] Unlocking system (I don't like these two so I just hardcode them, if you are interested you can implement that and add a switch to enable, PRs are welcome)
 - [ ] Ranking system (Is this really needed for a local server?) 
 - [ ] Proper update check response (Now it will just throw 404)
 - [ ] PlayInfo.php (Now it will just throw 404, I don't know what data it expext)
+- [ ] Online matching (and online matching events)
 
 # Difficulty unlocking
 
