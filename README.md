@@ -45,7 +45,7 @@ You can get the corresponding count in data/boot/*.dat file.
 
 You can now add solo events. In the config file, change the following section
 
-```json
+```
   "ResponseData": [
     {
       "FileName": "/event_031_20160112.evt", // This is the file name of the file to be read
