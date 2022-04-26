@@ -7,8 +7,4 @@
         <RootNamespace>SharedProject</RootNamespace>
     </PropertyGroup>
 
-    <ItemGroup>
-      <PackageReference Include="GenFu" Version="1.6.0" />
-    </ItemGroup>
-
 </Project>

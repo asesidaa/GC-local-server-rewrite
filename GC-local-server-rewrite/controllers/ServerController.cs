@@ -69,8 +69,8 @@ public class ServerController : WebApiController
                        "pref=nesys\n" +
                        "addr=nesys@home\n" +
                        "x-next-time=15\n" +
-                       $"x-img=http://{Configs.SERVER_ADDR}{Configs.STATIC_BASE_ROUTE}/news.png\n" +
-                       $"x-ranking=http://{Configs.SERVER_ADDR}{Configs.RANK_BASE_ROUTE}/ranking.php\n" +
+                       $"x-img=http://{Configs.SETTINGS.ServerIp}{Configs.STATIC_BASE_ROUTE}/news.png\n" +
+                       $"x-ranking=http://{Configs.SETTINGS.ServerIp}{Configs.RANK_BASE_ROUTE}/ranking.php\n" +
                        $"ticket={ticket}";
 
         return response;
@@ -93,8 +93,19 @@ public class ServerController : WebApiController
         HttpContext.Response.ContentEncoding = new UTF8Encoding(false);
         HttpContext.Response.KeepAlive = true;
 
-        return "count=1\n" +
-               "nexttime=0\n";
+        var responseList = Configs.SETTINGS.ResponseData.ToList();
+        var count = responseList.Count;
+        var dataString = new StringBuilder();
+        for (var i = 0; i < count; i++)
+        {
+            var data = responseList[i];
+            dataString.Append($"{i},{data.FileName},{data.NotBeforeUnixTime},{data.NotAfterUnixTime},{data.Md5},file");
+            dataString.Append('\n');
+        }
+
+        return $"count={count}\n" +
+               "nexttime=0\n" +
+               dataString.ToString().TrimEnd('\n');
     }
 
     [Route(HttpVerbs.Get, "/gameinfo.php")]

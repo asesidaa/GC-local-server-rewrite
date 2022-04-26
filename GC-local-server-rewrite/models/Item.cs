@@ -20,7 +20,7 @@ public class Item : Record, IIdModel, ICardIdModel
     public string? Modified { get; set; } = "1";
 
     [XmlElement("new_flag")]
-    public int NewFlag { get; set; } = 1;
+    public int NewFlag { get; set; }
 
     [XmlElement("use_flag")]
     public int UseFlag { get; set; } = 1;

@@ -19,8 +19,8 @@ public class CardServiceController : WebApiController
 
     public CardServiceController()
     {
-        cardSqLiteConnection = DatabaseHelper.ConnectDatabase(Configs.CARD_DB_NAME);
-        musicSqLiteConnection = DatabaseHelper.ConnectDatabase(Configs.MUSIC_DB_NAME);
+        cardSqLiteConnection = DatabaseHelper.ConnectDatabase(Configs.SETTINGS.CardDbName);
+        musicSqLiteConnection = DatabaseHelper.ConnectDatabase(Configs.SETTINGS.MusicDbName);
     }
 
     [Route(HttpVerbs.Post, "/cardn.cgi")]
@@ -72,28 +72,28 @@ public class CardServiceController : WebApiController
                 $"Getting read request, type is {requestType}".Info();
 
                 return ConstructResponse(
-                    GetStaticCount<Avatar>(cardId, Configs.AVATAR_COUNT, Configs.AVATAR_XPATH));
+                    GetStaticCount<Avatar>(cardId, Configs.SETTINGS.AvatarCount, Configs.AVATAR_XPATH));
             }
             case CardRequestType.ReadItem:
             {
                 $"Getting read request, type is {requestType}".Info();
 
                 return ConstructResponse(
-                    GetStaticCount<Item>(cardId, Configs.ITEM_COUNT, Configs.ITEM_XPATH));
+                    GetStaticCount<Item>(cardId, Configs.SETTINGS.ItemCount, Configs.ITEM_XPATH));
             }
             case CardRequestType.ReadSkin:
             {
                 $"Getting read request, type is {requestType}".Info();
 
                 return ConstructResponse(
-                    GetStaticCount<Skin>(cardId, Configs.SKIN_COUNT, Configs.SKIN_XPATH));
+                    GetStaticCount<Skin>(cardId, Configs.SETTINGS.SkinCount, Configs.SKIN_XPATH));
             }
             case CardRequestType.ReadTitle:
             {
                 $"Getting read request, type is {requestType}".Info();
 
                 return ConstructResponse(
-                    GetStaticCount<Title>(cardId, Configs.TITLE_COUNT, Configs.TITLE_XPATH));
+                    GetStaticCount<Title>(cardId, Configs.SETTINGS.TitleCount, Configs.TITLE_XPATH));
             }
             case CardRequestType.ReadMusic:
             {
@@ -113,7 +113,7 @@ public class CardServiceController : WebApiController
                 $"Getting read request, type is {requestType}".Info();
 
                 return ConstructResponse(
-                    GetStaticCount<Navigator>(cardId, Configs.NAVIGATOR_COUNT, Configs.NAVIGATOR_XPATH));
+                    GetStaticCount<Navigator>(cardId, Configs.SETTINGS.NavigatorCount, Configs.NAVIGATOR_XPATH));
             }
             case CardRequestType.ReadMusicExtra:
             {
@@ -150,7 +150,7 @@ public class CardServiceController : WebApiController
                 $"Getting read request, type is {requestType}".Info();
 
                 return ConstructResponse(
-                    GetStaticCount<SoundEffect>(cardId, Configs.SE_COUNT, Configs.SE_XPATH));
+                    GetStaticCount<SoundEffect>(cardId, Configs.SETTINGS.SeCount, Configs.SE_XPATH));
             }
             case CardRequestType.ReadGetMessage:
             {

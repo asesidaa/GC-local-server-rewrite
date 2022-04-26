@@ -13,10 +13,11 @@ internal class Program
         Batteries_V2.Init();
 
         InitializeLogging();
-        
+
         LogConfigValues();
 
-        var urlPrefixes = args.Length > 0 ? new List<string>(args) : new List<string> { "http://+:80", "https://+:443"};
+        var urlPrefixes =
+            args.Length > 0 ? new List<string>(args) : new List<string> { "http://+:80", "https://+:443" };
 
         using (var cts = new CancellationTokenSource())
         {
@@ -87,22 +88,15 @@ internal class Program
 
     private static void LogConfigValues()
     {
-       var configs = $"Config values: {nameof(Configs.SE_COUNT)} : {Configs.SE_COUNT}\n" +
-            $"{nameof(Configs.ITEM_COUNT)} : {Configs.ITEM_COUNT}\n" +
-            $"{nameof(Configs.SKIN_COUNT)} : {Configs.SKIN_COUNT}\n" +
-            $"{nameof(Configs.TITLE_COUNT)} : {Configs.TITLE_COUNT}\n" +
-            $"{nameof(Configs.AVATAR_COUNT)} : {Configs.AVATAR_COUNT}\n" +
-            $"{nameof(Configs.NAVIGATOR_COUNT)} : {Configs.NAVIGATOR_COUNT}\n" +
-            $"{nameof(Configs.MUSIC_DB_NAME)} : {Configs.MUSIC_DB_NAME}\n" +
-            $"{nameof(Configs.SERVER_ADDR)} : {Configs.SERVER_ADDR}\n";
-       configs.Info();
+        var paths = $"Paths: {nameof(PathHelper.HtmlRootPath)}: {PathHelper.HtmlRootPath}\n" +
+                    $"{nameof(PathHelper.LogRootPath)}: {PathHelper.LogRootPath}\n" +
+                    $"{nameof(PathHelper.DataBaseRootPath)}: {PathHelper.DataBaseRootPath}\n" +
+                    $"{nameof(PathHelper.ConfigFilePath)}: {PathHelper.ConfigFilePath}\n" +
+                    $"{nameof(PathHelper.CertRootPath)}: {PathHelper.CertRootPath}\n";
+        paths.Info();
 
-       var paths = $"Paths: {nameof(PathHelper.HtmlRootPath)}: {PathHelper.HtmlRootPath}\n" +
-                   $"{nameof(PathHelper.LogRootPath)}: {PathHelper.LogRootPath}\n" +
-                   $"{nameof(PathHelper.DataBaseRootPath)}: {PathHelper.DataBaseRootPath}\n" +
-                   $"{nameof(PathHelper.ConfigFilePath)}: {PathHelper.ConfigFilePath}\n" +
-                   $"{nameof(PathHelper.CertRootPath)}: {PathHelper.CertRootPath}\n";
-       paths.Info();
-
+        var configs = "Config values: \n" +
+                      $"{Configs.SETTINGS.Stringify()}";
+        configs.Info();
     }
 }

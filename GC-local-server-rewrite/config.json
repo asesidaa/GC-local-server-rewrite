@@ -1,0 +1,25 @@
+﻿{
+  "AvatarCount": 323,
+  "NavigatorCount": 94,
+  "ItemCount": 21,
+  "SkinCount": 21,
+  "SeCount": 26,
+  "TitleCount": 5273,
+  "CardDbName": "card.db3",
+  "MusicDbName": "music4MAX465.db3",
+  "ServerIp": "127.0.0.1",
+  "ResponseData": [
+    {
+      "FileName": "/event_031_20160112.evt",
+      "NotBeforeUnixTime": 1272260187,
+      "NotAfterUnixTime": 1903412187,
+      "Md5": "28a12ed884747db261b188bc2c97c555"
+    },
+    {
+      "FileName": "/telop_20201125.txt",
+      "NotBeforeUnixTime": 1272260187,
+      "NotAfterUnixTime": 1903412187,
+      "Md5": "86fb269d190d2c85f6e0468ceca42a20"
+    }
+  ]
+}

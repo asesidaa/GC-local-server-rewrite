@@ -52,7 +52,7 @@ public static class CertificateHelper
     private static readonly SubjectAlternativeName SUBJECT_ALTERNATIVE_NAME = new()
     {
         DnsName = Configs.DOMAINS,
-        IpAddress = System.Net.IPAddress.Parse(Configs.SERVER_ADDR)
+        IpAddress = System.Net.IPAddress.Parse(Configs.SETTINGS.ServerIp)
     };
 
     private static readonly ValidityPeriod VALIDITY_PERIOD = new()

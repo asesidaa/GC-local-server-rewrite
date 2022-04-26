@@ -19,7 +19,7 @@ public static class PathHelper
 
     public static string CertRootPath => Path.Combine(BasePath, Configs.CERT_FOLDER);
 
-    public static string ConfigFilePath => Environment.ProcessPath ?? string.Empty;
+    public static string ConfigFilePath => Path.Combine(BasePath, Configs.CONFIG_FILE_NAME);
 
     private static string BasePath
     {

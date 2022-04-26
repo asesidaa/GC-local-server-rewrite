@@ -15,7 +15,7 @@ public class ApiController : WebApiController
 
     public ApiController()
     {
-        cardSqLiteConnection = DatabaseHelper.ConnectDatabase(Configs.CARD_DB_NAME);
+        cardSqLiteConnection = DatabaseHelper.ConnectDatabase(Configs.SETTINGS.CardDbName);
     }
     
     [Route(HttpVerbs.Get, "/PlayOption")]
