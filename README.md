@@ -98,6 +98,8 @@ File name starts with `telop` is the scrolling banner, it's just a plain text fi
 
 Other files like `news`, `option` and `cap` should also be possible, but I have not tested these.
 
+The configured file should be put into the `event` folder, which you can change the position by using jconfig (regedit->event path)
+
 # Missing functions
 
 - [ ] Item/coin consuming 
