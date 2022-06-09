@@ -34,4 +34,8 @@ public class Music : Record
     [Column("use_flag")]
     [XmlElement("use_flag")]
     public int UseFlag { get; set; }
+
+    [Ignore]
+    [XmlElement("calc_flag")]
+    public uint CalcFlag { get; set; } = 2;
 }
