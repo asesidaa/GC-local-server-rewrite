@@ -31,5 +31,11 @@ public interface IAppSettings
     [Option(DefaultValue = Configs.DEFAULT_SERVER_IP)]
     string ServerIp { get; }
 
+    [Option(DefaultValue = Configs.DEFAULT_RELAY_SERVER)]
+    string RelayServer { get; }
+
+    [Option(DefaultValue = Configs.DEFAULT_RELAY_PORT)]
+    int RelayPort { get; }
+
     IEnumerable<IDataResponse> ResponseData { get; }
 }

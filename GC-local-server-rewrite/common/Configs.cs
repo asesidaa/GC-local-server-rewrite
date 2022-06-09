@@ -70,7 +70,7 @@ public static class Configs
 
     public const string MUSIC_AOU = "music_aou";
 
-    public const string MUSIC_AOU_XPATH = $"{ROOT_XPATH}/{MUSIC_AOU}";
+    public const string MUSIC_AOU_XPATH = $"{ROOT_XPATH}/{MUSIC_AOU}/record";
 
     public const string ITEM = "item";
 
@@ -142,4 +142,6 @@ public static class Configs
     public const string DEFAULT_CARD_DB_NAME = "card.db3";
     public const string DEFAULT_MUSIC_DB_NAME = "music4MAX465.db3";
     public const string DEFAULT_SERVER_IP = "127.0.0.1";
+    public const string DEFAULT_RELAY_SERVER = "127.0.0.1";
+    public const int DEFAULT_RELAY_PORT = 54321;
 }

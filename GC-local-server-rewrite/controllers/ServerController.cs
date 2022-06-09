@@ -63,7 +63,7 @@ public class ServerController : WebApiController
             md5.ComputeHash(Encoding.UTF8.GetBytes(gid)).Select(b => b.ToString("x2")));
         
 
-        var response = "host=card_id=7020392000147361\n" +
+        var response = $"host=card_id=7020392000147361,relay_addr={Configs.SETTINGS.RelayServer},relay_port={Configs.SETTINGS.RelayPort}\n" +
                        "no=1337\n" +
                        "name=123\n" +
                        "pref=nesys\n" +

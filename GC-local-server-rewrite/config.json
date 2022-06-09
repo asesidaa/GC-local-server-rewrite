@@ -8,6 +8,8 @@
   "CardDbName": "card.db3",
   "MusicDbName": "music4MAX465.db3",
   "ServerIp": "127.0.0.1",
+  "RelayServer": "127.0.0.1",
+  "RelayPort":  54321, 
   "ResponseData": [
     {
       "FileName": "/event_031_20160112.evt",
