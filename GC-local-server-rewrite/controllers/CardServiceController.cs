@@ -125,7 +125,7 @@ public class CardServiceController : WebApiController
             {
                 $"Getting read request, type is {requestType}".Info();
 
-                return ConstructResponse(GenerateEmptyXML(Configs.MUSIC_AOU));
+                return ConstructResponse(MusicAouUnlock());
             }
             case CardRequestType.ReadCoin:
             {
@@ -185,7 +185,7 @@ public class CardServiceController : WebApiController
             case CardRequestType.WriteCardDetail:
             {
                 $"Getting write request, type is {requestType}\n Data is {xmlData}".Info();
-                Write<CardDetail>(cardId, xmlData);
+                WriteCardDetail(cardId, xmlData);
 
                 return ConstructResponse(xmlData);
             }
@@ -387,6 +387,13 @@ public class CardServiceController : WebApiController
         return GenerateRecordsXml(result, Configs.MUSIC_XPATH);
     }
 
+    private string MusicAouUnlock()
+    {
+        var result = musicSqLiteConnection.Table<MusicAou>().ToList();
+
+        return !result.Any() ? GenerateEmptyXML(Configs.MUSIC_AOU) : GenerateRecordsXml(result, Configs.MUSIC_AOU_XPATH);
+    }
+
     private string MusicExtra()
     {
         var result = musicSqLiteConnection.Table<MusicExtra>().ToList();
@@ -474,6 +481,32 @@ public class CardServiceController : WebApiController
         }
 
         $"Updated {typeof(T)}".Info();
+    }
+
+    private void WriteCardDetail(long cardId, string xmlData)
+    {
+        var result = cardSqLiteConnection.Table<CardDetail>()
+            .Where(detail => detail.CardId == cardId);
+
+        // Populate song unlocks in card details table when write for the first time
+        if (!result.Any())
+        {
+            var musics = musicSqLiteConnection.Table<Music>().ToList();
+            var detailList = musics.Select(music => new CardDetail
+                {
+                    CardId = cardId,
+                    Pcol1 = 10,
+                    Pcol2 = music.MusicId,
+                    Pcol3 = 0,
+                    ScoreUi2 = 1,
+                    ScoreUi6 = 1
+                })
+                .ToList();
+
+            cardSqLiteConnection.InsertOrIgnoreAll(detailList);
+        }
+        
+        Write<CardDetail>(cardId, xmlData);
     }
 
     #endregion
