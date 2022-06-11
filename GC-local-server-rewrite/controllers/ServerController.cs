@@ -99,7 +99,7 @@ public class ServerController : WebApiController
         for (var i = 0; i < count; i++)
         {
             var data = responseList[i];
-            dataString.Append($"{i},{data.FileName},{data.NotBeforeUnixTime},{data.NotAfterUnixTime},{data.Md5},file");
+            dataString.Append($"{i},{data.FileName},{data.NotBeforeUnixTime},{data.NotAfterUnixTime},{data.Md5},{data.Index}");
             dataString.Append('\n');
         }
 

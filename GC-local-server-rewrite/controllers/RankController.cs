@@ -114,7 +114,8 @@ public class RankController : WebApiController
         {
             Rows = 30,
             TableName = "play_num_rank",
-            Status = 1
+            Status = 1,
+            EndDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
         };
 
         var playNumRankContainer = new PlayNumRankContainer

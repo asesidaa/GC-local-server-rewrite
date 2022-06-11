@@ -29,9 +29,11 @@ Open game using teknoparrot loader (you can find that in discord). The loader sh
 
 # Config
 
-The config file is ~~GC-local-server-rewrite.exe.config~~ config.json
+The config file is ~~GC-local-server-rewrite.exe.config~~ config.json
 
-If you are using 4MAX 4.65 data, it should work out of box.
+If you are using 4MAX 4.71 data, it should work out of box.
+
+If you are using 4MAX 4.65 data, MusicDbName=music4MAX465.db3
 
 If you are using 4MAX 4.61 data, first change MusicDbName to bundled music4MAX.db3
 
@@ -48,16 +50,60 @@ You can now add solo events. In the config file, change the following section
 ```
   "ResponseData": [
     {
-      "FileName": "/event_031_20160112.evt", // This is the file name of the file to be read
-      "NotBeforeUnixTime": 1272260187, 
-      "NotAfterUnixTime": 1903412187,// Be sure that NotBeforeUnixTime<= current time <= NotAfterUnixTime
-      "Md5": "28a12ed884747db261b188bc2c97c555" // File MD5, must match
+      "FileName": "/event_103_20201125.evt", // This is the file name of the file to be read
+      "NotBeforeUnixTime": 1335677127,
+      "NotAfterUnixTime": 1966397127, // Be sure that NotBeforeUnixTime<= current time <= NotAfterUnixTime
+      "Md5": "9ef6c4d5ca381583a2d99b626ce06b5e", // File MD5, must match
+      "Index": 0 // Special value, must be 0 for .evt file, this is the file controlling event
+    },
+    {
+      "FileName": "/event_20201125_reg.jpg",
+      "NotBeforeUnixTime": 1335677127,
+      "NotAfterUnixTime": 1966397127,
+      "Md5": "8e3fe25bf50dcbed13dbb54cc18b1efa",
+      "Index": 1 // Special value, must be 1 for event_reg.jpg
+    },
+    {
+      "FileName": "/event_20201125_sgreg.png",
+      "NotBeforeUnixTime": 1335677127,
+      "NotAfterUnixTime": 1966397127,
+      "Md5": "e0abb0503fe0c530d8a68e36994264c6",
+      "Index": 2 // Special value, must be 2 for event_sreg.jpg, this is the event picture in mode selection
+    },
+    {
+      "FileName": "/news_big_20201125_0.jpg",
+      "NotBeforeUnixTime": 1335677127,
+      "NotAfterUnixTime": 1966397127,
+      "Md5": "4a0f66431f6449279dc046149d1dd882",
+      "Index": 0 // Special value, must be 0 for first news_big.jpg, this is the picture shown before demo
+    },
+    {
+      "FileName": "/news_big_20201125_2.jpg",
+      "NotBeforeUnixTime": 1335677127,
+      "NotAfterUnixTime": 1966397127,
+      "Md5": "8e3fe25bf50dcbed13dbb54cc18b1efa",
+      "Index": 2 // Special value, can be 2~9 for 2nd to 9th news_big.jpg, so there can be up to 9 of these
+    },
+    {
+      "FileName": "/news_small_20201125_1.jpg",
+      "NotBeforeUnixTime": 1335677127,
+      "NotAfterUnixTime": 1966397127,
+      "Md5": "e20135bcd41c98875aec2b52eb9fcd06",
+      "Index": 1 // Special value, must be 1 for news_small.jpg, this is shown after game over
     },
     {
       "FileName": "/telop_20201125.txt",
-      "NotBeforeUnixTime": 1272260187,
-      "NotAfterUnixTime": 1903412187,
-      "Md5": "86fb269d190d2c85f6e0468ceca42a20"
+      "NotBeforeUnixTime": 1335677127,
+      "NotAfterUnixTime": 1966397127,
+      "Md5": "ee228de44d6656a9ec0bb7f1a0ca64e1",
+      "Index": 0 // Special value, must be 1 for telop, this is the text in scrolling banner
+    },
+    {
+      "FileName": "/event_unlock_20201125.cmp",
+      "NotBeforeUnixTime": 1335677127,
+      "NotAfterUnixTime": 1966397127,
+      "Md5": "623b0f10125cbe19c5394d992930ae8c",
+      "Index": 8 // Special value, must be 8 for .cmp file
     }
   ]
 ```
@@ -96,7 +142,7 @@ reward0.navigator = 0
 
 File name starts with `telop` is the scrolling banner, it's just a plain text file with banner content.
 
-Other files like `news`, `option` and `cap` should also be possible, but I have not tested these.
+Other files like `news`, `option` and `cap` should also be possible, but I have not tested these.
 
 The configured file should be put into the `event` folder, which you can change the position by using jconfig (regedit->event path)
 
@@ -111,7 +157,7 @@ The configured file should be put into the `event` folder, which you can change 
 
 # Difficulty unlocking
 
-This is processed on client side, so if you like to unlock all difficuties, just use bemani patcher.
+This is processed on client side, so if you like to unlock all difficulties, just use Bemani patcher.
 
 # Deteled songs
 

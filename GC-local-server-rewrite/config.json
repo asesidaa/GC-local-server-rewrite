@@ -1,27 +1,71 @@
 ﻿{
-  "AvatarCount": 323,
-  "NavigatorCount": 94,
+  "AvatarCount": 356,
+  "NavigatorCount": 118,
   "ItemCount": 21,
   "SkinCount": 21,
   "SeCount": 26,
-  "TitleCount": 5273,
+  "TitleCount": 5530,
   "CardDbName": "card.db3",
-  "MusicDbName": "music4MAX465.db3",
+  "MusicDbName": "music471.db3",
   "ServerIp": "127.0.0.1",
-  "RelayServer": "127.0.0.1",
-  "RelayPort":  54321, 
+  "RelayServer": "26.56.10.224",
+  "RelayPort": 54321,
   "ResponseData": [
     {
-      "FileName": "/event_031_20160112.evt",
-      "NotBeforeUnixTime": 1272260187,
-      "NotAfterUnixTime": 1903412187,
-      "Md5": "28a12ed884747db261b188bc2c97c555"
+      "FileName": "/event_103_20201125.evt",
+      "NotBeforeUnixTime": 1335677127,
+      "NotAfterUnixTime": 1966397127,
+      "Md5": "9ef6c4d5ca381583a2d99b626ce06b5e",
+      "Index": 0
+    },
+    {
+      "FileName": "/event_20201125_reg.jpg",
+      "NotBeforeUnixTime": 1335677127,
+      "NotAfterUnixTime": 1966397127,
+      "Md5": "8e3fe25bf50dcbed13dbb54cc18b1efa",
+      "Index": 1
+    },
+    {
+      "FileName": "/event_20201125_sgreg.png",
+      "NotBeforeUnixTime": 1335677127,
+      "NotAfterUnixTime": 1966397127,
+      "Md5": "e0abb0503fe0c530d8a68e36994264c6",
+      "Index": 2
+    },
+    {
+      "FileName": "/news_big_20201125_0.jpg",
+      "NotBeforeUnixTime": 1335677127,
+      "NotAfterUnixTime": 1966397127,
+      "Md5": "4a0f66431f6449279dc046149d1dd882",
+      "Index": 0
+    },
+    {
+      "FileName": "/news_big_20201125_2.jpg",
+      "NotBeforeUnixTime": 1335677127,
+      "NotAfterUnixTime": 1966397127,
+      "Md5": "8e3fe25bf50dcbed13dbb54cc18b1efa",
+      "Index": 2
+    },
+    {
+      "FileName": "/news_small_20201125_1.jpg",
+      "NotBeforeUnixTime": 1335677127,
+      "NotAfterUnixTime": 1966397127,
+      "Md5": "e20135bcd41c98875aec2b52eb9fcd06",
+      "Index": 1
     },
     {
       "FileName": "/telop_20201125.txt",
-      "NotBeforeUnixTime": 1272260187,
-      "NotAfterUnixTime": 1903412187,
-      "Md5": "86fb269d190d2c85f6e0468ceca42a20"
+      "NotBeforeUnixTime": 1335677127,
+      "NotAfterUnixTime": 1966397127,
+      "Md5": "ee228de44d6656a9ec0bb7f1a0ca64e1",
+      "Index": 0
+    },
+    {
+      "FileName": "/event_unlock_20201125.cmp",
+      "NotBeforeUnixTime": 1335677127,
+      "NotAfterUnixTime": 1966397127,
+      "Md5": "623b0f10125cbe19c5394d992930ae8c",
+      "Index": 8
     }
   ]
 }

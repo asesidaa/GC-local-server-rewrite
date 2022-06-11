@@ -26,8 +26,8 @@ public class UnlockKeynum : Record
     public int CashFlag { get; set; }
 
     [XmlElement("created")]
-    public string? Created { get; set; } = "1";
+    public string Created { get; set; } = "1";
 
     [XmlElement("modified")]
-    public string? Modified { get; set; } = "1";
+    public string Modified { get; set; } = "1";
 }

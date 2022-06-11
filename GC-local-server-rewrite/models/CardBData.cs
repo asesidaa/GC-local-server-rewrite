@@ -11,7 +11,7 @@ public class CardBData : ICardIdModel
     [Column("card_id")]
     [ChoXmlElementRecordField(FieldName = "card_id")]
     [XmlElement(ElementName = "card_id")]
-    public long? CardId { get; set; }
+    public long CardId { get; set; }
 
     [Column("bdata")]
     [ChoXmlElementRecordField(FieldName = "bdata")]

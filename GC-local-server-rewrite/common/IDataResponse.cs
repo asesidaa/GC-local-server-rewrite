@@ -9,4 +9,6 @@ public interface IDataResponse
     long NotAfterUnixTime { get; }
     
     string Md5 { get; }
+
+    int Index { get; }
 }

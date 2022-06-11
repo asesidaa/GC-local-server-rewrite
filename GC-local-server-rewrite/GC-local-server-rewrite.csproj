@@ -63,6 +63,10 @@
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         </None>
+        <None Update="db\music471.db3">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        </None>
     </ItemGroup>
 
     <ItemGroup>

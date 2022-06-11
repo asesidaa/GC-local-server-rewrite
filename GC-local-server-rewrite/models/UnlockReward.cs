@@ -14,16 +14,16 @@ public class UnlockReward : Record
     public int RewardType { get; set; }
 
     [XmlElement(ElementName = "open_date")]
-    public string? OpenDate { get; set; } = "2021-05-30";
+    public string OpenDate { get; set; } = "2021-05-30";
 
     [XmlElement(ElementName = "close_date")]
-    public string? CloseDate { get; set; } = "2030-05-30";
+    public string CloseDate { get; set; } = "2030-05-30";
 
     [XmlElement(ElementName = "open_time")]
-    public string? OpenTime { get; set; } = "00:00:01";
+    public string OpenTime { get; set; } = "00:00:01";
 
     [XmlElement(ElementName = "close_time")]
-    public string? CloseTime { get; set; } = "23:59:59";
+    public string CloseTime { get; set; } = "23:59:59";
 
     [XmlElement(ElementName = "target_id")]
     public int TargetId { get; set; }
@@ -50,8 +50,8 @@ public class UnlockReward : Record
     public long CloseUnixTime { get; set; } = 1906387199;
 
     [XmlElement("created")]
-    public string? Created { get; set; } = "1";
+    public string Created { get; set; } = "1";
 
     [XmlElement("modified")]
-    public string? Modified { get; set; } = "1";
+    public string Modified { get; set; } = "1";
 }

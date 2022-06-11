@@ -12,20 +12,20 @@ public class Music : Record
     public int MusicId { get; set; }
 
     [Column("title")]
-    [XmlElement(ElementName = "title", IsNullable = true)]
-    public string? Title { get; set; }
+    [XmlElement(ElementName = "title")]
+    public string? Title { get; set; } = string.Empty;
 
     [Column("artist")]
-    [XmlElement(ElementName = "artist", IsNullable = true)]
-    public string? Artist { get; set; }
+    [XmlElement(ElementName = "artist")]
+    public string Artist { get; set; } = string.Empty;
 
     [Column("release_date")]
-    [XmlElement(ElementName = "release_date", IsNullable = true)]
-    public string? ReleaseDate { get; set; }
+    [XmlElement(ElementName = "release_date")]
+    public string ReleaseDate { get; set; } = "2013-01-01 08:00:00";
 
     [Column("end_date")]
-    [XmlElement(ElementName = "end_date", IsNullable = true)]
-    public string? EndDate { get; set; }
+    [XmlElement(ElementName = "end_date")]
+    public string EndDate { get; set; } = "2030-01-01 08:00:00";
 
     [Column("new_flag")]
     [XmlElement("new_flag")]

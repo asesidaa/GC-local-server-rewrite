@@ -11,12 +11,12 @@ public class Card : ICardIdModel
     [Column("card_id")]
     [ChoXmlElementRecordField(FieldName = "card_id")]
     [XmlElement(ElementName = "card_id")]
-    public long? CardId { get; set; }
+    public long CardId { get; set; }
 
     [Column("player_name")]
     [ChoXmlElementRecordField(FieldName = "player_name")]
     [XmlElement(ElementName = "player_name")]
-    public string? PlayerName { get; set; }
+    public string PlayerName { get; set; } = "player";
 
     [Column("score_i1")]
     [ChoXmlElementRecordField(FieldName = "score_i1")]
@@ -41,7 +41,7 @@ public class Card : ICardIdModel
     [Column("achieve_status")]
     [ChoXmlElementRecordField(FieldName = "achieve_status")]
     [XmlElement("achieve_status")]
-    public string? AchieveStatus { get; set; } = string.Empty;
+    public string AchieveStatus { get; set; } = string.Empty;
 
     [Column("created")]
     [ChoXmlElementRecordField(FieldName = "created")]

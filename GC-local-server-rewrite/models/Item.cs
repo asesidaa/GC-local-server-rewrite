@@ -14,10 +14,10 @@ public class Item : Record, IIdModel, ICardIdModel
     public int ItemNum { get; set; } = 90;
 
     [XmlElement("created")]
-    public string? Created { get; set; } = "1";
+    public string Created { get; set; } = "1";
 
     [XmlElement("modified")]
-    public string? Modified { get; set; } = "1";
+    public string Modified { get; set; } = "1";
 
     [XmlElement("new_flag")]
     public int NewFlag { get; set; }
