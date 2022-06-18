@@ -8,6 +8,7 @@ using EmbedIO.WebApi;
 using GCLocalServerRewrite.common;
 using GCLocalServerRewrite.models;
 using SQLite.Net2;
+using Swan;
 using Swan.Logging;
 
 namespace GCLocalServerRewrite.controllers;
@@ -193,6 +194,7 @@ public class CardServiceController : WebApiController
             {
                 $"Getting write request, type is {requestType}\n Data is {xmlData}".Info();
                 Write<CardBData>(cardId, xmlData);
+                WriteCardPlayCount(cardId);
 
                 return ConstructResponse(xmlData);
             }
@@ -481,6 +483,55 @@ public class CardServiceController : WebApiController
         }
 
         $"Updated {typeof(T)}".Info();
+    }
+
+    private void WriteCardPlayCount(long cardId)
+    {
+        var record = cardSqLiteConnection.Table<CardPlayCount>().Where(count => count.CardId == cardId);
+
+        if (!record.Any())
+        {
+            $"Created new play count data for card {cardId}".Info();
+            var playCount = new CardPlayCount
+            {
+                CardId = cardId,
+                PlayCount = 1,
+                LastPlayed = DateTime.Now
+            };
+            cardSqLiteConnection.InsertOrReplace(playCount);
+            return;
+        }
+
+        var data = record.First();
+        var now = DateTime.Now;
+        var lastPlayedTime = data.LastPlayed;
+
+        if (now <= lastPlayedTime)
+        {
+            $"Current time {now} is less than or equal to last played time! Clock skew detected!".Warn();
+            data.PlayCount = 0;
+            data.LastPlayed = DateTime.Now;
+            cardSqLiteConnection.InsertOrReplace(data);
+            return;
+        }
+
+        DateTime start;
+        DateTime end;
+
+        if (now.Hour >= 8)
+        {
+            start = DateTime.Today.AddHours(8);
+            end = start.AddHours(24);
+        }
+        else
+        {
+            end = DateTime.Today.AddHours(8);
+            start = end.AddHours(-24);
+        }
+
+        data.PlayCount = lastPlayedTime.IsBetween(start, end) ? data.PlayCount + 1 : 0;
+        cardSqLiteConnection.InsertOrReplace(data);
+        $"Updated card play count, current count is {data.PlayCount}".Info();
     }
 
     private void WriteCardDetail(long cardId, string xmlData)

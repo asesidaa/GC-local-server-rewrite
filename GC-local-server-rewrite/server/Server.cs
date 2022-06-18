@@ -73,7 +73,7 @@ public class Server
     private static void InitializeDatabase()
     {
         DatabaseHelper.InitializeLocalDatabase(Configs.SETTINGS.CardDbName,
-            typeof(Card), typeof(CardBData), typeof(CardDetail));
+            typeof(Card), typeof(CardBData), typeof(CardDetail), typeof(CardPlayCount));
         DatabaseHelper.InitializeLocalDatabase(Configs.SETTINGS.MusicDbName,
             typeof(Music), typeof(MusicAou), typeof(MusicExtra));
     }

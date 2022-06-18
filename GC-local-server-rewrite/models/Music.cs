@@ -17,7 +17,13 @@ public class Music : Record
 
     [Column("artist")]
     [XmlElement(ElementName = "artist")]
-    public string Artist { get; set; } = string.Empty;
+    public string? Artist
+    {
+        get => _artist;
+        set => _artist = value ?? string.Empty;
+    } 
+
+    private string? _artist = string.Empty;
 
     [Column("release_date")]
     [XmlElement(ElementName = "release_date")]
