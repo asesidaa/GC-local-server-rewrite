@@ -2,7 +2,6 @@
 @using SharedProject.models
 @using MudAdmin.Utils
 @using SharedProject.enums
-@using GenFu
 
 <PageTitle>User</PageTitle>
 
@@ -42,6 +41,19 @@ else
                     <MudSelectItem Value="@item">@item.GetHelpText()</MudSelectItem>
                 }
             </MudSelect>
+            
+            <MudButton Disabled="@isSavingOptions" OnClick="SaveOptions" Variant="Variant.Filled" Color="Color.Info">
+                @if (isSavingOptions)
+                    {
+                        <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
+                        <MudText Class="ms-2">Saving...</MudText>
+                    }
+                    else
+                    {
+                        <MudIcon Icon="@Icons.Filled.Save"></MudIcon>
+                        <MudText>Save</MudText>
+                    }
+            </MudButton>
         </MudExpansionPanel>
         <MudExpansionPanel Text="SongPlayData">
             <MudDataGrid T="SongPlayData" Items="@songPlayDataList" Sortable="true">
@@ -52,15 +64,27 @@ else
                     <Column T="SongPlayData">
                         <CellTemplate>
                             <MudButton Variant="Variant.Outlined" Size="Size.Small"
-                                       OnClick="@(() => OnClick(context.Item))">
+                                       OnClick="@(() => OnShowDetailsClick(context.Item))">
                                 @(context.Item.ShowDetails ? "Hide" : "Show") Song Play Details
                             </MudButton>
                         </CellTemplate>
                     </Column>
+                    <Column T="SongPlayData">
+                        <CellTemplate>
+                            <MudToggleIconButton ToggleChanged="@(() => OnFavoriteToggled(context.Item))"
+                                                 Icon="@Icons.Material.Filled.FavoriteBorder" Color="@Color.Secondary" Title="Add to favorite"
+                                                 ToggledIcon="@Icons.Material.Filled.Favorite" ToggledColor="@Color.Secondary" ToggledTitle="Remove from favorite"/>
+                        </CellTemplate>
+                    </Column>
                     <Column T="SongPlayData" Field="Title" Title="Song Title"/>
                     <Column T="SongPlayData" Field="Artist" Title="Artist"/>
-                    <Column T="SongPlayData" Field="LastPlayTime" Title="Last Play Time"/>
-                    <Column T="SongPlayData" Field="TotalPlayCount" Title="Total Play Count"/>
+                    <Column T="SongPlayData" Title="Total Play Count">
+                        <CellTemplate>
+                            <MudText>
+                                @CalculateTotalPlayCount(context.Item)
+                            </MudText>
+                        </CellTemplate>
+                    </Column>
                 </Columns>
                 <ChildRowContent>
                     @if (context.ShowDetails)
@@ -77,16 +101,20 @@ else
                                         <MudTable Items="@context.SongPlaySubDataList" Context="SongPlayDetail" Elevation="0">
                                             <HeaderContent>
                                                 <MudTh>Difficulty</MudTh>
-                                                <MudTh>Score</MudTh>
                                                 <MudTh>Clear State</MudTh>
                                                 <MudTh>Play Count</MudTh>
+                                                <MudTh>Rating</MudTh>
+                                                <MudTh>Score</MudTh>
                                                 <MudTh>Max Chain</MudTh>
                                             </HeaderContent>
                                             <RowTemplate>
                                                 <MudTd DataLabel="Difficulty">@SongPlayDetail.Difficulty</MudTd>
-                                                <MudTd DataLabel="Score">@SongPlayDetail.Score</MudTd>
-                                                <MudTd DataLabel="Clear State">@SongPlayDetail.ClearState</MudTd>
+                                                <MudTd DataLabel="Clear State">
+                                                    @(SongPlayDetail.Score != 1000000 ? SongPlayDetail.ClearState : ClearState.Perfect)
+                                                </MudTd>
                                                 <MudTd DataLabel="Play Count">@SongPlayDetail.PlayCount</MudTd>
+                                                <MudTd DataLabel="Rating">@CalculateRating(SongPlayDetail.Score)</MudTd>
+                                                <MudTd DataLabel="Score">@SongPlayDetail.Score</MudTd>
                                                 <MudTd DataLabel="Max Chain">@SongPlayDetail.MaxChain</MudTd>
                                             </RowTemplate>
                                         </MudTable>
@@ -117,6 +145,20 @@ else
 
     private List<SongPlayData> songPlayDataList = null!;
 
+    private bool isSavingOptions = false;
+
+    private static readonly ScoreGradeMap[] GRADES =
+    {
+        new(0, "E"),
+        new(300000, "D"),
+        new(500000, "C"),
+        new(700000, "B"),
+        new(800000, "A"),
+        new(900000, "S"),
+        new(950000, "S+"),
+        new(990000, "S++"),
+    };
+
     protected override void OnInitialized()
     {
         var details = MockDataRepo.GetMockDataRepo().UserDetails;
@@ -129,9 +171,40 @@ else
         songPlayDataList = MockDataRepo.GetMockDataRepo().SongPlayDataList;
     }
 
-    private void OnClick(SongPlayData data)
+    private void OnShowDetailsClick(SongPlayData data)
     {
         data.ShowDetails = !data.ShowDetails;
     }
 
+    private async Task SaveOptions()
+    {
+        isSavingOptions = true;
+        await Task.Delay(2000);
+        isSavingOptions = false;
+    }
+
+    public record ScoreGradeMap(int Score, string Grade)
+    {
+        public override string ToString()
+        {
+            return $"{{ Score = {Score}, Grade = {Grade} }}";
+        }
+    }
+
+    private static string CalculateRating(int score)
+    {
+        var grade = GRADES.Where(g => g.Score <= score).Select(g => g.Grade).Last();
+        return grade;
+    }
+
+    private void OnFavoriteToggled(SongPlayData data)
+    {
+        data.IsFavorite = !data.IsFavorite;
+    }
+
+    private static int CalculateTotalPlayCount(SongPlayData data)
+    {
+        return data.SongPlaySubDataList
+            .Sum(detailData => detailData.PlayCount);
+    }
 }

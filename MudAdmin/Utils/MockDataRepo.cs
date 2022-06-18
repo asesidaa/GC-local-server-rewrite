@@ -33,12 +33,19 @@ public class MockDataRepo
 
             foreach (var difficulty in Enum.GetValues<Difficulty>())
             {
-                if (random.Next() > int.MaxValue / 2)
+                if (random.Next() <= int.MaxValue / 2)
                 {
-                    var subData = GenFu.GenFu.New<SongPlayDetailData>();
-                    subData.Difficulty = difficulty;
-                    subDataList.Add(subData);
+                    continue;
                 }
+
+                var subData = GenFu.GenFu.New<SongPlayDetailData>();
+                subData.Difficulty = difficulty;
+
+                if (subData.ClearState == ClearState.Perfect)
+                {
+                    subData.ClearState = ClearState.FullChain;
+                }
+                subDataList.Add(subData);
             }
 
             songPlayData.SongPlaySubDataList = subDataList;
@@ -92,7 +99,6 @@ public class MockDataRepo
         GenFu.GenFu.Configure<SongPlayDetailData>()
             .Fill(data => data.Score).WithinRange(0, 1000001);
         GenFu.GenFu.Configure<SongPlayData>()
-            .Fill(data => data.LastPlayTime).AsPastDate()
             .Fill(data => data.ShowDetails, false);
 
     }

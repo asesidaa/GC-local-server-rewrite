@@ -7,10 +7,8 @@ public class SongPlayData
     public string Artist { get; set; } = string.Empty;
 
     public List<SongPlayDetailData> SongPlaySubDataList { get; set; } = new List<SongPlayDetailData>(4);
-    
-    public DateTime LastPlayTime { get; set; }
-    
-    public int TotalPlayCount { get; set; }
+
+    public bool IsFavorite { get; set; }
     
     public bool ShowDetails { get; set; }
 }
