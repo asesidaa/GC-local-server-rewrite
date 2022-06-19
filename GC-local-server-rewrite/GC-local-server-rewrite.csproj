@@ -11,13 +11,13 @@
 
     <ItemGroup>
         <PackageReference Include="CertificateManager" Version="1.0.8" />
-        <PackageReference Include="ChoETL" Version="1.2.1.45" />
+        <PackageReference Include="ChoETL" Version="1.2.1.47" />
         <PackageReference Include="Config.Net" Version="4.19.0" />
         <PackageReference Include="Config.Net.Json" Version="4.19.0" />
         <PackageReference Include="EmbedIO" Version="3.4.3" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
-        <PackageReference Include="sqlite-net2" Version="2.0.7" />
-        <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.0.7" />
+        <PackageReference Include="sqlite-net2" Version="2.1.0-preB" />
+        <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.0" />
         <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
     </ItemGroup>
 

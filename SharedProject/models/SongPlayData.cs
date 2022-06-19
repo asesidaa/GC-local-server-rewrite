@@ -6,7 +6,7 @@ public class SongPlayData
 
     public string Artist { get; set; } = string.Empty;
 
-    public List<SongPlayDetailData> SongPlaySubDataList { get; set; } = new List<SongPlayDetailData>(4);
+    public SongPlayDetailData[] SongPlaySubDataList { get; set; } = new SongPlayDetailData[4];
 
     public bool IsFavorite { get; set; }
     

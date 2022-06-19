@@ -12,6 +12,8 @@ public class UserDetail: User
     
     public int PlayedSongCount { get; set; }
     
+    public int PlayedStageCount { get; set; }
+    
     public int TotalStageCount { get; set; }
     
     public int ClearedStageCount { get; set; }
@@ -27,4 +29,6 @@ public class UserDetail: User
     public int SPlusAboveStageCount { get; set; }
     
     public int SPlusPlusAboveStageCount { get; set; }
+    
+    public List<SongPlayData>? SongPlayDataList { get; set; }
 }

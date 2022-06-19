@@ -2,8 +2,8 @@
 
 public enum Difficulty
 {
-    Simple,
-    Normal,
-    Hard,
-    Extra
+    Simple = 0,
+    Normal = 1,
+    Hard = 2,
+    Extra = 3
 }
