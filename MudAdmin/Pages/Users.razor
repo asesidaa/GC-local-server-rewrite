@@ -1,8 +1,7 @@
 ﻿@page "/users"
 @using models = SharedProject.models
-@using GenFu
-@using MudAdmin.Utils
 @inject NavigationManager NavigationManager
+@inject HttpClient Client
 
 <PageTitle>Users</PageTitle>
 
@@ -30,11 +29,12 @@
 
 @code {
     private List<models.User> users = new();
+    
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
-        users = MockDataRepo.GetMockDataRepo().Users;
+        await base.OnInitializedAsync();
+        users = await Client.GetFromJsonAsync<List<models.User>>("api/Users") ?? new List<models.User>();
     }
 
     private void OnClick(models.User user)

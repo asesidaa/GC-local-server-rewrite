@@ -2,6 +2,7 @@
 @using SharedProject.models
 @using MudAdmin.Utils
 @using SharedProject.enums
+@inject HttpClient Client
 
 <PageTitle>User</PageTitle>
 
@@ -143,9 +144,9 @@ else
 
     private UserDetail? userDetail;
 
-    private List<SongPlayData> songPlayDataList = null!;
+    private List<SongPlayData> songPlayDataList = new();
 
-    private bool isSavingOptions = false;
+    private bool isSavingOptions;
 
     private static readonly ScoreGradeMap[] GRADES =
     {
@@ -159,18 +160,15 @@ else
         new(990000, "S++"),
     };
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        var details = MockDataRepo.GetMockDataRepo().UserDetails;
-        userDetail = details.First(detail => detail.CardId == CardId);
-        if (userDetail != null)
-        {
-            feverTranceShow = userDetail.PlayOption.FeverTrance;
-            fastSlowIndicator = userDetail.PlayOption.FastSlowIndicator;
-        }
-        songPlayDataList = MockDataRepo.GetMockDataRepo().SongPlayDataList;
+        await base.OnInitializedAsync();
+        userDetail = await Client.GetFromJsonAsync<UserDetail>($"api/UserDetail/{CardId}") ?? new();
+        songPlayDataList = userDetail.SongPlayDataList ?? new List<SongPlayData>();
+        feverTranceShow = userDetail.PlayOption.FeverTrance;
+        fastSlowIndicator = userDetail.PlayOption.FastSlowIndicator;
     }
-
+    
     private void OnShowDetailsClick(SongPlayData data)
     {
         data.ShowDetails = !data.ShowDetails;

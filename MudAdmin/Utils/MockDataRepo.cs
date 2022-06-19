@@ -48,7 +48,7 @@ public class MockDataRepo
                 subDataList.Add(subData);
             }
 
-            songPlayData.SongPlaySubDataList = subDataList;
+            songPlayData.SongPlaySubDataList = subDataList.ToArray();
         }
 
     }
