@@ -22,6 +22,8 @@ public static class Configs
 
     public const string STATIC_FOLDER = "static";
 
+    public const string WWWROOT = "wwwroot";
+
     public const string API_BASE_ROUTE = "/api";
     
     public const string OPTION_SERVICE_BASE_ROUTE = "/service/option";
@@ -154,4 +156,11 @@ public static class Configs
     public const string DEFAULT_SERVER_IP = "127.0.0.1";
     public const string DEFAULT_RELAY_SERVER = "127.0.0.1";
     public const int DEFAULT_RELAY_PORT = 54321;
+
+    public static readonly IReadOnlyList<int> DEFAULT_UNLOCKABLE_SONGS = new[]
+    {
+        11, 13, 149, 273, 291, 320, 321, 371, 378, 384, 464, 471, 474, 475, 492, 494, 498, 520,
+        548, 551, 558, 561, 565, 570, 577, 583, 612, 615, 622, 632, 659, 666, 668, 670, 672, 676,
+        680, 682, 685, 686, 697, 700, 701, 711, 720, 749, 875, 876, 877
+    };
 }

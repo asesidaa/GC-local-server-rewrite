@@ -8,7 +8,7 @@ public static class PathHelper
     /// <summary>
     ///     Gets the local path of html/static files.
     /// </summary>
-    public static string HtmlRootPath => Path.Combine(BasePath, Configs.STATIC_FOLDER);
+    public static string HtmlRootPath => Path.Combine(BasePath, Configs.STATIC_FOLDER, Configs.WWWROOT);
 
     /// <summary>
     ///     Root path for database, when debug, it's under source root, when release, it's the exe dir

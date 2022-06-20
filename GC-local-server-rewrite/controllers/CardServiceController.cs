@@ -1,4 +1,5 @@
-﻿using System.Net.Mime;
+﻿using System.Diagnostics;
+using System.Net.Mime;
 using System.Text;
 using System.Xml.Linq;
 using ChoETL;
@@ -539,21 +540,26 @@ public class CardServiceController : WebApiController
         var result = cardSqLiteConnection.Table<CardDetail>()
             .Where(detail => detail.CardId == cardId);
 
-        // Populate song unlocks in card details table when write for the first time
+        // Unlock all unlockable songs in card details table when write for the first time
         if (!result.Any())
         {
-            var musics = musicSqLiteConnection.Table<Music>().ToList();
-            var detailList = musics.Select(music => new CardDetail
+            var unlockableSongIds = Configs.SETTINGS.UnlockableSongIds;
+
+            if (unlockableSongIds is null)
+            {
+                unlockableSongIds = Configs.DEFAULT_UNLOCKABLE_SONGS;
+            }
+            var detailList = unlockableSongIds!.Select(id => new CardDetail
                 {
                     CardId = cardId,
                     Pcol1 = 10,
-                    Pcol2 = music.MusicId,
+                    Pcol2 = id,
                     Pcol3 = 0,
                     ScoreUi2 = 1,
                     ScoreUi6 = 1
                 })
                 .ToList();
-
+            
             cardSqLiteConnection.InsertOrIgnoreAll(detailList);
         }
         

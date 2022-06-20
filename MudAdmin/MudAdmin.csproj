@@ -1,9 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <RunAOTCompilation>False</RunAOTCompilation>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <RunAOTCompilation>False</RunAOTCompilation>
     </PropertyGroup>
 
     <ItemGroup>
@@ -15,6 +23,13 @@
 
     <ItemGroup>
       <ProjectReference Include="..\SharedProject\SharedProject.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Update="wwwroot\appsettings.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </Content>
     </ItemGroup>
 
 

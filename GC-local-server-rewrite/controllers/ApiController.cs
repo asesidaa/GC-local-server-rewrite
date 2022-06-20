@@ -3,6 +3,7 @@ using EmbedIO.Routing;
 using EmbedIO.WebApi;
 using GCLocalServerRewrite.common;
 using GCLocalServerRewrite.models;
+using SharedProject.common;
 using SharedProject.enums;
 using SharedProject.models;
 using SQLite.Net2;
@@ -125,14 +126,18 @@ public class ApiController : WebApiController
     private void ProcessCardDetail(UserDetail userDetail, IDictionary<int, SongPlayData> songPlayDataDict)
     {
         var option = cardSqLiteConnection.Table<CardDetail>()
-            .FirstOrDefault(detail => detail.CardId == userDetail.CardId && detail.Pcol1 == 0, new CardDetail
+            .FirstOrDefault(detail => detail.CardId == userDetail.CardId 
+                                      && detail.Pcol1 == Configs.CONFIG_PCOL1
+                                      && detail.Pcol2 == Configs.CONFIG_PCOL2
+                                      && detail.Pcol3 == Configs.CONFIG_PCOL3
+                , new CardDetail
             {
                 CardId = userDetail.CardId
             });
         SetOptions(option, userDetail);
 
         var songCounts = cardSqLiteConnection.Table<CardDetail>()
-            .Where(detail => detail.CardId == userDetail.CardId && detail.Pcol1 == 20);
+            .Where(detail => detail.CardId == userDetail.CardId && detail.Pcol1 == Configs.COUNT_PCOL1);
 
         foreach (var detail in songCounts)
         {
@@ -140,7 +145,7 @@ public class ApiController : WebApiController
         }
 
         var songScores = cardSqLiteConnection.Table<CardDetail>()
-            .Where(detail => detail.CardId == userDetail.CardId && detail.Pcol1 == 21);
+            .Where(detail => detail.CardId == userDetail.CardId && detail.Pcol1 == Configs.SCORE_PCOL1);
 
         foreach (var detail in songScores)
         {
@@ -148,7 +153,7 @@ public class ApiController : WebApiController
         }
 
         var favorites = cardSqLiteConnection.Table<CardDetail>()
-            .Where(detail => detail.CardId == userDetail.CardId && detail.Pcol1 == 10)
+            .Where(detail => detail.CardId == userDetail.CardId && detail.Pcol1 == Configs.FAVORITE_PCOL1)
             .ToDictionary(detail => detail.Pcol2);
 
         foreach (var (musicId, songPlayData) in songPlayDataDict)
@@ -186,7 +191,7 @@ public class ApiController : WebApiController
         
         AddSongPlayDataIfNotExist(songPlayDataDict, musicId);
 
-        for (var i = 0; i < 4; i++)
+        for (var i = 0; i < SharedConstants.DIFFICULTY_COUNT; i++)
         {
             var songPlayDetailData = songPlayDataDict[musicId].SongPlaySubDataList[i];
             songPlayDetailData.Difficulty = (Difficulty)i;
@@ -201,17 +206,17 @@ public class ApiController : WebApiController
             
             userDetail.TotalScore += cardDetail.ScoreUi1;
 
-            if (cardDetail.ScoreUi1 >= 900000)
+            if (cardDetail.ScoreUi1 >= SharedConstants.S_SCORE_THRESHOLD)
             {
                 userDetail.SAboveStageCount++;
             }
 
-            if (cardDetail.ScoreUi1 >= 950000)
+            if (cardDetail.ScoreUi1 >= SharedConstants.S_PLUS_SCORE_THRESHOLD)
             {
                 userDetail.SPlusAboveStageCount++;
             }
 
-            if (cardDetail.ScoreUi1 >= 990000)
+            if (cardDetail.ScoreUi1 >= SharedConstants.S_PLUS_PLUS_SCORE_THRESHOLD)
             {
                 userDetail.SPlusPlusAboveStageCount++;
             }
@@ -224,7 +229,7 @@ public class ApiController : WebApiController
 
         AddSongPlayDataIfNotExist(songPlayDataDict, musicId);
         
-        for (var i = 0; i < 4; i++)
+        for (var i = 0; i < SharedConstants.DIFFICULTY_COUNT; i++)
         {
             var songPlayDetailData = songPlayDataDict[musicId].SongPlaySubDataList[i];
 
@@ -278,10 +283,10 @@ public class ApiController : WebApiController
             Artist = musicData.Artist ?? string.Empty,
             Title = musicData.Title ?? string.Empty,
             MusicId = musicId,
-            SongPlaySubDataList = new SongPlayDetailData[4]
+            SongPlaySubDataList = new SongPlayDetailData[SharedConstants.DIFFICULTY_COUNT]
         };
 
-        for (var i = 0; i < 4; i++)
+        for (var i = 0; i < SharedConstants.DIFFICULTY_COUNT; i++)
         {
             songPlayData.SongPlaySubDataList[i] = new SongPlayDetailData();
         }

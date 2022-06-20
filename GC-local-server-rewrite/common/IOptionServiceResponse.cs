@@ -1,6 +1,6 @@
 ﻿namespace GCLocalServerRewrite.common;
 
-public interface IDataResponse
+public interface IOptionServiceResponse
 {
     string FileName { get; }
     

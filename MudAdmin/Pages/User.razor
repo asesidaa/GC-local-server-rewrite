@@ -1,6 +1,7 @@
 ﻿@page "/user/{CardId:long}"
 @using SharedProject.models
 @using SharedProject.enums
+@using SharedProject.common
 @inject HttpClient Client
 @inject IDialogService DialogService
 @inject ILogger<User> Logger
@@ -147,18 +148,6 @@ else
 
     private bool isSavingOptions;
 
-    private static readonly ScoreGradeMap[] GRADES =
-    {
-        new(0, "E"),
-        new(300000, "D"),
-        new(500000, "C"),
-        new(700000, "B"),
-        new(800000, "A"),
-        new(900000, "S"),
-        new(950000, "S+"),
-        new(990000, "S++"),
-    };
-
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
@@ -186,17 +175,9 @@ else
         isSavingOptions = false;
     }
 
-    public record ScoreGradeMap(int Score, string Grade)
-    {
-        public override string ToString()
-        {
-            return $"{{ Score = {Score}, Grade = {Grade} }}";
-        }
-    }
-
     private static string CalculateRating(int score)
     {
-        var grade = GRADES.Where(g => g.Score <= score).Select(g => g.Grade).Last();
+        var grade = SharedConstants.GRADES.Where(g => g.Score <= score).Select(g => g.Grade).Last();
         return grade;
     }
 

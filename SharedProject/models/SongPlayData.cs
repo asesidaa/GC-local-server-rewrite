@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using SharedProject.common;
 
 namespace SharedProject.models;
 
@@ -10,7 +11,7 @@ public class SongPlayData
     
     public int MusicId { get; set; }
 
-    public SongPlayDetailData[] SongPlaySubDataList { get; set; } = new SongPlayDetailData[4];
+    public SongPlayDetailData[] SongPlaySubDataList { get; set; } = new SongPlayDetailData[SharedConstants.DIFFICULTY_COUNT];
 
     public bool IsFavorite { get; set; }
     
