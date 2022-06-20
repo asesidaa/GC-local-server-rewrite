@@ -1,5 +1,4 @@
-﻿using ChoETL;
-using EmbedIO;
+﻿using EmbedIO;
 using EmbedIO.Routing;
 using EmbedIO.WebApi;
 using GCLocalServerRewrite.common;
@@ -39,6 +38,54 @@ public class ApiController : WebApiController
         return result;
     }
 
+    [Route(HttpVerbs.Post, "/UserDetail/SetMusicFavorite")]
+    // ReSharper disable once UnusedMember.Global
+    public bool SetFavorite([JsonData] MusicFavoriteData data)
+    {
+        var existing = cardSqLiteConnection.Table<CardDetail>()
+            .Where(detail => detail.CardId == data.CardId
+                             && detail.Pcol1 == Configs.FAVORITE_PCOL1
+                             && detail.Pcol2 == data.MusicId);
+
+        if (!existing.Any())
+        {
+            $"Trying to update non existing song's favorite! Card id {data.CardId}, music id {data.MusicId}".Warn();
+            return false;
+        }
+
+        var cardDetail = existing.First();
+        cardDetail.Fcol1 = data.IsFavorite ? 1 : 0;
+        var result = cardSqLiteConnection.Update(cardDetail);
+
+        return result == 1;
+    }
+
+    [Route(HttpVerbs.Post, "/UserDetail/SetPlayOption")]
+    // ReSharper disable once UnusedMember.Global
+    public bool SetPlayOption([JsonData] PlayOption data)
+    {
+        var existing = cardSqLiteConnection.Table<CardDetail>()
+            .Where(detail => detail.CardId == data.CardId
+                             && detail.Pcol1 == Configs.CONFIG_PCOL1
+                             && detail.Pcol2 == Configs.CONFIG_PCOL2
+                             && detail.Pcol3 == Configs.CONFIG_PCOL3);
+
+        if (!existing.Any())
+        {
+            $"Trying to update non existing card's config! Card id {data.CardId}".Warn();
+
+            return false;
+        }
+
+        var cardDetail = existing.First();
+        cardDetail.ScoreUi1 = (long)data.FastSlowIndicator;
+        cardDetail.ScoreUi2 = (long)data.FeverTrance;
+        
+        var result = cardSqLiteConnection.Update(cardDetail);
+
+        return result == 1;
+    }
+
     [Route(HttpVerbs.Get, "/UserDetail/{cardId}")]
     // ReSharper disable once UnusedMember.Global
     public UserDetail? GetUserDetail(long cardId)
@@ -47,6 +94,7 @@ public class ApiController : WebApiController
 
         if (!cardResult.Any())
         {
+            $"Getting detail for non exisisting card! Card id is {cardId}".Warn();
             return null;
         }
 
@@ -229,6 +277,7 @@ public class ApiController : WebApiController
         {
             Artist = musicData.Artist ?? string.Empty,
             Title = musicData.Title ?? string.Empty,
+            MusicId = musicId,
             SongPlaySubDataList = new SongPlayDetailData[4]
         };
 

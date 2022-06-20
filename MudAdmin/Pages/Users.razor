@@ -5,31 +5,64 @@
 
 <PageTitle>Users</PageTitle>
 
-<MudGrid>
-    @foreach (var user in users)
+<MudContainer>
+    @if (users is null)
     {
-        <MudItem>
-            <MudCard>
-                <MudCardHeader>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.h6">@user.PlayerName</MudText>
-                    </CardHeaderContent>
-                </MudCardHeader>
-                <MudCardContent>
-                    <MudText Typo="Typo.h6">Card ID</MudText>
-                    <MudText>@user.CardId</MudText>
-                </MudCardContent>
-                <MudCardActions>
-                    <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="() => OnClick(user)">Test</MudButton>
-                </MudCardActions>
-            </MudCard>
-        </MudItem>
+        <MudGrid>
+            @for (var i = 0; i < 5; i++)
+            {
+                <MudItem>
+                    <MudCard>
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="32px"/>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                        <MudCardContent>
+                            <MudSkeleton Width="80px" Height="32px"/>
+                            <MudSkeleton Width="147px" Height="28px"/>
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="99px" Height="25px" Class="ml-2"/>
+                        </MudCardActions>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudGrid>
     }
-</MudGrid>
+    else if (!(users.Count == 0))
+    {
+        <MudGrid>
+            @foreach (var user in users)
+            {
+                <MudItem>
+                    <MudCard>
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.h5">@user.PlayerName</MudText>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6">Card ID</MudText>
+                            <MudText>@user.CardId</MudText>
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="() => OnClick(user)">Check detail</MudButton>
+                        </MudCardActions>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudGrid>
+    }
+    else
+    {
+        <MudText Typo="Typo.h3">No Data</MudText>
+    }
+</MudContainer>
 
 @code {
-    private List<models.User> users = new();
-    
+    private List<models.User>? users;
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -41,4 +74,5 @@
     {
         NavigationManager.NavigateTo($"user/{user.CardId}");
     }
+
 }

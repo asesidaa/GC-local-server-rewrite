@@ -1,14 +1,17 @@
 ﻿@page "/user/{CardId:long}"
 @using SharedProject.models
-@using MudAdmin.Utils
 @using SharedProject.enums
 @inject HttpClient Client
+@inject IDialogService DialogService
+@inject ILogger<User> Logger
 
 <PageTitle>User</PageTitle>
-
+<MudContainer>
 @if (userDetail == null)
 {
-    <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
+    <MudSkeleton Width="1184px" Height="57px"/>
+    <MudSkeleton Width="1184px" Height="57px"/>
+    <MudSkeleton Width="1184px" Height="57px"/>
 }
 else
 {
@@ -57,12 +60,12 @@ else
             </MudButton>
         </MudExpansionPanel>
         <MudExpansionPanel Text="SongPlayData">
-            <MudDataGrid T="SongPlayData" Items="@songPlayDataList" Sortable="true">
+            <MudDataGrid T="SongPlayData" Items="@songPlayDataList" Sortable="true" Filterable="true">
                 <ToolBarContent>
                     <MudText Typo="Typo.h6">Played Songs</MudText>
                 </ToolBarContent>
                 <Columns>
-                    <Column T="SongPlayData">
+                    <Column T="SongPlayData" Sortable="false" Filterable="false">
                         <CellTemplate>
                             <MudButton Variant="Variant.Outlined" Size="Size.Small"
                                        OnClick="@(() => OnShowDetailsClick(context.Item))">
@@ -70,22 +73,17 @@ else
                             </MudButton>
                         </CellTemplate>
                     </Column>
-                    <Column T="SongPlayData">
+                    <Column T="SongPlayData" Field="IsFavorite" Sortable="false" Title="Favorite">
                         <CellTemplate>
-                            <MudToggleIconButton ToggleChanged="@(() => OnFavoriteToggled(context.Item))"
+                            <MudToggleIconButton Toggled="@context.Item.IsFavorite"    
+                                                 ToggledChanged="@(()=>OnFavoriteToggled(context.Item))"
                                                  Icon="@Icons.Material.Filled.FavoriteBorder" Color="@Color.Secondary" Title="Add to favorite"
                                                  ToggledIcon="@Icons.Material.Filled.Favorite" ToggledColor="@Color.Secondary" ToggledTitle="Remove from favorite"/>
                         </CellTemplate>
                     </Column>
                     <Column T="SongPlayData" Field="Title" Title="Song Title"/>
                     <Column T="SongPlayData" Field="Artist" Title="Artist"/>
-                    <Column T="SongPlayData" Title="Total Play Count">
-                        <CellTemplate>
-                            <MudText>
-                                @CalculateTotalPlayCount(context.Item)
-                            </MudText>
-                        </CellTemplate>
-                    </Column>
+                    <Column T="SongPlayData" Field="TotalPlayCount" Title="Total Play Count" />
                 </Columns>
                 <ChildRowContent>
                     @if (context.ShowDetails)
@@ -99,7 +97,7 @@ else
                                         </CardHeaderContent>
                                     </MudCardHeader>
                                     <MudCardContent Class="pa-0">
-                                        <MudTable Items="@context.SongPlaySubDataList" Context="SongPlayDetail" Elevation="0">
+                                        <MudTable Items="@context.SongPlaySubDataList" Context="SongPlayDetail" Elevation="0" Filter="data => data.ClearState != ClearState.NotPlayed">
                                             <HeaderContent>
                                                 <MudTh>Difficulty</MudTh>
                                                 <MudTh>Clear State</MudTh>
@@ -132,6 +130,7 @@ else
         </MudExpansionPanel>
     </MudExpansionPanels>
 }
+</MudContainer>
 
 @code {
 
@@ -177,7 +176,13 @@ else
     private async Task SaveOptions()
     {
         isSavingOptions = true;
-        await Task.Delay(2000);
+        var postData = new PlayOption
+        {
+            CardId = CardId,
+            FastSlowIndicator = fastSlowIndicator,
+            FeverTrance = feverTranceShow
+        };
+        var result = await Client.PostAsJsonAsync("api/UserDetail/SetPlayOption", postData);
         isSavingOptions = false;
     }
 
@@ -195,14 +200,29 @@ else
         return grade;
     }
 
-    private void OnFavoriteToggled(SongPlayData data)
+    private async Task OnFavoriteToggled(SongPlayData data)
     {
-        data.IsFavorite = !data.IsFavorite;
-    }
+        var options = new DialogOptions
+        {
+            CloseOnEscapeKey = false,
+            DisableBackdropClick = true,
+            FullWidth = true
+        };
+        var parameters = new DialogParameters();
+        parameters.Add("Data", data);
+        parameters.Add("CardId", CardId);
+        var dialog = DialogService.Show<FavoriteDialog>("Favorite", parameters, options);
+        var result = await dialog.Result;
 
-    private static int CalculateTotalPlayCount(SongPlayData data)
-    {
-        return data.SongPlaySubDataList
-            .Sum(detailData => detailData.PlayCount);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if ((bool)result.Data)
+        {
+            Logger.LogInformation("Changed!");
+            data.IsFavorite = !data.IsFavorite;
+        }
     }
 }

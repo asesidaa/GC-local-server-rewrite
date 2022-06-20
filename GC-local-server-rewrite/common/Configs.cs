@@ -122,6 +122,16 @@ public static class Configs
 
     public const string RANK_STATUS_XPATH = $"{ROOT_XPATH}/ranking_status";
 
+    public const int CONFIG_PCOL1 = 0;
+    public const int CONFIG_PCOL2 = 0;
+    public const int CONFIG_PCOL3 = 0;
+    
+    public const int FAVORITE_PCOL1 = 10;
+
+    public const int COUNT_PCOL1 = 20;
+
+    public const int SCORE_PCOL1 = 21;
+
     public static readonly List<string> DOMAINS = new()
     {
         "localhost",
