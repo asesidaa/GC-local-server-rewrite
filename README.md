@@ -167,7 +167,7 @@ To enable these, try use the omnimixed version of stage_param.dat. That can fix 
 
 ## Local network
 
-If your game and server is not on the same computer, try modify in config, change ServerIp to your server IP.
+If your game and server is not on the same computer, try modify in config, change `ServerIp` to your server IP.
 
 From server, open mmc.exe, export certificate named "Taito Arcade Machine CA" and "GC local server" with private key and import to game computer.
 
@@ -193,4 +193,6 @@ If you want to use the interface besides localhost(127.0.0.1), change in appsett
 "BaseUrl": "http://192.168.1.1" // Change to your server ip
 ```
 
-Notice that due to certificate issues, unless you have set up the certificate yourself, you need to use http for `BaseUrl` and when access the web page, otherwise it will fail to send requests.
+Notice that due to certificate issues, you need to use http for `BaseUrl` and when accessing the web page, otherwise it will show insecure or fail.
+
+If you really want https all along, make sure you have changed the `ServerIp` and have regenerated the certificate.
