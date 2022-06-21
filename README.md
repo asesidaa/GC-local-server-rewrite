@@ -189,7 +189,7 @@ A basic web interface for check scores and set options.
 
 If you want to use the interface besides localhost(127.0.0.1), change in appsettings.json:
 
-```json
+```
 "BaseUrl": "http://192.168.1.1" // Change to your server ip
 ```
 
