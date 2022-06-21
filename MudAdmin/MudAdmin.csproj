@@ -30,6 +30,10 @@
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       </Content>
+      <Content Update="wwwroot\news.png">
+	      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </Content>
     </ItemGroup>
 
 

@@ -43,12 +43,18 @@ public class Server
                 module => module.WithController<RankController>())
             .WithStaticFolder(Configs.STATIC_BASE_ROUTE, PathHelper.HtmlRootPath, true, m => m
                 .WithContentCaching(Configs.USE_FILE_CACHE))
-
             // Add static files after other modules to avoid conflicts
             .WithStaticFolder("/", PathHelper.HtmlRootPath, true, m => m
                 .WithContentCaching(Configs.USE_FILE_CACHE))
             .WithModule(new ActionModule("/", HttpVerbs.Any,
                 ctx => ctx.SendDataAsync(new { Message = "Error" })));
+        server.AddCustomMimeType(".dll", "application/octet-stream");
+        server.AddCustomMimeType(".blat", "application/octet-stream");
+        server.AddCustomMimeType(".dat", "application/octet-stream");
+        server.AddCustomMimeType(".json", "application/json");
+        server.AddCustomMimeType(".wasm", "application/wasm");
+        server.AddCustomMimeType(".woff", "application/font-woff");
+        server.AddCustomMimeType(".woff2", "application/font-woff2");
         server.HandleHttpException(async (context, exception) =>
         {
             context.Response.StatusCode = exception.StatusCode;
@@ -57,9 +63,11 @@ public class Server
             {
                 case 404:
                     await context.SendStringAsync("404 NOT FOUND!", "text/html", new UTF8Encoding(false));
+
                     break;
                 default:
                     await HttpExceptionHandler.Default(context, exception);
+
                     break;
             }
         });
