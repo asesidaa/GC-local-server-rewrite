@@ -6,7 +6,7 @@ Server functionality is basically the same, but the code should be now easier to
 
 Now it supports card registration.
 
-# Usage
+## Usage
 
 Download latest release from release page.
 
@@ -27,7 +27,7 @@ Open exe with **admin privileges** for certificate generating functionalities to
 
 Open game using teknoparrot loader (you can find that in discord). The loader should be also opened with **admin privileges**, otherwise it will not work.
 
-# Config
+## Config
 
 The config file is ~~GC-local-server-rewrite.exe.config~~ config.json
 
@@ -43,7 +43,7 @@ To unlock new avatars/navgators/skins/sound effects/titles from other version, c
 
 You can get the corresponding count in data/boot/*.dat file.
 
-# Event files
+## Event files
 
 You can now add solo events. In the config file, change the following section
 
@@ -146,7 +146,7 @@ Other files like `news`, `option` and `cap` should also be possible, but I have 
 
 The configured file should be put into the `event` folder, which you can change the position by using jconfig (regedit->event path)
 
-# Missing functions
+## Missing functions
 
 - [ ] Item/coin consuming 
 - [ ] Unlocking system (I don't like these two so I just hardcode them, if you are interested you can implement that and add a switch to enable, PRs are welcome)
@@ -155,17 +155,17 @@ The configured file should be put into the `event` folder, which you can change 
 - [ ] PlayInfo.php (Now it will just throw 404, I don't know what data it expext)
 - [ ] Online matching (and online matching events)
 
-# Difficulty unlocking
+## Difficulty unlocking
 
 This is processed on client side, so if you like to unlock all difficulties, just use Bemani patcher.
 
-# Deteled songs
+## Deteled songs
 
 If you see a lot of duplicate "Play Merrily" in the original tab, this is because in the songs db deleted songs are added back.
 
 To enable these, try use the omnimixed version of stage_param.dat. That can fix this issue
 
-# Local network
+## Local network
 
 If your game and server is not on the same computer, try modify in config, change ServerIp to your server IP.
 
@@ -173,7 +173,7 @@ From server, open mmc.exe, export certificate named "Taito Arcade Machine CA" an
 
 The cert "Taito Arcade Machine CA" goes into LocalMachine/My and Trusted root, the other only LocalMachine/My.
 
-# Windows XP
+## Windows XP
 
 If you are using Windows XP (e.g. using real machine), it will not recognize the generated certificate since it uses SHA256.
 
@@ -182,3 +182,15 @@ You will have to generate the certificates yourself.
 The root certificate should have CN=Taito Arcade Machine CA, while the server certificate should have DNS entries for the domains in the host file.
 
 The most important bit, **choose MD5 or SHA1 as signature algorithm**.
+
+# Web interface
+
+A basic web interface for check scores and set options.
+
+If you want to use the interface besides localhost(127.0.0.1), change in appsettings.json:
+
+```json
+"BaseUrl": "http://192.168.1.1" // Change to your server ip
+```
+
+Notice that due to certificate issues, unless you have set up the certificate yourself, you need to use http for `BaseUrl` and when access the web page, otherwise it will fail to send requests.
