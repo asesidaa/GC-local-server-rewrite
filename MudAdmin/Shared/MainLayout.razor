@@ -1,17 +1,29 @@
 ﻿@inherits LayoutComponentBase
 
-<MudThemeProvider/>
+<MudThemeProvider @ref="@MudThemeProvider" @bind-IsDarkMode="@IsDarkMode"/>
 <MudDialogProvider/>
 <MudSnackbarProvider/>
 
 <MudLayout>
     <MudAppBar Elevation="0">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())"/>
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" 
+                       OnClick="@((e) => DrawerToggle())"/>
         <MudSpacer/>
-        <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Link="https://mudblazor.com/" Target="_blank"/>
-        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/asesidaa/GC-local-server-rewrite/" Target="_blank"/>
+        <MudTooltip Duration="1000" Text="Powered by MudBlazor">
+            <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" 
+                           Link="https://mudblazor.com/" Target="_blank"/>
+        </MudTooltip>
+        <MudTooltip Duration="1000" Text="Github Repository">
+            <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" 
+                           Link="https://github.com/asesidaa/GC-local-server-rewrite/" Target="_blank"/>
+        </MudTooltip>
+        <MudTooltip Duration="1000" Text="@(IsDarkMode ? "Switch to Light Mode" : "Switch to DarkMode")">
+                    <MudToggleIconButton @bind-Toggled="@IsDarkMode"
+                                         Icon="@Icons.Material.Outlined.DarkMode" Color="Color.Inherit"
+                                         ToggledIcon="@Icons.Material.Filled.LightMode"/>
+        </MudTooltip>
     </MudAppBar>
-    <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
+    <MudDrawer @bind-Open="drawerOpen" Elevation="1">
         <MudDrawerHeader>
             <MudText Typo="Typo.h6">GC local server Admin</MudText>
         </MudDrawerHeader>
@@ -25,11 +37,24 @@
 </MudLayout>
 
 @code {
-    bool _drawerOpen = true;
+    bool drawerOpen = true;
+    
+    public bool IsDarkMode { get; set; }
+
+    public MudThemeProvider MudThemeProvider { get; set; } = null!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            IsDarkMode = await MudThemeProvider.GetSystemPreference();
+            StateHasChanged();
+        }
+    }
 
     void DrawerToggle()
     {
-        _drawerOpen = !_drawerOpen;
+        drawerOpen = !drawerOpen;
     }
 
 }
