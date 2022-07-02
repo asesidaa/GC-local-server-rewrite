@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Net.Mime;
+﻿using System.Net.Mime;
 using System.Text;
 using System.Xml.Linq;
 using ChoETL;
@@ -28,18 +27,56 @@ public class CardServiceController : WebApiController
     [Route(HttpVerbs.Post, "/cardn.cgi")]
     // ReSharper disable once UnusedMember.Global
     public string CardService([FormField] int gid, [FormField("mac_addr")] string mac, [FormField] int type,
-        [FormField("card_no")] long cardId, [FormField("data")] string xmlData)
+        [FormField("card_no")] long cardId, [FormField("data")] string xmlData, [FormField("cmd_str")] int cmdType)
     {
         HttpContext.Response.ContentType = MediaTypeNames.Application.Octet;
         HttpContext.Response.ContentEncoding = new UTF8Encoding(false);
         HttpContext.Response.KeepAlive = true;
 
+        return ProcessCommand(cmdType, mac, cardId, xmlData, type);
+    }
+
+    private string ProcessCommand(int cmdType, string mac, long cardId, string xmlData, int type)
+    {
+        if (!Enum.IsDefined(typeof(Command), cmdType))
+        {
+            throw new ArgumentOutOfRangeException(nameof(cmdType), cmdType, "Cmd type is unknown!");
+        }
+        
+        var command = (Command)cmdType;
+
+        return command switch
+        {
+            Command.CardRequest => ProcessCardRequest(mac, cardId, xmlData, type),
+            Command.ReissueRequest => ProcessReissueRequest(),
+            Command.RegisterRequest => ProcessRegisterRequest(cardId, xmlData),
+            _ => throw new ArgumentOutOfRangeException(nameof(command), command, "Command unknown, should never happen!")
+        };
+    }
+
+    private string ProcessRegisterRequest(long cardId, string xmlData)
+    {
+        $"Get card register request, data is \n{xmlData}".Info();
+        Write<Card>(cardId, xmlData);
+        return ConstructResponse(xmlData);
+    }
+
+    private static string ProcessReissueRequest()
+    {
+        "Get reissue request, returning not reissue".Info();
+        return ConstructResponse("", ReturnCode.NotReissue);
+    }
+    
+    private string ProcessCardRequest(string mac, long cardId, string xmlData, int type)
+    {
         if (!Enum.IsDefined(typeof(CardRequestType), type))
         {
-            throw new ArgumentOutOfRangeException(nameof(type));
+            throw new ArgumentOutOfRangeException(nameof(type), type, "Card request type is unknown!");
         }
-
+        
         var requestType = (CardRequestType)type;
+        
+        $"Getting card request, type is {requestType}".Info();
 
         switch (requestType)
         {
@@ -47,136 +84,97 @@ public class CardServiceController : WebApiController
 
             case CardRequestType.ReadCard:
             {
-                $"Getting read request, type is {requestType}".Info();
+                var response = Card(cardId, out var returnCode);
 
-                return ConstructResponse(Card(cardId));
+                return ConstructResponse(response, returnCode);
             }
             case CardRequestType.ReadCardDetail:
             {
-                $"Getting read request, type is {requestType}".Info();
-
-                return ConstructResponse(CardDetail(cardId, xmlData));
+                var cardDetail = CardDetail(cardId, xmlData);
+                return ConstructResponse(cardDetail);
             }
             case CardRequestType.ReadCardDetails:
             {
-                $"Getting read request, type is {requestType}".Info();
-
                 return ConstructResponse(CardDetails(cardId));
             }
             case CardRequestType.ReadCardBData:
             {
-                $"Getting read request, type is {requestType}".Info();
-
                 return ConstructResponse(CardBData(cardId));
             }
             case CardRequestType.ReadAvatar:
             {
-                $"Getting read request, type is {requestType}".Info();
-
                 return ConstructResponse(
                     GetStaticCount<Avatar>(cardId, Configs.SETTINGS.AvatarCount, Configs.AVATAR_XPATH));
             }
             case CardRequestType.ReadItem:
             {
-                $"Getting read request, type is {requestType}".Info();
-
                 return ConstructResponse(
                     GetStaticCount<Item>(cardId, Configs.SETTINGS.ItemCount, Configs.ITEM_XPATH));
             }
             case CardRequestType.ReadSkin:
             {
-                $"Getting read request, type is {requestType}".Info();
-
                 return ConstructResponse(
                     GetStaticCount<Skin>(cardId, Configs.SETTINGS.SkinCount, Configs.SKIN_XPATH));
             }
             case CardRequestType.ReadTitle:
             {
-                $"Getting read request, type is {requestType}".Info();
-
                 return ConstructResponse(
                     GetStaticCount<Title>(cardId, Configs.SETTINGS.TitleCount, Configs.TITLE_XPATH));
             }
             case CardRequestType.ReadMusic:
             {
-                $"Getting read request, type is {requestType}".Info();
-
                 return ConstructResponse(MusicUnlock());
             }
             case CardRequestType.ReadEventReward:
             {
-                $"Getting read request, type is {requestType}".Info();
-
                 return ConstructResponse(
-                    GenerateEmptyXML(Configs.EVENT_REWARD));
+                    GenerateEmptyXml(Configs.EVENT_REWARD));
             }
             case CardRequestType.ReadNavigator:
             {
-                $"Getting read request, type is {requestType}".Info();
-
                 return ConstructResponse(
                     GetStaticCount<Navigator>(cardId, Configs.SETTINGS.NavigatorCount, Configs.NAVIGATOR_XPATH));
             }
             case CardRequestType.ReadMusicExtra:
             {
-                $"Getting read request, type is {requestType}".Info();
-
                 return ConstructResponse(MusicExtra());
             }
             case CardRequestType.ReadMusicAou:
             {
-                $"Getting read request, type is {requestType}".Info();
-
                 return ConstructResponse(MusicAouUnlock());
             }
             case CardRequestType.ReadCoin:
             {
-                $"Getting read request, type is {requestType}".Info();
-
                 return ConstructResponse(Coin(cardId));
             }
             case CardRequestType.ReadUnlockReward:
             {
-                $"Getting read request, type is {requestType}".Info();
-
                 return ConstructResponse(UnlockReward(cardId));
             }
             case CardRequestType.ReadUnlockKeynum:
             {
-                $"Getting read request, type is {requestType}".Info();
-
                 return ConstructResponse(UnlockKeynum(cardId));
             }
             case CardRequestType.ReadSoundEffect:
             {
-                $"Getting read request, type is {requestType}".Info();
-
                 return ConstructResponse(
                     GetStaticCount<SoundEffect>(cardId, Configs.SETTINGS.SeCount, Configs.SE_XPATH));
             }
             case CardRequestType.ReadGetMessage:
             {
-                $"Getting read request, type is {requestType}".Info();
-
-                return ConstructResponse(GenerateEmptyXML(Configs.GET_MESSAGE));
+                return ConstructResponse(GenerateEmptyXml(Configs.GET_MESSAGE));
             }
             case CardRequestType.ReadCond:
             {
-                $"Getting read request, type is {requestType}".Info();
-
-                return ConstructResponse(GenerateEmptyXML(Configs.COND));
+                return ConstructResponse(GenerateEmptyXml(Configs.COND));
             }
             case CardRequestType.ReadTotalTrophy:
             {
-                $"Getting read request, type is {requestType}".Info();
-
                 return ConstructResponse(TotalTrophy(cardId));
             }
             case CardRequestType.SessionStart:
             case CardRequestType.SessionGet:
             {
-                $"Getting read request, type is {requestType}".Info();
-
                 return ConstructResponse(GetSession(cardId, mac));
             }
 
@@ -184,28 +182,26 @@ public class CardServiceController : WebApiController
 
             #region WriteRequests
 
+            case CardRequestType.WriteCard:
+            {
+                $"Card Request data is {xmlData}".Info();
+                Write<Card>(cardId, xmlData);
+                return ConstructResponse(xmlData);
+            }
             case CardRequestType.WriteCardDetail:
             {
-                $"Getting write request, type is {requestType}\n Data is {xmlData}".Info();
+                $"Card Request data is {xmlData}".Info();
                 WriteCardDetail(cardId, xmlData);
-
                 return ConstructResponse(xmlData);
             }
             case CardRequestType.WriteCardBData:
             {
-                $"Getting write request, type is {requestType}\n Data is {xmlData}".Info();
+                $"Card Request data is {xmlData}".Info();
                 Write<CardBData>(cardId, xmlData);
                 WriteCardPlayCount(cardId);
-
                 return ConstructResponse(xmlData);
             }
-            case CardRequestType.WriteCard:
-            {
-                $"Getting write request, type is {requestType}\n Data is {xmlData}".Info();
-                Write<Card>(cardId, xmlData);
-
-                return ConstructResponse(xmlData);
-            }
+            // TODO: Maybe one day implement these
             case CardRequestType.WriteAvatar:
             case CardRequestType.WriteItem:
             case CardRequestType.WriteTitle:
@@ -216,33 +212,32 @@ public class CardServiceController : WebApiController
             case CardRequestType.WriteUnlockKeynum:
             case CardRequestType.WriteSoundEffect:
             {
-                $"Getting write request, type is {requestType}\n Data is {xmlData}".Info();
-
+                $"Card Request data is {xmlData}".Info();
                 return ConstructResponse(xmlData);
             }
 
             #endregion
 
             default:
-#pragma warning disable CA2208
-                throw new ArgumentOutOfRangeException(nameof(requestType));
-#pragma warning restore CA2208
+                throw new ArgumentOutOfRangeException(nameof(requestType), requestType, "Request type not captured, should never happen!");
         }
     }
 
     #region ReadImplementation
 
-    private string Card(long cardId)
+    private string Card(long cardId, out ReturnCode returnCode)
     {
         var result = cardSqLiteConnection.Table<Card>().Where(card => card.CardId == cardId);
 
         if (!result.Any())
         {
-            return GenerateEmptyXML(Configs.CARD);
+            returnCode = ReturnCode.CardNotRegistered;
+            return string.Empty;
         }
 
         var card = result.First();
 
+        returnCode = ReturnCode.Ok;
         return GenerateSingleXml(card, Configs.CARD_XPATH);
     }
 
@@ -258,11 +253,10 @@ public class CardServiceController : WebApiController
 
         if (!result.Any())
         {
-            return GenerateEmptyXML(Configs.CARD_DETAIL);
+            return GenerateEmptyXml(Configs.CARD_DETAIL);
         }
 
         var cardDetail = result.First();
-
         return GenerateSingleXml(cardDetail, Configs.CARD_DETAIL_SINGLE_XPATH);
     }
 
@@ -273,7 +267,7 @@ public class CardServiceController : WebApiController
 
         if (!result.Any())
         {
-            return GenerateEmptyXML(Configs.CARD_DETAIL);
+            return GenerateEmptyXml(Configs.CARD_DETAIL);
         }
 
         var cardDetails = result.ToList();
@@ -288,7 +282,7 @@ public class CardServiceController : WebApiController
 
         if (!result.Any())
         {
-            return GenerateEmptyXML(Configs.CARD_BDATA);
+            return GenerateEmptyXml(Configs.CARD_BDATA);
         }
         var cardBData = result.First();
 
@@ -394,7 +388,7 @@ public class CardServiceController : WebApiController
     {
         var result = musicSqLiteConnection.Table<MusicAou>().ToList();
 
-        return !result.Any() ? GenerateEmptyXML(Configs.MUSIC_AOU) : GenerateRecordsXml(result, Configs.MUSIC_AOU_XPATH);
+        return !result.Any() ? GenerateEmptyXml(Configs.MUSIC_AOU) : GenerateRecordsXml(result, Configs.MUSIC_AOU_XPATH);
     }
 
     private string MusicExtra()
@@ -408,23 +402,28 @@ public class CardServiceController : WebApiController
 
     #region HelperMethods
 
-    private static string ConstructResponse(string xml)
+    private static string ConstructResponse(string xml, ReturnCode returnCode = ReturnCode.Ok)
     {
-        return "1\n" +
-               "10,10\n" +
-               xml;
+        var returnCodeInt = (int)returnCode;  
+        if (returnCodeInt == 1)
+        {
+            return $"{returnCodeInt}\n" +
+                   "1,1\n" +
+                   xml;
+        }
+        return $"{returnCodeInt}";
     }
 
-    private static string GenerateEmptyXML(string fieldName)
+    private static string GenerateEmptyXml(string fieldName)
     {
         var xml = new XDocument(new XElement("root",
-            new XElement(fieldName)));
+                                             new XElement(fieldName)));
         xml.Declaration = new XDeclaration("1.0", "UTF-8", null);
 
         return xml.ToString();
     }
 
-    private static string GenerateSingleXml<T>(T obj, string xpath) where T: class
+    private static string GenerateSingleXml<T>(T obj, string xpath) where T : class
     {
         var sb = new StringBuilder();
 
@@ -439,7 +438,7 @@ public class CardServiceController : WebApiController
 
         return sb.ToString();
     }
-    
+
     private static string GenerateRecordsXml<T>(IReadOnlyList<T> list, string xpath) where T : Record
     {
         var stringBuilder = new StringBuilder();
@@ -549,7 +548,7 @@ public class CardServiceController : WebApiController
             {
                 unlockableSongIds = Configs.DEFAULT_UNLOCKABLE_SONGS;
             }
-            var detailList = unlockableSongIds!.Select(id => new CardDetail
+            var detailList = unlockableSongIds.Select(id => new CardDetail
                 {
                     CardId = cardId,
                     Pcol1 = 10,
@@ -559,10 +558,10 @@ public class CardServiceController : WebApiController
                     ScoreUi6 = 1
                 })
                 .ToList();
-            
+
             cardSqLiteConnection.InsertOrIgnoreAll(detailList);
         }
-        
+
         Write<CardDetail>(cardId, xmlData);
     }
 
@@ -609,5 +608,30 @@ public class CardServiceController : WebApiController
         WriteSkin = 933,
         WriteUnlockKeynum = 1020,
         WriteSoundEffect = 8969
+    }
+
+    private enum Command
+    {
+        CardRequest = 256,
+        RegisterRequest = 512,
+        ReissueRequest = 1536
+    }
+
+    private enum ReturnCode
+    {
+        /// <summary>
+        /// 処理は正常に完了しました in debug string
+        /// </summary>
+        Ok = 1,
+        
+        /// <summary>
+        /// 未登録のカードです in debug string
+        /// </summary>
+        CardNotRegistered = 23,
+        
+        /// <summary>
+        /// 再発行予約がありません in debug string
+        /// </summary>
+        NotReissue = 27
     }
 }

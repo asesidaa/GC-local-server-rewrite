@@ -16,7 +16,7 @@ public class Card : ICardIdModel
     [Column("player_name")]
     [ChoXmlElementRecordField(FieldName = "player_name")]
     [XmlElement(ElementName = "player_name")]
-    public string PlayerName { get; set; } = "player";
+    public string PlayerName { get; set; } = string.Empty;
 
     [Column("score_i1")]
     [ChoXmlElementRecordField(FieldName = "score_i1")]
@@ -46,12 +46,12 @@ public class Card : ICardIdModel
     [Column("created")]
     [ChoXmlElementRecordField(FieldName = "created")]
     [XmlElement("created")]
-    public string Created { get; set; } = "1";
+    public string Created { get; set; } = "2017-01-01 08:00:00";
 
-    [Column("updated")]
-    [ChoXmlElementRecordField(FieldName = "updated")]
-    [XmlElement("updated")]
-    public string Updated { get; set; } = "1";
+    [Column("modified")]
+    [ChoXmlElementRecordField(FieldName = "modified")]
+    [XmlElement("modified")]
+    public string Modified { get; set; } = "2017-01-01 08:00:00";
     
     public void SetCardId(long cardId)
     {
