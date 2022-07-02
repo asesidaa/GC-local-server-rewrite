@@ -36,6 +36,8 @@ public static class Configs
 
     public const string INCOM_SERVICE_BASE_ROUTE = "/service/incom";
 
+    public const string UPDATE_SERVICE_BASE_ROUTE = "/update/cgi";
+
     public const string RANK_BASE_ROUTE = "/ranking";
 
     public const string ALIVE_BASE_ROUTE = "/alive";

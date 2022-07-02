@@ -41,6 +41,8 @@ public class Server
                 module => module.WithController<ServerController>())
             .WithWebApi(Configs.RANK_BASE_ROUTE, CustomResponseSerializer.None(true),
                 module => module.WithController<RankController>())
+            .WithWebApi(Configs.UPDATE_SERVICE_BASE_ROUTE, CustomResponseSerializer.None(true),
+                module => module.WithController<UpdateController>())
             .WithStaticFolder(Configs.STATIC_BASE_ROUTE, PathHelper.HtmlRootPath, true, m => m
                 .WithContentCaching(Configs.USE_FILE_CACHE))
             // Add static files after other modules to avoid conflicts
@@ -62,7 +64,8 @@ public class Server
             switch (exception.StatusCode)
             {
                 case 404:
-                    await context.SendStringAsync("404 NOT FOUND!", "text/html", new UTF8Encoding(false));
+                    var htmlContents = await File.ReadAllTextAsync(Path.Combine(PathHelper.HtmlRootPath, "index.html"));
+                    await context.SendStringAsync(htmlContents, "text/html", Encoding.UTF8);
 
                     break;
                 default:
