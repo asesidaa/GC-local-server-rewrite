@@ -126,7 +126,8 @@ public static class Configs
 
     public const string RANK_STATUS_XPATH = $"{ROOT_XPATH}/ranking_status";
 
-    public const int CONFIG_PCOL1 = 0;
+    public const int FIRST_CONFIG_PCOL1 = 0;
+    public const int SECOND_CONFIG_PCOL1 = 1;
     public const int CONFIG_PCOL2 = 0;
     public const int CONFIG_PCOL3 = 0;
     

@@ -90,6 +90,10 @@ public class CardDetail : Record, ICardIdModel
     [ChoXmlElementRecordField(FieldName = "fcol3")]
     [XmlElement("fcol3")]
     public int Fcol3 { get; set; }
+    
+    [Column("last_play_time")]
+    [XmlIgnore]
+    public DateTime LastPlayTime { get; set; } = DateTime.MinValue;
 
     public void SetCardId(long cardId)
     {

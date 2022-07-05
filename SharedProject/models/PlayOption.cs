@@ -13,4 +13,13 @@ public class PlayOption
 
     [JsonPropertyName(nameof(FeverTrance))]
     public PlayOptions.FeverTranceShow FeverTrance { get; set; }
+    
+    [JsonPropertyName(nameof(AvatarId))]
+    public long AvatarId { get; set; }
+    
+    [JsonPropertyName(nameof(NavigatorId))]
+    public long NavigatorId { get; set; }
+    
+    [JsonPropertyName(nameof(TitleId))]
+    public long TitleId { get; set; }
 }

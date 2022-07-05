@@ -1,0 +1,2850 @@
+[
+  {
+    "Id": 0,
+    "IdString": "crab",
+    "FullName": "CRAB",
+    "Name": "CRAB",
+    "Variant": "",
+    "AcquireMethod": "Part of the default set"
+  },
+  {
+    "Id": 1,
+    "IdString": "bird",
+    "FullName": "BIRD",
+    "Name": "BIRD",
+    "Variant": "",
+    "AcquireMethod": "Part of the default set"
+  },
+  {
+    "Id": 2,
+    "IdString": "dolphin",
+    "FullName": "DOLPHIN",
+    "Name": "DOLPHIN",
+    "Variant": "",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 3,
+    "IdString": "butterfly",
+    "FullName": "BUTTERFLY",
+    "Name": "BUTTERFLY",
+    "Variant": "",
+    "AcquireMethod": "Part of the default set"
+  },
+  {
+    "Id": 4,
+    "IdString": "energy",
+    "FullName": "ENERGY",
+    "Name": "ENERGY",
+    "Variant": "",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 5,
+    "IdString": "goldfish",
+    "FullName": "GOLDFISH",
+    "Name": "GOLDFISH",
+    "Variant": "",
+    "AcquireMethod": "Part of the default set"
+  },
+  {
+    "Id": 6,
+    "IdString": "light",
+    "FullName": "LIGHT",
+    "Name": "LIGHT",
+    "Variant": "",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 7,
+    "IdString": "octopus",
+    "FullName": "OCTOPUS",
+    "Name": "OCTOPUS",
+    "Variant": "",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 8,
+    "IdString": "human",
+    "FullName": "HUMAN",
+    "Name": "HUMAN",
+    "Variant": "",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 9,
+    "IdString": "rapid",
+    "FullName": "RAPID",
+    "Name": "RAPID",
+    "Variant": "",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 10,
+    "IdString": "squid",
+    "FullName": "SQUID",
+    "Name": "SQUID",
+    "Variant": "",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 11,
+    "IdString": "spark",
+    "FullName": "SPARK",
+    "Name": "SPARK",
+    "Variant": "",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 12,
+    "IdString": "gene",
+    "FullName": "GENE",
+    "Name": "GENE",
+    "Variant": "",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 13,
+    "IdString": "ufo",
+    "FullName": "UFO",
+    "Name": "UFO",
+    "Variant": "",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 14,
+    "IdString": "phoenix",
+    "FullName": "PHOENIX",
+    "Name": "PHOENIX",
+    "Variant": "",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 15,
+    "IdString": "ene",
+    "FullName": "ENE",
+    "Name": "ENE",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 16,
+    "IdString": "tv",
+    "FullName": "niconicoTVchan",
+    "Name": "niconico",
+    "Variant": "TVchan",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 17,
+    "IdString": "ene3d",
+    "FullName": "ENE(3D)",
+    "Name": "ENE(3D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 18,
+    "IdString": "silverhawk",
+    "FullName": "SILVER HAWK",
+    "Name": "SILVER",
+    "Variant": "HAWK",
+    "AcquireMethod": "Part of the default set"
+  },
+  {
+    "Id": 19,
+    "IdString": "headphone",
+    "FullName": "HEADPHONE CRAB",
+    "Name": "HEADPHONE",
+    "Variant": "CRAB",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 20,
+    "IdString": "rgray",
+    "FullName": "R-GRAY0",
+    "Name": "R-GRAY0",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 21,
+    "IdString": "horse",
+    "FullName": "HORSE",
+    "Name": "HORSE",
+    "Variant": "",
+    "AcquireMethod": "2014 (Horse) anniversary avatar"
+  },
+  {
+    "Id": 22,
+    "IdString": "fb777",
+    "FullName": "FB777",
+    "Name": "FB777",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 23,
+    "IdString": "kikkun",
+    "FullName": "KIKKUN",
+    "Name": "KIKKUN",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 24,
+    "IdString": "aroma",
+    "FullName": "aromahot",
+    "Name": "aromahot",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 25,
+    "IdString": "eoheoh",
+    "FullName": "eoheoh",
+    "Name": "eoheoh",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 26,
+    "IdString": "pegasus",
+    "FullName": "PEGASUS",
+    "Name": "PEGASUS",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 27,
+    "IdString": "marisa",
+    "FullName": "MARISA",
+    "Name": "MARISA",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 28,
+    "IdString": "elen",
+    "FullName": "EREN",
+    "Name": "EREN",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 29,
+    "IdString": "taokaka",
+    "FullName": "TAOKAKA",
+    "Name": "TAOKAKA",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 30,
+    "IdString": "nu13",
+    "FullName": "NU-13",
+    "Name": "NU-13",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 31,
+    "IdString": "rgray1",
+    "FullName": "R-GRAY1",
+    "Name": "R-GRAY1",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 32,
+    "IdString": "rain",
+    "FullName": "RAIN",
+    "Name": "RAIN",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 33,
+    "IdString": "kumi",
+    "FullName": "KUMI",
+    "Name": "KUMI",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 34,
+    "IdString": "metadra",
+    "FullName": "KING METAL DRAGON",
+    "Name": "KING METAL",
+    "Variant": "DRAGON",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 35,
+    "IdString": "tamadra",
+    "FullName": "TAMADRA",
+    "Name": "TAMADRA",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 36,
+    "IdString": "rivai",
+    "FullName": "hito2",
+    "Name": "hito2",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 37,
+    "IdString": "helicopter",
+    "FullName": "HELICOPTER",
+    "Name": "HELICOPTER",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 38,
+    "IdString": "kikousyu",
+    "FullName": "hito3",
+    "Name": "hito3",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 39,
+    "IdString": "reimu",
+    "FullName": "REIMU",
+    "Name": "REIMU",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 40,
+    "IdString": "ufoco",
+    "FullName": "UFO-CO",
+    "Name": "UFO-CO",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 41,
+    "IdString": "dragon",
+    "FullName": "DRAGON",
+    "Name": "DRAGON",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 42,
+    "IdString": "knitty",
+    "FullName": "KNITTY",
+    "Name": "KNITTY",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 43,
+    "IdString": "ninjaslayer",
+    "FullName": "NINJA SLAYER",
+    "Name": "NINJA",
+    "Variant": "SLAYER",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 44,
+    "IdString": "legend",
+    "FullName": "SILVER HAWK(L)",
+    "Name": "SILVER",
+    "Variant": "HAWK(L)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 45,
+    "IdString": "next",
+    "FullName": "SILVER HAWK(N)",
+    "Name": "SILVER",
+    "Variant": "HAWK(N)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 46,
+    "IdString": "formula",
+    "FullName": "SILVER HAWK(F)",
+    "Name": "SILVER",
+    "Variant": "HAWK(F)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 47,
+    "IdString": "assault",
+    "FullName": "SILVER HAWK(A)",
+    "Name": "SILVER",
+    "Variant": "HAWK(A)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 48,
+    "IdString": "rgray2",
+    "FullName": "R-GRAY2",
+    "Name": "R-GRAY2",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 49,
+    "IdString": "miria",
+    "FullName": "MIRIA",
+    "Name": "MIRIA",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 50,
+    "IdString": "origami",
+    "FullName": "PAPER CRANE",
+    "Name": "PAPER",
+    "Variant": "CRANE",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 51,
+    "IdString": "sheep",
+    "FullName": "SHEEP",
+    "Name": "SHEEP",
+    "Variant": "",
+    "AcquireMethod": "2015 (Sheep) anniversary avatar"
+  },
+  {
+    "Id": 52,
+    "IdString": "chiruno",
+    "FullName": "CIRNO",
+    "Name": "CIRNO",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 53,
+    "IdString": "sakuya",
+    "FullName": "SAKUYA",
+    "Name": "SAKUYA",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 54,
+    "IdString": "fb777_rpg",
+    "FullName": "FB777(RPG)",
+    "Name": "FB777",
+    "Variant": "(RPG)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 55,
+    "IdString": "kikkun_rpg",
+    "FullName": "KIKKUN(RPG)",
+    "Name": "KIKKUN",
+    "Variant": "(RPG)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 56,
+    "IdString": "aromahot_rpg",
+    "FullName": "aromahot(RPG)",
+    "Name": "aromahot",
+    "Variant": "(RPG)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 57,
+    "IdString": "eoheoh_rpg",
+    "FullName": "eoheoh(RPG)",
+    "Name": "eoheoh",
+    "Variant": "(RPG)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 58,
+    "IdString": "gcoctopus",
+    "FullName": "HEADPHONE OCTOPUS",
+    "Name": "HEADPHONE",
+    "Variant": "OCTOPUS",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 59,
+    "IdString": "ia",
+    "FullName": "IA(2D)",
+    "Name": "IA(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 60,
+    "IdString": "sayo",
+    "FullName": "SAYO",
+    "Name": "SAYO",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 61,
+    "IdString": "bubblen",
+    "FullName": "BUBBLEN",
+    "Name": "BUBBLEN",
+    "Variant": "",
+    "AcquireMethod": "Part of the default set"
+  },
+  {
+    "Id": 62,
+    "IdString": "hinatadenkou",
+    "FullName": "HITO",
+    "Name": "HITO",
+    "Variant": "",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 63,
+    "IdString": "spica",
+    "FullName": "SPICA",
+    "Name": "SPICA",
+    "Variant": "",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 64,
+    "IdString": "bobblen",
+    "FullName": "BOBBLEN",
+    "Name": "BOBBLEN",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 65,
+    "IdString": "space_invaders",
+    "FullName": "SPACE INVADERS",
+    "Name": "SPACE",
+    "Variant": "INVADERS",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 66,
+    "IdString": "cannon",
+    "FullName": "CANNON",
+    "Name": "CANNON",
+    "Variant": "",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 67,
+    "IdString": "gc_squid",
+    "FullName": "HEADPHONE SQUID",
+    "Name": "HEADPHONE",
+    "Variant": "SQUID",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 68,
+    "IdString": "fessupkun",
+    "FullName": "Fess up",
+    "Name": "Fess up",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign / Mypage"
+  },
+  {
+    "Id": 69,
+    "IdString": "ia3d",
+    "FullName": "IA(3D)",
+    "Name": "IA(3D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 70,
+    "IdString": "ironfossil",
+    "FullName": "Iron Fossil",
+    "Name": "Iron Fossil",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 71,
+    "IdString": "skull",
+    "FullName": "SKULL",
+    "Name": "SKULL",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 72,
+    "IdString": "intergray",
+    "FullName": "INTER GRAY",
+    "Name": "INTER GRAY",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 73,
+    "IdString": "ouroboros",
+    "FullName": "OUROBOROS",
+    "Name": "OUROBOROS",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 74,
+    "IdString": "rachel",
+    "FullName": "RACHEL",
+    "Name": "RACHEL",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 75,
+    "IdString": "miku3d",
+    "FullName": "HATSUNE MIKU(3D)",
+    "Name": "HATSUNE ",
+    "Variant": "MIKU(3D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 76,
+    "IdString": "miku",
+    "FullName": "HATSUNE MIKU(2D)",
+    "Name": "HATSUNE ",
+    "Variant": "MIKU(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 77,
+    "IdString": "cosio",
+    "FullName": "COSIO",
+    "Name": "COSIO",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 78,
+    "IdString": "shohei",
+    "FullName": "SHOHEI",
+    "Name": "SHOHEI",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 79,
+    "IdString": "fighting_thunder",
+    "FullName": "FIGHTING THUNDER",
+    "Name": "FIGHTING",
+    "Variant": "THUNDER",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 80,
+    "IdString": "nico",
+    "FullName": "NICO",
+    "Name": "NICO",
+    "Variant": "",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 81,
+    "IdString": "ti2",
+    "FullName": "Ti2",
+    "Name": "Ti2",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 82,
+    "IdString": "ti2overclock",
+    "FullName": "Ti2Overclock",
+    "Name": "Ti2",
+    "Variant": "Overclock",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 83,
+    "IdString": "blackfly",
+    "FullName": "BLACK FLY",
+    "Name": "BLACK FLY",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 84,
+    "IdString": "babi",
+    "FullName": "BABI",
+    "Name": "BABI",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 85,
+    "IdString": "sanae",
+    "FullName": "SANAE",
+    "Name": "SANAE",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 86,
+    "IdString": "youmu",
+    "FullName": "YOUMU",
+    "Name": "YOUMU",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 87,
+    "IdString": "rin",
+    "FullName": "KAGAMINE RIN",
+    "Name": "KAGAMINE",
+    "Variant": "RIN",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 88,
+    "IdString": "len",
+    "FullName": "KAGAMINE LEN",
+    "Name": "KAGAMINE",
+    "Variant": "LEN",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 89,
+    "IdString": "otomon",
+    "FullName": "OTOMON",
+    "Name": "OTOMON",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 90,
+    "IdString": "gurdian",
+    "FullName": "GUARDIAN",
+    "Name": "GUARDIAN",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 91,
+    "IdString": "march_arch",
+    "FullName": "March & Arch",
+    "Name": "March",
+    "Variant": "& Arch",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 92,
+    "IdString": "candice",
+    "FullName": "CANDICE BONBON",
+    "Name": "CANDICE",
+    "Variant": "BONBON",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 93,
+    "IdString": "ronmei",
+    "FullName": "RONMEI",
+    "Name": "RONMEI",
+    "Variant": "",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 94,
+    "IdString": "zundoko",
+    "FullName": "FULLMETAL ZUNDOKO",
+    "Name": "FULLMETAL",
+    "Variant": "ZUNDOKO",
+    "AcquireMethod": "Get by Mypage"
+  },
+  {
+    "Id": 95,
+    "IdString": "omake",
+    "FullName": "OMAKE",
+    "Name": "OMAKE",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 96,
+    "IdString": "syameimaru",
+    "FullName": "SYAMEIMARU",
+    "Name": "SYAMEIMARU",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 97,
+    "IdString": "seaturtle",
+    "FullName": "SEA TURTLE",
+    "Name": "SEA",
+    "Variant": "TURTLE",
+    "AcquireMethod": "Trophy reward"
+  },
+  {
+    "Id": 98,
+    "IdString": "frandoll",
+    "FullName": "FRANDRE SCARLET",
+    "Name": "FRANDRE",
+    "Variant": "SCARLET",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 99,
+    "IdString": "mosyune",
+    "FullName": "MOSYNE(HUMANOID)",
+    "Name": "MOSYNE",
+    "Variant": "(HUMANOID)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 100,
+    "IdString": "carte",
+    "FullName": "Carte",
+    "Name": "Carte",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 101,
+    "IdString": "monkey",
+    "FullName": "MONKEY",
+    "Name": "MONKEY",
+    "Variant": "",
+    "AcquireMethod": "2016 (Monkey) anniversary avatar"
+  },
+  {
+    "Id": 102,
+    "IdString": "mirin",
+    "FullName": "MIRIN",
+    "Name": "MIRIN",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 103,
+    "IdString": "mosyune_c",
+    "FullName": "MOSYNE(FLIGHT)",
+    "Name": "MOSYNE",
+    "Variant": "(FLIGHT)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 104,
+    "IdString": "sato",
+    "FullName": "EDM BOW",
+    "Name": "EDM BOW",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 105,
+    "IdString": "ranko",
+    "FullName": "RANKO",
+    "Name": "RANKO",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 106,
+    "IdString": "t+pazolite",
+    "FullName": "t+pazolite",
+    "Name": "t+pazolite",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 107,
+    "IdString": "massive-new-krew",
+    "FullName": "Massive-New-Krew",
+    "Name": "Massive",
+    "Variant": "New Krew",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 108,
+    "IdString": "risa",
+    "FullName": "RISA",
+    "Name": "RISA",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 109,
+    "IdString": "nemu",
+    "FullName": "NEMU",
+    "Name": "NEMU",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 110,
+    "IdString": "eimi",
+    "FullName": "EIMI",
+    "Name": "EIMI",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 111,
+    "IdString": "moga",
+    "FullName": "MOGA",
+    "Name": "MOGA",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 112,
+    "IdString": "ayane",
+    "FullName": "AYANE",
+    "Name": "AYANE",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 113,
+    "IdString": "linka",
+    "FullName": "LINKA",
+    "Name": "LINKA",
+    "Variant": "",
+    "AcquireMethod": "Trophy reward"
+  },
+  {
+    "Id": 114,
+    "IdString": "kaidan",
+    "FullName": "SPOOKY STORY",
+    "Name": "SPOOKY",
+    "Variant": "STORY",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 115,
+    "IdString": "cadence",
+    "FullName": "CADENCE",
+    "Name": "CADENCE",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 116,
+    "IdString": "skeleton",
+    "FullName": "SKELETON",
+    "Name": "SKELETON",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 117,
+    "IdString": "shopkeeper",
+    "FullName": "SHOPKEEPER",
+    "Name": "SHOPKEEPER",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 118,
+    "IdString": "monokuma",
+    "FullName": "MONOKUMA",
+    "Name": "MONOKUMA",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 119,
+    "IdString": "naegi",
+    "FullName": "MAKOTO NAEGI",
+    "Name": "MAKOTO",
+    "Variant": "NAEGI",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 120,
+    "IdString": "enosima",
+    "FullName": "JUNKO ENOSHIMA",
+    "Name": "JUNKO",
+    "Variant": "ENOSHIMA",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 121,
+    "IdString": "murakumo",
+    "FullName": "SILVER HAWK(M)",
+    "Name": "SILVER",
+    "Variant": "HAWK(M)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 122,
+    "IdString": "gumi3d",
+    "FullName": "GUMI(3D)",
+    "Name": "GUMI(3D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 123,
+    "IdString": "gumi",
+    "FullName": "GUMI(2D)",
+    "Name": "GUMI(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 124,
+    "IdString": "deltasword",
+    "FullName": "Deltasword",
+    "Name": "Deltasword",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 125,
+    "IdString": "strania",
+    "FullName": "STRANIA",
+    "Name": "STRANIA",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 126,
+    "IdString": "gumi_guitar",
+    "FullName": "GUMI(Guitar)",
+    "Name": "GUMI(Guitar)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 127,
+    "IdString": "reimu_2d",
+    "FullName": "REIMU(2D)",
+    "Name": "REIMU(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 128,
+    "IdString": "marisa_2d",
+    "FullName": "MARISA(2D)",
+    "Name": "MARISA(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 129,
+    "IdString": "sanae_2d",
+    "FullName": "SANAE(2D)",
+    "Name": "SANAE(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 130,
+    "IdString": "3d_ufo",
+    "FullName": "UFO(3D)",
+    "Name": "UFO(3D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 131,
+    "IdString": "one",
+    "FullName": "ONE(2D)",
+    "Name": "ONE(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 132,
+    "IdString": "one3d",
+    "FullName": "ONE(3D)",
+    "Name": "ONE(3D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 133,
+    "IdString": "akatuki3d",
+    "FullName": "AKATSUKI(3D)",
+    "Name": "AKATSUKI",
+    "Variant": "(3D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 134,
+    "IdString": "sun3d",
+    "FullName": "SUN(3D)",
+    "Name": "SUN(3D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 135,
+    "IdString": "masaki",
+    "FullName": "MASAKI",
+    "Name": "MASAKI",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 136,
+    "IdString": "miku_dot",
+    "FullName": "HATSUNE MIKU(2Ddot)",
+    "Name": "HATSUNE",
+    "Variant": "MIKU(2Ddot)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 137,
+    "IdString": "luka",
+    "FullName": "MEGURINE LUKA(2D)",
+    "Name": "MEGURINE",
+    "Variant": "LUKA(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 138,
+    "IdString": "luka3d",
+    "FullName": "MEGURINE LUKA(3D)",
+    "Name": "MEGURINE",
+    "Variant": "LUKA(3D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 139,
+    "IdString": "takuyayuki",
+    "FullName": "TAKUYA & YUKI",
+    "Name": "TAKUYA",
+    "Variant": "& YUKI",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 140,
+    "IdString": "alice_2d",
+    "FullName": "ALICE(2D)",
+    "Name": "ALICE(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 141,
+    "IdString": "nitori_2d",
+    "FullName": "NITORI(2D)",
+    "Name": "NITORI(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 142,
+    "IdString": "ken",
+    "FullName": "KEN",
+    "Name": "KEN",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 143,
+    "IdString": "keine_2d",
+    "FullName": "KEINE(2D)",
+    "Name": "KEINE(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 144,
+    "IdString": "yuugi",
+    "FullName": "YUGI",
+    "Name": "YUGI",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 145,
+    "IdString": "mini_linka",
+    "FullName": "CHIBI LINKA",
+    "Name": "CHIBI",
+    "Variant": " LINKA",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 146,
+    "IdString": "mini_ronmei",
+    "FullName": "CHIBI RONMEI",
+    "Name": "CHIBI",
+    "Variant": " RONMEI",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 147,
+    "IdString": "mini_ken",
+    "FullName": "CHIBI KEN",
+    "Name": "CHIBI",
+    "Variant": "KEN",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 148,
+    "IdString": "mini_zundoko",
+    "FullName": "CHIBI ZUNDOKO",
+    "Name": "CHIBI",
+    "Variant": "ZUNDOKO",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 149,
+    "IdString": "mini_dontuku",
+    "FullName": "CHIBI DONTSUKU",
+    "Name": "CHIBI",
+    "Variant": "DONTSUKU",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 150,
+    "IdString": "sidune_2d",
+    "FullName": "SIDUNE(2D)",
+    "Name": "SIDUNE(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 151,
+    "IdString": "dogumamaguma_2d",
+    "FullName": "DOGUMA & MAGUMA(2D)",
+    "Name": "DOGUMA & ",
+    "Variant": "MAGUMA(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 152,
+    "IdString": "remy_2d",
+    "FullName": "REMY(2D)",
+    "Name": "REMY(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 153,
+    "IdString": "kyoka_2d",
+    "FullName": "KYOKA(2D)",
+    "Name": "KYOKA(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 154,
+    "IdString": "sidune",
+    "FullName": "SIDUNE",
+    "Name": "SIDUNE",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 155,
+    "IdString": "hiyoko",
+    "FullName": "CHICK",
+    "Name": "CHICK",
+    "Variant": "",
+    "AcquireMethod": "2017 (Bird) anniversary avatar"
+  },
+  {
+    "Id": 156,
+    "IdString": "rin_dot",
+    "FullName": "KAGAMINE RIN(2D)",
+    "Name": "KAGAMINE",
+    "Variant": "RIN(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 157,
+    "IdString": "len_dot",
+    "FullName": "KAGAMINE LEN(2D)",
+    "Name": "KAGAMINE",
+    "Variant": "LEN(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 158,
+    "IdString": "yume",
+    "FullName": "YUME",
+    "Name": "YUME",
+    "Variant": "",
+    "AcquireMethod": "Part of the default set"
+  },
+  {
+    "Id": 159,
+    "IdString": "dontuku",
+    "FullName": "POLYVINYL DONTSUKU",
+    "Name": "POLYVINYL",
+    "Variant": "DONTSUKU",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 160,
+    "IdString": "youmu_2d",
+    "FullName": "YOUMU(2D)",
+    "Name": "YOUMU(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 161,
+    "IdString": "toyosatomimi_2d",
+    "FullName": "MIKO(2D)",
+    "Name": "MIKO(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 162,
+    "IdString": "vocaloid_nemu",
+    "FullName": "VOCALOID NEMU",
+    "Name": "VOCALOID",
+    "Variant": "NEMU",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 163,
+    "IdString": "tanukyun",
+    "FullName": "tanuQn",
+    "Name": "tanuQn",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 164,
+    "IdString": "remilia",
+    "FullName": "REMILIA SCARLET",
+    "Name": "REMILIA",
+    "Variant": "SCARLET",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 165,
+    "IdString": "yuyuko_2d",
+    "FullName": "YUYUKO(2D)",
+    "Name": "YUYUKO(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 166,
+    "IdString": "kanako_2d",
+    "FullName": "KANAKO(2D)",
+    "Name": "KANAKO(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 167,
+    "IdString": "ranko_2d",
+    "FullName": "RANKO(2D)",
+    "Name": "RANKO",
+    "Variant": "(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 168,
+    "IdString": "comp_2d",
+    "FullName": "COMP(2D)",
+    "Name": "COMP",
+    "Variant": "(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 169,
+    "IdString": "paprika_2d",
+    "FullName": "PAPRIKA(2D)",
+    "Name": "PAPRIKA",
+    "Variant": "(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 170,
+    "IdString": "rankonoane_2d",
+    "FullName": "RANKO no ANE(2D)",
+    "Name": "RANKO",
+    "Variant": "no ANE(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 171,
+    "IdString": "chibi_miku",
+    "FullName": "CHIBI MIKU",
+    "Name": "CHIBI",
+    "Variant": "MIKU",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 172,
+    "IdString": "chibi_luke",
+    "FullName": "CHIBI LUKA",
+    "Name": "CHIBI",
+    "Variant": "LUKA",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 173,
+    "IdString": "chibi_rin",
+    "FullName": "CHIBI RIN",
+    "Name": "CHIBI",
+    "Variant": "RIN",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 174,
+    "IdString": "chibi_len",
+    "FullName": "CHIBI LEN",
+    "Name": "CHIBI",
+    "Variant": "LEN",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 175,
+    "IdString": "chibi_meiko",
+    "FullName": "CHIBI MEIKO",
+    "Name": "CHIBI",
+    "Variant": "MEIKO",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 176,
+    "IdString": "chibi_kaito",
+    "FullName": "CHIBI KAITO",
+    "Name": "CHIBI",
+    "Variant": "KAITO",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 177,
+    "IdString": "miku3d_run",
+    "FullName": "HATSUNE MIKU(3Drun)",
+    "Name": "HATSUNE ",
+    "Variant": "MIKU(3Drun)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 178,
+    "IdString": "tonesphere_Cube_1",
+    "FullName": "Tone Sphere Cricro",
+    "Name": "Tone Sphere",
+    "Variant": "Cricro",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 179,
+    "IdString": "tonesphere_Cube_2",
+    "FullName": "Tone Sphere Tessera",
+    "Name": "Tone Sphere",
+    "Variant": "Tessera",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 180,
+    "IdString": "cessna_plane",
+    "FullName": "BIPLANE",
+    "Name": "BIPLANE",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 181,
+    "IdString": "redalice",
+    "FullName": "REDALiCE",
+    "Name": "REDALiCE",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 182,
+    "IdString": "genki",
+    "FullName": "DJ Genki",
+    "Name": "DJ Genki",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 183,
+    "IdString": "usao",
+    "FullName": "USAO",
+    "Name": "USAO",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 184,
+    "IdString": "myosuke",
+    "FullName": "DJ Myosuke",
+    "Name": "DJ Myosuke",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 185,
+    "IdString": "aran",
+    "FullName": "aran",
+    "Name": "aran",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 186,
+    "IdString": "vkl503p",
+    "FullName": "VKL5.03(P)",
+    "Name": "VKL5.03(P)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 187,
+    "IdString": "2foot",
+    "FullName": "2Foot",
+    "Name": "2Foot",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 188,
+    "IdString": "windia",
+    "FullName": "WINDIA",
+    "Name": "WINDIA",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 189,
+    "IdString": "casper",
+    "FullName": "CASPER",
+    "Name": "CASPER",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 190,
+    "IdString": "riga",
+    "FullName": "RIGA",
+    "Name": "RIGA",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 191,
+    "IdString": "cirno_2d",
+    "FullName": "CIRNO(2D)",
+    "Name": "CIRNO",
+    "Variant": "(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 192,
+    "IdString": "cirno_2dtan",
+    "FullName": "CIRNO(2D,TAN)",
+    "Name": "CIRNO",
+    "Variant": "(2D,TAN)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 193,
+    "IdString": "cirno_chirupa",
+    "FullName": "CIRNO(CHIRUPA)",
+    "Name": "CIRNO",
+    "Variant": "(CHIRUPA)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 194,
+    "IdString": "sukuna",
+    "FullName": "SHINMYOUMARU",
+    "Name": "SHINMYOU",
+    "Variant": "MARU",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 195,
+    "IdString": "horikawa_2d",
+    "FullName": "RAIKO(2D)",
+    "Name": "RAIKO(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 196,
+    "IdString": "sakuya_2d",
+    "FullName": "SAKUYA(2D)",
+    "Name": "SAKUYA(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 197,
+    "IdString": "yume_summer",
+    "FullName": "YUME(summer)",
+    "Name": "YUME",
+    "Variant": "(summer)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 198,
+    "IdString": "atmlogo",
+    "FullName": "ATTACK THE MUSIC",
+    "Name": "ATTACK",
+    "Variant": "THE MUSIC",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 199,
+    "IdString": "wr-02r",
+    "FullName": "WR-02R",
+    "Name": "WR-02R",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 200,
+    "IdString": "tonakai",
+    "FullName": "Reindeer",
+    "Name": "Reindeer",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 201,
+    "IdString": "dog",
+    "FullName": "DOG",
+    "Name": "DOG",
+    "Variant": "",
+    "AcquireMethod": "2018 (DOG) anniversary avatar"
+  },
+  {
+    "Id": 202,
+    "IdString": "linka_santa",
+    "FullName": "LINKA(Christmas)",
+    "Name": "LINKA",
+    "Variant": "(Christmas)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 203,
+    "IdString": "yume_santa",
+    "FullName": "YUME(Christmas)",
+    "Name": "YUME",
+    "Variant": "(Christmas)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 204,
+    "IdString": "ia_ninja",
+    "FullName": "IA(ninja)",
+    "Name": "IA",
+    "Variant": "(ninja)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 205,
+    "IdString": "one_ninja",
+    "FullName": "ONE(ninja)",
+    "Name": "ONE",
+    "Variant": "(ninja)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 206,
+    "IdString": "sutadontan",
+    "FullName": "SUTADONTAN",
+    "Name": "SUTADONTAN",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 207,
+    "IdString": "seija",
+    "FullName": "Xenoa",
+    "Name": "Xenoa",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 208,
+    "IdString": "gumi_panda",
+    "FullName": "GUMI(goggles)",
+    "Name": "GUMI",
+    "Variant": "(goggles)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 209,
+    "IdString": "gumi_datte",
+    "FullName": "GUMI(school)",
+    "Name": "GUMI",
+    "Variant": "(school)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 210,
+    "IdString": "dog_dot",
+    "FullName": "DOG(2D)",
+    "Name": "DOG",
+    "Variant": "(2D)",
+    "AcquireMethod": "2018 (DOG) anniversary avatar"
+  },
+  {
+    "Id": 211,
+    "IdString": "linka_miko",
+    "FullName": "LINKA(MIKO)",
+    "Name": "LINKA",
+    "Variant": "(MIKO)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 212,
+    "IdString": "hina",
+    "FullName": "HINA",
+    "Name": "HINA",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 213,
+    "IdString": "seine",
+    "FullName": "SEINE",
+    "Name": "SEINE",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 214,
+    "IdString": "mirin_s",
+    "FullName": "MIRIN(S)",
+    "Name": "MIRIN",
+    "Variant": "(S)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 215,
+    "IdString": "risa_s",
+    "FullName": "RISA(S)",
+    "Name": "RISA",
+    "Variant": "(S)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 216,
+    "IdString": "nemu_s",
+    "FullName": "NEMU(S)",
+    "Name": "NEMU",
+    "Variant": "(S)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 217,
+    "IdString": "eimi_s",
+    "FullName": "EIMI(S)",
+    "Name": "EIMI",
+    "Variant": "(S)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 218,
+    "IdString": "ayane_s",
+    "FullName": "AYANE(S)",
+    "Name": "AYANE",
+    "Variant": "(S)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 219,
+    "IdString": "rin_s",
+    "FullName": "RIN(S)",
+    "Name": "RIN",
+    "Variant": "(S)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 220,
+    "IdString": "nagi_s",
+    "FullName": "NAGI(S)",
+    "Name": "NAGI",
+    "Variant": "(S)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 221,
+    "IdString": "miku_10th",
+    "FullName": "HATSUNE MIKU(10th)",
+    "Name": "HATSUNE",
+    "Variant": "MIKU(10th)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 222,
+    "IdString": "chen_2d",
+    "FullName": "CHEN(2D)",
+    "Name": "CHEN(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 223,
+    "IdString": "kogasa_2d",
+    "FullName": "KOGASA(2D)",
+    "Name": "KOGASA(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 224,
+    "IdString": "ritmo",
+    "FullName": "RITMO",
+    "Name": "RITMO",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 225,
+    "IdString": "figica",
+    "FullName": "FISICA",
+    "Name": "FISICA",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 226,
+    "IdString": "linka_school",
+    "FullName": "LINKA(SCHOOL)",
+    "Name": "LINKA",
+    "Variant": "(SCHOOL)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 227,
+    "IdString": "yume_school",
+    "FullName": "YUME(SCHOOL)",
+    "Name": "YUME",
+    "Variant": "(SCHOOL)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 228,
+    "IdString": "seine_school",
+    "FullName": "SEINE(SCHOOL)",
+    "Name": "SEINE",
+    "Variant": "(SCHOOL)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 229,
+    "IdString": "frandre_2d",
+    "FullName": "FRANDRE(2D)",
+    "Name": "FRANDRE",
+    "Variant": "(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 230,
+    "IdString": "udongein_2d",
+    "FullName": "UDONGEIN(2D)",
+    "Name": "UDONGEIN",
+    "Variant": "(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 231,
+    "IdString": "gear",
+    "FullName": "GEAR",
+    "Name": "GEAR",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 232,
+    "IdString": "scissors",
+    "FullName": "SCISSORS",
+    "Name": "SCISSORS",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 233,
+    "IdString": "bbkkbkk",
+    "FullName": "B.B.K.K.B.K.K. 1",
+    "Name": "B.B.K.K.",
+    "Variant": "B.K.K. 1",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 234,
+    "IdString": "bbkkbkk2",
+    "FullName": "B.B.K.K.B.K.K. 2",
+    "Name": "B.B.K.K.",
+    "Variant": "B.K.K. 2",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 235,
+    "IdString": "fb777_phoenix",
+    "FullName": "FB777(Phoenix)",
+    "Name": "FB777",
+    "Variant": "(Phoenix)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 236,
+    "IdString": "kikkun_phoenix",
+    "FullName": "KIKKUN(Phoenix)",
+    "Name": "KIKKUN",
+    "Variant": "(Phoenix)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 237,
+    "IdString": "aromahot_phoenix",
+    "FullName": "aromahot(Phoenix)",
+    "Name": "aromahot",
+    "Variant": "(Phoenix)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 238,
+    "IdString": "eoheoh_phoenix",
+    "FullName": "eoheoh(Phoenix)",
+    "Name": "eoheoh",
+    "Variant": "(Phoenix)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 239,
+    "IdString": "akane_dot",
+    "FullName": "AKANE (2Ddot)",
+    "Name": "AKANE",
+    "Variant": "(2Ddot)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 240,
+    "IdString": "aoi_dot",
+    "FullName": "AOI(2Ddot)",
+    "Name": "AOI",
+    "Variant": "(2Ddot)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 241,
+    "IdString": "akane",
+    "FullName": "AKANE(Seyana.)",
+    "Name": "AKANE",
+    "Variant": "(Seyana.)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 242,
+    "IdString": "yukari",
+    "FullName": "YUKARI(Seyana.)",
+    "Name": "YUKARI",
+    "Variant": "(Seyana.)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 243,
+    "IdString": "miku_2018",
+    "FullName": "HATSUNE MIKU(2018)",
+    "Name": "HATSUNE",
+    "Variant": "MIKU(2018)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 244,
+    "IdString": "jyunko_2d",
+    "FullName": "JUNKO(2D)",
+    "Name": "JUNKO(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 245,
+    "IdString": "mikoko_2d",
+    "FullName": "MIKOKO(2D)",
+    "Name": "MIKOKO(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 246,
+    "IdString": "13",
+    "FullName": "13",
+    "Name": "13",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 247,
+    "IdString": "ririka",
+    "FullName": "Rilyca",
+    "Name": "Rilyca",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 248,
+    "IdString": "gustav",
+    "FullName": "Gustav Heydrich",
+    "Name": "Gustav",
+    "Variant": "Heydrich",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 249,
+    "IdString": "voidoll",
+    "FullName": "Voidoll",
+    "Name": "Voidoll",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 250,
+    "IdString": "nojarori",
+    "FullName": "MIKOKO(3D)",
+    "Name": "MIKOKO(3D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 251,
+    "IdString": "udongein",
+    "FullName": "UDONGEIN",
+    "Name": "UDONGEIN",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 252,
+    "IdString": "oukokuflag",
+    "FullName": "Kemomimi Oukoku Flag",
+    "Name": "Kemomimi",
+    "Variant": "Oukoku Flag",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 253,
+    "IdString": "spr_f_maincharad",
+    "FullName": "Human UNDERTALE",
+    "Name": "Human",
+    "Variant": "UNDERTALE",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 254,
+    "IdString": "spr_flowey",
+    "FullName": "Flowey UNDERTALE",
+    "Name": "Flowey",
+    "Variant": "UNDERTALE",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 255,
+    "IdString": "spr_heart",
+    "FullName": "SOUL UNDERTALE",
+    "Name": "SOUL",
+    "Variant": "UNDERTALE",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 256,
+    "IdString": "una_spicy",
+    "FullName": "OTOMACHI UNA SPICY",
+    "Name": "OTOMACHI",
+    "Variant": "UNA(SPICY)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 257,
+    "IdString": "una_sugar",
+    "FullName": "OTOMACHI UNA SUGAR",
+    "Name": "OTOMACHI",
+    "Variant": "UNA(SUGAR)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 258,
+    "IdString": "una",
+    "FullName": "OTOMACHI UNA",
+    "Name": "OTOMACHI",
+    "Variant": "UNA",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 259,
+    "IdString": "kefia",
+    "FullName": "KEFIR",
+    "Name": "KEFIR",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 260,
+    "IdString": "boar",
+    "FullName": "BOAR",
+    "Name": "BOAR",
+    "Variant": "",
+    "AcquireMethod": "2019 (BOAR) anniversary avatar"
+  },
+  {
+    "Id": 261,
+    "IdString": "seine_santa",
+    "FullName": "SEINE(Christmas)",
+    "Name": "SEINE",
+    "Variant": "(Christmas)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 262,
+    "IdString": "suwako_2d",
+    "FullName": "SUWAKO(2D)",
+    "Name": "SUWAKO(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 263,
+    "IdString": "hikari",
+    "FullName": "HIKARI",
+    "Name": "HIKARI",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 264,
+    "IdString": "tairitsu",
+    "FullName": "TAIRITSU",
+    "Name": "TAIRITSU",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 265,
+    "IdString": "boar_linka",
+    "FullName": "LINKA&BOAR",
+    "Name": "LINKA&BOAR",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 266,
+    "IdString": "ia_cheer",
+    "FullName": "IA(Cheerleader)",
+    "Name": "IA",
+    "Variant": "(Cheerleader)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 267,
+    "IdString": "one_cheer",
+    "FullName": "ONE(Cheerleader)",
+    "Name": "ONE",
+    "Variant": "(Cheerleader)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 268,
+    "IdString": "really",
+    "FullName": "Rarari Really",
+    "Name": "Rarari Really",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 269,
+    "IdString": "fairy",
+    "FullName": "Lalari Fairy",
+    "Name": "Lalari Fairy",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 270,
+    "IdString": "clear",
+    "FullName": "El Clear",
+    "Name": "El Clear",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 271,
+    "IdString": "fail",
+    "FullName": "El Fail",
+    "Name": "El Fail",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 272,
+    "IdString": "yuzuki",
+    "FullName": "YUKARI(2Ddot)",
+    "Name": "YUKARI",
+    "Variant": "(2Ddot)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 273,
+    "IdString": "greatthing",
+    "FullName": "Great Thing",
+    "Name": "Great Thing",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 274,
+    "IdString": "nayutan",
+    "FullName": "ANDROMEDAKO",
+    "Name": "ANDRO",
+    "Variant": "MEDAKO",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 275,
+    "IdString": "djnobunaga",
+    "FullName": "DJ NOBUNAGA",
+    "Name": "DJ",
+    "Variant": " NOBUNAGA",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 276,
+    "IdString": "sarasshi",
+    "FullName": "SARASSY",
+    "Name": "SARASSY",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 277,
+    "IdString": "linka_cranky",
+    "FullName": "LINKA(Cranky)",
+    "Name": "LINKA",
+    "Variant": "(Cranky)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 278,
+    "IdString": "yume_cranky",
+    "FullName": "YUME(Cranky)",
+    "Name": "YUME",
+    "Variant": "(Cranky)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 279,
+    "IdString": "seine_cranky",
+    "FullName": "SEINE(Cranky)",
+    "Name": "SEINE",
+    "Variant": "(Cranky)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 280,
+    "IdString": "annoying_dog",
+    "FullName": "ANNOYING DOG",
+    "Name": "ANNOYING",
+    "Variant": "DOG",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 281,
+    "IdString": "napstablook",
+    "FullName": "NAPSTA BLOOK",
+    "Name": "NAPSTA",
+    "Variant": "BLOOK",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 282,
+    "IdString": "temmie",
+    "FullName": "TEMMIE",
+    "Name": "TEMMIE",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign\nTemmie avatar courtesy of\nTemmie Chang and Betty Kwong."
+  },
+  {
+    "Id": 283,
+    "IdString": "reimu_headphone_2d",
+    "FullName": "REIMU(headphone)",
+    "Name": "REIMU",
+    "Variant": "(headphone)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 284,
+    "IdString": "bun_2d",
+    "FullName": "SYAMEIMARU(2D)",
+    "Name": "SYAMEIMARU",
+    "Variant": "(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 285,
+    "IdString": "ito_2d",
+    "FullName": "SIYO",
+    "Name": "SIYO",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 286,
+    "IdString": "nero_2d",
+    "FullName": "NERO",
+    "Name": "NERO",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 287,
+    "IdString": "okina_2d",
+    "FullName": "OKINA(2D)",
+    "Name": "OKINA(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 288,
+    "IdString": "rino_mai_2d",
+    "FullName": "SATONO&MAI(2D)",
+    "Name": "SATONO&MAI",
+    "Variant": "(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 289,
+    "IdString": "rossa_2d",
+    "FullName": "ROSSA",
+    "Name": "ROSSA",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 290,
+    "IdString": "siyo_2d",
+    "FullName": "ITO",
+    "Name": "ITO",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 291,
+    "IdString": "sui_2d",
+    "FullName": "SUI",
+    "Name": "SUI",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 292,
+    "IdString": "yukari_y_2d",
+    "FullName": "YUKARI.Y (2D)",
+    "Name": "YUKARI.Y",
+    "Variant": "(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 293,
+    "IdString": "swallowtail",
+    "FullName": "swallowtail",
+    "Name": "swallowtail",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 294,
+    "IdString": "himetanaka",
+    "FullName": "HIME TANAKA",
+    "Name": "HIME",
+    "Variant": "TANAKA",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 295,
+    "IdString": "hinasuzuki",
+    "FullName": "HINA SUZUKI",
+    "Name": "HINA",
+    "Variant": "SUZUKI",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 296,
+    "IdString": "miraiakari_2d",
+    "FullName": "MIRAI AKARI",
+    "Name": "MIRAI",
+    "Variant": "AKARI",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 297,
+    "IdString": "elizabeth_2d",
+    "FullName": "ELIZABETH",
+    "Name": "ELIZABETH",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 298,
+    "IdString": "akarikizuna_2d",
+    "FullName": "AKARI KIZUNA",
+    "Name": "AKARI",
+    "Variant": "KIZUNA",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 299,
+    "IdString": "flower_2d",
+    "FullName": "flower",
+    "Name": "flower",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 300,
+    "IdString": "mouse_2d",
+    "FullName": "LINKA&MOUSE",
+    "Name": "LINKA",
+    "Variant": "&MOUSE",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 301,
+    "IdString": "linka_miko2",
+    "FullName": "LINKA (MIKO)",
+    "Name": "LINKA",
+    "Variant": "(MIKO)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 302,
+    "IdString": "yume_miko",
+    "FullName": "YUME (MIKO)",
+    "Name": "YUME",
+    "Variant": "(MIKO)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 303,
+    "IdString": "seine_miko",
+    "FullName": "SEINE (MIKO)",
+    "Name": "SEINE",
+    "Variant": "(MIKO)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 304,
+    "IdString": "noa_2d",
+    "FullName": "NoA",
+    "Name": "NoA",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 305,
+    "IdString": "io_2d",
+    "FullName": "Io",
+    "Name": "Io",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 306,
+    "IdString": "mana_2d",
+    "FullName": "Mana",
+    "Name": "Mana",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 307,
+    "IdString": "meiling_2d",
+    "FullName": "MEILING(2D)",
+    "Name": "MEILING",
+    "Variant": "(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 308,
+    "IdString": "patchouli_2d",
+    "FullName": "PATCHOULI(2D)",
+    "Name": "PATCHOULI",
+    "Variant": "(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 309,
+    "IdString": "remilia_2d",
+    "FullName": "REMILIA(2D)",
+    "Name": "REMILIA",
+    "Variant": "(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 310,
+    "IdString": "saki_2d",
+    "FullName": "SAKI(2D)",
+    "Name": "SAKI",
+    "Variant": "(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 311,
+    "IdString": "keiki_2d",
+    "FullName": "KEIKI(2D)",
+    "Name": "KEIKI",
+    "Variant": "(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 312,
+    "IdString": "mayumi_2d",
+    "FullName": "MAYUMI(2D)",
+    "Name": "MAYUMI",
+    "Variant": "(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 313,
+    "IdString": "luna",
+    "FullName": "LUNA",
+    "Name": "LUNA",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 314,
+    "IdString": "buro_2d",
+    "FullName": "BURO",
+    "Name": "BURO",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 315,
+    "IdString": "rin_2d",
+    "FullName": "RIN",
+    "Name": "RIN",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 316,
+    "IdString": "marija_2d",
+    "FullName": "MARIJA",
+    "Name": "MARIJA",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 317,
+    "IdString": "ymir_2d",
+    "FullName": "YMIR",
+    "Name": "YMIR",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 318,
+    "IdString": "d_siro_2019",
+    "FullName": "SIRO",
+    "Name": "SIRO",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 319,
+    "IdString": "mito_tkn",
+    "FullName": "MITO",
+    "Name": "MITO",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 320,
+    "IdString": "lily_2d",
+    "FullName": "LILY",
+    "Name": "LILY",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 321,
+    "IdString": "teruyama_2d",
+    "FullName": "TERUYAMA",
+    "Name": "TERUYAMA",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 322,
+    "IdString": "haneru_2d",
+    "FullName": "HANERU HIDA",
+    "Name": "HANERU",
+    "Variant": "HIDA",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 323,
+    "IdString": "chuni_2d",
+    "FullName": "CHUNI PENGUIN",
+    "Name": "CHUNI",
+    "Variant": "PENGUIN",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 324,
+    "IdString": "richt_2d",
+    "FullName": "RICHTSHUTZE",
+    "Name": "RICHT",
+    "Variant": "SHUTZE",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 325,
+    "IdString": "magellan_2d",
+    "FullName": "MAGELLAN MAGELLAN",
+    "Name": "MAGELLAN",
+    "Variant": "MAGELLAN",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 326,
+    "IdString": "sakuramiko_2d",
+    "FullName": "MIKO SAKURA",
+    "Name": "MIKO",
+    "Variant": "SAKURA",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 327,
+    "IdString": "fubuki_2d",
+    "FullName": "FUBUKI SHIRAKAMI",
+    "Name": "FUBUKI",
+    "Variant": "SHIRAKAMI",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 328,
+    "IdString": "matsuri_2d",
+    "FullName": "MATSURI NATSUIRO",
+    "Name": "MATSURI",
+    "Variant": "NATSUIRO",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 329,
+    "IdString": "marine_2d",
+    "FullName": "MARINE HOUSHOU",
+    "Name": "MARINE",
+    "Variant": "HOUSHOU",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 330,
+    "IdString": "satori_2d",
+    "FullName": "SATORI(2D)",
+    "Name": "SATORI(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 331,
+    "IdString": "koishi_2d",
+    "FullName": "KOISHI(2D)",
+    "Name": "KOISHI(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 332,
+    "IdString": "orin_2d",
+    "FullName": "ORIN(2D)",
+    "Name": "ORIN(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 333,
+    "IdString": "utsuho_2d",
+    "FullName": "UTSUHO(2D)",
+    "Name": "UTSUHO(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 334,
+    "IdString": "p4all",
+    "FullName": "P4ALL(2D)",
+    "Name": "P4ALL(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 335,
+    "IdString": "linka10th_2d",
+    "FullName": "LINKA(Fairy)",
+    "Name": "LINKA",
+    "Variant": "(Fairy)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 336,
+    "IdString": "yume10th_2d",
+    "FullName": "YUME(Fairy)",
+    "Name": "YUME",
+    "Variant": "(Fairy)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 337,
+    "IdString": "seine10th_2d",
+    "FullName": "SEINE(Fairy)",
+    "Name": "SEINE",
+    "Variant": "(Fairy)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 338,
+    "IdString": "hime2_2d",
+    "FullName": "HIME(Ver.2)",
+    "Name": "HIME",
+    "Variant": "(Ver.2)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 339,
+    "IdString": "hina2_2d",
+    "FullName": "HINA(Ver.2)",
+    "Name": "HINA",
+    "Variant": "(Ver.2)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 340,
+    "IdString": "rinku_2d",
+    "FullName": "RINKU AIMOTO",
+    "Name": "RINKU",
+    "Variant": "AIMOTO",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 341,
+    "IdString": "kyoko_2d",
+    "FullName": "KYOKO YAMATE",
+    "Name": "KYOKO",
+    "Variant": "YAMATE",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 342,
+    "IdString": "shouni_2d",
+    "FullName": "SHONI PENGUIN",
+    "Name": "SHONI",
+    "Variant": "PENGUIN",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 343,
+    "IdString": "survivalzundoko_2d",
+    "FullName": "SURVIVAL ZUNDOKO",
+    "Name": "SURVIVAL",
+    "Variant": "ZUNDOKO",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 344,
+    "IdString": "nekomiyahinata",
+    "FullName": "HINATA(2D)",
+    "Name": "HINATA(2D)",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 345,
+    "IdString": "hinatavr",
+    "FullName": "HINATA(VirtuaREAL)",
+    "Name": "HINATA",
+    "Variant": "(VirtuaREAL)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 346,
+    "IdString": "pikameevr",
+    "FullName": "PIKAMEE(VirtuaREAL)",
+    "Name": "PIKAMEE",
+    "Variant": "(VirtuaREAL)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 347,
+    "IdString": "tomoshikavr",
+    "FullName": "TOMOSHIKA(VirtuaREAL)",
+    "Name": "TOMOSHIKA",
+    "Variant": "(VirtuaREAL)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 348,
+    "IdString": "akarihoshizaki",
+    "FullName": "AKARI HOSHIZAKI",
+    "Name": "AKARI",
+    "Variant": "HOSHIZAKI",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 349,
+    "IdString": "yuzufujisawa",
+    "FullName": "YUZU FUJISAWA",
+    "Name": "YUZU",
+    "Variant": "FUJISAWA",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 350,
+    "IdString": "aoimisumi",
+    "FullName": "AOI MISUMI",
+    "Name": "AOI",
+    "Variant": "MISUMI",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 351,
+    "IdString": "setsunasumeragi",
+    "FullName": "SETSUNA SUMERAGI",
+    "Name": "SETSUNA",
+    "Variant": "SUMERAGI",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 352,
+    "IdString": "navinyan",
+    "FullName": "NAVINYAN",
+    "Name": "NAVINYAN",
+    "Variant": "",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 353,
+    "IdString": "kaguranana",
+    "FullName": "KAGURANANA(2D)",
+    "Name": "KAGURANANA",
+    "Variant": "(2D)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 354,
+    "IdString": "nanavr",
+    "FullName": "KAGURANANA(VirtuaREAL)",
+    "Name": "KAGURANANA",
+    "Variant": "(VirtuaREAL)",
+    "AcquireMethod": "Get via a campaign"
+  },
+  {
+    "Id": 355,
+    "IdString": "kyovr",
+    "FullName": "KYO(VirtuaREAL)",
+    "Name": "KYO",
+    "Variant": "(VirtuaREAL)",
+    "AcquireMethod": "Get via a campaign"
+  }
+]

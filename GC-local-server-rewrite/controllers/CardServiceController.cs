@@ -40,14 +40,14 @@ public class CardServiceController : WebApiController
     {
         if (!Enum.IsDefined(typeof(Command), cmdType))
         {
-            throw new ArgumentOutOfRangeException(nameof(cmdType), cmdType, "Cmd type is unknown!");
+            throw new ArgumentOutOfRangeException(nameof(cmdType), cmdType, $"Cmd type is unknown!\n Data is {xmlData}");
         }
         
         var command = (Command)cmdType;
 
         return command switch
         {
-            Command.CardRequest => ProcessCardRequest(mac, cardId, xmlData, type),
+            Command.CardReadRequest or Command.CardWriteRequest => ProcessCardRequest(mac, cardId, xmlData, type),
             Command.ReissueRequest => ProcessReissueRequest(),
             Command.RegisterRequest => ProcessRegisterRequest(cardId, xmlData),
             _ => throw new ArgumentOutOfRangeException(nameof(command), command, "Command unknown, should never happen!")
@@ -66,7 +66,7 @@ public class CardServiceController : WebApiController
         "Get reissue request, returning not reissue".Info();
         return ConstructResponse("", ReturnCode.NotReissue);
     }
-    
+
     private string ProcessCardRequest(string mac, long cardId, string xmlData, int type)
     {
         if (!Enum.IsDefined(typeof(CardRequestType), type))
@@ -534,35 +534,56 @@ public class CardServiceController : WebApiController
         $"Updated card play count, current count is {data.PlayCount}".Info();
     }
 
-    private void WriteCardDetail(long cardId, string xmlData)
+    private void  WriteCardDetail(long cardId, string xmlData)
     {
         var result = cardSqLiteConnection.Table<CardDetail>()
             .Where(detail => detail.CardId == cardId);
 
-        // Unlock all unlockable songs in card details table when write for the first time
+        // Unlock all unlockable songs in card details table when write card detail for the first time
         if (!result.Any())
         {
-            var unlockableSongIds = Configs.SETTINGS.UnlockableSongIds;
-
-            if (unlockableSongIds is null)
-            {
-                unlockableSongIds = Configs.DEFAULT_UNLOCKABLE_SONGS;
-            }
-            var detailList = unlockableSongIds.Select(id => new CardDetail
-                {
-                    CardId = cardId,
-                    Pcol1 = 10,
-                    Pcol2 = id,
-                    Pcol3 = 0,
-                    ScoreUi2 = 1,
-                    ScoreUi6 = 1
-                })
-                .ToList();
-
-            cardSqLiteConnection.InsertOrIgnoreAll(detailList);
+            UnlockSongs(cardId);
         }
 
-        Write<CardDetail>(cardId, xmlData);
+        var reader = new ChoXmlReader<CardDetail>(new StringReader(xmlData)).WithXPath(Configs.DATA_XPATH);
+        var cardDetail = reader.Read();
+
+        if (cardDetail is null)
+        {
+            throw new HttpRequestException("Write object is null");
+        }
+
+        cardDetail.SetCardId(cardId);
+        cardDetail.LastPlayTime = DateTime.Now;
+        var rowsAffected = cardSqLiteConnection.InsertOrReplace(cardDetail);
+        if (rowsAffected == 0)
+        {
+            throw new ApplicationException("Update database failed!");
+        }
+
+        "Updated card detail".Info();
+    }
+    private void UnlockSongs(long cardId)
+    {
+        var unlockableSongIds = Configs.SETTINGS.UnlockableSongIds;
+
+        if (unlockableSongIds is null)
+        {
+            unlockableSongIds = Configs.DEFAULT_UNLOCKABLE_SONGS;
+        }
+        var detailList = unlockableSongIds.Select(id => new CardDetail
+            {
+                CardId = cardId,
+                Pcol1 = 10,
+                Pcol2 = id,
+                Pcol3 = 0,
+                ScoreUi2 = 1,
+                ScoreUi6 = 1,
+                LastPlayTime = DateTime.Now
+            })
+            .ToList();
+
+        cardSqLiteConnection.InsertOrIgnoreAll(detailList);
     }
 
     #endregion
@@ -612,7 +633,8 @@ public class CardServiceController : WebApiController
 
     private enum Command
     {
-        CardRequest = 256,
+        CardReadRequest = 256,
+        CardWriteRequest = 768,
         RegisterRequest = 512,
         ReissueRequest = 1536
     }

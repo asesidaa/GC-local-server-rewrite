@@ -13,4 +13,6 @@ public class SongPlayDetailData
     public Difficulty Difficulty { get; set; }
     
     public ClearState ClearState { get; set; }
+    
+    public DateTime LastPlayTime { get; set; }
 }

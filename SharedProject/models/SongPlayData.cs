@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using SharedProject.common;
+using SharedProject.enums;
 
 namespace SharedProject.models;
 
@@ -23,6 +24,17 @@ public class SongPlayData
         get
         {
             return SongPlaySubDataList.Sum(data => data.PlayCount);
+        }
+    }
+
+    [JsonIgnore]
+    public DateTime LastPlayTime
+    {
+        get
+        {
+            var songPlayDetailData = SongPlaySubDataList.Where(data => data.ClearState != ClearState.NotPlayed)
+                .MinBy(data => data.LastPlayTime);
+            return songPlayDetailData?.LastPlayTime ?? DateTime.MaxValue;
         }
     }
 }

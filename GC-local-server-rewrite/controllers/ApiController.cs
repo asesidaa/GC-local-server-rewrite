@@ -65,26 +65,38 @@ public class ApiController : WebApiController
     // ReSharper disable once UnusedMember.Global
     public bool SetPlayOption([JsonData] PlayOption data)
     {
-        var existing = cardSqLiteConnection.Table<CardDetail>()
+        var firstConfig = cardSqLiteConnection.Table<CardDetail>()
             .Where(detail => detail.CardId == data.CardId
-                             && detail.Pcol1 == Configs.CONFIG_PCOL1
+                             && detail.Pcol1 == Configs.FIRST_CONFIG_PCOL1
+                             && detail.Pcol2 == Configs.CONFIG_PCOL2
+                             && detail.Pcol3 == Configs.CONFIG_PCOL3);
+        
+        var secondConfig = cardSqLiteConnection.Table<CardDetail>()
+            .Where(detail => detail.CardId == data.CardId
+                             && detail.Pcol1 == Configs.SECOND_CONFIG_PCOL1
                              && detail.Pcol2 == Configs.CONFIG_PCOL2
                              && detail.Pcol3 == Configs.CONFIG_PCOL3);
 
-        if (!existing.Any())
+        if (!firstConfig.Any() || !secondConfig.Any())
         {
             $"Trying to update non existing card's config! Card id {data.CardId}".Warn();
 
             return false;
         }
 
-        var cardDetail = existing.First();
-        cardDetail.ScoreUi1 = (long)data.FastSlowIndicator;
-        cardDetail.ScoreUi2 = (long)data.FeverTrance;
-        
-        var result = cardSqLiteConnection.Update(cardDetail);
+        var firstDetail = firstConfig.First();
+        firstDetail.ScoreUi1 = (long)data.FastSlowIndicator;
+        firstDetail.ScoreUi2 = (long)data.FeverTrance;
+        firstDetail.ScoreI1 = data.AvatarId;
+        firstDetail.Fcol2 = (int)data.TitleId;
 
-        return result == 1;
+        var secondDetail = secondConfig.First();
+        secondDetail.ScoreI1 = data.NavigatorId;
+        
+        var firstResult = cardSqLiteConnection.Update(firstDetail);
+        var secondResult = cardSqLiteConnection.Update(secondDetail);
+
+        return firstResult == 1 && secondResult == 1;
     }
 
     [Route(HttpVerbs.Get, "/UserDetail/{cardId}")]
@@ -125,16 +137,26 @@ public class ApiController : WebApiController
 
     private void ProcessCardDetail(UserDetail userDetail, IDictionary<int, SongPlayData> songPlayDataDict)
     {
-        var option = cardSqLiteConnection.Table<CardDetail>()
-            .FirstOrDefault(detail => detail.CardId == userDetail.CardId 
-                                      && detail.Pcol1 == Configs.CONFIG_PCOL1
+        var firstOption = cardSqLiteConnection.Table<CardDetail>()
+            .FirstOrDefault(detail => detail.CardId == userDetail.CardId
+                                      && detail.Pcol1 == Configs.FIRST_CONFIG_PCOL1
                                       && detail.Pcol2 == Configs.CONFIG_PCOL2
                                       && detail.Pcol3 == Configs.CONFIG_PCOL3
-                , new CardDetail
-            {
-                CardId = userDetail.CardId
-            });
-        SetOptions(option, userDetail);
+                            , new CardDetail
+                            {
+                                CardId = userDetail.CardId
+                            });
+        var secondOption = cardSqLiteConnection.Table<CardDetail>()
+            .FirstOrDefault(detail => detail.CardId == userDetail.CardId
+                                      && detail.Pcol1 == Configs.SECOND_CONFIG_PCOL1
+                                      && detail.Pcol2 == Configs.CONFIG_PCOL2
+                                      && detail.Pcol3 == Configs.CONFIG_PCOL3
+                            , new CardDetail
+                            {
+                                CardId = userDetail.CardId
+                            });
+        
+        SetOptions(firstOption, secondOption, userDetail);
 
         var songCounts = cardSqLiteConnection.Table<CardDetail>()
             .Where(detail => detail.CardId == userDetail.CardId && detail.Pcol1 == Configs.COUNT_PCOL1);
@@ -162,10 +184,10 @@ public class ApiController : WebApiController
         }
     }
 
-    private static void SetOptions(CardDetail cardDetail, UserDetail userDetail)
+    private static void SetOptions(CardDetail firstOptionCardDetail, CardDetail secondOptionCardDetail, UserDetail userDetail)
     {
-        var fastSlow = (int)cardDetail.ScoreUi1;
-        var feverTrance = (int)cardDetail.ScoreUi2;
+        var fastSlow = (int)firstOptionCardDetail.ScoreUi1;
+        var feverTrance = (int)firstOptionCardDetail.ScoreUi2;
 
         if (!Enum.IsDefined(typeof(PlayOptions.FastSlowIndicator), fastSlow))
         {
@@ -179,9 +201,12 @@ public class ApiController : WebApiController
 
         userDetail.PlayOption = new PlayOption
         {
-            CardId = cardDetail.CardId,
+            CardId = firstOptionCardDetail.CardId,
             FastSlowIndicator = (PlayOptions.FastSlowIndicator)fastSlow,
-            FeverTrance = (PlayOptions.FeverTranceShow)feverTrance
+            FeverTrance = (PlayOptions.FeverTranceShow)feverTrance,
+            AvatarId = firstOptionCardDetail.ScoreI1,
+            TitleId = firstOptionCardDetail.Fcol2,
+            NavigatorId = secondOptionCardDetail.ScoreI1
         };
     }
     private void SetDetails(CardDetail cardDetail, IDictionary<int, SongPlayData> songPlayDataDict,
@@ -241,6 +266,7 @@ public class ApiController : WebApiController
             }
 
             songPlayDetailData.PlayCount = (int)cardDetail.ScoreUi1;
+            songPlayDetailData.LastPlayTime = cardDetail.LastPlayTime;
             songPlayDetailData.ClearState = ClearState.Failed;
             userDetail.PlayedStageCount++;
 
