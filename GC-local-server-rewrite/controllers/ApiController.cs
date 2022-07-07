@@ -39,6 +39,20 @@ public class ApiController : WebApiController
         return result;
     }
 
+    [Route(HttpVerbs.Post, "/Users/SetPlayerName")]
+    public bool SetPlayerName([JsonData] User data)
+    {
+        var existing = cardSqLiteConnection.Table<Card>().Where(card => card.CardId == data.CardId);
+        if (!existing.Any())
+        {
+            $"Trying to update non existing user's name! Card id {data.CardId}".Warn();
+            return false;
+        }
+        var user = existing.First();
+        user.PlayerName = data.PlayerName;
+        return cardSqLiteConnection.Update(user) == 1;
+    }
+
     [Route(HttpVerbs.Post, "/UserDetail/SetMusicFavorite")]
     // ReSharper disable once UnusedMember.Global
     public bool SetFavorite([JsonData] MusicFavoriteData data)

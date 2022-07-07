@@ -2,6 +2,8 @@
 @using models = SharedProject.models
 @inject NavigationManager NavigationManager
 @inject HttpClient Client
+@inject IDialogService DialogService
+@inject ILogger<Users> Logger
 
 <PageTitle>Users</PageTitle>
 
@@ -41,13 +43,17 @@
                             <CardHeaderContent>
                                 <MudText Typo="Typo.h5">@user.PlayerName</MudText>
                             </CardHeaderContent>
+                            <CardHeaderActions>
+                                <MudIconButton Icon="@Icons.Filled.Edit" Color="Color.Default"
+                                               OnClick="() => OnEditPlayerNameClicked(user)"/>
+                            </CardHeaderActions>
                         </MudCardHeader>
                         <MudCardContent>
                             <MudText Typo="Typo.h6">Card ID</MudText>
                             <MudText>@user.CardId</MudText>
                         </MudCardContent>
                         <MudCardActions>
-                            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="() => OnClick(user)">Check detail</MudButton>
+                            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="() => OnCheckDetailClick(user)">Check detail</MudButton>
                         </MudCardActions>
                     </MudCard>
                 </MudItem>
@@ -70,9 +76,23 @@
         users = await Client.GetFromJsonAsync<List<models.User>>("api/Users") ?? new List<models.User>();
     }
 
-    private void OnClick(models.User user)
+    private void OnCheckDetailClick(models.User user)
     {
         NavigationManager.NavigateTo($"user/{user.CardId}");
+    }
+
+    private async Task OnEditPlayerNameClicked(models.User user)
+    {
+        var options = new DialogOptions
+        {
+            CloseOnEscapeKey = false,
+            DisableBackdropClick = true,
+            FullWidth = true
+        };
+        var parameters = new DialogParameters();
+        parameters.Add("Data", user);
+        var dialog = DialogService.Show<ChangePlayerNameDialog>("Favorite", parameters, options);
+        var result = await dialog.Result;
     }
 
 }

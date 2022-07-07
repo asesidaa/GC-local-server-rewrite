@@ -1,5 +1,8 @@
-﻿namespace SharedProject.enums;
+﻿using ProtoBuf;
 
+namespace SharedProject.enums;
+
+[ProtoContract]
 public enum NavigatorDefaultAvailability
 {
     NotAvailable = 0,

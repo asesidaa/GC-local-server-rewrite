@@ -7,4 +7,8 @@
         <RootNamespace>SharedProject</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="protobuf-net" Version="3.1.17" />
+    </ItemGroup>
+
 </Project>

@@ -20,7 +20,15 @@ public static class SharedConstants
 
     public const int S_PLUS_PLUS_SCORE_THRESHOLD = 990000;
 
-    public static readonly ScoreGradeMap[] GRADES =
+    public const int MAX_PLAYER_NAME_LENGTH = 8;
+
+    public const string NAVIGATOR_DAT_URI = "data/navigator.dat";
+    
+    public const string AVATAR_DAT_URI = "data/avatar.dat";
+    
+    public const string TITLE_DAT_URI = "data/title.dat";
+    
+    public static readonly ScoreGradeMap[] Grades =
     {
         new(E_SCORE_THRESHOLD, "E"),
         new(D_SCORE_THRESHOLD, "D"),

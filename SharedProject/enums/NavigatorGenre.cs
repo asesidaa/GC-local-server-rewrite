@@ -1,5 +1,8 @@
-﻿namespace SharedProject.enums;
+﻿using ProtoBuf;
 
+namespace SharedProject.enums;
+
+[ProtoContract]
 public enum NavigatorGenre
 {
     Default = 1,

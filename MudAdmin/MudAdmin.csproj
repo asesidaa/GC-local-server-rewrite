@@ -19,6 +19,7 @@
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.4" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.4" PrivateAssets="all" />
         <PackageReference Include="MudBlazor" Version="6.0.11-dev.4" />
+        <PackageReference Include="protobuf-net" Version="3.1.17" />
     </ItemGroup>
 
     <ItemGroup>
@@ -28,6 +29,18 @@
     <ItemGroup>
       <Content Update="wwwroot\appsettings.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </Content>
+      <Content Update="wwwroot\data\avatar.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </Content>
+      <Content Update="wwwroot\data\navigator.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </Content>
+      <Content Update="wwwroot\data\title.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       </Content>
       <Content Update="wwwroot\news.png">
