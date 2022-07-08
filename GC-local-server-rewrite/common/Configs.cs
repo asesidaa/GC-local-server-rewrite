@@ -4,7 +4,7 @@ namespace GCLocalServerRewrite.common;
 
 public static class Configs
 {
-    public const bool USE_FILE_CACHE = true;
+    public const bool USE_FILE_CACHE = false;
 
     public const string ROOT_CA_CN = "Taito Arcade Machine CA";
 

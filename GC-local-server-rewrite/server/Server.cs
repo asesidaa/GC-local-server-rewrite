@@ -44,10 +44,18 @@ public class Server
             .WithWebApi(Configs.UPDATE_SERVICE_BASE_ROUTE, CustomResponseSerializer.None(true),
                 module => module.WithController<UpdateController>())
             .WithStaticFolder(Configs.STATIC_BASE_ROUTE, PathHelper.HtmlRootPath, true, m => m
-                .WithContentCaching(Configs.USE_FILE_CACHE))
+                                  .WithContentCaching(Configs.USE_FILE_CACHE))
             // Add static files after other modules to avoid conflicts
-            .WithStaticFolder("/", PathHelper.HtmlRootPath, true, m => m
-                .WithContentCaching(Configs.USE_FILE_CACHE))
+            .WithStaticFolder("/", PathHelper.HtmlRootPath, true, m =>
+            {
+                m.WithContentCaching(Configs.USE_FILE_CACHE);
+                m.OnMappingFailed = async (context, info) =>
+                {
+                    var htmlContents = await File.ReadAllTextAsync(Path.Combine(PathHelper.HtmlRootPath, "index.html"));
+                    context.Response.StatusCode = 200;
+                    await context.SendStringAsync(htmlContents, "text/html", Encoding.UTF8);
+                };
+            })
             .WithModule(new ActionModule("/", HttpVerbs.Any,
                 ctx => ctx.SendDataAsync(new { Message = "Error" })));
         server.AddCustomMimeType(".dll", "application/octet-stream");
