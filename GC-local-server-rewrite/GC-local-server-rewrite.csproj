@@ -14,8 +14,8 @@
         <PackageReference Include="ChoETL" Version="1.2.1.47" />
         <PackageReference Include="Config.Net" Version="4.19.0" />
         <PackageReference Include="Config.Net.Json" Version="4.19.0" />
-        <PackageReference Include="EmbedIO" Version="3.4.3" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+        <PackageReference Include="EmbedIO" Version="3.5.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0-preview.5.22301.12" />
         <PackageReference Include="sqlite-net2" Version="2.1.0-preB" />
         <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.0" />
         <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.2" />

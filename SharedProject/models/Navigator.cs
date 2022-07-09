@@ -32,6 +32,10 @@ public class Navigator
     
     [ProtoMember(9)]
     public string? ToolTipEn { get; set; }
+
+    [ProtoIgnore]
+    public string? NameEntryString => NameEntry0?.ToString();
+
     public override string ToString() {
         return $"{Id}: {NameEntry1?.NameWithVariant}, {NameEntry1?.IllustrationCredit}";
     }

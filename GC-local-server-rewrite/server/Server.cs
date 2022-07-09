@@ -2,7 +2,6 @@
 using EmbedIO.Actions;
 using EmbedIO.Files;
 using EmbedIO.WebApi;
-using GCLocalServerRewrite.backports;
 using GCLocalServerRewrite.common;
 using GCLocalServerRewrite.controllers;
 using GCLocalServerRewrite.models;
@@ -25,23 +24,23 @@ public class Server
             .WithLocalSessionManager()
             .WithCors()
             .WithWebApi(Configs.API_BASE_ROUTE, module => module.WithController<ApiController>())
-            .WithWebApi(Configs.CARD_SERVICE_BASE_ROUTE, CustomResponseSerializer.None(true),
+            .WithWebApi(Configs.CARD_SERVICE_BASE_ROUTE, ResponseSerializer.None(true),
                 module => module.WithController<CardServiceController>())
-            .WithWebApi(Configs.OPTION_SERVICE_BASE_ROUTE, CustomResponseSerializer.None(true),
+            .WithWebApi(Configs.OPTION_SERVICE_BASE_ROUTE, ResponseSerializer.None(true),
                 module => module.WithController<OptionServiceController>())
-            .WithWebApi(Configs.UPLOAD_SERVICE_BASE_ROUTE, CustomResponseSerializer.None(true),
+            .WithWebApi(Configs.UPLOAD_SERVICE_BASE_ROUTE, ResponseSerializer.None(true),
                 module => module.WithController<UploadServiceController>())
-            .WithWebApi(Configs.RESPONE_SERVICE_BASE_ROUTE, CustomResponseSerializer.None(true),
+            .WithWebApi(Configs.RESPONE_SERVICE_BASE_ROUTE, ResponseSerializer.None(true),
                 module => module.WithController<ResponeServiceController>())
-            .WithWebApi(Configs.INCOM_SERVICE_BASE_ROUTE, CustomResponseSerializer.None(true),
+            .WithWebApi(Configs.INCOM_SERVICE_BASE_ROUTE, ResponseSerializer.None(true),
                 module => module.WithController<IncomServiceController>())
-            .WithWebApi(Configs.ALIVE_BASE_ROUTE, CustomResponseSerializer.None(true),
+            .WithWebApi(Configs.ALIVE_BASE_ROUTE, ResponseSerializer.None(true),
                 module => module.WithController<AliveController>())
-            .WithWebApi(Configs.SERVER_BASE_ROUTE, CustomResponseSerializer.None(true),
+            .WithWebApi(Configs.SERVER_BASE_ROUTE, ResponseSerializer.None(true),
                 module => module.WithController<ServerController>())
-            .WithWebApi(Configs.RANK_BASE_ROUTE, CustomResponseSerializer.None(true),
+            .WithWebApi(Configs.RANK_BASE_ROUTE, ResponseSerializer.None(true),
                 module => module.WithController<RankController>())
-            .WithWebApi(Configs.UPDATE_SERVICE_BASE_ROUTE, CustomResponseSerializer.None(true),
+            .WithWebApi(Configs.UPDATE_SERVICE_BASE_ROUTE, ResponseSerializer.None(true),
                 module => module.WithController<UpdateController>())
             .WithStaticFolder(Configs.STATIC_BASE_ROUTE, PathHelper.HtmlRootPath, true, m => m
                                   .WithContentCaching(Configs.USE_FILE_CACHE))
@@ -65,23 +64,6 @@ public class Server
         server.AddCustomMimeType(".wasm", "application/wasm");
         server.AddCustomMimeType(".woff", "application/font-woff");
         server.AddCustomMimeType(".woff2", "application/font-woff2");
-        server.HandleHttpException(async (context, exception) =>
-        {
-            context.Response.StatusCode = exception.StatusCode;
-
-            switch (exception.StatusCode)
-            {
-                case 404:
-                    var htmlContents = await File.ReadAllTextAsync(Path.Combine(PathHelper.HtmlRootPath, "index.html"));
-                    await context.SendStringAsync(htmlContents, "text/html", Encoding.UTF8);
-
-                    break;
-                default:
-                    await HttpExceptionHandler.Default(context, exception);
-
-                    break;
-            }
-        });
 
         // Listen for state changes.
         server.StateChanged += (_, e) => $"WebServer New State - {e.NewState}".Info();
