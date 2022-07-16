@@ -30,6 +30,9 @@ public interface IAppSettings
     
     [Option(DefaultValue = Configs.DEFAULT_SERVER_IP)]
     string ServerIp { get; }
+    
+    [Option(DefaultValue = Configs.DEFAULT_EVENT_FOLDER)]
+    string EventFolder { get; }
 
     [Option(DefaultValue = Configs.DEFAULT_RELAY_SERVER)]
     string RelayServer { get; }

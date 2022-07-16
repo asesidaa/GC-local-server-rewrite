@@ -6,9 +6,10 @@
   "SeCount": 26,
   "TitleCount": 5530,
   "CardDbName": "card.db3",
-  "MusicDbName": "music471.db3",
+  "MusicDbName": "music471omni.db3",
   "ServerIp": "127.0.0.1",
-  "RelayServer": "26.56.10.224",
+  "EventFolder": "event",
+  "RelayServer": "127.0.0.1",
   "RelayPort": 54321,
   "UnlockableSongIds": [
     11, 13, 149, 273, 291, 320, 321, 371, 378, 384, 464, 471, 474, 475, 492, 494, 498, 520, 
@@ -69,7 +70,7 @@
       "FileName": "/event_unlock_20201125.cmp",
       "NotBeforeUnixTime": 1335677127,
       "NotAfterUnixTime": 1966397127,
-      "Md5": "623b0f10125cbe19c5394d992930ae8c",
+      "Md5": "534a253e3de8360c2beff49a5f120105",
       "Index": 8
     }
   ]

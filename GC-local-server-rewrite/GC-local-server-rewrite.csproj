@@ -50,10 +50,6 @@
 		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         </Content>
         <None Remove="GC-local-server-rewrite.exe.config.xml" />
-        <None Include="GC-local-server-rewrite.exe.config">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-        </None>
         <None Remove="db\music4MAX.db3" />
         <Content Include="db\music4MAX.db3">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

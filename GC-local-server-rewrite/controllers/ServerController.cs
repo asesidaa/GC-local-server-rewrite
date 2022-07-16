@@ -15,6 +15,8 @@ namespace GCLocalServerRewrite.controllers;
 
 public class ServerController : WebApiController
 {
+    private static readonly string DataUrl = $"https://{Configs.SETTINGS.ServerIp}/{Configs.STATIC_FOLDER}/{Configs.SETTINGS.EventFolder}";
+    
     [Route(HttpVerbs.Get, "/certify.php")]
     public string Certify([QueryData] NameValueCollection parameters)
     {
@@ -99,12 +101,13 @@ public class ServerController : WebApiController
         for (var i = 0; i < count; i++)
         {
             var data = responseList[i];
-            dataString.Append($"{i},{data.FileName},{data.NotBeforeUnixTime},{data.NotAfterUnixTime},{data.Md5},{data.Index}");
+            var fileUrl = data.FileName.StartsWith("/") ? $"{DataUrl}{data.FileName}" : $"{DataUrl}/{data.FileName}";
+            dataString.Append($"{i},{fileUrl},{data.NotBeforeUnixTime},{data.NotAfterUnixTime},{data.Md5},{data.Index}");
             dataString.Append('\n');
         }
 
         return $"count={count}\n" +
-               "nexttime=0\n" +
+               "nexttime=1\n" +
                dataString.ToString().TrimEnd('\n');
     }
 

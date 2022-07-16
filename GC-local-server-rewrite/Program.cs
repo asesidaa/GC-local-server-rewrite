@@ -32,7 +32,7 @@ internal class Program
         Terminal.Flush();
 
         Console.WriteLine("Press any key to exit.");
-        WaitForKeypress();
+        Console.ReadKey(true);
     }
 
     private static void InitializeLogging()
@@ -67,7 +67,7 @@ internal class Program
         // Be sure to run in parallel.
         await Task.Yield();
 
-        "Press any key to stop the web server.".Info(nameof(Program));
+        "Press x to stop the web server.".Info(nameof(Program));
         WaitForKeypress();
         "Stopping...".Info(nameof(Program));
         cancel();
@@ -78,12 +78,17 @@ internal class Program
     /// </summary>
     private static void WaitForKeypress()
     {
-        while (Console.KeyAvailable)
-        {
-            Console.ReadKey(true);
-        }
+        ConsoleKeyInfo consoleKeyInfo;
 
-        Console.ReadKey(true);
+        do
+        {
+            while (Console.KeyAvailable == false)
+            {
+                Thread.Sleep(250);
+            }
+
+            consoleKeyInfo = Console.ReadKey(true);
+        } while (consoleKeyInfo.Key != ConsoleKey.X);
     }
 
     private static void LogConfigValues()

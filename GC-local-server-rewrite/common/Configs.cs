@@ -4,7 +4,7 @@ namespace GCLocalServerRewrite.common;
 
 public static class Configs
 {
-    public const bool USE_FILE_CACHE = false;
+    public const bool USE_FILE_CACHE = true;
 
     public const string ROOT_CA_CN = "Taito Arcade Machine CA";
 
@@ -126,6 +126,8 @@ public static class Configs
 
     public const string RANK_STATUS_XPATH = $"{ROOT_XPATH}/ranking_status";
 
+    public const string ONLINE_MATCHING_XPATH = $"{ROOT_XPATH}/online_matching/record";
+
     public const int FIRST_CONFIG_PCOL1 = 0;
     public const int SECOND_CONFIG_PCOL1 = 1;
     public const int CONFIG_PCOL2 = 0;
@@ -159,6 +161,7 @@ public static class Configs
     public const string DEFAULT_SERVER_IP = "127.0.0.1";
     public const string DEFAULT_RELAY_SERVER = "127.0.0.1";
     public const int DEFAULT_RELAY_PORT = 54321;
+    public const string DEFAULT_EVENT_FOLDER = "event";
 
     public static readonly IReadOnlyList<int> DEFAULT_UNLOCKABLE_SONGS = new[]
     {

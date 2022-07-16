@@ -18,6 +18,8 @@ public class CardServiceController : WebApiController
     private readonly SQLiteConnection cardSqLiteConnection;
     private readonly SQLiteConnection musicSqLiteConnection;
 
+    private static Dictionary<long, OnlineMatchingEntry> OnlineMatchingEntries = new();
+
     public CardServiceController()
     {
         cardSqLiteConnection = DatabaseHelper.ConnectDatabase(Configs.SETTINGS.CardDbName);
@@ -42,7 +44,7 @@ public class CardServiceController : WebApiController
         {
             throw new ArgumentOutOfRangeException(nameof(cmdType), cmdType, $"Cmd type is unknown!\n Data is {xmlData}");
         }
-        
+
         var command = (Command)cmdType;
 
         return command switch
@@ -73,9 +75,9 @@ public class CardServiceController : WebApiController
         {
             throw new ArgumentOutOfRangeException(nameof(type), type, "Card request type is unknown!");
         }
-        
+
         var requestType = (CardRequestType)type;
-        
+
         $"Getting card request, type is {requestType}".Info();
 
         switch (requestType)
@@ -172,8 +174,8 @@ public class CardServiceController : WebApiController
             {
                 return ConstructResponse(TotalTrophy(cardId));
             }
-            case CardRequestType.SessionStart:
-            case CardRequestType.SessionGet:
+            case CardRequestType.StartSession:
+            case CardRequestType.GetSession:
             {
                 return ConstructResponse(GetSession(cardId, mac));
             }
@@ -184,19 +186,19 @@ public class CardServiceController : WebApiController
 
             case CardRequestType.WriteCard:
             {
-                $"Card Request data is {xmlData}".Info();
+                $"Card Write data is {xmlData}".Info();
                 Write<Card>(cardId, xmlData);
                 return ConstructResponse(xmlData);
             }
             case CardRequestType.WriteCardDetail:
             {
-                $"Card Request data is {xmlData}".Info();
+                $"Card Detail Write data is {xmlData}".Info();
                 WriteCardDetail(cardId, xmlData);
                 return ConstructResponse(xmlData);
             }
             case CardRequestType.WriteCardBData:
             {
-                $"Card Request data is {xmlData}".Info();
+                $"Card BData Write data is {xmlData}".Info();
                 Write<CardBData>(cardId, xmlData);
                 WriteCardPlayCount(cardId);
                 return ConstructResponse(xmlData);
@@ -212,8 +214,17 @@ public class CardServiceController : WebApiController
             case CardRequestType.WriteUnlockKeynum:
             case CardRequestType.WriteSoundEffect:
             {
-                $"Card Request data is {xmlData}".Info();
+                $"Card Write data is {xmlData}".Info();
                 return ConstructResponse(xmlData);
+            }
+
+            #endregion
+            #region OnlineMatching
+
+            case CardRequestType.StartOnlineMatching:
+            {
+                $"Start Online Matching, data is {xmlData}".Info();
+                return ConstructResponse(StartOnlineMatching(cardId, xmlData));
             }
 
             #endregion
@@ -222,7 +233,7 @@ public class CardServiceController : WebApiController
                 throw new ArgumentOutOfRangeException(nameof(requestType), requestType, "Request type not captured, should never happen!");
         }
     }
-
+ 
     #region ReadImplementation
 
     private string Card(long cardId, out ReturnCode returnCode)
@@ -404,7 +415,7 @@ public class CardServiceController : WebApiController
 
     private static string ConstructResponse(string xml, ReturnCode returnCode = ReturnCode.Ok)
     {
-        var returnCodeInt = (int)returnCode;  
+        var returnCodeInt = (int)returnCode;
         if (returnCodeInt == 1)
         {
             return $"{returnCodeInt}\n" +
@@ -534,7 +545,7 @@ public class CardServiceController : WebApiController
         $"Updated card play count, current count is {data.PlayCount}".Info();
     }
 
-    private void  WriteCardDetail(long cardId, string xmlData)
+    private void WriteCardDetail(long cardId, string xmlData)
     {
         var result = cardSqLiteConnection.Table<CardDetail>()
             .Where(detail => detail.CardId == cardId);
@@ -588,6 +599,44 @@ public class CardServiceController : WebApiController
 
     #endregion
 
+    #region OnlineMatchingImplementation
+
+    private static string StartOnlineMatching(long cardId, string xmlData)
+    {
+        var reader = new ChoXmlReader<OnlineMatchingEntry>(new StringReader(xmlData)).WithXPath(Configs.DATA_XPATH);
+        var entry = reader.Read();
+
+        /*var fake = entry.CopyPropertiesToNew<OnlineMatchingEntry>();
+        fake.MachineId--;
+        fake.MatchingId = 0xB16B00B5;
+        fake.EntryStart = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        fake.CardId = cardId - 1;
+        fake.AvatarId--;
+        fake.PlayerName = "FAKE";
+        fake.EntryNo = 0x4B1D;
+        fake.TitleId--;
+        fake.MatchingTimeout = 90;
+        fake.MatchingRemainingTime = 89;
+        fake.MatchingWaitTime = 1;
+        fake.Status = 1;
+        OnlineMatchingEntries[fake.CardId] = fake;*/
+
+        entry.CardId = cardId;
+        entry.MatchingId = 0xB16B00B5;
+        entry.EntryNo = 0;
+        entry.EntryStart = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        entry.MatchingTimeout = 90 * 1000;
+        entry.MatchingRemainingTime = 89 * 1000;
+        entry.MatchingWaitTime = 1;
+        entry.Status = 1;
+        entry.Dump().Info();
+        OnlineMatchingEntries[cardId] = entry;
+        
+        return GenerateRecordsXml(OnlineMatchingEntries.Values.ToList(), Configs.ONLINE_MATCHING_XPATH);
+    }
+
+    #endregion
+
     private enum CardRequestType
     {
         // Read data
@@ -613,8 +662,8 @@ public class CardServiceController : WebApiController
         ReadTotalTrophy = 8468,
 
         // Sessions
-        SessionGet = 401,
-        SessionStart = 402,
+        GetSession = 401,
+        StartSession = 402,
 
         // Write data
         WriteCard = 771,
@@ -628,7 +677,10 @@ public class CardServiceController : WebApiController
         WriteCoin = 980,
         WriteSkin = 933,
         WriteUnlockKeynum = 1020,
-        WriteSoundEffect = 8969
+        WriteSoundEffect = 8969,
+        
+        // Online matching
+        StartOnlineMatching = 8705
     }
 
     private enum Command
@@ -645,12 +697,12 @@ public class CardServiceController : WebApiController
         /// 処理は正常に完了しました in debug string
         /// </summary>
         Ok = 1,
-        
+
         /// <summary>
         /// 未登録のカードです in debug string
         /// </summary>
         CardNotRegistered = 23,
-        
+
         /// <summary>
         /// 再発行予約がありません in debug string
         /// </summary>
