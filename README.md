@@ -4,8 +4,6 @@ This is a rewritten version of GC local  server, original version is [here](http
 
 Server functionality is basically the same, but the code should be now easier to work with, and can be extended esaily.
 
-Now it supports card registration.
-
 ## Usage
 
 Download latest release from release page.
@@ -21,11 +19,11 @@ If you don't have the modified NesysService.exe, modify the host file, add the f
 127.0.0.1 fjm170920zero.nesica.net
 ```
 
-Open mmc.exe, delete any certificate in LocalMachine/My or LocalMachine/Trusted root named Taito Arcade Machine CA (if present, most likely not)
+Open mmc.exe, delete any certificate in `LocalMachine/My` or `LocalMachine/Trusted root` named `Taito Arcade Machine CA` (if present, most likely not)
 
 Open exe with **admin privileges** for certificate generating functionalities to work.
 
-Open game using teknoparrot loader (you can find that in discord). The loader should be also opened with **admin privileges**, otherwise it will not work.
+Open game using openparrot loader (you can find that in discord). The loader should be also opened with **admin privileges**, otherwise it will not work.
 
 ## Config
 
@@ -41,7 +39,7 @@ If you are using 4EX 4.52 data, change MusicDbName to bundled music.db3
 
 To unlock new avatars/navgators/skins/sound effects/titles from other version, change the corresponding count in config.
 
-You can get the corresponding count in data/boot/*.dat file.
+You can get the corresponding count in data/boot/*.dat file. It is the first 2 bytes (uint16) encoded in big endian.
 
 ## Event files
 
@@ -96,7 +94,7 @@ You can now add solo events. In the config file, change the following section
       "NotBeforeUnixTime": 1335677127,
       "NotAfterUnixTime": 1966397127,
       "Md5": "ee228de44d6656a9ec0bb7f1a0ca64e1",
-      "Index": 0 // Special value, must be 1 for telop, this is the text in scrolling banner
+      "Index": 0 // Special value, must be 0 for telop, this is the text in scrolling banner
     },
     {
       "FileName": "/event_unlock_20201125.cmp",
@@ -142,9 +140,11 @@ reward0.navigator = 0
 
 File name starts with `telop` is the scrolling banner, it's just a plain text file with banner content.
 
-Other files like `news`, `option` and `cap` should also be possible, but I have not tested these.
+Other files like `option` and `cap` should also be possible, but I have not tested these.
 
 The configured file should be put into the `event` folder, which you can change the position by using jconfig (regedit->event path)
+
+The event files can also be downloaded from the server. Put the event files into `static/wwwroot/event` folder and the game will download the specified event files from the server.
 
 ## Missing functions
 
@@ -152,12 +152,12 @@ The configured file should be put into the `event` folder, which you can change 
 - [ ] Unlocking system (I don't like these two so I just hardcode them, if you are interested you can implement that and add a switch to enable, PRs are welcome)
 - [ ] Ranking system (Is this really needed for a local server?) 
 - [ ] Proper update check response (Now it will just throw 404)
-- [ ] PlayInfo.php (Now it will just throw 404, I don't know what data it expext)
+- [x] ~~PlayInfo.php (Now it will just throw 404, I don't know what data it expext)~~
 - [ ] Online matching (and online matching events)
 
 ## Difficulty unlocking
 
-This is processed on client side, so if you like to unlock all difficulties, just use Bemani patcher.
+This is processed on client side, so if you like to unlock all difficulties, just use Bemani patcher with 4.52 exe (they are compatible).
 
 ## Deteled songs
 
