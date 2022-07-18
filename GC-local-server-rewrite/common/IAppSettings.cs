@@ -39,6 +39,9 @@ public interface IAppSettings
 
     [Option(DefaultValue = Configs.DEFAULT_RELAY_PORT)]
     int RelayPort { get; }
+
+    [Option(DefaultValue = false)]
+    bool DownloadEvents { get; }
     
     [Option(DefaultValue = null)]
     IEnumerable<int>? UnlockableSongIds { get; }
