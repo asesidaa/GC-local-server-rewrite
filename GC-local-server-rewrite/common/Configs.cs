@@ -128,6 +128,8 @@ public static class Configs
 
     public const string ONLINE_MATCHING_XPATH = $"{ROOT_XPATH}/online_matching/record";
 
+    public const string ONLINE_BATTLE_RESULT_XPATH = $"{ROOT_XPATH}/online_battle_result";
+
     public const int FIRST_CONFIG_PCOL1 = 0;
     public const int SECOND_CONFIG_PCOL1 = 1;
     public const int CONFIG_PCOL2 = 0;

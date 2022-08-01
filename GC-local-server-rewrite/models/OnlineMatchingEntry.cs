@@ -73,14 +73,23 @@ public class OnlineMatchingEntry: Record
     [ChoXmlElementRecordField(FieldName = "message_id")]
     public long MessageId { get; set; }
 
+    /// <summary>
+    /// Communication timeout?
+    /// </summary>
     [XmlElement(ElementName = "matching_timeout")]
     [ChoXmlElementRecordField(FieldName = "matching_timeout")]
     public long MatchingTimeout { get; set; } = 99;
 
+    /// <summary>
+    /// Wait time
+    /// </summary>
     [XmlElement(ElementName = "matching_wait_time")]
     [ChoXmlElementRecordField(FieldName = "matching_wait_time")]
     public long MatchingWaitTime { get; set; } = 10;
 
+    /// <summary>
+    /// Seems not used
+    /// </summary>
     [XmlElement(ElementName = "matching_remaining_time")]
     [ChoXmlElementRecordField(FieldName = "matching_remaining_time")]
     public long MatchingRemainingTime { get; set; } = 89;

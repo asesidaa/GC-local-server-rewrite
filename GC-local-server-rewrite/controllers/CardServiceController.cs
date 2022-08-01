@@ -1,4 +1,5 @@
-﻿using System.Net.Mime;
+﻿using System.Collections.Concurrent;
+using System.Net.Mime;
 using System.Text;
 using System.Xml.Linq;
 using ChoETL;
@@ -18,7 +19,7 @@ public class CardServiceController : WebApiController
     private readonly SQLiteConnection cardSqLiteConnection;
     private readonly SQLiteConnection musicSqLiteConnection;
 
-    private static Dictionary<long, OnlineMatchingEntry> OnlineMatchingEntries = new();
+    private static readonly ConcurrentDictionary<long, OnlineMatchingEntry> OnlineMatchingEntries = new();
 
     public CardServiceController()
     {
@@ -226,7 +227,18 @@ public class CardServiceController : WebApiController
                 $"Start Online Matching, data is {xmlData}".Info();
                 return ConstructResponse(StartOnlineMatching(cardId, xmlData));
             }
+            
+            case CardRequestType.UpdateOnlineMatching:
+            {
+                $"Update Online Matching, data is {xmlData}".Info();
+                return ConstructResponse(UpdateOnlineMatching(cardId, xmlData));
+            }
 
+            case CardRequestType.UploadOnlineMatchingResult:
+            {
+                $"Get Online Matching result, data is {xmlData}".Info();
+                return ConstructResponse(UploadOnlineMatchingResult(cardId, xmlData));
+            }
             #endregion
 
             default:
@@ -606,28 +618,13 @@ public class CardServiceController : WebApiController
         var reader = new ChoXmlReader<OnlineMatchingEntry>(new StringReader(xmlData)).WithXPath(Configs.DATA_XPATH);
         var entry = reader.Read();
 
-        /*var fake = entry.CopyPropertiesToNew<OnlineMatchingEntry>();
-        fake.MachineId--;
-        fake.MatchingId = 0xB16B00B5;
-        fake.EntryStart = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-        fake.CardId = cardId - 1;
-        fake.AvatarId--;
-        fake.PlayerName = "FAKE";
-        fake.EntryNo = 0x4B1D;
-        fake.TitleId--;
-        fake.MatchingTimeout = 90;
-        fake.MatchingRemainingTime = 89;
-        fake.MatchingWaitTime = 1;
-        fake.Status = 1;
-        OnlineMatchingEntries[fake.CardId] = fake;*/
-
         entry.CardId = cardId;
-        entry.MatchingId = 0xB16B00B5;
-        entry.EntryNo = 0;
+        entry.MatchingId = 0xDEADBEEF;
+        entry.EntryNo = OnlineMatchingEntries.Count;
         entry.EntryStart = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-        entry.MatchingTimeout = 90 * 1000;
-        entry.MatchingRemainingTime = 89 * 1000;
-        entry.MatchingWaitTime = 1;
+        entry.MatchingTimeout = 10;
+        entry.MatchingRemainingTime = 3;
+        entry.MatchingWaitTime = 3;
         entry.Status = 1;
         entry.Dump().Info();
         OnlineMatchingEntries[cardId] = entry;
@@ -635,6 +632,56 @@ public class CardServiceController : WebApiController
         return GenerateRecordsXml(OnlineMatchingEntries.Values.ToList(), Configs.ONLINE_MATCHING_XPATH);
     }
 
+    private static string UpdateOnlineMatching(long cardId, string xmlData)
+    {
+        var reader = new ChoXmlReader<OnlineMatchingUpdateData>(new StringReader(xmlData));
+        var data = reader.Read();
+        var entry = OnlineMatchingEntries.GetValueOrDefault(cardId);
+        if (entry is null)
+        {
+            throw new HttpException(400,"Entry for this card id does not exist!");
+        }
+        if (data.Action != 0)
+        {
+            $"Action is {data.Action}".Info();
+        }
+
+        entry.MessageId = data.MessageId;
+        if (entry.MatchingRemainingTime <= 0)
+        {
+            entry.Status = 3;
+            entry.Dump().Info();
+            return GenerateRecordsXml(OnlineMatchingEntries.Values.ToList(), Configs.ONLINE_MATCHING_XPATH);
+        }
+        
+        entry.MatchingRemainingTime--;
+        entry.Dump().Info();
+
+        return GenerateRecordsXml(OnlineMatchingEntries.Values.ToList(), Configs.ONLINE_MATCHING_XPATH); 
+    }
+
+    private static string UploadOnlineMatchingResult(long cardId, string xmlData)
+    {
+        var reader = new ChoXmlReader<OnlineMatchingResultData>(new StringReader(xmlData));
+        var data = reader.Read();
+        
+        var entry = OnlineMatchingEntries.GetValueOrDefault(cardId);
+        if (entry is null)
+        {
+            throw new HttpException(400,"Entry for this card id does not exist!");
+        }
+
+        if (entry.MatchingId != data.MatchingId)
+        {
+            throw new HttpException(400,"Matching Id mismatch!");
+        }
+
+        var result = new OnlineMatchingResult
+        {
+            Status = 1
+        };
+        return GenerateSingleXml(result, Configs.ONLINE_BATTLE_RESULT_XPATH);
+    }
     #endregion
 
     private enum CardRequestType
@@ -680,7 +727,9 @@ public class CardServiceController : WebApiController
         WriteSoundEffect = 8969,
         
         // Online matching
-        StartOnlineMatching = 8705
+        StartOnlineMatching = 8705,
+        UpdateOnlineMatching = 8961,
+        UploadOnlineMatchingResult = 8709
     }
 
     private enum Command
