@@ -153,7 +153,7 @@ The event files can also be downloaded from the server. Put the event files into
 - [ ] Ranking system (Is this really needed for a local server?) 
 - [ ] Proper update check response (Now it will just throw 404)
 - [x] ~~PlayInfo.php (Now it will just throw 404, I don't know what data it expext)~~
-- [ ] Online matching (and online matching events)
+- [x] ~~Online matching (and online matching events)~~ Initial support
 
 ## Difficulty unlocking
 
