@@ -676,6 +676,8 @@ public class CardServiceController : WebApiController
             throw new HttpException(400,"Matching Id mismatch!");
         }
 
+        // Only one matching at a time
+        OnlineMatchingEntries.Clear();
         var result = new OnlineMatchingResult
         {
             Status = 1
