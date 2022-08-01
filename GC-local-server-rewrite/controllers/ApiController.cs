@@ -130,8 +130,13 @@ public class ApiController : WebApiController
         return ToUserDetail(card);
     }
 
-    private UserDetail ToUserDetail(Card card)
+    private UserDetail? ToUserDetail(Card card)
     {
+        if (!cardSqLiteConnection.Table<CardDetail>().Select(detail => detail.CardId == card.CardId).Any())
+        {
+            return null;
+        }
+        
         var userDetail = new UserDetail
         {
             CardId = card.CardId,
