@@ -19,7 +19,12 @@ public class CardServiceController : WebApiController
     private readonly SQLiteConnection cardSqLiteConnection;
     private readonly SQLiteConnection musicSqLiteConnection;
 
-    private static readonly ConcurrentDictionary<long, OnlineMatchingEntry> OnlineMatchingEntries = new();
+    private static readonly ConcurrentDictionary<long, List<OnlineMatchingEntry>> OnlineMatchingEntries = new()
+    {
+        [0xDEADBEEF] = new List<OnlineMatchingEntry>(),
+        [0xCAFEBABE] = new List<OnlineMatchingEntry>(),
+        [0xD0D0CACA] = new List<OnlineMatchingEntry>()
+    };
 
     public CardServiceController()
     {
@@ -620,23 +625,31 @@ public class CardServiceController : WebApiController
 
         entry.CardId = cardId;
         entry.MatchingId = 0xDEADBEEF;
-        entry.EntryNo = OnlineMatchingEntries.Count;
+        entry.EntryNo = OnlineMatchingEntries[0xDEADBEEF].Count;
         entry.EntryStart = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-        entry.MatchingTimeout = 10;
+        entry.MatchingTimeout = 20;
         entry.MatchingRemainingTime = 3;
-        entry.MatchingWaitTime = 3;
+        entry.MatchingWaitTime = 10;
         entry.Status = 1;
         entry.Dump().Info();
-        OnlineMatchingEntries[cardId] = entry;
+        var entries = OnlineMatchingEntries[0xDEADBEEF];
+        var existing = entries.Find(matchingEntry => matchingEntry.CardId == cardId);
+        if (existing is not null)
+        {
+            "Card id already exist in entry! Previous match is not cleaned up! Clearing now".Warn();
+            entries.Clear();
+        }
+        OnlineMatchingEntries[0xDEADBEEF].Add(entry);
         
-        return GenerateRecordsXml(OnlineMatchingEntries.Values.ToList(), Configs.ONLINE_MATCHING_XPATH);
+        return GenerateRecordsXml(OnlineMatchingEntries[0xDEADBEEF], Configs.ONLINE_MATCHING_XPATH);
     }
 
     private static string UpdateOnlineMatching(long cardId, string xmlData)
     {
         var reader = new ChoXmlReader<OnlineMatchingUpdateData>(new StringReader(xmlData));
         var data = reader.Read();
-        var entry = OnlineMatchingEntries.GetValueOrDefault(cardId);
+        var entries = OnlineMatchingEntries[0xDEADBEEF];
+        var entry = entries.Find(matchingEntry => matchingEntry.CardId == cardId);
         if (entry is null)
         {
             throw new HttpException(400,"Entry for this card id does not exist!");
@@ -651,13 +664,13 @@ public class CardServiceController : WebApiController
         {
             entry.Status = 3;
             entry.Dump().Info();
-            return GenerateRecordsXml(OnlineMatchingEntries.Values.ToList(), Configs.ONLINE_MATCHING_XPATH);
+            return GenerateRecordsXml(OnlineMatchingEntries[0xDEADBEEF], Configs.ONLINE_MATCHING_XPATH);
         }
         
         entry.MatchingRemainingTime--;
         entry.Dump().Info();
 
-        return GenerateRecordsXml(OnlineMatchingEntries.Values.ToList(), Configs.ONLINE_MATCHING_XPATH); 
+        return GenerateRecordsXml(OnlineMatchingEntries[0xDEADBEEF], Configs.ONLINE_MATCHING_XPATH); 
     }
 
     private static string UploadOnlineMatchingResult(long cardId, string xmlData)
@@ -665,7 +678,8 @@ public class CardServiceController : WebApiController
         var reader = new ChoXmlReader<OnlineMatchingResultData>(new StringReader(xmlData));
         var data = reader.Read();
         
-        var entry = OnlineMatchingEntries.GetValueOrDefault(cardId);
+        var entries = OnlineMatchingEntries[0xDEADBEEF];
+        var entry = entries.Find(matchingEntry => matchingEntry.CardId == cardId);
         if (entry is null)
         {
             throw new HttpException(400,"Entry for this card id does not exist!");
@@ -676,8 +690,7 @@ public class CardServiceController : WebApiController
             throw new HttpException(400,"Matching Id mismatch!");
         }
 
-        // Only one matching at a time
-        OnlineMatchingEntries.Clear();
+        OnlineMatchingEntries[0xDEADBEEF].Remove(entry);
         var result = new OnlineMatchingResult
         {
             Status = 1
