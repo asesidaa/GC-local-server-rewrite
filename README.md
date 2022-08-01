@@ -196,3 +196,20 @@ If you want to use the interface besides localhost(127.0.0.1), change in appsett
 Notice that due to certificate issues, you need to use http for `BaseUrl` and when accessing the web page, otherwise it will show insecure or fail.
 
 If you really want https all along, make sure you have changed the `ServerIp` and have regenerated the certificate.
+
+# Relay server
+
+Relay server is simple, just run the executable. Default port is 3333, you can change it by provide a command line argument, e.g.
+
+```
+./GCRelayServer 12345
+```
+
+In main server's config.json, change the following fields to specify the relay server:
+
+```
+  "RelayServer": "127.0.0.1", // Server IP
+  "RelayPort": 3333, // Server port
+```
+
+Currently the server implementation only allow one matching at a time. Notice that if one matching ends abnormally, you will need to restart the main server.
