@@ -1,4 +1,5 @@
-﻿using EmbedIO;
+﻿using System.Security.Cryptography.X509Certificates;
+using EmbedIO;
 using EmbedIO.Actions;
 using EmbedIO.Files;
 using EmbedIO.WebApi;
@@ -7,6 +8,7 @@ using GCLocalServerRewrite.controllers;
 using GCLocalServerRewrite.models;
 using Swan.Logging;
 using System.Text;
+using Swan;
 
 namespace GCLocalServerRewrite.server;
 
@@ -15,12 +17,30 @@ public class Server
     public static WebServer CreateWebServer(IEnumerable<string> urlPrefixes)
     {
         InitializeDatabase();
-        var cert = CertificateHelper.InitializeCertificate();
+        X509Certificate2 cert;
+        if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+        {
+            cert = CertificateHelper.InitializeCertificate();
+        }
+        else
+        {
+            var certPath = Path.Combine(PathHelper.CertRootPath, "cert.pfx");
+            var certPassword = string.Empty;
+            var collection = new X509Certificate2Collection();
+            collection.Import(certPath, null, X509KeyStorageFlags.PersistKeySet |
+                                              X509KeyStorageFlags.MachineKeySet | 
+                                              X509KeyStorageFlags.Exportable);
+            if (!collection.Any())
+            {
+                SelfCheck.Failure("Failed to import certificate!!!");
+            }
+            cert = collection.First();
+        }
 
         var server = new WebServer(webServerOptions => webServerOptions
-                .WithUrlPrefixes(urlPrefixes)
-                .WithCertificate(cert)
-                .WithMode(HttpListenerMode.EmbedIO))
+                                       .WithUrlPrefixes(urlPrefixes)
+                                       .WithCertificate(cert)
+                                       .WithMode(HttpListenerMode.EmbedIO))
             .WithLocalSessionManager()
             .WithCors()
             .WithWebApi(Configs.API_BASE_ROUTE, module => module.WithController<ApiController>())

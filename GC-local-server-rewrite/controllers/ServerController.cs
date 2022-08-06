@@ -15,7 +15,7 @@ namespace GCLocalServerRewrite.controllers;
 
 public class ServerController : WebApiController
 {
-    private static readonly string DataUrl = $"https://{Configs.SETTINGS.ServerIp}/{Configs.STATIC_FOLDER}/{Configs.SETTINGS.EventFolder}";
+    private static readonly string DataUrl = $"https://cert.nesys.jp/{Configs.STATIC_FOLDER}/{Configs.SETTINGS.EventFolder}";
     
     [Route(HttpVerbs.Get, "/certify.php")]
     public string Certify([QueryData] NameValueCollection parameters)
