@@ -1,0 +1,39 @@
+﻿{
+  "Events": {
+    "UseEvents": true,
+    "EventFiles": [
+      {
+        "FileName": "event_103_20201125.evt",
+        "Index": 0
+      },
+      {
+        "FileName": "event_20201125_reg.jpg",
+        "Index": 1
+      },
+      {
+        "FileName": "event_20201125_sgreg.png",
+        "Index": 2
+      },
+      {
+        "FileName": "news_big_20201125_0.jpg",
+        "Index": 0
+      },
+      {
+        "FileName": "news_big_20201125_2.jpg",
+        "Index": 2
+      },
+      {
+        "FileName": "news_small_20201125_1.jpg",
+        "Index": 1
+      },
+      {
+        "FileName": "telop_20201125.txt",
+        "Index": 0
+      },
+      {
+        "FileName": "event_unlock_20201125.cmp",
+        "Index": 8
+      }
+    ]
+  }
+}

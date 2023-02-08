@@ -1,0 +1,6 @@
+﻿{
+  "Relay": {
+    "RelayServer": "127.0.0.1",
+    "RelayPort": 3333
+  }
+}
