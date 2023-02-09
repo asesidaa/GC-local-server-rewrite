@@ -1,14 +1,10 @@
-﻿using Application.Common;
-using Application.Common.Exceptions;
+﻿using Application.Common.Extensions;
 using Application.Common.Models;
 using Application.Dto;
 using Application.Interfaces;
 using Application.Mappers;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using Throw;
 
-namespace Application.Game.Card;
+namespace Application.Game.Card.Management;
 
 public record CardRegisterCommand(long CardId, string Data) : IRequestWrapper<string>;
 

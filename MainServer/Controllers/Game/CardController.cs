@@ -1,7 +1,10 @@
 ﻿using System.Net;
 using Application.Common.Models;
 using Application.Game.Card;
+using Application.Game.Card.Management;
+using Application.Game.Card.Session;
 using Domain;
+using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Throw;
 
@@ -28,6 +31,7 @@ public class CardController : BaseController<CardController>
         switch (cardCommandType)
         {
             case CardCommandType.CardReadRequest:
+            case CardCommandType.CardWriteRequest:
             {
                 switch (cardRequestType)
                 {
@@ -72,8 +76,8 @@ public class CardController : BaseController<CardController>
                     case CardRequestType.ReadTotalTrophy:
                         break;
                     case CardRequestType.GetSession:
-                        break;
                     case CardRequestType.StartSession:
+                        result = await Mediator.Send(new GetSessionCommand(request.CardId, request.Mac));
                         break;
                     case CardRequestType.WriteCard:
                         
@@ -111,12 +115,11 @@ public class CardController : BaseController<CardController>
                 }
                 break;
             }
-            case CardCommandType.CardWriteRequest:
-                break;
             case CardCommandType.RegisterRequest:
                 result = await Mediator.Send(new CardRegisterCommand(request.CardId, request.Data));
                 break;
             case CardCommandType.ReissueRequest:
+                result = await Mediator.Send(new CardReissueCommand(request.CardId));
                 break;
             default:
                 throw new ArgumentOutOfRangeException(message: "Should not happen", paramName:null);

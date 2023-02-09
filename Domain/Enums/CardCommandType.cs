@@ -1,4 +1,4 @@
-﻿namespace Domain;
+﻿namespace Domain.Enums;
 
 public enum CardCommandType
 {

@@ -1,4 +1,4 @@
-﻿namespace Domain;
+﻿namespace Domain.Enums;
 
 public enum CardReturnCode
 {
@@ -23,5 +23,5 @@ public enum CardReturnCode
     /// <summary>
     /// Server side validation error
     /// </summary>
-    Unknown = 999
+    Unknown = -1
 }
