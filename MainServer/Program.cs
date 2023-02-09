@@ -5,6 +5,7 @@ using Domain.Config;
 using Infrastructure;
 using Infrastructure.Common;
 using Infrastructure.Persistence;
+using MainServer.Filters;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Extensions.Logging;
@@ -38,6 +39,8 @@ try
         builder.Configuration.GetSection(EventConfig.EVENT_SECTION));
     builder.Services.Configure<RelayConfig>(
         builder.Configuration.GetSection(RelayConfig.RELAY_SECTION));
+    builder.Services.Configure<GameConfig>(
+        builder.Configuration.GetSection(GameConfig.GAME_SECTION));     
 
     var serverIp = builder.Configuration["ServerIp"] ?? "127.0.0.1";
     var certificateManager = new CertificateService(serverIp, new SerilogLoggerFactory(Log.Logger).CreateLogger(""));
@@ -51,7 +54,9 @@ try
         configuration.WriteTo.Console().ReadFrom.Configuration(context.Configuration);
     });
 
-    builder.Services.AddControllers().AddXmlSerializerFormatters();
+    builder.Services.AddControllers(options =>
+        options.Filters.Add<ApiExceptionFilterService>());
+    
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
@@ -80,13 +85,15 @@ try
     var eventService = app.Services.GetService<IEventManagerService>();
     eventService.ThrowIfNull();
     eventService.InitializeEvents();
-
-    // Configure the HTTP request pipeline.
+    
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
         app.UseSwaggerUI();
     }
+
+    // app.UseExceptionHandler();
+    app.UseStaticFiles();
 
     app.MapControllers();
 
@@ -94,7 +101,7 @@ try
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Unhandled exception");
+    Log.Fatal(ex, "Unhandled exception in startup");
 }
 finally
 {

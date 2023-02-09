@@ -1,4 +1,7 @@
 ﻿using System.Reflection;
+using Application.Common.Behaviours;
+using Application.Game.Card;
+using Application.Interfaces;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,6 +13,8 @@ public static class DependencyInjection
     {
         services.AddMediatR(Assembly.GetExecutingAssembly());
 
+        services.AddScoped<ICardDependencyAggregate, CardDependencyAggregate>();
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
         return services;
     }
 }

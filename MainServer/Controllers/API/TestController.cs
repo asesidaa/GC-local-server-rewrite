@@ -20,5 +20,20 @@ namespace MainServer.Controllers.API
         {
             return context.MusicUnlocks.First();
         }
+
+        [HttpPost]
+        public ActionResult<string> TestXmlInputOutput([FromForm(Name = "my_model")]TestModel model, 
+            [FromForm(Name = "my_type")]int type)
+        {
+            return Ok($"{model.Name}\n{model.Age}\n{type}");
+        }
     }
+
+    public class TestModel
+    {
+        public string Name { get; set; } = string.Empty;
+
+        public int Age { get; set; }
+    }
+    
 }

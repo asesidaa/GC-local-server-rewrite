@@ -43,6 +43,7 @@
 
     <ItemGroup>
       <Folder Include="Controllers\API" />
+      <Folder Include="Logs" />
     </ItemGroup>
 
 </Project>

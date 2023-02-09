@@ -20,14 +20,14 @@ public static class MigrationHelper
             
         return reader.Read()? (long)reader[0] == 1 : false;
     }
-        
-    public static string GetConnectionString()
+
+    private static string GetConnectionString()
     {
         var builder = new ConfigurationBuilder()
             .SetBasePath(PathHelper.ConfigurationPath)
             .AddJsonFile("database.json", optional: false, reloadOnChange: false);
 
-        var cardDbName = builder.Build()["CardDbName"];
+        var cardDbName = builder.Build()["CardDbName"] ?? "card.db3";
         var cardDbPath = Path.Combine(PathHelper.DatabasePath, cardDbName);
         return cardDbPath;
     }

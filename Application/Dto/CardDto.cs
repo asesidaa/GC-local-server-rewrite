@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace Application.Dto;
 
@@ -8,6 +9,7 @@ public class CardDto
     public long CardId { get; set; }
 
     [XmlElement(ElementName = "player_name")]
+    [DefaultValue("")]
     public string PlayerName { get; set; } = string.Empty;
 
     [XmlElement("score_i1")]
@@ -23,11 +25,14 @@ public class CardDto
     public long Fcol3 { get; set; }
 
     [XmlElement("achieve_status")]
+    [DefaultValue("")]
     public string AchieveStatus { get; set; } = string.Empty;
 
     [XmlElement("created")]
+    [DefaultValue("")]
     public string Created { get; set; } = string.Empty;
 
     [XmlElement("modified")]
+    [DefaultValue("")]
     public string Modified { get; set; } = string.Empty;
 }
