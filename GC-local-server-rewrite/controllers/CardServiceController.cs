@@ -1,4 +1,4 @@
-﻿using System.Collections.Concurrent;
+﻿using System.Net.Http.Json;
 using System.Net.Mime;
 using System.Text;
 using System.Xml.Linq;
@@ -8,9 +8,13 @@ using EmbedIO.Routing;
 using EmbedIO.WebApi;
 using GCLocalServerRewrite.common;
 using GCLocalServerRewrite.models;
+using SharedProject.models;
 using SQLite.Net2;
 using Swan;
 using Swan.Logging;
+using Avatar=GCLocalServerRewrite.models.Avatar;
+using Navigator=GCLocalServerRewrite.models.Navigator;
+using Title=GCLocalServerRewrite.models.Title;
 
 namespace GCLocalServerRewrite.controllers;
 
@@ -18,13 +22,6 @@ public class CardServiceController : WebApiController
 {
     private readonly SQLiteConnection cardSqLiteConnection;
     private readonly SQLiteConnection musicSqLiteConnection;
-
-    private static readonly ConcurrentDictionary<long, List<OnlineMatchingEntry>> OnlineMatchingEntries = new()
-    {
-        [0xDEADBEEF] = new List<OnlineMatchingEntry>(),
-        [0xCAFEBABE] = new List<OnlineMatchingEntry>(),
-        [0xD0D0CACA] = new List<OnlineMatchingEntry>()
-    };
 
     public CardServiceController()
     {
@@ -34,17 +31,17 @@ public class CardServiceController : WebApiController
 
     [Route(HttpVerbs.Post, "/cardn.cgi")]
     // ReSharper disable once UnusedMember.Global
-    public string CardService([FormField] int gid, [FormField("mac_addr")] string mac, [FormField] int type,
+    public async Task<string> CardService([FormField] int gid, [FormField("mac_addr")] string mac, [FormField] int type,
         [FormField("card_no")] long cardId, [FormField("data")] string xmlData, [FormField("cmd_str")] int cmdType)
     {
         HttpContext.Response.ContentType = MediaTypeNames.Application.Octet;
         HttpContext.Response.ContentEncoding = new UTF8Encoding(false);
         HttpContext.Response.KeepAlive = true;
 
-        return ProcessCommand(cmdType, mac, cardId, xmlData, type);
+        return await ProcessCommand(cmdType, mac, cardId, xmlData, type);
     }
 
-    private string ProcessCommand(int cmdType, string mac, long cardId, string xmlData, int type)
+    private async Task<string> ProcessCommand(int cmdType, string mac, long cardId, string xmlData, int type)
     {
         if (!Enum.IsDefined(typeof(Command), cmdType))
         {
@@ -55,7 +52,7 @@ public class CardServiceController : WebApiController
 
         return command switch
         {
-            Command.CardReadRequest or Command.CardWriteRequest => ProcessCardRequest(mac, cardId, xmlData, type),
+            Command.CardReadRequest or Command.CardWriteRequest => await ProcessCardRequest(mac, cardId, xmlData, type),
             Command.ReissueRequest => ProcessReissueRequest(),
             Command.RegisterRequest => ProcessRegisterRequest(cardId, xmlData),
             _ => throw new ArgumentOutOfRangeException(nameof(command), command, "Command unknown, should never happen!")
@@ -75,7 +72,7 @@ public class CardServiceController : WebApiController
         return ConstructResponse("", ReturnCode.NotReissue);
     }
 
-    private string ProcessCardRequest(string mac, long cardId, string xmlData, int type)
+    private async Task<string> ProcessCardRequest(string mac, long cardId, string xmlData, int type)
     {
         if (!Enum.IsDefined(typeof(CardRequestType), type))
         {
@@ -230,19 +227,22 @@ public class CardServiceController : WebApiController
             case CardRequestType.StartOnlineMatching:
             {
                 $"Start Online Matching, data is {xmlData}".Info();
-                return ConstructResponse(StartOnlineMatching(cardId, xmlData));
+                var resultString = await StartOnlineMatching(cardId, xmlData);
+                return ConstructResponse(resultString);
             }
             
             case CardRequestType.UpdateOnlineMatching:
             {
                 $"Update Online Matching, data is {xmlData}".Info();
-                return ConstructResponse(UpdateOnlineMatching(cardId, xmlData));
+                var resultString = await UpdateOnlineMatching(cardId, xmlData);
+                return ConstructResponse(resultString);
             }
 
             case CardRequestType.UploadOnlineMatchingResult:
             {
                 $"Get Online Matching result, data is {xmlData}".Info();
-                return ConstructResponse(UploadOnlineMatchingResult(cardId, xmlData));
+                var resultString = await UploadOnlineMatchingResult(cardId, xmlData);
+                return ConstructResponse(resultString);
             }
             #endregion
 
@@ -618,67 +618,98 @@ public class CardServiceController : WebApiController
 
     #region OnlineMatchingImplementation
 
-    private static string StartOnlineMatching(long cardId, string xmlData)
+    private static async Task<string> StartOnlineMatching(long cardId, string xmlData)
     {
         var reader = new ChoXmlReader<OnlineMatchingEntry>(new StringReader(xmlData)).WithXPath(Configs.DATA_XPATH);
         var entry = reader.Read();
 
-        entry.CardId = cardId;
-        entry.MatchingId = 0xDEADBEEF;
-        entry.EntryNo = OnlineMatchingEntries[0xDEADBEEF].Count;
-        entry.EntryStart = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-        entry.MatchingTimeout = 20;
-        entry.MatchingRemainingTime = 3;
-        entry.MatchingWaitTime = 10;
-        entry.Status = 1;
-        entry.Dump().Info();
-        var entries = OnlineMatchingEntries[0xDEADBEEF];
-        var existing = entries.Find(matchingEntry => matchingEntry.CardId == cardId);
-        if (existing is not null)
+        var request = Converters.ConvertFromEntry(entry) ;
+        request.CardId = cardId;
+        request.EntryStart = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        request.MatchingTimeout = 20;
+        request.MatchingRemainingTime = 3;
+        request.MatchingWaitTime = 10;
+        request.Status = 1;
+
+        var client = new HttpClient();
+        var url = $"http://{Configs.SETTINGS.MatchingServer}/{Configs.MATCHING_URL_BASE}/{Configs.START_MATCHING_URL}";
+        try
         {
-            "Card id already exist in entry! Previous match is not cleaned up! Clearing now".Warn();
-            entries.Clear();
+            var response = await client.PostAsJsonAsync(url, request);
+            var dataList = await response.Content.ReadFromJsonAsync<List<OnlineMatchingData>>();
+            if (dataList is null)
+            {
+                throw new HttpRequestException("Start matching request fail");
+            }
+            var result = dataList.ConvertAll(input => Converters.ConvertFromData(input));
+            return GenerateRecordsXml(result, Configs.ONLINE_MATCHING_XPATH);
         }
-        OnlineMatchingEntries[0xDEADBEEF].Add(entry);
-        
-        return GenerateRecordsXml(OnlineMatchingEntries[0xDEADBEEF], Configs.ONLINE_MATCHING_XPATH);
+        catch (Exception e)
+        {
+            e.Error("", "Http request failed");
+            throw;
+        }
     }
 
-    private static string UpdateOnlineMatching(long cardId, string xmlData)
+    private static async Task<string> UpdateOnlineMatching(long cardId, string xmlData)
     {
         var reader = new ChoXmlReader<OnlineMatchingUpdateData>(new StringReader(xmlData));
         var data = reader.Read();
-        var entries = OnlineMatchingEntries[0xDEADBEEF];
-        var entry = entries.Find(matchingEntry => matchingEntry.CardId == cardId);
-        if (entry is null)
+        var request = new OnlineMatchingUpdateRequest
         {
-            throw new HttpException(400,"Entry for this card id does not exist!");
-        }
-        if (data.Action != 0)
+            Action = data.Action,
+            CardId = cardId,
+            EventId = data.EventId,
+            MatchingId = data.MatchingId,
+            MessageId = data.MessageId
+        };
+        var client = new HttpClient();
+        var url = $"http://{Configs.SETTINGS.MatchingServer}/{Configs.MATCHING_URL_BASE}/{Configs.UPDATE_MATCHING_URL}";
+        try
         {
-            $"Action is {data.Action}".Info();
+            var response = await client.PostAsJsonAsync(url, request);
+            var dataList = await response.Content.ReadFromJsonAsync<List<OnlineMatchingEntry>>();
+            if (dataList is null)
+            {
+                throw new HttpRequestException("Update matching request fail");
+            }
+            return GenerateRecordsXml(dataList, Configs.ONLINE_MATCHING_XPATH);
         }
-
-        entry.MessageId = data.MessageId;
-        if (entry.MatchingRemainingTime <= 0)
+        catch (Exception e)
         {
-            entry.Status = 3;
-            entry.Dump().Info();
-            return GenerateRecordsXml(OnlineMatchingEntries[0xDEADBEEF], Configs.ONLINE_MATCHING_XPATH);
+            e.Error("", "Http request failed");
+            throw;
         }
-        
-        entry.MatchingRemainingTime--;
-        entry.Dump().Info();
-
-        return GenerateRecordsXml(OnlineMatchingEntries[0xDEADBEEF], Configs.ONLINE_MATCHING_XPATH); 
     }
 
-    private static string UploadOnlineMatchingResult(long cardId, string xmlData)
+    private static async Task<string> UploadOnlineMatchingResult(long cardId, string xmlData)
     {
         var reader = new ChoXmlReader<OnlineMatchingResultData>(new StringReader(xmlData));
         var data = reader.Read();
-        
-        var entries = OnlineMatchingEntries[0xDEADBEEF];
+        var request = new OnlineMatchingFinishRequest
+        {
+            CardId = cardId,
+            MatchingId = data.MatchingId
+        };
+        var client = new HttpClient();
+        var url = $"http://{Configs.SETTINGS.MatchingServer}/{Configs.MATCHING_URL_BASE}/{Configs.UPDATE_MATCHING_URL}";
+        try
+        {
+            var response = await client.PostAsJsonAsync(url, request);
+            var success = await response.Content.ReadFromJsonAsync<bool>();
+            
+            var result = new OnlineMatchingResult
+            {
+                Status = success ? 1:0
+            };
+            return GenerateSingleXml(result, Configs.ONLINE_BATTLE_RESULT_XPATH);
+        }
+        catch (Exception e)
+        {
+            e.Error("", "Http request failed");
+            throw;
+        }
+        /*var entries = OnlineMatchingEntries[0xDEADBEEF];
         var entry = entries.Find(matchingEntry => matchingEntry.CardId == cardId);
         if (entry is null)
         {
@@ -695,7 +726,7 @@ public class CardServiceController : WebApiController
         {
             Status = 1
         };
-        return GenerateSingleXml(result, Configs.ONLINE_BATTLE_RESULT_XPATH);
+        return GenerateSingleXml(result, Configs.ONLINE_BATTLE_RESULT_XPATH);*/
     }
     #endregion
 

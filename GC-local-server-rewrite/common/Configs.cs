@@ -141,6 +141,14 @@ public static class Configs
 
     public const int SCORE_PCOL1 = 21;
 
+    public const string MATCHING_URL_BASE = "Matching";
+
+    public const string START_MATCHING_URL = "Start";
+    public const string UPDATE_MATCHING_URL = "Update";
+    public const string FINISH_MATCHING_URL = "Finish";
+    
+    
+
     public static readonly List<string> DOMAINS = new()
     {
         "localhost",
@@ -164,6 +172,8 @@ public static class Configs
     public const string DEFAULT_RELAY_SERVER = "127.0.0.1";
     public const int DEFAULT_RELAY_PORT = 54321;
     public const string DEFAULT_EVENT_FOLDER = "event";
+    public const string DEFAULT_MATCHING_SERVER = "127.0.0.1:5000";
+
 
     public static readonly IReadOnlyList<int> DEFAULT_UNLOCKABLE_SONGS = new[]
     {

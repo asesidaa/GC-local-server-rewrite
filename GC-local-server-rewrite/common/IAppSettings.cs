@@ -43,6 +43,9 @@ public interface IAppSettings
     [Option(DefaultValue = false)]
     bool DownloadEvents { get; }
     
+    [Option(DefaultValue = Configs.DEFAULT_MATCHING_SERVER)]
+    string MatchingServer { get; }
+    
     [Option(DefaultValue = null)]
     IEnumerable<int>? UnlockableSongIds { get; }
 

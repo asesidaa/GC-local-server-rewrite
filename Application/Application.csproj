@@ -22,9 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Game\Card\OnlineMatching" />
       <Folder Include="Game\Card\Read" />
-      <Folder Include="Game\Card\Write" />
     </ItemGroup>
 
 </Project>

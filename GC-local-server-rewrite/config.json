@@ -11,7 +11,8 @@
   "EventFolder": "event",
   "DownloadEvents": false,
   "RelayServer": "127.0.0.1",
-  "RelayPort": 54321,
+  "RelayPort": 3333,
+  "MatchingServer": "127.0.0.1:5038",
   "UnlockableSongIds": [
     11,
     13,
@@ -68,7 +69,7 @@
       "FileName": "/event_103_20201125.evt",
       "NotBeforeUnixTime": 1335677127,
       "NotAfterUnixTime": 1966397127,
-      "Md5": "9ef6c4d5ca381583a2d99b626ce06b5e",
+      "Md5": "27b503145a62e46f5f611b6f8a91e4f3",
       "Index": 0
     },
     {
