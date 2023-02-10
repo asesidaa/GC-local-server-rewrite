@@ -35,7 +35,7 @@ public class ServerController : BaseController<ServerController>
     [HttpGet("data.php")]
     public async Task<ActionResult<string>> GetData()
     {
-        var query = new GetDataQuery(Request.Host.Value);
+        var query = new GetDataQuery(Request.Host.Value, Request.Scheme);
         return Ok(await Mediator.Send(query));
     }
 }

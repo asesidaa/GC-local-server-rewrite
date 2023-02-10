@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Game.Server;
 
-public record GetDataQuery(string Host) : IRequest<string>;
+public record GetDataQuery(string Host, string Scheme) : IRequest<string>;
 
 public class GetDataQueryHandler : IRequestHandler<GetDataQuery, string>
 {
@@ -23,9 +23,8 @@ public class GetDataQueryHandler : IRequestHandler<GetDataQuery, string>
         {
             return Task.FromResult(response);
         }
-
-        var host = request.Host;
-        var urlBase = $"http://{host}/events/";
+        
+        var urlBase = $"{request.Scheme}://{request.Host}/events/";
         var dataString = new StringBuilder();
         var events = eventManagerService.GetEvents();
         var count = 0;

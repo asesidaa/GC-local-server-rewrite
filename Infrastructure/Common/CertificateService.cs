@@ -289,7 +289,14 @@ public class CertificateService
             {
                 logger.LogInformation("Certificate CN={CommonName} found!", commonName);
 
-                return result.First();
+                var cert = result.First();
+                var extensions = cert.Extensions;
+                if (extensions.Select(extension => extension.Oid).Any(oid => oid?.Value == OidLookup.ServerAuthentication.Value))
+                {
+                    return cert;
+                }
+                logger.LogInformation("Certificate CN={CommonName} does not include server authentication!", commonName);
+                return null;
             }
 
             store.Close();

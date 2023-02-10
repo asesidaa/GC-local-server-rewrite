@@ -10,40 +10,71 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="CertificateManager" Version="1.0.8" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2" />
+        <PackageReference Include="CertificateManager" Version="1.0.8"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.2">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.3" />
-        <PackageReference Include="Serilog.AspNetCore" Version="6.1.1-dev-00293" />
-        <PackageReference Include="Serilog.Expressions" Version="3.4.2-dev-00119" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-        <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
-        <PackageReference Include="Throw" Version="1.3.1" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.3"/>
+        <PackageReference Include="Serilog.AspNetCore" Version="6.1.1-dev-00293"/>
+        <PackageReference Include="Serilog.Expressions" Version="3.4.2-dev-00119"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
+        <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.2"/>
+        <PackageReference Include="Throw" Version="1.3.1"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Content Remove="Configurations\database.json" />
-      <None Include="Configurations\database.json" />
-      <Content Remove="Configurations\events.json" />
-      <None Include="Configurations\events.json" />
-      <Content Remove="Configurations\game.json" />
-      <None Include="Configurations\game.json" />
-      <Content Remove="Configurations\logging.json" />
-      <None Include="Configurations\logging.json" />
-      <Content Remove="Configurations\matching.json" />
-      <None Include="Configurations\matching.json" />
+        <Content Update="Configurations\database.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        </Content>
+        <Content Update="Configurations\events.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        </Content>
+        <Content Update="Configurations\game.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        </Content>
+        <Content Update="Configurations\logging.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        </Content>
+        <Content Update="Configurations\matching.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        </Content>
+        <Content Include="Database\music.db3">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        </Content>
+        <Content Include="Database\music4MAX.db3">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        </Content>
+        <Content Include="Database\music4MAX465.db3">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        </Content>
+        <Content Include="Database\music471.db3">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        </Content>
+        <Content Include="Database\music471omni.db3">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+        <ProjectReference Include="..\Infrastructure\Infrastructure.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\API" />
-      <Folder Include="Logs" />
+        <Folder Include="Controllers\API"/>
+        <Folder Include="Logs"/>
+        <Folder Include="wwwroot"/>
     </ItemGroup>
 
 </Project>
