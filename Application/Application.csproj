@@ -21,8 +21,4 @@
       <PackageReference Include="Throw" Version="1.3.1" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Game\Card\Read" />
-    </ItemGroup>
-
 </Project>

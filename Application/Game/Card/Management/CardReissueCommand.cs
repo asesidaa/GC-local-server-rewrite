@@ -15,7 +15,6 @@ public class CardReissueCommandHandler : CardRequestHandlerBase<CardReissueComma
     public override Task<ServiceResult<string>> Handle(CardReissueCommand request, CancellationToken cancellationToken)
     {
         // TODO: Support actual reissue
-        var result = $"{(int)CardReturnCode.NotReissue}";
-        return Task.FromResult(new ServiceResult<string>(result));
+        return Task.FromResult(ServiceResult.Failed<string>(ServiceError.NotReissue));
     }
 }

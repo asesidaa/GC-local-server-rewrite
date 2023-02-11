@@ -26,7 +26,7 @@ public class ServiceResult<T> : ServiceResult
 
 public class ServiceResult
 {
-    public bool Succeeded => Error == null;
+    public bool Succeeded => Error is null;
 
     public ServiceError? Error { get; set; }
 

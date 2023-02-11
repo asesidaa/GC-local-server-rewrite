@@ -1,4 +1,6 @@
-﻿namespace Application.Common.Models;
+﻿using Domain.Enums;
+
+namespace Application.Common.Models;
 
 /// <summary>
 /// All errors contained in ServiceResult objects must return an error of this type
@@ -36,7 +38,7 @@ public class ServiceError
     /// <summary>
     /// Default error for when we receive an exception
     /// </summary>
-    public static ServiceError DefaultError => new("An unknown exception occured.", 999);
+    public static ServiceError DefaultError => new("An unknown exception occured.", (int)CardReturnCode.Unknown);
 
     /// <summary>
     /// Default validation error. Use this for invalid parameters in controller actions and service methods.
@@ -56,9 +58,11 @@ public class ServiceError
     /// </summary>
     public static ServiceError CustomMessage(string errorMessage)
     {
-        return new ServiceError(errorMessage, 997);
+        return new ServiceError(errorMessage, (int)CardReturnCode.Unknown);
     }
 
+    public static ServiceError NotReissue => new ServiceError("Not reissue, registering a new card", (int)CardReturnCode.NotReissue);
+    
     public static ServiceError UserNotFound => new("User with this id does not exist", 996);
 
     public static ServiceError UserFailedToCreate => new("Failed to create User.", 995);

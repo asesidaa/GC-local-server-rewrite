@@ -2,7 +2,9 @@
 using Application.Common.Models;
 using Application.Game.Card;
 using Application.Game.Card.Management;
+using Application.Game.Card.Read;
 using Application.Game.Card.Session;
+using Application.Game.Card.Write;
 using Domain;
 using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +38,7 @@ public class CardController : BaseController<CardController>
                 switch (cardRequestType)
                 {
                     case CardRequestType.ReadCard:
+                        result = await Mediator.Send(new ReadCardQuery(request.CardId));
                         break;
                     case CardRequestType.ReadCardDetail:
                         break;
@@ -80,29 +83,37 @@ public class CardController : BaseController<CardController>
                         result = await Mediator.Send(new GetSessionCommand(request.CardId, request.Mac));
                         break;
                     case CardRequestType.WriteCard:
-                        
                         break;
                     case CardRequestType.WriteCardDetail:
                         break;
                     case CardRequestType.WriteCardBData:
                         break;
                     case CardRequestType.WriteAvatar:
+                        result = await Mediator.Send(new WriteAvatarCommand(request.CardId, request.Data));
                         break;
                     case CardRequestType.WriteItem:
+                        result = await Mediator.Send(new WriteItemCommand(request.CardId, request.Data));
                         break;
                     case CardRequestType.WriteTitle:
+                        result = await Mediator.Send(new WriteTitleCommand(request.CardId, request.Data));
                         break;
                     case CardRequestType.WriteMusicDetail:
+                        result = await Mediator.Send(new WriteMusicDetailCommand(request.CardId, request.Data));
                         break;
                     case CardRequestType.WriteNavigator:
+                        result = await Mediator.Send(new WriteNavigatorCommand(request.CardId, request.Data));
                         break;
                     case CardRequestType.WriteCoin:
+                        result = await Mediator.Send(new WriteCoinCommand(request.CardId, request.Data));
                         break;
                     case CardRequestType.WriteSkin:
+                        result = await Mediator.Send(new WriteSkinCommand(request.CardId, request.Data));
                         break;
                     case CardRequestType.WriteUnlockKeynum:
+                        result = await Mediator.Send(new WriteUnlockKeynumCommand(request.CardId, request.Data));
                         break;
                     case CardRequestType.WriteSoundEffect:
+                        result = await Mediator.Send(new WriteSoundEffectCommand(request.CardId, request.Data));
                         break;
                     case CardRequestType.StartOnlineMatching:
                         break;
@@ -130,7 +141,8 @@ public class CardController : BaseController<CardController>
             return Ok(result.Data);
         }
 
-        var errorMessage = $"{(int)CardReturnCode.Unknown}\n" +
+        // Here error is not null since Succeeded => Error is null; 
+        var errorMessage = $"{result.Error!.Code}\n" +
                            $"{result.Error!.Message}";
         return Ok(errorMessage);
     }
