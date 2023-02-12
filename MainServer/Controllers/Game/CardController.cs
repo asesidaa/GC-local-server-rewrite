@@ -5,7 +5,6 @@ using Application.Game.Card.Management;
 using Application.Game.Card.Read;
 using Application.Game.Card.Session;
 using Application.Game.Card.Write;
-using Domain;
 using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Throw;
@@ -47,39 +46,55 @@ public class CardController : BaseController<CardController>
                         result = await Mediator.Send(new ReadAllCardDetailsQuery(request.CardId));
                         break;
                     case CardRequestType.ReadCardBData:
+                        result = await Mediator.Send(new ReadCardBDataQuery(request.CardId));
                         break;
                     case CardRequestType.ReadAvatar:
                         result = await Mediator.Send(new ReadAvatarQuery(request.CardId));
                         break;
                     case CardRequestType.ReadItem:
+                        result = await Mediator.Send(new ReadItemQuery(request.CardId));
                         break;
                     case CardRequestType.ReadSkin:
+                        result = await Mediator.Send(new ReadSkinQuery(request.CardId));
                         break;
                     case CardRequestType.ReadTitle:
-                        break;
-                    case CardRequestType.ReadMusic:
-                        break;
-                    case CardRequestType.ReadEventReward:
+                        result = await Mediator.Send(new ReadTitleQuery(request.CardId));
                         break;
                     case CardRequestType.ReadNavigator:
-                        break;
-                    case CardRequestType.ReadMusicExtra:
-                        break;
-                    case CardRequestType.ReadMusicAou:
-                        break;
-                    case CardRequestType.ReadCoin:
-                        break;
-                    case CardRequestType.ReadUnlockReward:
-                        break;
-                    case CardRequestType.ReadUnlockKeynum:
+                        result = await Mediator.Send(new ReadNavigatorQuery(request.CardId));
                         break;
                     case CardRequestType.ReadSoundEffect:
+                        result = await Mediator.Send(new ReadSoundEffectQuery(request.CardId));
+                        break;
+                    case CardRequestType.ReadMusic:
+                        result = await Mediator.Send(new ReadMusicQuery(request.CardId));
+                        break;
+                    case CardRequestType.ReadMusicAou:
+                        result = await Mediator.Send(new ReadMusicAouQuery(request.CardId));
+                        break;
+                    case CardRequestType.ReadMusicExtra:
+                        result = await Mediator.Send(new ReadMusicExtraQuery(request.CardId));
+                        break;
+                    case CardRequestType.ReadEventReward:
+                        result = await Mediator.Send(new ReadEventRewardQuery(request.CardId));
+                        break;
+                    case CardRequestType.ReadCoin:
+                        result = await Mediator.Send(new ReadCoinQuery(request.CardId));
+                        break;
+                    case CardRequestType.ReadUnlockReward:
+                        result = await Mediator.Send(new ReadUnlockRewardQuery(request.CardId));
+                        break;
+                    case CardRequestType.ReadUnlockKeynum:
+                        result = await Mediator.Send(new ReadUnlockKeynumQuery(request.CardId));
                         break;
                     case CardRequestType.ReadGetMessage:
+                        result = await Mediator.Send(new ReadGetMessageQuery(request.CardId));
                         break;
                     case CardRequestType.ReadCond:
+                        result = await Mediator.Send(new ReadCondQuery(request.CardId));
                         break;
                     case CardRequestType.ReadTotalTrophy:
+                        result = await Mediator.Send(new ReadTotalTrophyQuery(request.CardId));
                         break;
                     case CardRequestType.GetSession:
                     case CardRequestType.StartSession:

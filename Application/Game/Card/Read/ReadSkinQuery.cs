@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Application.Game.Card.Read;
 
 
-public record ReadSkinQuery(long CardId, string Data) : IRequestWrapper<string>;
+public record ReadSkinQuery(long CardId) : IRequestWrapper<string>;
 
 public class ReadSkinQueryHandler : CardRequestHandlerBase<ReadSkinQuery, string>
 {

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Application.Game.Card.Read;
 
 
-public record ReadMusicExtraQuery(long CardId, string Data) : IRequestWrapper<string>;
+public record ReadMusicExtraQuery(long CardId) : IRequestWrapper<string>;
 
 public class ReadMusicExtraQueryHandler : CardRequestHandlerBase<ReadMusicExtraQuery, string>
 {

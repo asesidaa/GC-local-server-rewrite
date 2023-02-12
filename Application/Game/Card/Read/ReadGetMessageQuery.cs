@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Application.Game.Card.Read;
 
 
-public record ReadGetMessageQuery(long CardId, string Data) : IRequestWrapper<string>;
+public record ReadGetMessageQuery(long CardId) : IRequestWrapper<string>;
 
 public class ReadGetMessageQueryHandler : CardRequestHandlerBase<ReadGetMessageQuery, string>
 {

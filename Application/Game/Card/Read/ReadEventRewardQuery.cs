@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Application.Game.Card.Read;
 
 
-public record ReadEventRewardQuery(long CardId, string Data) : IRequestWrapper<string>;
+public record ReadEventRewardQuery(long CardId) : IRequestWrapper<string>;
 
 public class ReadEventRewardQueryHandler : CardRequestHandlerBase<ReadEventRewardQuery, string>
 {

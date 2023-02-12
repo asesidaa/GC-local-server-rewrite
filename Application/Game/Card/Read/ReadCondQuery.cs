@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Application.Game.Card.Read;
 
 
-public record ReadCondQuery(long CardId, string Data) : IRequestWrapper<string>;
+public record ReadCondQuery(long CardId) : IRequestWrapper<string>;
 
 public class ReadCondQueryHandler : CardRequestHandlerBase<ReadCondQuery, string>
 {

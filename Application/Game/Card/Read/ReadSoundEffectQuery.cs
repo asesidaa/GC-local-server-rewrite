@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Application.Game.Card.Read;
 
 
-public record ReadSoundEffectQuery(long CardId, string Data) : IRequestWrapper<string>;
+public record ReadSoundEffectQuery(long CardId) : IRequestWrapper<string>;
 
 public class ReadSoundEffectQueryHandler : CardRequestHandlerBase<ReadSoundEffectQuery, string>
 {

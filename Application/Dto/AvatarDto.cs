@@ -23,10 +23,8 @@ public class AvatarDto
     public string Modified { get; set; } = string.Empty;
 
     [XmlElement("new_flag")]
-    [DefaultValue(1)]
-    public int NewFlag { get; set; } = 1;
+    public int NewFlag { get; set; }
 
     [XmlElement("use_flag")]
-    [DefaultValue(1)]
-    public int UseFlag { get; set; } = 1;
+    public int UseFlag { get; set; }
 }

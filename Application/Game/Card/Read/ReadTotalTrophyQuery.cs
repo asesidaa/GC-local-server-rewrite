@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Application.Game.Card.Read;
 
 
-public record ReadTotalTrophyQuery(long CardId, string Data) : IRequestWrapper<string>;
+public record ReadTotalTrophyQuery(long CardId) : IRequestWrapper<string>;
 
 public class ReadTotalTrophyQueryHandler : CardRequestHandlerBase<ReadTotalTrophyQuery, string>
 {

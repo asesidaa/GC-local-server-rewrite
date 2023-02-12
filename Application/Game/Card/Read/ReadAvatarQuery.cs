@@ -15,17 +15,14 @@ public record ReadAvatarQuery(long CardId) : IRequestWrapper<string>;
 public class ReadAvatarQueryHandler : CardRequestHandlerBase<ReadAvatarQuery, string>
 {
     private const string AVATAR_XPATH = "/root/avatar/record";
-    
-    private readonly GameConfig config;
-    
-    public ReadAvatarQueryHandler(ICardDependencyAggregate aggregate, IOptions<GameConfig> options) : base(aggregate)
+
+    public ReadAvatarQueryHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {
-        config = options.Value;
     }
 
     public override Task<ServiceResult<string>> Handle(ReadAvatarQuery request, CancellationToken cancellationToken)
     {
-        var count = config.AvatarCount;
+        var count = Config.AvatarCount;
         var list = new List<AvatarDto>();
         for (int i = 0; i < count; i++)
         {

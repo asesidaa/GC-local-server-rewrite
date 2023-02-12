@@ -14,21 +14,18 @@ public record ReadItemQuery(long CardId) : IRequestWrapper<string>;
 public class ReadItemQueryHandler : CardRequestHandlerBase<ReadItemQuery, string>
 {
     private const string ITEM_XPATH = "/root/item/record";
-    
-    private readonly GameConfig config;
-    
-    public ReadItemQueryHandler(ICardDependencyAggregate aggregate, IOptions<GameConfig> options) : base(aggregate)
+
+    public ReadItemQueryHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {
-        config = options.Value;
     }
 
     public override Task<ServiceResult<string>> Handle(ReadItemQuery request, CancellationToken cancellationToken)
     {
-        var count = config.AvatarCount;
+        var count = Config.ItemCount;
         var list = new List<ItemDto>();
         for (int i = 0; i < count; i++)
         {
-            var avatar = new ItemDto()
+            var item = new ItemDto
             {
                 Id = i,
                 CardId = request.CardId,
@@ -39,7 +36,7 @@ public class ReadItemQueryHandler : CardRequestHandlerBase<ReadItemQuery, string
                 NewFlag = 0,
                 UseFlag = 1
             };
-            list.Add(avatar);
+            list.Add(item);
         }
 
         var result = list.SerializeCardDataList(ITEM_XPATH);
