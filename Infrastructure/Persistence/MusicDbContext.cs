@@ -67,7 +67,7 @@ public partial class MusicDbContext : DbContext, IMusicDbContext
             entity.Property(e => e.MusicId)
                 .ValueGeneratedNever()
                 .HasColumnName("music_id");
-            entity.Property(e => e.Artist).HasColumnName("artist");
+            entity.Property(e => e.Artist).HasColumnName("artist").IsRequired(false);
             entity.Property(e => e.Title).HasColumnName("title");
             entity.Property(e => e.ReleaseDate).HasColumnName("release_date");
             entity.Property(e => e.EndDate).HasColumnName("end_date");
