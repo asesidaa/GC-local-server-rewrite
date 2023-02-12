@@ -41,12 +41,15 @@ public class CardController : BaseController<CardController>
                         result = await Mediator.Send(new ReadCardQuery(request.CardId));
                         break;
                     case CardRequestType.ReadCardDetail:
+                        result = await Mediator.Send(new ReadCardDetailQuery(request.CardId, request.Data));
                         break;
                     case CardRequestType.ReadCardDetails:
+                        result = await Mediator.Send(new ReadAllCardDetailsQuery(request.CardId));
                         break;
                     case CardRequestType.ReadCardBData:
                         break;
                     case CardRequestType.ReadAvatar:
+                        result = await Mediator.Send(new ReadAvatarQuery(request.CardId));
                         break;
                     case CardRequestType.ReadItem:
                         break;
@@ -138,7 +141,10 @@ public class CardController : BaseController<CardController>
 
         if (result.Succeeded)
         {
-            return Ok(result.Data);
+            var normalResult = "1\n" +
+                               "1,1\n" +
+                               $"{result.Data}";
+            return Ok(normalResult);
         }
 
         // Here error is not null since Succeeded => Error is null; 

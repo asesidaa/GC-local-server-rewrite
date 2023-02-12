@@ -252,7 +252,7 @@ else
                     <Column T="SongPlayData" Field="@nameof(SongPlayData.LastPlayTime)" Title="Last Play Time"/>
                 </Columns>
                 <ChildRowContent>
-                    @if (context.ShowDetails)
+                    @if (context.Item.ShowDetails)
                     {
                         <MudTr>
                             <td colspan="5">
@@ -263,7 +263,7 @@ else
                                         </CardHeaderContent>
                                     </MudCardHeader>
                                     <MudCardContent Class="pa-0">
-                                        <MudTable Items="@context.SongPlaySubDataList"
+                                        <MudTable Items="@context.Item.SongPlaySubDataList"
                                                   Context="SongPlayDetail"
                                                   Elevation="0"
                                                   Filter="data => data.ClearState != ClearState.NotPlayed">

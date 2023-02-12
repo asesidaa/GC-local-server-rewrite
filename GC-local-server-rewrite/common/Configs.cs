@@ -158,7 +158,7 @@ public static class Configs
     };
 
     public static readonly IAppSettings SETTINGS = 
-        new ConfigurationBuilder<IAppSettings>().UseJsonFile(PathHelper.ConfigFilePath).Build();
+        new ConfigurationBuilder<IAppSettings>().UseJsonConfig(PathHelper.ConfigFilePath).Build();
 
     public const int DEFAULT_AVATAR_COUNT = 323;
     public const int DEFAULT_NAVIGATOR_COUNT = 94;

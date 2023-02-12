@@ -9,10 +9,10 @@ namespace Infrastructure.Common;
 
 public class CertificateService
 {
+    private const string ENHANCED_KEY_USAGE_OID = "2.5.29.37";
+    
     private const X509KeyUsageFlags ROOT_CA_X509_KEY_USAGE_FLAGS = X509KeyUsageFlags.KeyCertSign |
-                                                                   X509KeyUsageFlags.DataEncipherment |
-                                                                   X509KeyUsageFlags.KeyEncipherment |
-                                                                   X509KeyUsageFlags.DigitalSignature;
+                                                                   X509KeyUsageFlags.CrlSign;
 
     private const X509KeyStorageFlags X509_KEY_STORAGE_FLAGS_MACHINE = X509KeyStorageFlags.PersistKeySet |
                                                                        X509KeyStorageFlags.MachineKeySet |
@@ -63,7 +63,7 @@ public class CertificateService
     private static readonly ValidityPeriod VALIDITY_PERIOD = new()
     {
         ValidFrom = DateTime.UtcNow,
-        ValidTo = DateTime.UtcNow.AddYears(3)
+        ValidTo = DateTime.UtcNow.AddYears(1)
     };
 
     private static readonly OidCollection OID_COLLECTION = new()
@@ -121,11 +121,13 @@ public class CertificateService
                 return existingCert;
             }
 
-            logger.LogInformation("Existing CN not found! Removing old certificates and genrate new ones...");
+            logger.LogInformation("Existing certs not found or are not valid! " +
+                                  "Removing old certificates and genrate new ones...");
         }
 
         RemovePreviousCert(StoreName.My, StoreLocation.LocalMachine);
         RemovePreviousCert(StoreName.Root, StoreLocation.LocalMachine);
+        RemovePreviousCert(StoreName.Root, StoreLocation.CurrentUser);
 
         return GenerateCertificate();
     }
@@ -155,7 +157,7 @@ public class CertificateService
 
         var cert = createCertificates.NewRsaChainedCertificate(
             CERT_DISTINGUISHED_NAME,
-            CERT_BASIC_CONSTRAINTS,
+            new BasicConstraints(),
             VALIDITY_PERIOD,
             subjectAlternativeName,
             rootCa,
@@ -187,12 +189,15 @@ public class CertificateService
             AddCertToStore(rootCaWithPrivateKey, StoreName.My, StoreLocation.LocalMachine);
             AddCertToStore(rootCaWithPrivateKey, StoreName.Root, StoreLocation.LocalMachine);
             AddCertToStore(certWithPrivateKey, StoreName.My, StoreLocation.LocalMachine);
+            AddCertToStore(certWithPrivateKey, StoreName.My, StoreLocation.CurrentUser);
+            logger.LogInformation("Added new certs to store!");
         }
 
         Directory.CreateDirectory(CERT_DIR);
 
         File.WriteAllBytes(ROOT_CERT_PATH, rootCaWithPrivateKey.Export(X509ContentType.Pfx));
         File.WriteAllBytes(CERT_PATH, certWithPrivateKey.Export(X509ContentType.Pfx));
+        logger.LogInformation("New certs saved!");
 
         return certWithPrivateKey;
     }
@@ -219,7 +224,7 @@ public class CertificateService
         {
             var store = new X509Store(storeName, storeLocation);
             store.Open(OpenFlags.ReadWrite);
-            var result = store.Certificates.Find(X509FindType.FindByIssuerName, ROOT_CA_CN, true);
+            var result = store.Certificates.Find(X509FindType.FindByIssuerName, ROOT_CA_CN, false);
 
             if (result.Any())
             {
@@ -291,9 +296,16 @@ public class CertificateService
 
                 var cert = result.First();
                 var extensions = cert.Extensions;
-                if (extensions.Select(extension => extension.Oid).Any(oid => oid?.Value == OidLookup.ServerAuthentication.Value))
+                var enhancedUsage = extensions.FirstOrDefault(extension => ENHANCED_KEY_USAGE_OID.Equals(extension.Oid?.Value));
+                if (enhancedUsage is X509EnhancedKeyUsageExtension usages)
                 {
-                    return cert;
+                    foreach (var usage in usages.EnhancedKeyUsages)
+                    {
+                        if (OidLookup.ServerAuthentication.Value!.Equals(usage.Value))
+                        {
+                            return cert;
+                        }
+                    }
                 }
                 logger.LogInformation("Certificate CN={CommonName} does not include server authentication!", commonName);
                 return null;

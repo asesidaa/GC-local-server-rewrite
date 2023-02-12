@@ -101,18 +101,14 @@ public class ServerController : WebApiController
         for (var i = 0; i < count; i++)
         {
             var data = responseList[i];
-            var fileUrl = data.FileName;
-            if (Configs.SETTINGS.DownloadEvents)
-            {
-                fileUrl = data.FileName.StartsWith("/") ? $"{DataUrl}{data.FileName}" : $"{DataUrl}/{data.FileName}";
-            }
+            var fileUrl = data.FileName.StartsWith("/") ? $"{DataUrl}{data.FileName}" : $"{DataUrl}/{data.FileName}";
             dataString.Append($"{i},{fileUrl},{data.NotBeforeUnixTime},{data.NotAfterUnixTime},{data.Md5},{data.Index}");
             dataString.Append('\n');
         }
 
         return $"count={count}\n" +
                "nexttime=1\n" +
-               dataString.ToString().TrimEnd('\n');
+               (Configs.SETTINGS.DownloadEvents ? dataString.ToString().TrimEnd('\n') : "");
     }
 
     [Route(HttpVerbs.Get, "/gameinfo.php")]

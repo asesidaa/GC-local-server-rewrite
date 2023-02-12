@@ -9,7 +9,7 @@
 
     <ItemGroup>
       <PackageReference Include="BinarySerializer" Version="8.6.3-alpha" />
-      <PackageReference Include="NetCoreServer" Version="6.2.0" />
+      <PackageReference Include="NetCoreServer" Version="6.6.0" />
       <PackageReference Include="Swan.Logging" Version="6.0.2-beta.69" />
     </ItemGroup>
 
