@@ -2,6 +2,7 @@
 using Application.Common.Models;
 using Application.Game.Card;
 using Application.Game.Card.Management;
+using Application.Game.Card.OnlineMatching;
 using Application.Game.Card.Read;
 using Application.Game.Card.Session;
 using Application.Game.Card.Write;
@@ -28,120 +29,69 @@ public class CardController : BaseController<CardController>
         }
 
         request.Data = WebUtility.UrlDecode(request.Data);
-        var result = ServiceResult.Failed<string>(ServiceError.DefaultError);
+        ServiceResult<string> result;
         switch (cardCommandType)
         {
             case CardCommandType.CardReadRequest:
             case CardCommandType.CardWriteRequest:
             {
-                switch (cardRequestType)
+                result = cardRequestType switch
                 {
-                    case CardRequestType.ReadCard:
-                        result = await Mediator.Send(new ReadCardQuery(request.CardId));
-                        break;
-                    case CardRequestType.ReadCardDetail:
-                        result = await Mediator.Send(new ReadCardDetailQuery(request.CardId, request.Data));
-                        break;
-                    case CardRequestType.ReadCardDetails:
-                        result = await Mediator.Send(new ReadAllCardDetailsQuery(request.CardId));
-                        break;
-                    case CardRequestType.ReadCardBData:
-                        result = await Mediator.Send(new ReadCardBDataQuery(request.CardId));
-                        break;
-                    case CardRequestType.ReadAvatar:
-                        result = await Mediator.Send(new ReadAvatarQuery(request.CardId));
-                        break;
-                    case CardRequestType.ReadItem:
-                        result = await Mediator.Send(new ReadItemQuery(request.CardId));
-                        break;
-                    case CardRequestType.ReadSkin:
-                        result = await Mediator.Send(new ReadSkinQuery(request.CardId));
-                        break;
-                    case CardRequestType.ReadTitle:
-                        result = await Mediator.Send(new ReadTitleQuery(request.CardId));
-                        break;
-                    case CardRequestType.ReadNavigator:
-                        result = await Mediator.Send(new ReadNavigatorQuery(request.CardId));
-                        break;
-                    case CardRequestType.ReadSoundEffect:
-                        result = await Mediator.Send(new ReadSoundEffectQuery(request.CardId));
-                        break;
-                    case CardRequestType.ReadMusic:
-                        result = await Mediator.Send(new ReadMusicQuery(request.CardId));
-                        break;
-                    case CardRequestType.ReadMusicAou:
-                        result = await Mediator.Send(new ReadMusicAouQuery(request.CardId));
-                        break;
-                    case CardRequestType.ReadMusicExtra:
-                        result = await Mediator.Send(new ReadMusicExtraQuery(request.CardId));
-                        break;
-                    case CardRequestType.ReadEventReward:
-                        result = await Mediator.Send(new ReadEventRewardQuery(request.CardId));
-                        break;
-                    case CardRequestType.ReadCoin:
-                        result = await Mediator.Send(new ReadCoinQuery(request.CardId));
-                        break;
-                    case CardRequestType.ReadUnlockReward:
-                        result = await Mediator.Send(new ReadUnlockRewardQuery(request.CardId));
-                        break;
-                    case CardRequestType.ReadUnlockKeynum:
-                        result = await Mediator.Send(new ReadUnlockKeynumQuery(request.CardId));
-                        break;
-                    case CardRequestType.ReadGetMessage:
-                        result = await Mediator.Send(new ReadGetMessageQuery(request.CardId));
-                        break;
-                    case CardRequestType.ReadCond:
-                        result = await Mediator.Send(new ReadCondQuery(request.CardId));
-                        break;
-                    case CardRequestType.ReadTotalTrophy:
-                        result = await Mediator.Send(new ReadTotalTrophyQuery(request.CardId));
-                        break;
-                    case CardRequestType.GetSession:
-                    case CardRequestType.StartSession:
-                        result = await Mediator.Send(new GetSessionCommand(request.CardId, request.Mac));
-                        break;
-                    case CardRequestType.WriteCard:
-                        break;
-                    case CardRequestType.WriteCardDetail:
-                        break;
-                    case CardRequestType.WriteCardBData:
-                        break;
-                    case CardRequestType.WriteAvatar:
-                        result = await Mediator.Send(new WriteAvatarCommand(request.CardId, request.Data));
-                        break;
-                    case CardRequestType.WriteItem:
-                        result = await Mediator.Send(new WriteItemCommand(request.CardId, request.Data));
-                        break;
-                    case CardRequestType.WriteTitle:
-                        result = await Mediator.Send(new WriteTitleCommand(request.CardId, request.Data));
-                        break;
-                    case CardRequestType.WriteMusicDetail:
-                        result = await Mediator.Send(new WriteMusicDetailCommand(request.CardId, request.Data));
-                        break;
-                    case CardRequestType.WriteNavigator:
-                        result = await Mediator.Send(new WriteNavigatorCommand(request.CardId, request.Data));
-                        break;
-                    case CardRequestType.WriteCoin:
-                        result = await Mediator.Send(new WriteCoinCommand(request.CardId, request.Data));
-                        break;
-                    case CardRequestType.WriteSkin:
-                        result = await Mediator.Send(new WriteSkinCommand(request.CardId, request.Data));
-                        break;
-                    case CardRequestType.WriteUnlockKeynum:
-                        result = await Mediator.Send(new WriteUnlockKeynumCommand(request.CardId, request.Data));
-                        break;
-                    case CardRequestType.WriteSoundEffect:
-                        result = await Mediator.Send(new WriteSoundEffectCommand(request.CardId, request.Data));
-                        break;
-                    case CardRequestType.StartOnlineMatching:
-                        break;
-                    case CardRequestType.UpdateOnlineMatching:
-                        break;
-                    case CardRequestType.UploadOnlineMatchingResult:
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(message: "Should not happen", paramName:null);
-                }
+                    CardRequestType.ReadCard => await Mediator.Send(new ReadCardQuery(request.CardId)),
+                    CardRequestType.ReadCardDetail => await Mediator.Send(
+                        new ReadCardDetailQuery(request.CardId, request.Data)),
+                    CardRequestType.ReadCardDetails => await Mediator.Send(new ReadAllCardDetailsQuery(request.CardId)),
+                    CardRequestType.ReadCardBData => await Mediator.Send(new ReadCardBDataQuery(request.CardId)),
+                    CardRequestType.ReadAvatar => await Mediator.Send(new ReadAvatarQuery(request.CardId)),
+                    CardRequestType.ReadItem => await Mediator.Send(new ReadItemQuery(request.CardId)),
+                    CardRequestType.ReadSkin => await Mediator.Send(new ReadSkinQuery(request.CardId)),
+                    CardRequestType.ReadTitle => await Mediator.Send(new ReadTitleQuery(request.CardId)),
+                    CardRequestType.ReadMusic => await Mediator.Send(new ReadMusicQuery(request.CardId)),
+                    CardRequestType.ReadEventReward => await Mediator.Send(new ReadEventRewardQuery(request.CardId)),
+                    CardRequestType.ReadNavigator => await Mediator.Send(new ReadNavigatorQuery(request.CardId)),
+                    CardRequestType.ReadMusicExtra => await Mediator.Send(new ReadMusicExtraQuery(request.CardId)),
+                    CardRequestType.ReadMusicAou => await Mediator.Send(new ReadMusicAouQuery(request.CardId)),
+                    CardRequestType.ReadCoin => await Mediator.Send(new ReadCoinQuery(request.CardId)),
+                    CardRequestType.ReadUnlockReward => await Mediator.Send(new ReadUnlockRewardQuery(request.CardId)),
+                    CardRequestType.ReadUnlockKeynum => await Mediator.Send(new ReadUnlockKeynumQuery(request.CardId)),
+                    CardRequestType.ReadSoundEffect => await Mediator.Send(new ReadSoundEffectQuery(request.CardId)),
+                    CardRequestType.ReadGetMessage => await Mediator.Send(new ReadGetMessageQuery(request.CardId)),
+                    CardRequestType.ReadCond => await Mediator.Send(new ReadCondQuery(request.CardId)),
+                    CardRequestType.ReadTotalTrophy => await Mediator.Send(new ReadTotalTrophyQuery(request.CardId)),
+                    CardRequestType.GetSession or CardRequestType.StartSession => await Mediator.Send(
+                        new GetSessionCommand(request.CardId, request.Mac)),
+                    CardRequestType.WriteCard =>
+                        await Mediator.Send(new WriteCardCommand(request.CardId, request.Data)),
+                    CardRequestType.WriteCardDetail => await Mediator.Send(
+                        new WriteCardDetailCommand(request.CardId, request.Data)),
+                    CardRequestType.WriteCardBData => await Mediator.Send(
+                        new WriteCardBDataCommand(request.CardId, request.Data)),
+                    CardRequestType.WriteAvatar => await Mediator.Send(new WriteAvatarCommand(request.CardId,
+                        request.Data)),
+                    CardRequestType.WriteItem =>
+                        await Mediator.Send(new WriteItemCommand(request.CardId, request.Data)),
+                    CardRequestType.WriteTitle => await Mediator.Send(new WriteTitleCommand(request.CardId,
+                        request.Data)),
+                    CardRequestType.WriteMusicDetail => await Mediator.Send(
+                        new WriteMusicDetailCommand(request.CardId, request.Data)),
+                    CardRequestType.WriteNavigator => await Mediator.Send(
+                        new WriteNavigatorCommand(request.CardId, request.Data)),
+                    CardRequestType.WriteCoin =>
+                        await Mediator.Send(new WriteCoinCommand(request.CardId, request.Data)),
+                    CardRequestType.WriteSkin =>
+                        await Mediator.Send(new WriteSkinCommand(request.CardId, request.Data)),
+                    CardRequestType.WriteUnlockKeynum => await Mediator.Send(
+                        new WriteUnlockKeynumCommand(request.CardId, request.Data)),
+                    CardRequestType.WriteSoundEffect => await Mediator.Send(
+                        new WriteSoundEffectCommand(request.CardId, request.Data)),
+                    CardRequestType.StartOnlineMatching => await Mediator.Send(
+                        new StartOnlineMatchingCommand(request.CardId, request.Data)),
+                    CardRequestType.UpdateOnlineMatching => await Mediator.Send(
+                        new UpdateOnlineMatchingCommand(request.CardId, request.Data)),
+                    CardRequestType.UploadOnlineMatchingResult => await Mediator.Send(
+                        new UploadOnlineMatchingResultCommand(request.CardId, request.Data)),
+                    _ => throw new ArgumentOutOfRangeException(nameof(cardRequestType), cardRequestType, "Should not happen")
+                };
                 break;
             }
             case CardCommandType.RegisterRequest:
@@ -151,7 +101,7 @@ public class CardController : BaseController<CardController>
                 result = await Mediator.Send(new CardReissueCommand(request.CardId));
                 break;
             default:
-                throw new ArgumentOutOfRangeException(message: "Should not happen", paramName:null);
+                throw new ArgumentOutOfRangeException(nameof(cardCommandType), cardCommandType, "Should not happen");
         }
 
         if (result.Succeeded)

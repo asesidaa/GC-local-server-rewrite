@@ -8,6 +8,7 @@ using Infrastructure.Persistence;
 using MainServer.Filters;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Serilog;
 using Serilog.Extensions.Logging;
 using Throw;
@@ -64,8 +65,15 @@ try
 
     builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
+    
+    builder.Services.AddResponseCompression(options =>
+    {
+        options.EnableForHttps = true;
+    });
 
     var app = builder.Build();
+    
+    app.UseResponseCompression();
     
     using (var scope = app.Services.CreateScope())
     {
@@ -96,13 +104,11 @@ try
     // Add content type for .cmp and .evt files as static files with unknown file extensions return 404 by default
     // See https://learn.microsoft.com/en-us/aspnet/core/fundamentals/static-files?view=aspnetcore-7.0#fileextensioncontenttypeprovider
     // ReSharper disable once UseObjectOrCollectionInitializer
-    var provider = new FileExtensionContentTypeProvider();
-    provider.Mappings[".cmp"] = "text/plain";
-    provider.Mappings[".evt"] = "text/plain";
-    app.UseStaticFiles(new StaticFileOptions
-    {
-        ContentTypeProvider = provider
-    });
+    var contentTypeProvider = new FileExtensionContentTypeProvider();
+    contentTypeProvider.Mappings[".cmp"] = "text/plain";
+    contentTypeProvider.Mappings[".evt"] = "text/plain";
+
+    app.UseStaticFiles();
 
     app.MapControllers();
 

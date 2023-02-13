@@ -17,7 +17,7 @@ public class AliveController : ControllerBase
         return Ok(response);
     }
 
-    [HttpGet("/{id}/Alive.txt")]
+    [HttpGet("{id}/Alive.txt")]
     public IActionResult GetAliveFile()
     {
         return Ok("");

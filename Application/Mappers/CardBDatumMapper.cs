@@ -8,4 +8,6 @@ namespace Application.Mappers;
 public static partial class CardBDatumMapper
 {
     public static partial CardBDatumDto CardBDatumToDto(this CardBdatum cardBdatum);
+    
+    public static partial CardBdatum DtoToCardBDatum(this CardBDatumDto dto);
 }
