@@ -51,7 +51,7 @@ public class CardDetailDto
 
     [XmlElement(ElementName = "last_play_tenpo_id")]
     [DefaultValue("GC local server")]
-    public string LastPlayShopId { get; set; } = "GC local server";
+    public string LastPlayTenpoId { get; set; } = "GC local server";
 
     [XmlElement("fcol1")]
     public int Fcol1 { get; set; }

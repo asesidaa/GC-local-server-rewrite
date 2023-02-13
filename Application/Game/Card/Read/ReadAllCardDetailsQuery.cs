@@ -14,8 +14,8 @@ public record ReadAllCardDetailsQuery(long CardId) : IRequestWrapper<string>;
 
 public class ReadAllCardDetailsQueryHandler : CardRequestHandlerBase<ReadAllCardDetailsQuery, string>
 {
-    private const string CARD_DETAILS_XPATH = "/root/card_detail/record";
-    private const string EMPTY_XPATH = "/root/card_detail";
+    private const string CARD_DETAILS_XPATH = "/root/card_detail";
+    private const string RECORD_XPATH = $"{CARD_DETAILS_XPATH}/record";
     
     private readonly ILogger<ReadAllCardDetailsQueryHandler> logger;
 
@@ -43,7 +43,7 @@ public class ReadAllCardDetailsQueryHandler : CardRequestHandlerBase<ReadAllCard
         string result;
         if (cardDetails.Count == 0)
         {
-            result = new object().SerializeCardData(EMPTY_XPATH);
+            result = new object().SerializeCardData(CARD_DETAILS_XPATH);
         }
         else
         {
@@ -53,7 +53,7 @@ public class ReadAllCardDetailsQueryHandler : CardRequestHandlerBase<ReadAllCard
                 dto.Id = i;
                 return dto;
             });
-            result = dtoList.SerializeCardDataList(CARD_DETAILS_XPATH);
+            result = dtoList.SerializeCardDataList(RECORD_XPATH);
         }
 
         return new ServiceResult<string>(result);

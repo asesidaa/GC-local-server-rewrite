@@ -1,6 +1,7 @@
 using Application.Common.Extensions;
 using Application.Common.Models;
 using Application.Interfaces;
+using Application.Mappers;
 using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,12 +12,27 @@ public record ReadMusicExtraQuery(long CardId) : IRequestWrapper<string>;
 
 public class ReadMusicExtraQueryHandler : CardRequestHandlerBase<ReadMusicExtraQuery, string>
 {
+    private const string MUSIC_EXTRA_XPATH = "/root/music_extra";
+
+    private const string RECORD_XPATH = $"{MUSIC_EXTRA_XPATH}/record";
+    
     public ReadMusicExtraQueryHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {
     }
 
-    public override Task<ServiceResult<string>> Handle(ReadMusicExtraQuery request, CancellationToken cancellationToken)
+    public override async Task<ServiceResult<string>> Handle(ReadMusicExtraQuery request, CancellationToken cancellationToken)
     {
-      throw new NotImplementedException();  
+        var musics = await MusicDbContext.MusicExtras.ToListAsync(cancellationToken: cancellationToken);
+        var dtoList = musics.Select((aou, i) =>
+        {
+            var dto = aou.MusicExtraToDto();
+            dto.Id = i;
+            return dto;
+        }).ToList();
+
+        var result = dtoList.Count == 0 ? new object().SerializeCardData(MUSIC_EXTRA_XPATH) 
+            : dtoList.SerializeCardDataList(RECORD_XPATH);
+
+        return new ServiceResult<string>(result);
     }
 }

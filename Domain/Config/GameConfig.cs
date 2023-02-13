@@ -17,4 +17,6 @@ public class GameConfig
     public int TitleCount { get; set; }
 
     public List<int> UnlockableSongIds { get; set; } = new();
+
+    public List<UnlockRewardConfig> UnlockRewards { get; set; } = new();
 }

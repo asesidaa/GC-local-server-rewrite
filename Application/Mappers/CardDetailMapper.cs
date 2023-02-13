@@ -8,4 +8,6 @@ namespace Application.Mappers;
 public static partial class CardDetailMapper
 {
     public static partial CardDetailDto CardDetailToDto(this CardDetail cardDetail);
+
+    public static partial CardDetail DtoToCardDetail(this CardDetailDto dto);
 }

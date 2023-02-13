@@ -31,8 +31,8 @@ public class ReadAvatarQueryHandler : CardRequestHandlerBase<ReadAvatarQuery, st
                 Id = i,
                 CardId = request.CardId,
                 AvatarId = i,
-                Created = "2013-01-01",
-                Modified = "2013-01-01",
+                Created = "2013-01-01 08:00:00",
+                Modified = "2013-01-01 08:00:00",
                 NewFlag = 0,
                 UseFlag = 1
             };
