@@ -13,6 +13,8 @@ public interface ICardDbContext
 
     public DbSet<CardPlayCount> CardPlayCounts { get; set; }
     
+    public DbSet<PlayNumRank> PlayNumRanks { get; set; }
+
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     
     

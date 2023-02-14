@@ -1,4 +1,6 @@
-﻿using Domain.Enums;
+﻿using Application.Common.Models;
+using Application.Game.Rank;
+using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Throw;
 
@@ -14,21 +16,26 @@ public class RankingController : BaseController<RankingController>
         var type = (RankingCommandType)rankType;
         type.Throw().IfOutOfRange();
 
-        switch (type)
+        var result = type switch
         {
-            case RankingCommandType.GlobalRank:
-                break;
-            case RankingCommandType.PlayNumRank:
-                break;
-            case RankingCommandType.EventRank:
-                break;
-            case RankingCommandType.MonthlyRank:
-                break;
-            case RankingCommandType.ShopRank:
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(type), type, "Should not happen!");
+            RankingCommandType.GlobalRank => await Mediator.Send(new GetGlobalScoreRankQuery()),
+            RankingCommandType.PlayNumRank => await Mediator.Send(new GetPlayNumRankQuery()),
+            RankingCommandType.EventRank => await Mediator.Send(new GetEventRankQuery()),
+            RankingCommandType.MonthlyRank => await Mediator.Send(new GetMonthlyScoreRankQuery()),
+            RankingCommandType.ShopRank => await Mediator.Send(new GetTenpoScoreRankQuery()),
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Should not happen!")
+        };
+
+        if (result.Succeeded)
+        {
+            var normalResult = "1\n" +
+                               $"{result.Data}";
+            return Ok(normalResult);
         }
-        return "";
+
+        // Here error is not null since Succeeded => Error is null; 
+        var errorMessage = $"{result.Error!.Code}\n" +
+                           $"{result.Error!.Message}";
+        return Ok(errorMessage);
     }
 }

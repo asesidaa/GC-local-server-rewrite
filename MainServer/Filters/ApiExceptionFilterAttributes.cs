@@ -64,7 +64,7 @@ public class ApiExceptionFilterService : ExceptionFilterAttribute
 
     private void HandleArgumentOutOfRangeException(ExceptionContext context)
     {
-        logger.LogError(context.Exception, "");
+        logger.LogError(context.Exception, "Get an argument out of bound exception");
         var exception = context.Exception as ArgumentOutOfRangeException;
         Debug.Assert(exception != null, nameof(exception) + " != null");
 

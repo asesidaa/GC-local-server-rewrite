@@ -34,7 +34,7 @@ public class WriteCardDetailCommandHandler : CardRequestHandlerBase<WriteCardDet
         var detail = dto.DtoToCardDetail();
         detail.CardId = request.CardId;
         detail.LastPlayTime = DateTime.Now;
-        CardDbContext.CardDetails.Upsert(detail);
+        await CardDbContext.CardDetails.Upsert(detail).RunAsync(cancellationToken);
 
         await CardDbContext.SaveChangesAsync(cancellationToken);
         

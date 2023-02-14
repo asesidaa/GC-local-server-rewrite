@@ -25,6 +25,8 @@ public partial class CardDbContext : DbContext, ICardDbContext
 
     public virtual DbSet<CardPlayCount> CardPlayCounts { get; set; } = null!;
 
+    public virtual DbSet<PlayNumRank> PlayNumRanks { get; set; } = null!;
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (optionsBuilder.IsConfigured)
@@ -110,6 +112,23 @@ public partial class CardDbContext : DbContext, ICardDbContext
                 .HasConversion<DateTimeToTicksConverter>();
             entity.Property(e => e.PlayCount).HasColumnName("play_count");
         });
+
+        modelBuilder.Entity<PlayNumRank>(entity =>
+        {
+            entity.HasKey(e => e.MusicId);
+
+            entity.ToTable("PlayNumRank");
+
+            entity.Property(e => e.MusicId).ValueGeneratedNever();
+            entity.Property(e => e.PlayCount);
+            entity.Property(e => e.Artist);
+            entity.Property(e => e.Title);
+            entity.Property(e => e.Rank);
+            entity.Property(e => e.Rank2);
+            entity.Property(e => e.PrevRank);
+            entity.Property(e => e.PrevRank2);
+        });
+        
 
         OnModelCreatingPartial(modelBuilder);
     }

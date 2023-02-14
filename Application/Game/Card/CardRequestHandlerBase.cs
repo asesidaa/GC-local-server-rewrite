@@ -1,9 +1,6 @@
 ﻿using Application.Common.Models;
 using Application.Interfaces;
 using Domain.Config;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Application.Game.Card;
 

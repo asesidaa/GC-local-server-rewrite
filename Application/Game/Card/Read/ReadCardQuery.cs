@@ -1,6 +1,7 @@
 ﻿using Application.Common.Extensions;
 using Application.Common.Models;
 using Application.Interfaces;
+using Application.Mappers;
 using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -26,7 +27,7 @@ public class ReadCardQueryHandler : CardRequestHandlerBase<ReadCardQuery, string
             return ServiceResult.Failed<string>(new ServiceError($"Card id: {request.CardId} does not exist!", (int)CardReturnCode.CardNotRegistered));
         }
 
-        var result = card.SerializeCardData("/root/card");
+        var result = card.CardMainToCardDto().SerializeCardData("/root/card");
 
         return new ServiceResult<string>(result);
     }

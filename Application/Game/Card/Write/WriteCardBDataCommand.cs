@@ -33,7 +33,7 @@ public class WriteCardBDataCommandHandler : CardRequestHandlerBase<WriteCardBDat
         var dto = request.Data.DeserializeCardData<CardBDatumDto>();
         var data = dto.DtoToCardBDatum();
         data.CardId = request.CardId;
-        CardDbContext.CardBdata.Upsert(data);
+        await CardDbContext.CardBdata.Upsert(data).RunAsync(cancellationToken);
 
         await CardDbContext.SaveChangesAsync(cancellationToken);
         

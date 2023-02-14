@@ -28,6 +28,20 @@ public static class XmlSerializationExtensions
         }
         return buffer.ToString();
     }
+    
+    public static string SerializeCardData<T>(this T source) where T : class
+    {
+        var buffer = new StringBuilder();
+        using (var writer = new ChoXmlWriter<T>(buffer).UseXmlSerialization())
+        {
+            writer.Configuration.OmitXmlDeclaration = false;
+            writer.Configuration.DoNotEmitXmlNamespace = true;
+            writer.Configuration.IgnoreRootName = true;
+            writer.Write(source);
+        }
+        return buffer.ToString();
+    }
+    
     public static string SerializeCardDataList<T>(this IEnumerable<T> source, string xpath) where T : class
     {
         var buffer = new StringBuilder();

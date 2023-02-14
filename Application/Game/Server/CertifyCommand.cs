@@ -57,7 +57,7 @@ public partial class CertifyCommandHandler : IRequestHandler<CertifyCommand, str
         
         var response = $"host=card_id=7020392000147361,relay_addr={relayConfig.RelayServer},relay_port={relayConfig.RelayPort}\n" +
                        "no=1337\n" +
-                       "name=123\n" +
+                       "name=Local\n" +
                        "pref=nesys\n" +
                        "addr=nesys@home\n" +
                        "x-next-time=15\n" +
