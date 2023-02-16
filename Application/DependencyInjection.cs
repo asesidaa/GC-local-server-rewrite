@@ -20,13 +20,48 @@ public static class DependencyInjection
         services.AddQuartz(q =>
         {
             q.UseMicrosoftDependencyInjectionJobFactory();
-            var jobKey = new JobKey("UpdatePlayNumRankJob");
-            q.AddJob<UpdatePlayNumRankJob>(options => options.WithIdentity(jobKey));
-
+            
+            q.AddJob<UpdatePlayNumRankJob>(options => options.WithIdentity(UpdatePlayNumRankJob.KEY));
             q.AddTrigger(options =>
             {
-                options.ForJob(jobKey)
+                options.ForJob(UpdatePlayNumRankJob.KEY)
                     .WithIdentity("UpdatePlayNumRankJob-trigger")
+                    .StartNow()
+                    .WithSimpleSchedule(x =>
+                    {
+                        x.WithIntervalInHours(24).RepeatForever();
+                    });
+            });
+            
+            q.AddJob<UpdateGlobalScoreRankJob>(options => options.WithIdentity(UpdateGlobalScoreRankJob.KEY));
+            q.AddTrigger(options =>
+            {
+                options.ForJob(UpdateGlobalScoreRankJob.KEY)
+                    .WithIdentity("UpdateGlobalScoreRankJob-trigger")
+                    .StartNow()
+                    .WithSimpleSchedule(x =>
+                    {
+                        x.WithIntervalInHours(24).RepeatForever();
+                    });
+            });
+            
+            q.AddJob<UpdateMonthlyScoreRankJob>(options => options.WithIdentity(UpdateMonthlyScoreRankJob.KEY));
+            q.AddTrigger(options =>
+            {
+                options.ForJob(UpdateMonthlyScoreRankJob.KEY)
+                    .WithIdentity("UpdateMonthlyScoreRankJob-trigger")
+                    .StartNow()
+                    .WithSimpleSchedule(x =>
+                    {
+                        x.WithIntervalInHours(24).RepeatForever();
+                    });
+            });
+            
+            q.AddJob<MaintainTenpoIdJob>(options => options.WithIdentity(MaintainTenpoIdJob.KEY));
+            q.AddTrigger(options =>
+            {
+                options.ForJob(MaintainTenpoIdJob.KEY)
+                    .WithIdentity("MaintainTenpoIdJob-trigger")
                     .StartNow()
                     .WithSimpleSchedule(x =>
                     {

@@ -50,8 +50,8 @@ public class CardDetailDto
     public long ScoreBi1 { get; set; }
 
     [XmlElement(ElementName = "last_play_tenpo_id")]
-    [DefaultValue("GC local server")]
-    public string LastPlayTenpoId { get; set; } = "GC local server";
+    [DefaultValue("1337")]
+    public string LastPlayTenpoId { get; set; } = "1337";
 
     [XmlElement("fcol1")]
     public int Fcol1 { get; set; }

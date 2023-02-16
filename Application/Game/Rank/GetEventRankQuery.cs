@@ -17,7 +17,7 @@ public class GetEventRankQueryHandler : IRequestHandlerWrapper<GetEventRankQuery
             Ranks = new List<object>(),
             Status = new RankStatus
             {
-                TableName = "TenpoScoreRank",
+                TableName = "EventRank",
                 StartDate = TimeHelper.DateToString(DateTime.Today),
                 EndDate = TimeHelper.DateToString(DateTime.Today),
                 Rows = 0,

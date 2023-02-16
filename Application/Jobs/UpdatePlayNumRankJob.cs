@@ -14,6 +14,8 @@ public class UpdatePlayNumRankJob : IJob
     private readonly ICardDbContext cardDbContext;
 
     private readonly IMusicDbContext musicDbContext;
+    
+    public static readonly JobKey KEY = new JobKey("UpdatePlayNumRankJob");
 
     public UpdatePlayNumRankJob(ILogger<UpdatePlayNumRankJob> logger, ICardDbContext cardDbContext,
         IMusicDbContext musicDbContext)
@@ -61,5 +63,7 @@ public class UpdatePlayNumRankJob : IJob
         }).ToList();
         await cardDbContext.PlayNumRanks.UpsertRange(result).RunAsync();
         await cardDbContext.SaveChangesAsync(new CancellationToken());
+        
+        logger.LogInformation("Updating play num rank done");
     }
 }

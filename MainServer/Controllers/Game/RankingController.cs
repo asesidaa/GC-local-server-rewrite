@@ -11,7 +11,8 @@ namespace MainServer.Controllers.Game;
 public class RankingController : BaseController<RankingController>
 {
     [HttpGet("ranking.php")]
-    public async Task<ActionResult<string>> Ranking([FromQuery(Name = "cmd_type")] int rankType)
+    public async Task<ActionResult<string>> Ranking([FromQuery(Name = "cmd_type")] int rankType,
+        [FromQuery(Name = "tenpo_id")] int tenpoId)
     {
         var type = (RankingCommandType)rankType;
         type.Throw().IfOutOfRange();
@@ -22,7 +23,7 @@ public class RankingController : BaseController<RankingController>
             RankingCommandType.PlayNumRank => await Mediator.Send(new GetPlayNumRankQuery()),
             RankingCommandType.EventRank => await Mediator.Send(new GetEventRankQuery()),
             RankingCommandType.MonthlyRank => await Mediator.Send(new GetMonthlyScoreRankQuery()),
-            RankingCommandType.ShopRank => await Mediator.Send(new GetTenpoScoreRankQuery()),
+            RankingCommandType.ShopRank => await Mediator.Send(new GetTenpoScoreRankQuery(tenpoId)),
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Should not happen!")
         };
 

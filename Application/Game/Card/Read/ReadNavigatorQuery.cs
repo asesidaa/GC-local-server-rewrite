@@ -31,11 +31,11 @@ public class ReadNavigatorQueryHandler : CardRequestHandlerBase<ReadNavigatorQue
             {
                 Id = i,
                 CardId = request.CardId,
-                NavigatorId = i,
+                NavigatorId = i + 1,
                 Created = "2013-01-01 08:00:00",
                 Modified = "2013-01-01 08:00:00",
                 NewFlag = 0,
-                UseFlag = 1
+                UseFlag = i == 10 ? 0 : 1
             };
             list.Add(navigator);
         }

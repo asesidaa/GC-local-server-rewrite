@@ -30,11 +30,11 @@ public class ReadAvatarQueryHandler : CardRequestHandlerBase<ReadAvatarQuery, st
             {
                 Id = i,
                 CardId = request.CardId,
-                AvatarId = i,
+                AvatarId = i + 1,
                 Created = "2013-01-01 08:00:00",
                 Modified = "2013-01-01 08:00:00",
                 NewFlag = 0,
-                UseFlag = 1
+                UseFlag = i == 10 ? 0 : 1
             };
             list.Add(avatar);
         }

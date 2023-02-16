@@ -28,7 +28,7 @@ public class ReadSoundEffectQueryHandler : CardRequestHandlerBase<ReadSoundEffec
             {
                 Id = i,
                 CardId = request.CardId,
-                SoundEffectId = i,
+                SoundEffectId = i + 1,
                 Created = "2013-01-01 08:00:00",
                 Modified = "2013-01-01 08:00:00",
                 NewFlag = 0,

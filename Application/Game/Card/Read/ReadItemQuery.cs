@@ -29,7 +29,7 @@ public class ReadItemQueryHandler : CardRequestHandlerBase<ReadItemQuery, string
             {
                 Id = i,
                 CardId = request.CardId,
-                ItemId = i,
+                ItemId = i + 1,
                 ItemNum = 90,
                 Created = "2013-01-01",
                 Modified = "2013-01-01",

@@ -27,6 +27,13 @@ public partial class CardDbContext : DbContext, ICardDbContext
 
     public virtual DbSet<PlayNumRank> PlayNumRanks { get; set; } = null!;
 
+    public virtual DbSet<GlobalScoreRank> GlobalScoreRanks { get; set; } = null!;
+    
+    public virtual DbSet<MonthlyScoreRank> MonthlyScoreRanks { get; set; } = null!;
+    
+    public virtual DbSet<ShopScoreRank> ShopScoreRanks { get; set; } = null!;
+
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (optionsBuilder.IsConfigured)
@@ -128,7 +135,72 @@ public partial class CardDbContext : DbContext, ICardDbContext
             entity.Property(e => e.PrevRank);
             entity.Property(e => e.PrevRank2);
         });
+
+        modelBuilder.Entity<GlobalScoreRank>(entity =>
+        {
+            entity.HasKey(e => e.CardId);
+
+            entity.ToTable("GlobalScoreRank");
+
+            entity.Property(e => e.CardId).ValueGeneratedNever();
+            entity.Property(e => e.Fcol1);
+            entity.Property(e => e.AvatarId);
+            entity.Property(e => e.Title);
+            entity.Property(e => e.TitleId);
+            entity.Property(e => e.Rank);
+            entity.Property(e => e.AreaId);
+            entity.Property(e => e.Area);
+            entity.Property(e => e.LastPlayTenpoId);
+            entity.Property(e => e.TenpoName);
+            entity.Property(e => e.PrefId);
+            entity.Property(e => e.Pref);
+            entity.Property(e => e.TotalScore);
+            entity.Property(e => e.PlayerName);
+        });
         
+        modelBuilder.Entity<MonthlyScoreRank>(entity =>
+        {
+            entity.HasKey(e => e.CardId);
+
+            entity.ToTable("MonthlyScoreRank");
+
+            entity.Property(e => e.CardId).ValueGeneratedNever();
+            entity.Property(e => e.Fcol1);
+            entity.Property(e => e.AvatarId);
+            entity.Property(e => e.Title);
+            entity.Property(e => e.TitleId);
+            entity.Property(e => e.Rank);
+            entity.Property(e => e.AreaId);
+            entity.Property(e => e.Area);
+            entity.Property(e => e.LastPlayTenpoId);
+            entity.Property(e => e.TenpoName);
+            entity.Property(e => e.PrefId);
+            entity.Property(e => e.Pref);
+            entity.Property(e => e.TotalScore);
+            entity.Property(e => e.PlayerName);
+        });
+        
+        modelBuilder.Entity<ShopScoreRank>(entity =>
+        {
+            entity.HasKey(e => e.CardId);
+
+            entity.ToTable("ShopScoreRank");
+
+            entity.Property(e => e.CardId).ValueGeneratedNever();
+            entity.Property(e => e.Fcol1);
+            entity.Property(e => e.AvatarId);
+            entity.Property(e => e.Title);
+            entity.Property(e => e.TitleId);
+            entity.Property(e => e.Rank);
+            entity.Property(e => e.AreaId);
+            entity.Property(e => e.Area);
+            entity.Property(e => e.LastPlayTenpoId);
+            entity.Property(e => e.TenpoName);
+            entity.Property(e => e.PrefId);
+            entity.Property(e => e.Pref);
+            entity.Property(e => e.TotalScore);
+            entity.Property(e => e.PlayerName);
+        });
 
         OnModelCreatingPartial(modelBuilder);
     }
