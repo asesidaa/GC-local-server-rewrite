@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Game.Rank;
 
-public record GetGlobalScoreRankQuery() : IRequestWrapper<string>;
+public record GetGlobalScoreRankQuery(string Param) : IRequestWrapper<string>;
 
 public class GetGlobalScoreRankQueryHandler : IRequestHandlerWrapper<GetGlobalScoreRankQuery, string>
 {
@@ -22,6 +22,59 @@ public class GetGlobalScoreRankQueryHandler : IRequestHandlerWrapper<GetGlobalSc
 
     public async Task<ServiceResult<string>> Handle(GetGlobalScoreRankQuery request, CancellationToken cancellationToken)
     {
+        var param = request.Param.DeserializeCardData<RankParam>();
+        if (param.CardId == 0)
+        {
+            return await GetAllRanks(cancellationToken);
+        }
+        return await GetCardRank(param.CardId, cancellationToken);
+    }
+
+    private async Task<ServiceResult<string>> GetCardRank(long cardId,
+        CancellationToken cancellationToken)
+    {
+        var rank = await cardDbContext.GlobalScoreRanks.FirstOrDefaultAsync(scoreRank => scoreRank.CardId == cardId, 
+            cancellationToken: cancellationToken);
+        GlobalScoreRankContainer container;
+        if (rank is null)
+        {
+            container = new GlobalScoreRankContainer
+            {
+                Ranks = new List<ScoreRankDto>(),
+                Status = new RankStatus
+                {
+                    TableName = "GlobalScoreRank",
+                    StartDate = TimeHelper.DateToString(DateTime.Today),
+                    EndDate = TimeHelper.DateToString(DateTime.Today),
+                    Rows = 1,
+                    Status = 1
+                }
+            };
+            return new ServiceResult<string>(container.SerializeCardData());
+        }
+
+        var dto = rank.ScoreRankToDto();
+        dto.Id = 0;
+        container = new GlobalScoreRankContainer
+        {
+            Ranks = new List<ScoreRankDto>
+            {
+                dto
+            },
+            Status = new RankStatus
+            {
+                TableName = "GlobalScoreRank",
+                StartDate = TimeHelper.DateToString(DateTime.Today),
+                EndDate = TimeHelper.DateToString(DateTime.Today),
+                Rows = 1,
+                Status = 1
+            }
+        };
+        return new ServiceResult<string>(container.SerializeCardData());
+    }
+
+    private async Task<ServiceResult<string>> GetAllRanks(CancellationToken cancellationToken)
+    {
         var ranks = await cardDbContext.GlobalScoreRanks.OrderBy(rank => rank.Rank)
             .Take(30).ToListAsync(cancellationToken: cancellationToken);
 
@@ -32,7 +85,7 @@ public class GetGlobalScoreRankQueryHandler : IRequestHandlerWrapper<GetGlobalSc
             dto.Rank2 = dto.Rank;
             return dto;
         }).ToList();
-        
+
         var container = new GlobalScoreRankContainer
         {
             Ranks = dtoList,

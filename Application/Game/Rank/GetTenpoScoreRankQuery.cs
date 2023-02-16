@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Game.Rank;
 
-public record GetTenpoScoreRankQuery(int TenpoId) : IRequestWrapper<string>;
+public record GetTenpoScoreRankQuery(int TenpoId, string Param) : IRequestWrapper<string>;
 
 public class GetTenpoScoreRankQueryHandler : IRequestHandlerWrapper<GetTenpoScoreRankQuery, string>
 {
@@ -23,7 +23,60 @@ public class GetTenpoScoreRankQueryHandler : IRequestHandlerWrapper<GetTenpoScor
 
     public async Task<ServiceResult<string>> Handle(GetTenpoScoreRankQuery request, CancellationToken cancellationToken)
     {
-        var ranks = await cardDbContext.GlobalScoreRanks.Where(rank => rank.LastPlayTenpoId == request.TenpoId)
+        var param = request.Param.DeserializeCardData<RankParam>();
+        if (param.CardId == 0)
+        {
+            return await GetAllRanks(request.TenpoId, cancellationToken);
+        }
+        return await GetCardRank(param.CardId, request.TenpoId, cancellationToken);
+    }
+
+    private async Task<ServiceResult<string>> GetCardRank(long cardId, int tenpoId, CancellationToken cancellationToken)
+    {
+        var rank = await cardDbContext.GlobalScoreRanks.FirstOrDefaultAsync(scoreRank => scoreRank.CardId == cardId &&
+            scoreRank.LastPlayTenpoId == tenpoId, 
+            cancellationToken: cancellationToken);
+        TenpoScoreRankContainer container;
+        if (rank is null)
+        {
+            container = new TenpoScoreRankContainer
+            {
+                Ranks = new List<ScoreRankDto>(),
+                Status = new RankStatus
+                {
+                    TableName = "TenpoScoreRank",
+                    StartDate = TimeHelper.DateToString(DateTime.Today),
+                    EndDate = TimeHelper.DateToString(DateTime.Today),
+                    Rows = 1,
+                    Status = 1
+                }
+            };
+            return new ServiceResult<string>(container.SerializeCardData());
+        }
+
+        var dto = rank.ScoreRankToDto();
+        dto.Id = 0;
+        container = new TenpoScoreRankContainer
+        {
+            Ranks = new List<ScoreRankDto>
+            {
+                dto
+            },
+            Status = new RankStatus
+            {
+                TableName = "TenpoScoreRankContainer",
+                StartDate = TimeHelper.DateToString(DateTime.Today),
+                EndDate = TimeHelper.DateToString(DateTime.Today),
+                Rows = 1,
+                Status = 1
+            }
+        };
+        return new ServiceResult<string>(container.SerializeCardData());
+    }
+
+    private async Task<ServiceResult<string>> GetAllRanks(int tenpoId, CancellationToken cancellationToken)
+    {
+        var ranks = await cardDbContext.GlobalScoreRanks.Where(rank => rank.LastPlayTenpoId == tenpoId)
             .OrderByDescending(rank => rank.TotalScore)
             .Take(30)
             .ToListAsync(cancellationToken: cancellationToken);
@@ -32,7 +85,7 @@ public class GetTenpoScoreRankQueryHandler : IRequestHandlerWrapper<GetTenpoScor
             rank.Rank = i + 1;
             return rank;
         }).ToList();
-        
+
         var dtoList = ranks.Select((rank, i) =>
         {
             var dto = rank.ScoreRankToDto();
@@ -40,7 +93,7 @@ public class GetTenpoScoreRankQueryHandler : IRequestHandlerWrapper<GetTenpoScor
             dto.Rank2 = dto.Rank;
             return dto;
         }).ToList();
-        
+
         var container = new TenpoScoreRankContainer
         {
             Ranks = dtoList,

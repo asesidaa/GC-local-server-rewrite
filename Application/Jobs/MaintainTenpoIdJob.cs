@@ -22,11 +22,13 @@ public class MaintainTenpoIdJob : IJob
 
     [SuppressMessage("ReSharper.DPA", "DPA0007: Large number of DB records", 
         Justification = "All details might be read")]
+    [SuppressMessage("ReSharper.DPA", "DPA0006: Large number of DB commands")]
     public async Task Execute(IJobExecutionContext context)
     {
         logger.LogInformation("Starting changing null values in card detail table");
 
-        var details = await cardDbContext.CardDetails.Where(detail => detail.LastPlayTenpoId == null).ToListAsync();
+        var details = await cardDbContext.CardDetails.Where(detail => detail.LastPlayTenpoId == null ||
+                                                                      detail.LastPlayTenpoId == "GC local server").ToListAsync();
         details.ForEach(detail => detail.LastPlayTenpoId="1337");
 
         cardDbContext.CardDetails.UpdateRange(details);
