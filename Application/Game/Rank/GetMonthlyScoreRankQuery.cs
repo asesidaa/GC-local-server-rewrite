@@ -1,11 +1,4 @@
-﻿using System.Xml.Serialization;
-using Application.Common.Extensions;
-using Application.Common.Helpers;
-using Application.Common.Models;
-using Application.Dto;
-using Application.Interfaces;
-using Application.Mappers;
-using Microsoft.EntityFrameworkCore;
+﻿using Application.Common.Helpers;
 
 namespace Application.Game.Rank;
 

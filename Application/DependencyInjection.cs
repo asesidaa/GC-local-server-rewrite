@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using Application.Common.Behaviours;
 using Application.Game.Card;
-using Application.Interfaces;
 using Application.Jobs;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

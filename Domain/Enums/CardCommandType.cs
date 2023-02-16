@@ -2,8 +2,8 @@
 
 public enum CardCommandType
 {
-    CardReadRequest = 256,
+    CardReadRequest  = 256,
     CardWriteRequest = 768,
-    RegisterRequest = 512,
-    ReissueRequest = 1536
+    RegisterRequest  = 512,
+    ReissueRequest   = 1536
 }

@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using Application.Interfaces;
 using MediatR;
 
 namespace Application.Game.Server;

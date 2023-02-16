@@ -16,35 +16,35 @@
     "UnlockRewards": [
       {
         "RewardId" : 1,
-        "RewardType" : 1,
+        "RewardType" : "Item",
         "TargetId" : 1,
         "TargetNum": 1,
         "KeyNum": 1
       },
       {
         "RewardId" : 2,
-        "RewardType" : 0,
+        "RewardType" : "Music",
         "TargetId" : 11,
         "TargetNum": 1,
         "KeyNum": 1
       },
       {
         "RewardId" : 3,
-        "RewardType" : 2,
+        "RewardType" : "Avatar",
         "TargetId" : 11,
         "TargetNum": 1,
         "KeyNum": 1
       },
       {
         "RewardId" : 4,
-        "RewardType" : 7,
+        "RewardType" : "Navigator",
         "TargetId" : 11,
         "TargetNum": 1,
         "KeyNum": 1
       },
       {
         "RewardId" : 5,
-        "RewardType" : 8,
+        "RewardType" : "Coin",
         "TargetId" : 1,
         "TargetNum": 1,
         "KeyNum": 1

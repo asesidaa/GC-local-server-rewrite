@@ -1,6 +1,3 @@
-using Application.Common.Models;
-using Application.Interfaces;
-
 namespace Application.Game.Card.Write;
 
 public record WriteUnlockKeynumCommand(long CardId, string Data) : IRequestWrapper<string>;

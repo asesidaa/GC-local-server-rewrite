@@ -1,6 +1,4 @@
-﻿using Application.Interfaces;
-using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities;
 using Microsoft.Extensions.Logging;
 using Quartz;
 

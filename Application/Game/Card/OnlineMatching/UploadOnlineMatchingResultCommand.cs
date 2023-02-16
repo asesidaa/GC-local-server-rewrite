@@ -1,7 +1,4 @@
-﻿using Application.Common.Models;
-using Application.Interfaces;
-
-namespace Application.Game.Card.OnlineMatching;
+﻿namespace Application.Game.Card.OnlineMatching;
 
 public record UploadOnlineMatchingResultCommand(long CardId, string Data) : IRequestWrapper<string>;
 

@@ -1,11 +1,4 @@
-﻿using System.Xml.Serialization;
-using Application.Common.Extensions;
-using Application.Common.Helpers;
-using Application.Common.Models;
-using Application.Dto;
-using Application.Interfaces;
-using Application.Mappers;
-using Microsoft.EntityFrameworkCore;
+﻿using Application.Common.Helpers;
 
 namespace Application.Game.Rank;
 
@@ -35,41 +28,27 @@ public class GetGlobalScoreRankQueryHandler : IRequestHandlerWrapper<GetGlobalSc
     {
         var rank = await cardDbContext.GlobalScoreRanks.FirstOrDefaultAsync(scoreRank => scoreRank.CardId == cardId, 
             cancellationToken: cancellationToken);
-        GlobalScoreRankContainer container;
-        if (rank is null)
+        var container =  new GlobalScoreRankContainer
         {
-            container = new GlobalScoreRankContainer
-            {
-                Ranks = new List<ScoreRankDto>(),
-                Status = new RankStatus
-                {
-                    TableName = "GlobalScoreRank",
-                    StartDate = TimeHelper.DateToString(DateTime.Today),
-                    EndDate = TimeHelper.DateToString(DateTime.Today),
-                    Rows = 1,
-                    Status = 1
-                }
-            };
-            return new ServiceResult<string>(container.SerializeCardData());
-        }
-
-        var dto = rank.ScoreRankToDto();
-        dto.Id = 0;
-        container = new GlobalScoreRankContainer
-        {
-            Ranks = new List<ScoreRankDto>
-            {
-                dto
-            },
+            Ranks = new List<ScoreRankDto>(),
             Status = new RankStatus
             {
                 TableName = "GlobalScoreRank",
                 StartDate = TimeHelper.DateToString(DateTime.Today),
                 EndDate = TimeHelper.DateToString(DateTime.Today),
-                Rows = 1,
+                Rows = 0,
                 Status = 1
             }
         };
+        if (rank is null)
+        {
+            return new ServiceResult<string>(container.SerializeCardData());
+        }
+
+        var dto = rank.ScoreRankToDto();
+        dto.Id = 0;
+        container.Ranks.Add(dto);
+        container.Status.Rows++;
         return new ServiceResult<string>(container.SerializeCardData());
     }
 

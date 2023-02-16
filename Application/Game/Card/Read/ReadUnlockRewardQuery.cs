@@ -1,10 +1,3 @@
-using System.Xml.Serialization;
-using Application.Common.Extensions;
-using Application.Common.Models;
-using Application.Interfaces;
-using Domain.Enums;
-using Microsoft.EntityFrameworkCore;
-
 namespace Application.Game.Card.Read;
 
 
@@ -26,7 +19,7 @@ public class ReadUnlockRewardQueryHandler : CardRequestHandlerBase<ReadUnlockRew
             Id = i,
             CardId = request.CardId,
             RewardId = rewardConfig.RewardId,
-            RewardType = rewardConfig.RewardType,
+            RewardType = (int)rewardConfig.RewardType,
             TargetId = rewardConfig.TargetId,
             TargetNum = rewardConfig.TargetNum,
             KeyNum = rewardConfig.KeyNum,

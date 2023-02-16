@@ -1,12 +1,4 @@
-﻿using System.Xml.Serialization;
-using Application.Common.Extensions;
-using Application.Common.Helpers;
-using Application.Common.Models;
-using Application.Dto;
-using Application.Interfaces;
-using Application.Mappers;
-using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Application.Common.Helpers;
 
 namespace Application.Game.Rank;
 
@@ -36,41 +28,27 @@ public class GetTenpoScoreRankQueryHandler : IRequestHandlerWrapper<GetTenpoScor
         var rank = await cardDbContext.GlobalScoreRanks.FirstOrDefaultAsync(scoreRank => scoreRank.CardId == cardId &&
             scoreRank.LastPlayTenpoId == tenpoId, 
             cancellationToken: cancellationToken);
-        TenpoScoreRankContainer container;
+        var container = new TenpoScoreRankContainer
+        {
+            Ranks = new List<ScoreRankDto>(),
+            Status = new RankStatus
+            {
+                TableName = "TenpoScoreRank",
+                StartDate = TimeHelper.DateToString(DateTime.Today),
+                EndDate = TimeHelper.DateToString(DateTime.Today),
+                Rows = 0,
+                Status = 1
+            }
+        };
         if (rank is null)
         {
-            container = new TenpoScoreRankContainer
-            {
-                Ranks = new List<ScoreRankDto>(),
-                Status = new RankStatus
-                {
-                    TableName = "TenpoScoreRank",
-                    StartDate = TimeHelper.DateToString(DateTime.Today),
-                    EndDate = TimeHelper.DateToString(DateTime.Today),
-                    Rows = 1,
-                    Status = 1
-                }
-            };
             return new ServiceResult<string>(container.SerializeCardData());
         }
 
         var dto = rank.ScoreRankToDto();
         dto.Id = 0;
-        container = new TenpoScoreRankContainer
-        {
-            Ranks = new List<ScoreRankDto>
-            {
-                dto
-            },
-            Status = new RankStatus
-            {
-                TableName = "TenpoScoreRankContainer",
-                StartDate = TimeHelper.DateToString(DateTime.Today),
-                EndDate = TimeHelper.DateToString(DateTime.Today),
-                Rows = 1,
-                Status = 1
-            }
-        };
+        container.Ranks.Add(dto);
+        container.Status.Rows++;
         return new ServiceResult<string>(container.SerializeCardData());
     }
 

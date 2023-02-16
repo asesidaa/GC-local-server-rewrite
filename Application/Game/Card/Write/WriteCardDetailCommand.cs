@@ -1,10 +1,4 @@
-﻿using Application.Common.Extensions;
-using Application.Common.Models;
-using Application.Dto;
-using Application.Interfaces;
-using Application.Mappers;
-using Domain.Enums;
-using Microsoft.EntityFrameworkCore;
+﻿using Domain.Enums;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Game.Card.Write;

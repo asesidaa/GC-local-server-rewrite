@@ -1,7 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using Application.Interfaces;
 using Domain.Config;
 using MediatR;
 using Microsoft.Extensions.Options;

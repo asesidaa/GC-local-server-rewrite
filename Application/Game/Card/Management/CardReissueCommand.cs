@@ -1,8 +1,4 @@
-﻿using Application.Common.Models;
-using Application.Interfaces;
-using Domain.Enums;
-
-namespace Application.Game.Card.Management;
+﻿namespace Application.Game.Card.Management;
 
 public record CardReissueCommand(long CardId) : IRequestWrapper<string>;
 

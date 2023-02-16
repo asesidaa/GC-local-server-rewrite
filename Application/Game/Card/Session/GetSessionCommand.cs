@@ -1,9 +1,4 @@
-﻿using Application.Common.Extensions;
-using Application.Common.Models;
-using Application.Dto;
-using Application.Interfaces;
-
-namespace Application.Game.Card.Session;
+﻿namespace Application.Game.Card.Session;
 
 public record GetSessionCommand(long CardId, string Mac) : IRequestWrapper<string>;
 

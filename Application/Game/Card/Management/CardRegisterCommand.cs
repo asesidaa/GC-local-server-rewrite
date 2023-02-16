@@ -1,10 +1,4 @@
-﻿using Application.Common.Extensions;
-using Application.Common.Models;
-using Application.Dto;
-using Application.Interfaces;
-using Application.Mappers;
-
-namespace Application.Game.Card.Management;
+﻿namespace Application.Game.Card.Management;
 
 public record CardRegisterCommand(long CardId, string Data) : IRequestWrapper<string>;
 

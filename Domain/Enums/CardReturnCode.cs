@@ -19,7 +19,7 @@ public enum CardReturnCode
     /// 再発行予約がありません in debug string
     /// </summary>
     NotReissue = 27,
-    
+
     /// <summary>
     /// Server side validation error
     /// </summary>

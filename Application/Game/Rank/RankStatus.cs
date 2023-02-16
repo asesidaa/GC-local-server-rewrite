@@ -1,6 +1,4 @@
-﻿using System.Xml.Serialization;
-
-namespace Application.Game.Rank;
+﻿namespace Application.Game.Rank;
 
 public class RankStatus
 {

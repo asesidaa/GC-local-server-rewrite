@@ -1,9 +1,3 @@
-using Application.Common.Extensions;
-using Application.Common.Models;
-using Application.Interfaces;
-using Domain.Enums;
-using Microsoft.EntityFrameworkCore;
-
 namespace Application.Game.Card.Read;
 
 

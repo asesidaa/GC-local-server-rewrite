@@ -1,12 +1,3 @@
-using Application.Common.Extensions;
-using Application.Common.Models;
-using Application.Dto;
-using Application.Interfaces;
-using Domain.Config;
-using Domain.Enums;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-
 namespace Application.Game.Card.Read;
 
 

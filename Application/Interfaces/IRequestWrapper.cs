@@ -1,5 +1,4 @@
-﻿using Application.Common.Models;
-using MediatR;
+﻿using MediatR;
 
 namespace Application.Interfaces;
 

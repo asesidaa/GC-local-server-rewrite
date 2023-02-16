@@ -1,6 +1,4 @@
-﻿using Application.Common.Models;
-using Application.Interfaces;
-using Domain.Config;
+﻿using Domain.Config;
 
 namespace Application.Game.Card;
 

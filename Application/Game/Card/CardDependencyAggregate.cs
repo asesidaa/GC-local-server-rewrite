@@ -1,5 +1,4 @@
-﻿using Application.Interfaces;
-using Domain.Config;
+﻿using Domain.Config;
 using Microsoft.Extensions.Options;
 
 namespace Application.Game.Card;

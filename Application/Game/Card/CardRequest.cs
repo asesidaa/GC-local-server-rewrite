@@ -1,6 +1,4 @@
-﻿using Domain;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Game.Card;
 

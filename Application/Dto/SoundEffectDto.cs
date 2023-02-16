@@ -1,6 +1,4 @@
-﻿using System.Xml.Serialization;
-
-namespace Application.Dto;
+﻿namespace Application.Dto;
 
 public class SoundEffectDto
 {
