@@ -7,14 +7,14 @@ namespace Application.Game.Card.Read;
 
 public record ReadAllCardDetailsQuery(long CardId) : IRequestWrapper<string>;
 
-public class ReadAllCardDetailsQueryHandler : CardRequestHandlerBase<ReadAllCardDetailsQuery, string>
+public class ReadAllDetailsQueryHandler : RequestHandlerBase<ReadAllCardDetailsQuery, string>
 {
     private const string CARD_DETAILS_XPATH = "/root/card_detail";
     private const string RECORD_XPATH = $"{CARD_DETAILS_XPATH}/record";
     
-    private readonly ILogger<ReadAllCardDetailsQueryHandler> logger;
+    private readonly ILogger<ReadAllDetailsQueryHandler> logger;
 
-    public ReadAllCardDetailsQueryHandler(ICardDependencyAggregate aggregate, ILogger<ReadAllCardDetailsQueryHandler> logger) : base(aggregate)
+    public ReadAllDetailsQueryHandler(ICardDependencyAggregate aggregate, ILogger<ReadAllDetailsQueryHandler> logger) : base(aggregate)
     {
         this.logger = logger;
     }

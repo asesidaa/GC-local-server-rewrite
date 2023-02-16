@@ -3,7 +3,7 @@ namespace Application.Game.Card.Read;
 
 public record ReadTotalTrophyQuery(long CardId) : IRequestWrapper<string>;
 
-public class ReadTotalTrophyQueryHandler : CardRequestHandlerBase<ReadTotalTrophyQuery, string>
+public class ReadTotalTrophyQueryHandler : RequestHandlerBase<ReadTotalTrophyQuery, string>
 {
     private const string TOTAL_TROPHY_XPATH = "/root/total_trophy";
     

@@ -2,7 +2,7 @@
 
 public record UploadOnlineMatchingResultCommand(long CardId, string Data) : IRequestWrapper<string>;
 
-public class UploadOnlineMatchingResultCommandHandler : CardRequestHandlerBase<UploadOnlineMatchingResultCommand, string>
+public class UploadOnlineMatchingResultCommandHandler : RequestHandlerBase<UploadOnlineMatchingResultCommand, string>
 {
     public UploadOnlineMatchingResultCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {

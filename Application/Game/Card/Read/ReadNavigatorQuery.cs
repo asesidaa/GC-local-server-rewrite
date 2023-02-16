@@ -3,7 +3,7 @@ namespace Application.Game.Card.Read;
 
 public record ReadNavigatorQuery(long CardId) : IRequestWrapper<string>;
 
-public class ReadNavigatorQueryHandler : CardRequestHandlerBase<ReadNavigatorQuery, string>
+public class ReadNavigatorQueryHandler : RequestHandlerBase<ReadNavigatorQuery, string>
 {
     private const string NAVIGATOR_XPATH = "/root/navigator/record";
 

@@ -3,7 +3,7 @@ namespace Application.Game.Card.Read;
 
 public record ReadMusicExtraQuery(long CardId) : IRequestWrapper<string>;
 
-public class ReadMusicExtraQueryHandler : CardRequestHandlerBase<ReadMusicExtraQuery, string>
+public class ReadMusicExtraQueryHandler : RequestHandlerBase<ReadMusicExtraQuery, string>
 {
     private const string MUSIC_EXTRA_XPATH = "/root/music_extra";
 

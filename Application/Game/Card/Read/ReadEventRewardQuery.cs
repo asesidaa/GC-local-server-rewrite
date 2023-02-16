@@ -3,7 +3,7 @@ namespace Application.Game.Card.Read;
 
 public record ReadEventRewardQuery(long CardId) : IRequestWrapper<string>;
 
-public class ReadEventRewardQueryHandler : CardRequestHandlerBase<ReadEventRewardQuery, string>
+public class ReadEventRewardQueryHandler : RequestHandlerBase<ReadEventRewardQuery, string>
 {
     private const string EVENT_REWARD_XPATH = "/root/event_reward";
     

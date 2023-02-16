@@ -2,7 +2,7 @@ namespace Application.Game.Card.Read;
 
 public record ReadItemQuery(long CardId) : IRequestWrapper<string>;
 
-public class ReadItemQueryHandler : CardRequestHandlerBase<ReadItemQuery, string>
+public class ReadItemQueryHandler : RequestHandlerBase<ReadItemQuery, string>
 {
     private const string ITEM_XPATH = "/root/item/record";
 

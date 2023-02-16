@@ -2,7 +2,7 @@ namespace Application.Game.Card.Write;
 
 public record WriteItemCommand(long CardId, string Data) : IRequestWrapper<string>;
 
-public class WriteItemCommandHandler : CardRequestHandlerBase<WriteItemCommand, string>
+public class WriteItemCommandHandler : RequestHandlerBase<WriteItemCommand, string>
 {
     public WriteItemCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate) {}
 

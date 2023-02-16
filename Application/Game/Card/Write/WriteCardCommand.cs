@@ -5,11 +5,11 @@ namespace Application.Game.Card.Write;
 
 public record WriteCardCommand(long CardId, string Data) : IRequestWrapper<string>;
 
-public class WriteCardCommandHandler : CardRequestHandlerBase<WriteCardCommand, string>
+public class WriteCommandHandler : RequestHandlerBase<WriteCardCommand, string>
 {
-    private readonly ILogger<WriteCardCommandHandler> logger;
+    private readonly ILogger<WriteCommandHandler> logger;
 
-    public WriteCardCommandHandler(ICardDependencyAggregate aggregate, ILogger<WriteCardCommandHandler> logger) : base(aggregate)
+    public WriteCommandHandler(ICardDependencyAggregate aggregate, ILogger<WriteCommandHandler> logger) : base(aggregate)
     {
         this.logger = logger;
     }

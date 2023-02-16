@@ -72,7 +72,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Controllers\API" />
         <Folder Include="Logs" />
         <Folder Include="wwwroot" />
     </ItemGroup>

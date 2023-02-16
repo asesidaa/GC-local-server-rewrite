@@ -3,7 +3,7 @@ namespace Application.Game.Card.Read;
 
 public record ReadCondQuery(long CardId) : IRequestWrapper<string>;
 
-public class ReadCondQueryHandler : CardRequestHandlerBase<ReadCondQuery, string>
+public class ReadCondQueryHandler : RequestHandlerBase<ReadCondQuery, string>
 {
     private const string COND_XPATH = "/root/cond";
     

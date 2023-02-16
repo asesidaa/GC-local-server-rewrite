@@ -3,7 +3,7 @@ namespace Application.Game.Card.Read;
 
 public record ReadTitleQuery(long CardId) : IRequestWrapper<string>;
 
-public class ReadTitleQueryHandler : CardRequestHandlerBase<ReadTitleQuery, string>
+public class ReadTitleQueryHandler : RequestHandlerBase<ReadTitleQuery, string>
 {
     private const string TITLE_XPATH = "/root/title/record";
     

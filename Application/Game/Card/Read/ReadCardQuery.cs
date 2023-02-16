@@ -5,11 +5,11 @@ namespace Application.Game.Card.Read;
 
 public record ReadCardQuery(long CardId) : IRequestWrapper<string>;
 
-public class ReadCardQueryHandler : CardRequestHandlerBase<ReadCardQuery, string>
+public class ReadQueryHandler : RequestHandlerBase<ReadCardQuery, string>
 {
-    private readonly ILogger<ReadCardQueryHandler> logger;
+    private readonly ILogger<ReadQueryHandler> logger;
 
-    public ReadCardQueryHandler(ICardDependencyAggregate aggregate, ILogger<ReadCardQueryHandler> logger) : base(aggregate) {
+    public ReadQueryHandler(ICardDependencyAggregate aggregate, ILogger<ReadQueryHandler> logger) : base(aggregate) {
         this.logger = logger;
     }
     

@@ -1,9 +1,11 @@
 ﻿// Global using directives
 
-global using System.Xml.Serialization;
 global using Microsoft.EntityFrameworkCore;
+global using System.Xml.Serialization;
+global using Application.Common.Base;
 global using Application.Common.Extensions;
 global using Application.Common.Models;
+global using Application.Dto.Api;
+global using Application.Dto.Game;
 global using Application.Interfaces;
 global using Application.Mappers;
-global using Application.Dto;

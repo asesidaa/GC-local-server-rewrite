@@ -5,7 +5,7 @@ namespace Application.Game.Card.Read;
 
 public record ReadMusicQuery(long CardId) : IRequestWrapper<string>;
 
-public class ReadMusicQueryHandler : CardRequestHandlerBase<ReadMusicQuery, string>
+public class ReadMusicQueryHandler : RequestHandlerBase<ReadMusicQuery, string>
 {
     private const string MUSIC_XPATH = "/root/music/record";
     public ReadMusicQueryHandler(ICardDependencyAggregate aggregate) : base(aggregate)

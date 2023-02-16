@@ -3,7 +3,7 @@ namespace Application.Game.Card.Read;
 
 public record ReadSoundEffectQuery(long CardId) : IRequestWrapper<string>;
 
-public class ReadSoundEffectQueryHandler : CardRequestHandlerBase<ReadSoundEffectQuery, string>
+public class ReadSoundEffectQueryHandler : RequestHandlerBase<ReadSoundEffectQuery, string>
 {
     private const string SOUND_EFFECT_XPATH = "/root/sound_effect/record";
     public ReadSoundEffectQueryHandler(ICardDependencyAggregate aggregate) : base(aggregate)

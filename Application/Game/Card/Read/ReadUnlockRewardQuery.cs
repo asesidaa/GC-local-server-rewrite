@@ -3,7 +3,7 @@ namespace Application.Game.Card.Read;
 
 public record ReadUnlockRewardQuery(long CardId) : IRequestWrapper<string>;
 
-public class ReadUnlockRewardQueryHandler : CardRequestHandlerBase<ReadUnlockRewardQuery, string>
+public class ReadUnlockRewardQueryHandler : RequestHandlerBase<ReadUnlockRewardQuery, string>
 {
     private const string UNLOCK_REWARD_XPATH = "/root/unlock_reward/record";
     

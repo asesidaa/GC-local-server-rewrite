@@ -3,7 +3,7 @@ namespace Application.Game.Card.Read;
 
 public record ReadGetMessageQuery(long CardId) : IRequestWrapper<string>;
 
-public class ReadGetMessageQueryHandler : CardRequestHandlerBase<ReadGetMessageQuery, string>
+public class ReadGetMessageQueryHandler : RequestHandlerBase<ReadGetMessageQuery, string>
 {
     private const string GET_MESSAGE_XPATH = "/root/get_message";
     

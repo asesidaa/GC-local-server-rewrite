@@ -61,9 +61,11 @@ public class ServiceError
         return new ServiceError(errorMessage, (int)CardReturnCode.Unknown);
     }
 
+    public static ServiceError DatabaseSaveFailed => new ServiceError("Database save failed", 800);
+    
     public static ServiceError NotReissue => new ServiceError("Not reissue, registering a new card", (int)CardReturnCode.NotReissue);
     
-    public static ServiceError UserNotFound => new("User with this id does not exist", 996);
+    public static ServiceError UserNotFound => new("Card with this id does not exist", 996);
 
     public static ServiceError UserFailedToCreate => new("Failed to create User.", 995);
 

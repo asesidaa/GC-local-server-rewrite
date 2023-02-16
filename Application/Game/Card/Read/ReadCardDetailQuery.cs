@@ -6,13 +6,13 @@ namespace Application.Game.Card.Read;
 
 public record ReadCardDetailQuery(long CardId, string Data) : IRequestWrapper<string>;
 
-public class ReadCardDetailQueryHandler : CardRequestHandlerBase<ReadCardDetailQuery, string>
+public class ReadDetailQueryHandler : RequestHandlerBase<ReadCardDetailQuery, string>
 {
     private const string CARD_DETAILS_XPATH = "/root/card_detail";
 
-    private readonly ILogger<ReadCardDetailQueryHandler> logger;
+    private readonly ILogger<ReadDetailQueryHandler> logger;
 
-    public ReadCardDetailQueryHandler(ICardDependencyAggregate aggregate, ILogger<ReadCardDetailQueryHandler> logger) : base(aggregate)
+    public ReadDetailQueryHandler(ICardDependencyAggregate aggregate, ILogger<ReadDetailQueryHandler> logger) : base(aggregate)
     {
         this.logger = logger;
     }

@@ -2,7 +2,7 @@ namespace Application.Game.Card.Write;
 
 public record WriteSoundEffectCommand(long CardId, string Data) : IRequestWrapper<string>;
 
-public class WriteSoundEffectCommandHandler : CardRequestHandlerBase<WriteSoundEffectCommand, string>
+public class WriteSoundEffectCommandHandler : RequestHandlerBase<WriteSoundEffectCommand, string>
 {
     public WriteSoundEffectCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate) {}
 

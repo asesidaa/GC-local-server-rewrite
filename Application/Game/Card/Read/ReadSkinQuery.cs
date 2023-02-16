@@ -3,7 +3,7 @@ namespace Application.Game.Card.Read;
 
 public record ReadSkinQuery(long CardId) : IRequestWrapper<string>;
 
-public class ReadSkinQueryHandler : CardRequestHandlerBase<ReadSkinQuery, string>
+public class ReadSkinQueryHandler : RequestHandlerBase<ReadSkinQuery, string>
 {
     private const string SKIN_XPATH = "/root/skin/record";
     

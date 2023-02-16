@@ -3,7 +3,7 @@ namespace Application.Game.Card.Read;
 
 public record ReadAvatarQuery(long CardId) : IRequestWrapper<string>;
 
-public class ReadAvatarQueryHandler : CardRequestHandlerBase<ReadAvatarQuery, string>
+public class ReadAvatarQueryHandler : RequestHandlerBase<ReadAvatarQuery, string>
 {
     private const string AVATAR_XPATH = "/root/avatar/record";
 

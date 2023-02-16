@@ -2,7 +2,7 @@ namespace Application.Game.Card.Write;
 
 public record WriteSkinCommand(long CardId, string Data) : IRequestWrapper<string>;
 
-public class WriteSkinCommandHandler : CardRequestHandlerBase<WriteSkinCommand, string>
+public class WriteSkinCommandHandler : RequestHandlerBase<WriteSkinCommand, string>
 {
     public WriteSkinCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate) {}
 

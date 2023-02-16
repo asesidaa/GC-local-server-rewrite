@@ -2,7 +2,7 @@
 
 public record GetSessionCommand(long CardId, string Mac) : IRequestWrapper<string>;
 
-public class GetSessionCommandHandler : CardRequestHandlerBase<GetSessionCommand, string>
+public class GetSessionCommandHandler : RequestHandlerBase<GetSessionCommand, string>
 {
     private const string SESSION_XPATH = "/root/session";
     

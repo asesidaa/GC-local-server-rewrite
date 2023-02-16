@@ -2,7 +2,7 @@
 
 public record StartOnlineMatchingCommand(long CardId, string Data) : IRequestWrapper<string>;
 
-public class StartOnlineMatchingCommandHandler : CardRequestHandlerBase<StartOnlineMatchingCommand, string>
+public class StartOnlineMatchingCommandHandler : RequestHandlerBase<StartOnlineMatchingCommand, string>
 {
     public StartOnlineMatchingCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {

@@ -2,7 +2,7 @@ namespace Application.Game.Card.Write;
 
 public record WriteMusicDetailCommand(long CardId, string Data) : IRequestWrapper<string>;
 
-public class WriteMusicDetailCommandHandler : CardRequestHandlerBase<WriteMusicDetailCommand, string>
+public class WriteMusicDetailCommandHandler : RequestHandlerBase<WriteMusicDetailCommand, string>
 {
     public WriteMusicDetailCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate) {}
 

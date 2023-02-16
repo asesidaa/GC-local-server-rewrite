@@ -3,7 +3,7 @@ namespace Application.Game.Card.Read;
 
 public record ReadUnlockKeynumQuery(long CardId) : IRequestWrapper<string>;
 
-public class ReadUnlockKeynumQueryHandler : CardRequestHandlerBase<ReadUnlockKeynumQuery, string>
+public class ReadUnlockKeynumQueryHandler : RequestHandlerBase<ReadUnlockKeynumQuery, string>
 {
     private const string UNLOCK_KEYNUM_XPATH = "/root/unlock_keynum/record";
     public ReadUnlockKeynumQueryHandler(ICardDependencyAggregate aggregate) : base(aggregate)

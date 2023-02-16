@@ -2,9 +2,9 @@
 
 public record CardRegisterCommand(long CardId, string Data) : IRequestWrapper<string>;
 
-public class CardRegisterCommandHandler : CardRequestHandlerBase<CardRegisterCommand, string>
+public class RegisterCommandHandler : RequestHandlerBase<CardRegisterCommand, string>
 {
-    public CardRegisterCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate)
+    public RegisterCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {
     }
 

@@ -3,7 +3,7 @@ namespace Application.Game.Card.Read;
 
 public record ReadCoinQuery(long CardId) : IRequestWrapper<string>;
 
-public class ReadCoinQueryHandler : CardRequestHandlerBase<ReadCoinQuery, string>
+public class ReadCoinQueryHandler : RequestHandlerBase<ReadCoinQuery, string>
 {
     private const string COIN_XPATH = "/root/coin";
     

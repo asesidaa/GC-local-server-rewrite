@@ -5,7 +5,7 @@ namespace Application.Game.Card.Read;
 
 public record ReadMusicAouQuery(long CardId) : IRequestWrapper<string>;
 
-public class ReadMusicAouQueryHandler : CardRequestHandlerBase<ReadMusicAouQuery, string>
+public class ReadMusicAouQueryHandler : RequestHandlerBase<ReadMusicAouQuery, string>
 {
     private const string MUSIC_AOU_XPATH = "/root/music_aou";
 

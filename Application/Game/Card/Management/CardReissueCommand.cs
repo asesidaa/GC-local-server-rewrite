@@ -2,9 +2,9 @@
 
 public record CardReissueCommand(long CardId) : IRequestWrapper<string>;
 
-public class CardReissueCommandHandler : CardRequestHandlerBase<CardReissueCommand, string>
+public class ReissueCommandHandler : RequestHandlerBase<CardReissueCommand, string>
 {
-    public CardReissueCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate)
+    public ReissueCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {
     }
 

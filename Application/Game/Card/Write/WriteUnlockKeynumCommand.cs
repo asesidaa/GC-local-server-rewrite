@@ -2,7 +2,7 @@ namespace Application.Game.Card.Write;
 
 public record WriteUnlockKeynumCommand(long CardId, string Data) : IRequestWrapper<string>;
 
-public class WriteUnlockKeynumCommandHandler : CardRequestHandlerBase<WriteUnlockKeynumCommand, string>
+public class WriteUnlockKeynumCommandHandler : RequestHandlerBase<WriteUnlockKeynumCommand, string>
 {
     public WriteUnlockKeynumCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate) {}
 
