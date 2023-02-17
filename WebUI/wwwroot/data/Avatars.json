@@ -1,0 +1,1426 @@
+[
+  {
+    "AvatarId": 0,
+    "AvatarName": "CRAB"
+  },
+  {
+    "AvatarId": 1,
+    "AvatarName": "BIRD"
+  },
+  {
+    "AvatarId": 2,
+    "AvatarName": "DOLPHIN"
+  },
+  {
+    "AvatarId": 3,
+    "AvatarName": "BUTTERFLY"
+  },
+  {
+    "AvatarId": 4,
+    "AvatarName": "ENERGY"
+  },
+  {
+    "AvatarId": 5,
+    "AvatarName": "GOLDFISH"
+  },
+  {
+    "AvatarId": 6,
+    "AvatarName": "LIGHT"
+  },
+  {
+    "AvatarId": 7,
+    "AvatarName": "OCTOPUS"
+  },
+  {
+    "AvatarId": 8,
+    "AvatarName": "HUMAN"
+  },
+  {
+    "AvatarId": 9,
+    "AvatarName": "RAPID"
+  },
+  {
+    "AvatarId": 10,
+    "AvatarName": "SQUID"
+  },
+  {
+    "AvatarId": 11,
+    "AvatarName": "SPARK"
+  },
+  {
+    "AvatarId": 12,
+    "AvatarName": "GENE"
+  },
+  {
+    "AvatarId": 13,
+    "AvatarName": "UFO"
+  },
+  {
+    "AvatarId": 14,
+    "AvatarName": "PHOENIX"
+  },
+  {
+    "AvatarId": 15,
+    "AvatarName": "ENE"
+  },
+  {
+    "AvatarId": 16,
+    "AvatarName": "niconicoTVchan"
+  },
+  {
+    "AvatarId": 17,
+    "AvatarName": "ENE(3D)"
+  },
+  {
+    "AvatarId": 18,
+    "AvatarName": "SILVER HAWK"
+  },
+  {
+    "AvatarId": 19,
+    "AvatarName": "GC CRAB"
+  },
+  {
+    "AvatarId": 20,
+    "AvatarName": "R-GRAY0"
+  },
+  {
+    "AvatarId": 21,
+    "AvatarName": "HORSE"
+  },
+  {
+    "AvatarId": 22,
+    "AvatarName": "FB777"
+  },
+  {
+    "AvatarId": 23,
+    "AvatarName": "KIKKUN"
+  },
+  {
+    "AvatarId": 24,
+    "AvatarName": "aromahot"
+  },
+  {
+    "AvatarId": 25,
+    "AvatarName": "eoheoh"
+  },
+  {
+    "AvatarId": 26,
+    "AvatarName": "PEGASUS"
+  },
+  {
+    "AvatarId": 27,
+    "AvatarName": "MARISA"
+  },
+  {
+    "AvatarId": 28,
+    "AvatarName": "EREN"
+  },
+  {
+    "AvatarId": 29,
+    "AvatarName": "TAOKAKA"
+  },
+  {
+    "AvatarId": 30,
+    "AvatarName": "NU-13"
+  },
+  {
+    "AvatarId": 31,
+    "AvatarName": "R-GRAY1"
+  },
+  {
+    "AvatarId": 32,
+    "AvatarName": "RAIN"
+  },
+  {
+    "AvatarId": 33,
+    "AvatarName": "KUMI"
+  },
+  {
+    "AvatarId": 34,
+    "AvatarName": "KING METAL DRAGON"
+  },
+  {
+    "AvatarId": 35,
+    "AvatarName": "TAMADRA"
+  },
+  {
+    "AvatarId": 36,
+    "AvatarName": "hito2"
+  },
+  {
+    "AvatarId": 37,
+    "AvatarName": "HELICOPTER"
+  },
+  {
+    "AvatarId": 38,
+    "AvatarName": "hito3"
+  },
+  {
+    "AvatarId": 39,
+    "AvatarName": "REIMU"
+  },
+  {
+    "AvatarId": 40,
+    "AvatarName": "UFO-CO"
+  },
+  {
+    "AvatarId": 41,
+    "AvatarName": "DRAGON"
+  },
+  {
+    "AvatarId": 42,
+    "AvatarName": "KNITTY"
+  },
+  {
+    "AvatarId": 43,
+    "AvatarName": "NINJA SLAYER"
+  },
+  {
+    "AvatarId": 44,
+    "AvatarName": "SILVER HAWK(L)"
+  },
+  {
+    "AvatarId": 45,
+    "AvatarName": "SILVER HAWK(N)"
+  },
+  {
+    "AvatarId": 46,
+    "AvatarName": "SILVER HAWK(F)"
+  },
+  {
+    "AvatarId": 47,
+    "AvatarName": "SILVER HAWK(A)"
+  },
+  {
+    "AvatarId": 48,
+    "AvatarName": "R-GRAY2"
+  },
+  {
+    "AvatarId": 49,
+    "AvatarName": "MIRIA"
+  },
+  {
+    "AvatarId": 50,
+    "AvatarName": "PAPER CRANE"
+  },
+  {
+    "AvatarId": 51,
+    "AvatarName": "SHEEP"
+  },
+  {
+    "AvatarId": 52,
+    "AvatarName": "CIRNO"
+  },
+  {
+    "AvatarId": 53,
+    "AvatarName": "SAKUYA"
+  },
+  {
+    "AvatarId": 54,
+    "AvatarName": "FB777(RPG)"
+  },
+  {
+    "AvatarId": 55,
+    "AvatarName": "KIKKUN(RPG)"
+  },
+  {
+    "AvatarId": 56,
+    "AvatarName": "aromahot(RPG)"
+  },
+  {
+    "AvatarId": 57,
+    "AvatarName": "eoheoh(RPG)"
+  },
+  {
+    "AvatarId": 58,
+    "AvatarName": "GC OCTOPUS"
+  },
+  {
+    "AvatarId": 59,
+    "AvatarName": "IA(2D)"
+  },
+  {
+    "AvatarId": 60,
+    "AvatarName": "SAYO"
+  },
+  {
+    "AvatarId": 61,
+    "AvatarName": "BUBBLEN"
+  },
+  {
+    "AvatarId": 62,
+    "AvatarName": "HITO"
+  },
+  {
+    "AvatarId": 63,
+    "AvatarName": "SPICA"
+  },
+  {
+    "AvatarId": 64,
+    "AvatarName": "BOBBLEN"
+  },
+  {
+    "AvatarId": 65,
+    "AvatarName": "SPACE INVADERS"
+  },
+  {
+    "AvatarId": 66,
+    "AvatarName": "CANNON"
+  },
+  {
+    "AvatarId": 67,
+    "AvatarName": "GC SQUID"
+  },
+  {
+    "AvatarId": 68,
+    "AvatarName": "Fess up"
+  },
+  {
+    "AvatarId": 69,
+    "AvatarName": "IA(3D)"
+  },
+  {
+    "AvatarId": 70,
+    "AvatarName": "Iron Fossil"
+  },
+  {
+    "AvatarId": 71,
+    "AvatarName": "SKULL"
+  },
+  {
+    "AvatarId": 72,
+    "AvatarName": "INTER GRAY"
+  },
+  {
+    "AvatarId": 73,
+    "AvatarName": "OUROBOROS"
+  },
+  {
+    "AvatarId": 74,
+    "AvatarName": "RACHEL"
+  },
+  {
+    "AvatarId": 75,
+    "AvatarName": "HATSUNE MIKU(3D)"
+  },
+  {
+    "AvatarId": 76,
+    "AvatarName": "HATSUNE MIKU(2D)"
+  },
+  {
+    "AvatarId": 77,
+    "AvatarName": "COSIO"
+  },
+  {
+    "AvatarId": 78,
+    "AvatarName": "SHOHEI"
+  },
+  {
+    "AvatarId": 79,
+    "AvatarName": "FIGHTING THUNDER"
+  },
+  {
+    "AvatarId": 80,
+    "AvatarName": "NICO"
+  },
+  {
+    "AvatarId": 81,
+    "AvatarName": "Ti2"
+  },
+  {
+    "AvatarId": 82,
+    "AvatarName": "Ti2Overclock"
+  },
+  {
+    "AvatarId": 83,
+    "AvatarName": "BLACK FLY"
+  },
+  {
+    "AvatarId": 84,
+    "AvatarName": "BABI"
+  },
+  {
+    "AvatarId": 85,
+    "AvatarName": "SANAE"
+  },
+  {
+    "AvatarId": 86,
+    "AvatarName": "YOUMU"
+  },
+  {
+    "AvatarId": 87,
+    "AvatarName": "KAGAMINE RIN"
+  },
+  {
+    "AvatarId": 88,
+    "AvatarName": "KAGAMINE LEN"
+  },
+  {
+    "AvatarId": 89,
+    "AvatarName": "OTOMON"
+  },
+  {
+    "AvatarId": 90,
+    "AvatarName": "GUARDIAN"
+  },
+  {
+    "AvatarId": 91,
+    "AvatarName": "March \u0026 Arch"
+  },
+  {
+    "AvatarId": 92,
+    "AvatarName": "CANDICE BONBON"
+  },
+  {
+    "AvatarId": 93,
+    "AvatarName": "RONMEI"
+  },
+  {
+    "AvatarId": 94,
+    "AvatarName": "FULLMETAL ZUNDOKO"
+  },
+  {
+    "AvatarId": 95,
+    "AvatarName": "OMAKE"
+  },
+  {
+    "AvatarId": 96,
+    "AvatarName": "SYAMEIMARU"
+  },
+  {
+    "AvatarId": 97,
+    "AvatarName": "SEA TURTLE"
+  },
+  {
+    "AvatarId": 98,
+    "AvatarName": "FRANDRE SCARLET"
+  },
+  {
+    "AvatarId": 99,
+    "AvatarName": "MOSYNE(HUMANOID)"
+  },
+  {
+    "AvatarId": 100,
+    "AvatarName": "Carte"
+  },
+  {
+    "AvatarId": 101,
+    "AvatarName": "MONKEY"
+  },
+  {
+    "AvatarId": 102,
+    "AvatarName": "MIRIN"
+  },
+  {
+    "AvatarId": 103,
+    "AvatarName": "MOSYNE(FLIGHT)"
+  },
+  {
+    "AvatarId": 104,
+    "AvatarName": "EDM BOW"
+  },
+  {
+    "AvatarId": 105,
+    "AvatarName": "RANKO"
+  },
+  {
+    "AvatarId": 106,
+    "AvatarName": "t\u002Bpazolite"
+  },
+  {
+    "AvatarId": 107,
+    "AvatarName": "Massive-New-Krew"
+  },
+  {
+    "AvatarId": 108,
+    "AvatarName": "RISA"
+  },
+  {
+    "AvatarId": 109,
+    "AvatarName": "NEMU"
+  },
+  {
+    "AvatarId": 110,
+    "AvatarName": "EIMI"
+  },
+  {
+    "AvatarId": 111,
+    "AvatarName": "MOGA"
+  },
+  {
+    "AvatarId": 112,
+    "AvatarName": "AYANE"
+  },
+  {
+    "AvatarId": 113,
+    "AvatarName": "LINKA"
+  },
+  {
+    "AvatarId": 114,
+    "AvatarName": "KAIDAN"
+  },
+  {
+    "AvatarId": 115,
+    "AvatarName": "CADENCE"
+  },
+  {
+    "AvatarId": 116,
+    "AvatarName": "SKELETON"
+  },
+  {
+    "AvatarId": 117,
+    "AvatarName": "SHOPKEEPER"
+  },
+  {
+    "AvatarId": 118,
+    "AvatarName": "MONOKUMA"
+  },
+  {
+    "AvatarId": 119,
+    "AvatarName": "MAKOTO NAEGI"
+  },
+  {
+    "AvatarId": 120,
+    "AvatarName": "JUNKO ENOSHIMA"
+  },
+  {
+    "AvatarId": 121,
+    "AvatarName": "SILVER HAWK(M)"
+  },
+  {
+    "AvatarId": 122,
+    "AvatarName": "GUMI(3D)"
+  },
+  {
+    "AvatarId": 123,
+    "AvatarName": "GUMI(2D)"
+  },
+  {
+    "AvatarId": 124,
+    "AvatarName": "Deltasword"
+  },
+  {
+    "AvatarId": 125,
+    "AvatarName": "STRANIA"
+  },
+  {
+    "AvatarId": 126,
+    "AvatarName": "GUMI(Guitar)"
+  },
+  {
+    "AvatarId": 127,
+    "AvatarName": "REIMU(2D)"
+  },
+  {
+    "AvatarId": 128,
+    "AvatarName": "MARISA(2D)"
+  },
+  {
+    "AvatarId": 129,
+    "AvatarName": "SANAE(2D)"
+  },
+  {
+    "AvatarId": 130,
+    "AvatarName": "UFO(3D)"
+  },
+  {
+    "AvatarId": 131,
+    "AvatarName": "ONE(2D)"
+  },
+  {
+    "AvatarId": 132,
+    "AvatarName": "ONE(3D)"
+  },
+  {
+    "AvatarId": 133,
+    "AvatarName": "AKATSUKI(3D)"
+  },
+  {
+    "AvatarId": 134,
+    "AvatarName": "SUN(3D)"
+  },
+  {
+    "AvatarId": 135,
+    "AvatarName": "MASAKI"
+  },
+  {
+    "AvatarId": 136,
+    "AvatarName": "HATSUNE MIKU(2Ddot)"
+  },
+  {
+    "AvatarId": 137,
+    "AvatarName": "MEGURINE LUKA(2D)"
+  },
+  {
+    "AvatarId": 138,
+    "AvatarName": "MEGURINE LUKA(3D)"
+  },
+  {
+    "AvatarId": 139,
+    "AvatarName": "TAKUYA \u0026 YUKI"
+  },
+  {
+    "AvatarId": 140,
+    "AvatarName": "ALICE(2D)"
+  },
+  {
+    "AvatarId": 141,
+    "AvatarName": "NITORI(2D)"
+  },
+  {
+    "AvatarId": 142,
+    "AvatarName": "KEN"
+  },
+  {
+    "AvatarId": 143,
+    "AvatarName": "KEINE(2D)"
+  },
+  {
+    "AvatarId": 144,
+    "AvatarName": "YUGI"
+  },
+  {
+    "AvatarId": 145,
+    "AvatarName": "CHIBI LINKA"
+  },
+  {
+    "AvatarId": 146,
+    "AvatarName": "CHIBI RONMEI"
+  },
+  {
+    "AvatarId": 147,
+    "AvatarName": "CHIBI KEN"
+  },
+  {
+    "AvatarId": 148,
+    "AvatarName": "CHIBI ZUNDOKO"
+  },
+  {
+    "AvatarId": 149,
+    "AvatarName": "CHIBI DONTSUKU"
+  },
+  {
+    "AvatarId": 150,
+    "AvatarName": "SIDUNE(2D)"
+  },
+  {
+    "AvatarId": 151,
+    "AvatarName": "DOGUMA \u0026 MAGUMA(2D)"
+  },
+  {
+    "AvatarId": 152,
+    "AvatarName": "REMY(2D)"
+  },
+  {
+    "AvatarId": 153,
+    "AvatarName": "KYOKA(2D)"
+  },
+  {
+    "AvatarId": 154,
+    "AvatarName": "SIDUNE"
+  },
+  {
+    "AvatarId": 155,
+    "AvatarName": "CHICK"
+  },
+  {
+    "AvatarId": 156,
+    "AvatarName": "KAGAMINE RIN(2D)"
+  },
+  {
+    "AvatarId": 157,
+    "AvatarName": "KAGAMINE LEN(2D)"
+  },
+  {
+    "AvatarId": 158,
+    "AvatarName": "YUME"
+  },
+  {
+    "AvatarId": 159,
+    "AvatarName": "POLYVINYL DONTSUKU"
+  },
+  {
+    "AvatarId": 160,
+    "AvatarName": "YOUMU(2D)"
+  },
+  {
+    "AvatarId": 161,
+    "AvatarName": "MIKO(2D)"
+  },
+  {
+    "AvatarId": 162,
+    "AvatarName": "VOCALOID NEMU"
+  },
+  {
+    "AvatarId": 163,
+    "AvatarName": "tanuQn"
+  },
+  {
+    "AvatarId": 164,
+    "AvatarName": "REMILIA SCARLET"
+  },
+  {
+    "AvatarId": 165,
+    "AvatarName": "YUYUKO(2D)"
+  },
+  {
+    "AvatarId": 166,
+    "AvatarName": "KANAKO(2D)"
+  },
+  {
+    "AvatarId": 167,
+    "AvatarName": "RANKO(2D)"
+  },
+  {
+    "AvatarId": 168,
+    "AvatarName": "COMP(2D)"
+  },
+  {
+    "AvatarId": 169,
+    "AvatarName": "PAPRIKA(2D)"
+  },
+  {
+    "AvatarId": 170,
+    "AvatarName": "RANKO no ANE(2D)"
+  },
+  {
+    "AvatarId": 171,
+    "AvatarName": "CHIBI MIKU"
+  },
+  {
+    "AvatarId": 172,
+    "AvatarName": "CHIBI LUKA"
+  },
+  {
+    "AvatarId": 173,
+    "AvatarName": "CHIBI RIN"
+  },
+  {
+    "AvatarId": 174,
+    "AvatarName": "CHIBI LEN"
+  },
+  {
+    "AvatarId": 175,
+    "AvatarName": "CHIBI MEIKO"
+  },
+  {
+    "AvatarId": 176,
+    "AvatarName": "CHIBI KAITO"
+  },
+  {
+    "AvatarId": 177,
+    "AvatarName": "HATSUNE MIKU(3Drun)"
+  },
+  {
+    "AvatarId": 178,
+    "AvatarName": "Tone Sphere Cricro"
+  },
+  {
+    "AvatarId": 179,
+    "AvatarName": "Tone Sphere Tessera"
+  },
+  {
+    "AvatarId": 180,
+    "AvatarName": "BIPLANE"
+  },
+  {
+    "AvatarId": 181,
+    "AvatarName": "REDALiCE"
+  },
+  {
+    "AvatarId": 182,
+    "AvatarName": "DJ Genki"
+  },
+  {
+    "AvatarId": 183,
+    "AvatarName": "USAO"
+  },
+  {
+    "AvatarId": 184,
+    "AvatarName": "DJ Myosuke"
+  },
+  {
+    "AvatarId": 185,
+    "AvatarName": "aran"
+  },
+  {
+    "AvatarId": 186,
+    "AvatarName": "VKL5.03(P)"
+  },
+  {
+    "AvatarId": 187,
+    "AvatarName": "2Foot"
+  },
+  {
+    "AvatarId": 188,
+    "AvatarName": "WINDIA"
+  },
+  {
+    "AvatarId": 189,
+    "AvatarName": "CASPER"
+  },
+  {
+    "AvatarId": 190,
+    "AvatarName": "RIGA"
+  },
+  {
+    "AvatarId": 191,
+    "AvatarName": "CIRNO(2D)"
+  },
+  {
+    "AvatarId": 192,
+    "AvatarName": "CIRNO(2D,TAN)"
+  },
+  {
+    "AvatarId": 193,
+    "AvatarName": "CIRNO(CHIRUPA)"
+  },
+  {
+    "AvatarId": 194,
+    "AvatarName": "SHINMYOUMARU"
+  },
+  {
+    "AvatarId": 195,
+    "AvatarName": "RAIKO(2D)"
+  },
+  {
+    "AvatarId": 196,
+    "AvatarName": "SAKUYA(2D)"
+  },
+  {
+    "AvatarId": 197,
+    "AvatarName": "YUME(summer)"
+  },
+  {
+    "AvatarId": 198,
+    "AvatarName": "ATTACK THE MUSIC"
+  },
+  {
+    "AvatarId": 199,
+    "AvatarName": "WR-02R"
+  },
+  {
+    "AvatarId": 200,
+    "AvatarName": "Reindeer"
+  },
+  {
+    "AvatarId": 201,
+    "AvatarName": "DOG"
+  },
+  {
+    "AvatarId": 202,
+    "AvatarName": "LINKA(Christmas)"
+  },
+  {
+    "AvatarId": 203,
+    "AvatarName": "YUME(Christmas)"
+  },
+  {
+    "AvatarId": 204,
+    "AvatarName": "IA(ninja)"
+  },
+  {
+    "AvatarId": 205,
+    "AvatarName": "ONE(ninja)"
+  },
+  {
+    "AvatarId": 206,
+    "AvatarName": "SUTADONTAN"
+  },
+  {
+    "AvatarId": 207,
+    "AvatarName": "Xenoa"
+  },
+  {
+    "AvatarId": 208,
+    "AvatarName": "GUMI(goggles)"
+  },
+  {
+    "AvatarId": 209,
+    "AvatarName": "GUMI(school)"
+  },
+  {
+    "AvatarId": 210,
+    "AvatarName": "DOG(2D)"
+  },
+  {
+    "AvatarId": 211,
+    "AvatarName": "LINKA(MIKO)"
+  },
+  {
+    "AvatarId": 212,
+    "AvatarName": "HINA"
+  },
+  {
+    "AvatarId": 213,
+    "AvatarName": "SEINE"
+  },
+  {
+    "AvatarId": 214,
+    "AvatarName": "MIRIN(S)"
+  },
+  {
+    "AvatarId": 215,
+    "AvatarName": "RISA(S)"
+  },
+  {
+    "AvatarId": 216,
+    "AvatarName": "NEMU(S)"
+  },
+  {
+    "AvatarId": 217,
+    "AvatarName": "EIMI(S)"
+  },
+  {
+    "AvatarId": 218,
+    "AvatarName": "AYANE(S)"
+  },
+  {
+    "AvatarId": 219,
+    "AvatarName": "RIN(S)"
+  },
+  {
+    "AvatarId": 220,
+    "AvatarName": "NAGI(S)"
+  },
+  {
+    "AvatarId": 221,
+    "AvatarName": "HATSUNE MIKU(10th)"
+  },
+  {
+    "AvatarId": 222,
+    "AvatarName": "CHEN(2D)"
+  },
+  {
+    "AvatarId": 223,
+    "AvatarName": "KOGASA(2D)"
+  },
+  {
+    "AvatarId": 224,
+    "AvatarName": "RITMO"
+  },
+  {
+    "AvatarId": 225,
+    "AvatarName": "FISICA"
+  },
+  {
+    "AvatarId": 226,
+    "AvatarName": "LINKA(SCHOOL)"
+  },
+  {
+    "AvatarId": 227,
+    "AvatarName": "YUME(SCHOOL)"
+  },
+  {
+    "AvatarId": 228,
+    "AvatarName": "SEINE(SCHOOL)"
+  },
+  {
+    "AvatarId": 229,
+    "AvatarName": "FRANDRE(2D)"
+  },
+  {
+    "AvatarId": 230,
+    "AvatarName": "UDONGEIN(2D)"
+  },
+  {
+    "AvatarId": 231,
+    "AvatarName": "GEAR"
+  },
+  {
+    "AvatarId": 232,
+    "AvatarName": "SCISSORS"
+  },
+  {
+    "AvatarId": 233,
+    "AvatarName": "B.B.K.K.B.K.K. 1"
+  },
+  {
+    "AvatarId": 234,
+    "AvatarName": "B.B.K.K.B.K.K. 2"
+  },
+  {
+    "AvatarId": 235,
+    "AvatarName": "FB777(Phoenix)"
+  },
+  {
+    "AvatarId": 236,
+    "AvatarName": "KIKKUN(Phoenix)"
+  },
+  {
+    "AvatarId": 237,
+    "AvatarName": "aromahot(Phoenix)"
+  },
+  {
+    "AvatarId": 238,
+    "AvatarName": "eoheoh(Phoenix)"
+  },
+  {
+    "AvatarId": 239,
+    "AvatarName": "AKANE (2Ddot)"
+  },
+  {
+    "AvatarId": 240,
+    "AvatarName": "AOI(2Ddot)"
+  },
+  {
+    "AvatarId": 241,
+    "AvatarName": "AKANE(Seyana.)"
+  },
+  {
+    "AvatarId": 242,
+    "AvatarName": "YUKARI(Seyana.)"
+  },
+  {
+    "AvatarId": 243,
+    "AvatarName": "HATSUNE MIKU(2018)"
+  },
+  {
+    "AvatarId": 244,
+    "AvatarName": "JUNKO(2D)"
+  },
+  {
+    "AvatarId": 245,
+    "AvatarName": "MIKOKO(2D)"
+  },
+  {
+    "AvatarId": 246,
+    "AvatarName": "13"
+  },
+  {
+    "AvatarId": 247,
+    "AvatarName": "Rilyca"
+  },
+  {
+    "AvatarId": 248,
+    "AvatarName": "Gustav Heydrich"
+  },
+  {
+    "AvatarId": 249,
+    "AvatarName": "Voidoll"
+  },
+  {
+    "AvatarId": 250,
+    "AvatarName": "MIKOKO(3D)"
+  },
+  {
+    "AvatarId": 251,
+    "AvatarName": "UDONGEIN"
+  },
+  {
+    "AvatarId": 252,
+    "AvatarName": "Kemomimi Oukoku Flag"
+  },
+  {
+    "AvatarId": 253,
+    "AvatarName": "Human UNDERTALE"
+  },
+  {
+    "AvatarId": 254,
+    "AvatarName": "Flowey UNDERTALE"
+  },
+  {
+    "AvatarId": 255,
+    "AvatarName": "SOUL UNDERTALE"
+  },
+  {
+    "AvatarId": 256,
+    "AvatarName": "OTOMACHI UNA SPICY"
+  },
+  {
+    "AvatarId": 257,
+    "AvatarName": "OTOMACHI UNA SUGAR"
+  },
+  {
+    "AvatarId": 258,
+    "AvatarName": "OTOMACHI UNA"
+  },
+  {
+    "AvatarId": 259,
+    "AvatarName": "KEFIR"
+  },
+  {
+    "AvatarId": 260,
+    "AvatarName": "BOAR"
+  },
+  {
+    "AvatarId": 261,
+    "AvatarName": "SEINE(Christmas)"
+  },
+  {
+    "AvatarId": 262,
+    "AvatarName": "SUWAKO(2D)"
+  },
+  {
+    "AvatarId": 263,
+    "AvatarName": "HIKARI"
+  },
+  {
+    "AvatarId": 264,
+    "AvatarName": "TAIRITSU"
+  },
+  {
+    "AvatarId": 265,
+    "AvatarName": "LINKA\u0026BOAR"
+  },
+  {
+    "AvatarId": 266,
+    "AvatarName": "IA(Cheerleader)"
+  },
+  {
+    "AvatarId": 267,
+    "AvatarName": "ONE(Cheerleader)"
+  },
+  {
+    "AvatarId": 268,
+    "AvatarName": "Rarari Really"
+  },
+  {
+    "AvatarId": 269,
+    "AvatarName": "Lalari Fairy"
+  },
+  {
+    "AvatarId": 270,
+    "AvatarName": "El Clear"
+  },
+  {
+    "AvatarId": 271,
+    "AvatarName": "El Fail"
+  },
+  {
+    "AvatarId": 272,
+    "AvatarName": "YUKARI(2Ddot)"
+  },
+  {
+    "AvatarId": 273,
+    "AvatarName": "Great Thing"
+  },
+  {
+    "AvatarId": 274,
+    "AvatarName": "ANDROMEDAKO"
+  },
+  {
+    "AvatarId": 275,
+    "AvatarName": "DJ NOBUNAGA"
+  },
+  {
+    "AvatarId": 276,
+    "AvatarName": "SARASSY"
+  },
+  {
+    "AvatarId": 277,
+    "AvatarName": "LINKA(Cranky)"
+  },
+  {
+    "AvatarId": 278,
+    "AvatarName": "YUME(Cranky)"
+  },
+  {
+    "AvatarId": 279,
+    "AvatarName": "SEINE(Cranky)"
+  },
+  {
+    "AvatarId": 280,
+    "AvatarName": "ANNOYING DOG"
+  },
+  {
+    "AvatarId": 281,
+    "AvatarName": "NAPSTA BLOOK"
+  },
+  {
+    "AvatarId": 282,
+    "AvatarName": "TEMMIE"
+  },
+  {
+    "AvatarId": 283,
+    "AvatarName": "REIMU(headphone)"
+  },
+  {
+    "AvatarId": 284,
+    "AvatarName": "SYAMEIMARU(2D)"
+  },
+  {
+    "AvatarId": 285,
+    "AvatarName": "SIYO"
+  },
+  {
+    "AvatarId": 286,
+    "AvatarName": "NERO"
+  },
+  {
+    "AvatarId": 287,
+    "AvatarName": "OKINA(2D)"
+  },
+  {
+    "AvatarId": 288,
+    "AvatarName": "SATONO\u0026MAI(2D)"
+  },
+  {
+    "AvatarId": 289,
+    "AvatarName": "ROSSA"
+  },
+  {
+    "AvatarId": 290,
+    "AvatarName": "ITO"
+  },
+  {
+    "AvatarId": 291,
+    "AvatarName": "SUI"
+  },
+  {
+    "AvatarId": 292,
+    "AvatarName": "YUKARI.Y (2D)"
+  },
+  {
+    "AvatarId": 293,
+    "AvatarName": "swallowtail"
+  },
+  {
+    "AvatarId": 294,
+    "AvatarName": "HIME TANAKA"
+  },
+  {
+    "AvatarId": 295,
+    "AvatarName": "HINA SUZUKI"
+  },
+  {
+    "AvatarId": 296,
+    "AvatarName": "MIRAI AKARI"
+  },
+  {
+    "AvatarId": 297,
+    "AvatarName": "ELIZABETH"
+  },
+  {
+    "AvatarId": 298,
+    "AvatarName": "AKARI KIZUNA"
+  },
+  {
+    "AvatarId": 299,
+    "AvatarName": "flower"
+  },
+  {
+    "AvatarId": 300,
+    "AvatarName": "LINKA\u0026MOUSE"
+  },
+  {
+    "AvatarId": 301,
+    "AvatarName": "LINKA (MIKO)"
+  },
+  {
+    "AvatarId": 302,
+    "AvatarName": "YUME (MIKO)"
+  },
+  {
+    "AvatarId": 303,
+    "AvatarName": "SEINE (MIKO)"
+  },
+  {
+    "AvatarId": 304,
+    "AvatarName": "NoA"
+  },
+  {
+    "AvatarId": 305,
+    "AvatarName": "Io"
+  },
+  {
+    "AvatarId": 306,
+    "AvatarName": "Mana"
+  },
+  {
+    "AvatarId": 307,
+    "AvatarName": "MEILING(2D)"
+  },
+  {
+    "AvatarId": 308,
+    "AvatarName": "PATCHOULI(2D)"
+  },
+  {
+    "AvatarId": 309,
+    "AvatarName": "REMILIA(2D)"
+  },
+  {
+    "AvatarId": 310,
+    "AvatarName": "SAKI(2D)"
+  },
+  {
+    "AvatarId": 311,
+    "AvatarName": "KEIKI(2D)"
+  },
+  {
+    "AvatarId": 312,
+    "AvatarName": "MAYUMI(2D)"
+  },
+  {
+    "AvatarId": 313,
+    "AvatarName": "LUNA"
+  },
+  {
+    "AvatarId": 314,
+    "AvatarName": "BURO"
+  },
+  {
+    "AvatarId": 315,
+    "AvatarName": "RIN"
+  },
+  {
+    "AvatarId": 316,
+    "AvatarName": "MARIJA"
+  },
+  {
+    "AvatarId": 317,
+    "AvatarName": "YMIR"
+  },
+  {
+    "AvatarId": 318,
+    "AvatarName": "SIRO"
+  },
+  {
+    "AvatarId": 319,
+    "AvatarName": "MITO"
+  },
+  {
+    "AvatarId": 320,
+    "AvatarName": "LILY"
+  },
+  {
+    "AvatarId": 321,
+    "AvatarName": "TERUYAMA"
+  },
+  {
+    "AvatarId": 322,
+    "AvatarName": "HANERU HIDA"
+  },
+  {
+    "AvatarId": 323,
+    "AvatarName": "CHUNI PENGUIN"
+  },
+  {
+    "AvatarId": 324,
+    "AvatarName": "RICHTSHUTZE"
+  },
+  {
+    "AvatarId": 325,
+    "AvatarName": "MAGELLAN MAGELLAN"
+  },
+  {
+    "AvatarId": 326,
+    "AvatarName": "MIKO SAKURA"
+  },
+  {
+    "AvatarId": 327,
+    "AvatarName": "FUBUKI SHIRAKAMI"
+  },
+  {
+    "AvatarId": 328,
+    "AvatarName": "MATSURI NATSUIRO"
+  },
+  {
+    "AvatarId": 329,
+    "AvatarName": "MARINE HOUSHOU"
+  },
+  {
+    "AvatarId": 330,
+    "AvatarName": "SATORI(2D)"
+  },
+  {
+    "AvatarId": 331,
+    "AvatarName": "KOISHI(2D)"
+  },
+  {
+    "AvatarId": 332,
+    "AvatarName": "ORIN(2D)"
+  },
+  {
+    "AvatarId": 333,
+    "AvatarName": "UTSUHO(2D)"
+  },
+  {
+    "AvatarId": 334,
+    "AvatarName": "P4ALL(2D)"
+  },
+  {
+    "AvatarId": 335,
+    "AvatarName": "LINKA(Fairy)"
+  },
+  {
+    "AvatarId": 336,
+    "AvatarName": "YUME(Fairy)"
+  },
+  {
+    "AvatarId": 337,
+    "AvatarName": "SEINE(Fairy)"
+  },
+  {
+    "AvatarId": 338,
+    "AvatarName": "HIME(Ver.2)"
+  },
+  {
+    "AvatarId": 339,
+    "AvatarName": "HINA(Ver.2)"
+  },
+  {
+    "AvatarId": 340,
+    "AvatarName": "RINKU AIMOTO"
+  },
+  {
+    "AvatarId": 341,
+    "AvatarName": "KYOKO YAMATE"
+  },
+  {
+    "AvatarId": 342,
+    "AvatarName": "SHONI PENGUIN"
+  },
+  {
+    "AvatarId": 343,
+    "AvatarName": "SURVIVAL ZUNDOKO"
+  },
+  {
+    "AvatarId": 344,
+    "AvatarName": "HINATA(2D)"
+  },
+  {
+    "AvatarId": 345,
+    "AvatarName": "HINATA(VirtuaREAL)"
+  },
+  {
+    "AvatarId": 346,
+    "AvatarName": "PIKAMEE(VirtuaREAL)"
+  },
+  {
+    "AvatarId": 347,
+    "AvatarName": "TOMOSHIKA(VirtuaREAL)"
+  },
+  {
+    "AvatarId": 348,
+    "AvatarName": "AKARI HOSHIZAKI"
+  },
+  {
+    "AvatarId": 349,
+    "AvatarName": "YUZU FUJISAWA"
+  },
+  {
+    "AvatarId": 350,
+    "AvatarName": "AOI MISUMI"
+  },
+  {
+    "AvatarId": 351,
+    "AvatarName": "SETSUNA SUMERAGI"
+  },
+  {
+    "AvatarId": 352,
+    "AvatarName": "NAVINYAN"
+  },
+  {
+    "AvatarId": 353,
+    "AvatarName": "KAGURANANA(2D)"
+  },
+  {
+    "AvatarId": 354,
+    "AvatarName": "KAGURANANA(VirtuaREAL)"
+  },
+  {
+    "AvatarId": 355,
+    "AvatarName": "KYO(VirtuaREAL)"
+  }
+]

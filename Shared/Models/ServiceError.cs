@@ -1,6 +1,6 @@
 ﻿using Domain.Enums;
 
-namespace Application.Common.Models;
+namespace Shared.Models;
 
 /// <summary>
 /// All errors contained in ServiceResult objects must return an error of this type

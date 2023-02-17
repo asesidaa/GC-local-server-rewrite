@@ -1,4 +1,6 @@
-﻿namespace Application.Common.Models;
+﻿using Shared.Dto.Api;
+
+namespace Shared.Models;
 
 public class PlayOptionData
 {

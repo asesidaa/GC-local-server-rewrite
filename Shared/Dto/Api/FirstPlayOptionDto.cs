@@ -1,6 +1,6 @@
 ﻿using Domain.Enums;
 
-namespace Application.Dto.Api;
+namespace Shared.Dto.Api;
 
 public class FirstPlayOptionDto
 {

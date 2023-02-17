@@ -108,12 +108,14 @@ try
     contentTypeProvider.Mappings[".cmp"] = "text/plain";
     contentTypeProvider.Mappings[".evt"] = "text/plain";
 
+    app.UseBlazorFrameworkFiles();
     app.UseStaticFiles(new StaticFileOptions
     {
         ContentTypeProvider = contentTypeProvider
     });
 
     app.MapControllers();
+    app.MapFallbackToFile("index.html");
 
     app.Run();
 }

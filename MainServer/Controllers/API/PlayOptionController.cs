@@ -1,6 +1,6 @@
 ﻿using Application.Api;
-using Application.Common.Models;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Models;
 
 namespace MainServer.Controllers.API;
 

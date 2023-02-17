@@ -439,4 +439,7 @@ FodyWeavers.xsd
 /db/card.db3
 Certificates
 wwwroot/events/
+wwwroot/_framework/
+wwwroot/favicon.ico
+wwwroot/index.html
 Database/card*.db3

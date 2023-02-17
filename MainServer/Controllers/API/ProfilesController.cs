@@ -1,7 +1,7 @@
 ﻿using Application.Api;
-using Application.Common.Models;
-using Application.Dto.Api;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Dto.Api;
+using Shared.Models;
 
 namespace MainServer.Controllers.API;
 

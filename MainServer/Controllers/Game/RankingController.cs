@@ -1,5 +1,4 @@
-﻿using Application.Common.Models;
-using Application.Game.Rank;
+﻿using Application.Game.Rank;
 using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Throw;

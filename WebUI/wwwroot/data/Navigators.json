@@ -1,0 +1,946 @@
+[
+  {
+    "Id": 0,
+    "NavigatorName": "YUME",
+    "Genre": 1,
+    "IllustrationCredit": "illustration by 未早",
+    "ToolTipJp": "ナビゲーターをユメに変更します\nボイスを変更します(CV:高橋菜々美)",
+    "ToolTipEn": "Change the navigator to YUME\nCV: Nanami Takahashi"
+  },
+  {
+    "Id": 1,
+    "NavigatorName": "LINKA",
+    "Genre": 1,
+    "IllustrationCredit": "illustration by ヤスダスズヒト",
+    "ToolTipJp": "ナビゲーターをリンカに変更します\nボイスを変更します(CV:豊田萌絵)",
+    "ToolTipEn": "Change the navigator to LINKA\nCV: Jenny Shima"
+  },
+  {
+    "Id": 2,
+    "NavigatorName": "ZUNDOKO",
+    "Genre": 2,
+    "IllustrationCredit": "illustration by 雉本ユーヒ",
+    "ToolTipJp": "ナビゲーターをフルメタル ずんど子ちゃんに\n変更します\nボイスを変更します(CV:ちよこ)",
+    "ToolTipEn": "Change the navigator to ZUNDOKO\nCV: Chiyoko"
+  },
+  {
+    "Id": 3,
+    "NavigatorName": "DONTSUKU",
+    "Genre": 2,
+    "IllustrationCredit": "illustration by 雉本ユーヒ",
+    "ToolTipJp": "ナビゲーターをポリビニル どんつくくんに\n変更します\nボイスを変更します(CV:さきぴょ)",
+    "ToolTipEn": "Change the navigator to DONTSUKU\nCV: Sakipyo"
+  },
+  {
+    "Id": 4,
+    "NavigatorName": "RONMEI",
+    "Genre": 2,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターをカンフーガール・ロンメイに\n変更します",
+    "ToolTipEn": "Change the navigator to RONMEI"
+  },
+  {
+    "Id": 5,
+    "NavigatorName": "KEN",
+    "Genre": 2,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターをカンフーマスター・拳に\n変更します",
+    "ToolTipEn": "Change the navigator to KEN"
+  },
+  {
+    "Id": 6,
+    "NavigatorName": "TOMOKA",
+    "Genre": 3,
+    "IllustrationCredit": "illustration by 曽我部修司（ＦｉＦＳ）\n「ピリオドゼロ」より",
+    "ToolTipJp": "ナビゲーターをトモカに変更します\nボイスを変更します(CV:水瀬いのり)",
+    "ToolTipEn": "Change the navigator to TOMOKA\nCV: Inori Minase"
+  },
+  {
+    "Id": 7,
+    "NavigatorName": "REIMU",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by Sody\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターを博麗霊夢に変更します",
+    "ToolTipEn": "Change the navigator to REIMU"
+  },
+  {
+    "Id": 8,
+    "NavigatorName": "MARISA",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by Sody\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターを霧雨魔理沙に変更します",
+    "ToolTipEn": "Change the navigator to MARISA"
+  },
+  {
+    "Id": 9,
+    "NavigatorName": "MIKU(WINTER)",
+    "Genre": 5,
+    "IllustrationCredit": "illustration by へちま\n「初音ミク四季シリーズ」より",
+    "ToolTipJp": "ナビゲーターを初音ミク(冬Ver.)に変更します\nボイスを変更します(ボイスアクター:藤田咲)",
+    "ToolTipEn": "Change the navigator to MIKU(WINTER)\nCV: Saki Fujita"
+  },
+  {
+    "Id": 10,
+    "NavigatorName": "NEMU(VOCALOID)",
+    "Genre": 5,
+    "IllustrationCredit": "illustration by 堀口悠紀子",
+    "ToolTipJp": "ナビゲーターを夢眠ネム(VOCALOID)\nに変更します\nボイスを変更します(CV:夢眠ネム)",
+    "ToolTipEn": "Change the navigator to NEMU(VOCALOID)\nCV: NEMU(VOCALOID)"
+  },
+  {
+    "Id": 11,
+    "NavigatorName": "NADIA",
+    "Genre": 3,
+    "IllustrationCredit": "illustration by 秦 南乃花\n(Nanoha Hata)\n「アルカノイドvsインベーダー」より",
+    "ToolTipJp": "ナビゲーターをナティア・\nヴィヴィーに変更します\nボイスを変更します(CV:嶋澤奈津子)",
+    "ToolTipEn": "Change the navigator to NADIA VIVIE\nCV: Natsuko Shimazawa"
+  },
+  {
+    "Id": 12,
+    "NavigatorName": "MIKU(SUMMER)",
+    "Genre": 5,
+    "IllustrationCredit": "illustration by さいとうなおき\n「初音ミク四季シリーズ」より",
+    "ToolTipJp": "ナビゲーターを初音ミク(夏Ver.)に変更します\nボイスを変更します(ボイスアクター:藤田咲)",
+    "ToolTipEn": "Change the navigator to MIKU(SUMMER)\nCV: Saki Fujita"
+  },
+  {
+    "Id": 13,
+    "NavigatorName": "DORO*C",
+    "Genre": 6,
+    "IllustrationCredit": "illustration by KEI\n「HARDCORE TANO*C」より",
+    "ToolTipJp": "ナビゲーターをDORO*Cに\n変更します",
+    "ToolTipEn": "Change the navigator to DORO*C"
+  },
+  {
+    "Id": 14,
+    "NavigatorName": "YOUMU",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by Sody\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターを魂魄妖夢に変更します",
+    "ToolTipEn": "Change the navigator to YOUMU"
+  },
+  {
+    "Id": 15,
+    "NavigatorName": "SAKUYA",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by Sody\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターを十六夜咲夜に変更します",
+    "ToolTipEn": "Change the navigator to SAKUYA"
+  },
+  {
+    "Id": 16,
+    "NavigatorName": "MIYABI",
+    "Genre": 6,
+    "IllustrationCredit": "illustration by Nidy-2D-\n「フィギュアヘッズ エース」より",
+    "ToolTipJp": "ナビゲーターを雅に変更します\nボイスを変更します(CV:高野麻里佳)",
+    "ToolTipEn": "Change the navigator to MIYABI\nCV: Marika Kouno"
+  },
+  {
+    "Id": 17,
+    "NavigatorName": "KAGURA",
+    "Genre": 6,
+    "IllustrationCredit": "illustration by Nidy-2D-\n「フィギュアヘッズ エース」より",
+    "ToolTipJp": "ナビゲーターを神楽に変更します\nボイスを変更します(CV:本渡楓)",
+    "ToolTipEn": "Change the navigator to KAGURA\nCV: Kaede Hondo"
+  },
+  {
+    "Id": 18,
+    "NavigatorName": "CASPER",
+    "Genre": 6,
+    "IllustrationCredit": "illustration by 井上淳哉\n「デススマイルズ」より",
+    "ToolTipJp": "ナビゲーターをキャスパーに変更します",
+    "ToolTipEn": "Change the navigator to CASPER"
+  },
+  {
+    "Id": 19,
+    "NavigatorName": "ADELE\u3000FRIEDRICH",
+    "Genre": 6,
+    "IllustrationCredit": "illustration by 山本七式\n「アンダーディフィート」より",
+    "ToolTipJp": "ナビゲーターをアデーレ・フリードリッヒ\nに変更します",
+    "ToolTipEn": "Change the navigator to ADELE FRIEDRICH"
+  },
+  {
+    "Id": 20,
+    "NavigatorName": "ESHIRIA\u3000PORTMAN",
+    "Genre": 6,
+    "IllustrationCredit": "illustration by ことぶきつかさ\n「雷電Ⅴ」より",
+    "ToolTipJp": "ナビゲーターをエシリア・ポートマン\nに変更します",
+    "ToolTipEn": "Change the navigator to ESHIRIA PORTMAN"
+  },
+  {
+    "Id": 21,
+    "NavigatorName": "CIRNO (CHIRUPA)",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by モタ\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターをチルノ(チルパバージョン)\nに変更します",
+    "ToolTipEn": "Change the navigator to CIRNO(CHIRUPA)"
+  },
+  {
+    "Id": 22,
+    "NavigatorName": "YUME (SCHOOL)",
+    "Genre": 2,
+    "IllustrationCredit": "illustration by 未早",
+    "ToolTipJp": "ナビゲーターをユメ(学生服)に変更します\nボイスを変更します(CV:高橋菜々美)",
+    "ToolTipEn": "Change the navigator to YUME(SCHOOL)\nCV: Nanami Takahashi"
+  },
+  {
+    "Id": 23,
+    "NavigatorName": "SHINMYOUMARU",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by Kenichirou Furuya\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターを少名針妙丸に変更します",
+    "ToolTipEn": "Change the navigator to SHINMYOUMARU"
+  },
+  {
+    "Id": 24,
+    "NavigatorName": "SANAE",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by Sody\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターを東風谷早苗に変更します",
+    "ToolTipEn": "Change the navigator to SANAE"
+  },
+  {
+    "Id": 25,
+    "NavigatorName": "SUTADONTAN",
+    "Genre": 2,
+    "IllustrationCredit": "illustration by 雉本ユーヒ",
+    "ToolTipJp": "ナビゲーターをすたどんたん殿下に\n変更します\nボイスを変更します(CV:山本椛)",
+    "ToolTipEn": "Change the navigator to SUTADONTAN\nCV: Momiji Yamamoto"
+  },
+  {
+    "Id": 26,
+    "NavigatorName": "YUME (Xmas)",
+    "Genre": 2,
+    "IllustrationCredit": "illustration by 未早",
+    "ToolTipJp": "ナビゲーターをユメ(クリスマス)に変更します\nボイスを変更します(CV:高橋菜々美)",
+    "ToolTipEn": "Change the navigator to YUME(Xmas)\nCV: Nanami Takahashi"
+  },
+  {
+    "Id": 27,
+    "NavigatorName": "IA",
+    "Genre": 5,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターをIAに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to IA"
+  },
+  {
+    "Id": 28,
+    "NavigatorName": "ONE",
+    "Genre": 5,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターをONEに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to ONE"
+  },
+  {
+    "Id": 29,
+    "NavigatorName": "Xenoa",
+    "Genre": 2,
+    "IllustrationCredit": "illustration by AO",
+    "ToolTipJp": "ナビゲーターをゼノアに\n変更します",
+    "ToolTipEn": "Change the navigator to Xenoa"
+  },
+  {
+    "Id": 30,
+    "NavigatorName": "MIRAI",
+    "Genre": 3,
+    "IllustrationCredit": "illustration by 曽我部修司（ＦｉＦＳ）\n「ピリオドゼロ」より",
+    "ToolTipJp": "ナビゲーターをミライに変更します\nボイスを変更します(CV:松田利冴)",
+    "ToolTipEn": "Change the navigator to MIRAI\nCV: Risae Matsuda"
+  },
+  {
+    "Id": 31,
+    "NavigatorName": "NAVI_OWL",
+    "Genre": 3,
+    "IllustrationCredit": "illustration by 曽我部修司（ＦｉＦＳ）\n「ピリオドゼロ」より",
+    "ToolTipJp": "ナビゲーターをナビウルに変更します\nボイスを変更します(CV:田中あいみ)",
+    "ToolTipEn": "Change the navigator to navi_Owl\nCV: Aimi Tanaka"
+  },
+  {
+    "Id": 32,
+    "NavigatorName": "GUMI",
+    "Genre": 5,
+    "IllustrationCredit": "illustration by ゆうき まさみ\n\u3000(C) INTERNET Co., Ltd.",
+    "ToolTipJp": "ナビゲーターをGUMIに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to GUMI"
+  },
+  {
+    "Id": 33,
+    "NavigatorName": "SEINE",
+    "Genre": 1,
+    "IllustrationCredit": "illustration by 未早",
+    "ToolTipJp": "ナビゲーターをセイネに変更します\nボイスを変更します(CV:河上英里子)",
+    "ToolTipEn": "Change the navigator to SEINE"
+  },
+  {
+    "Id": 34,
+    "NavigatorName": "MIRIN",
+    "Genre": 6,
+    "IllustrationCredit": "illustration by 雉本ユーヒ",
+    "ToolTipJp": "ナビゲーターを古川未鈴に変更します\nボイスを変更します(CV:古川未鈴)",
+    "ToolTipEn": "Change the navigator to MIRIN\nCV: Mirin Furukawa"
+  },
+  {
+    "Id": 35,
+    "NavigatorName": "CHEN",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by Kenichirou Furuya\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターを橙に変更します",
+    "ToolTipEn": "Change the navigator to CHEN"
+  },
+  {
+    "Id": 36,
+    "NavigatorName": "KOGASA",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by 秦 南乃花\n(Nanoha Hata)\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターを多々良小傘に変更します",
+    "ToolTipEn": "Change the navigator to KOGASA"
+  },
+  {
+    "Id": 37,
+    "NavigatorName": "MIKU(10th)",
+    "Genre": 5,
+    "IllustrationCredit": "illustration by 左",
+    "ToolTipJp": "ナビゲーターを\n初音ミク(10周年タイトーオリジナルVer.)\nに変更します\nボイスを変更します(ボイスアクター:藤田咲)",
+    "ToolTipEn": "Change the navigator to MIKU(10th)\nCV: Saki Fujita"
+  },
+  {
+    "Id": 38,
+    "NavigatorName": "SEINE(BIKINI)",
+    "Genre": 2,
+    "IllustrationCredit": "illustration by 未早",
+    "ToolTipJp": "ナビゲーターをセイネ(ビキニ)\nに変更します\nボイスを変更します(CV:河上英里子)",
+    "ToolTipEn": "Change the navigator to SEINE(BIKINI)\nCV: Eriko Kawakami"
+  },
+  {
+    "Id": 39,
+    "NavigatorName": "FRANDRE",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by Sody\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターをフランドール・スカーレット\nに変更します",
+    "ToolTipEn": "Change the navigator to FRANDRE"
+  },
+  {
+    "Id": 40,
+    "NavigatorName": "AKANE GYARI Ver.",
+    "Genre": 5,
+    "IllustrationCredit": "illustration by GYARI",
+    "ToolTipJp": "ナビゲーターを琴葉茜(GYARI Ver.)\nに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to AKANE(GYARI Ver.)"
+  },
+  {
+    "Id": 41,
+    "NavigatorName": "GUMI hatsuko Ver.",
+    "Genre": 5,
+    "IllustrationCredit": "illustration by hatsuko\n\u3000(C) INTERNET Co., Ltd.",
+    "ToolTipJp": "ナビゲーターをGUMI(hatsuko Ver.)に変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to GUMI(hatsuko Ver.)"
+  },
+  {
+    "Id": 42,
+    "NavigatorName": "SEINE GYARI Ver.",
+    "Genre": 2,
+    "IllustrationCredit": "illustration by GYARI",
+    "ToolTipJp": "ナビゲーターをセイネ(GYARI Ver.)\nに変更します\nボイスを変更します(CV:河上英里子)",
+    "ToolTipEn": "Change the navigator to SEINE(GYARI Ver.)\nCV: Eriko Kawakami"
+  },
+  {
+    "Id": 43,
+    "NavigatorName": "MIKOKO",
+    "Genre": 6,
+    "IllustrationCredit": "illustration by ねこます",
+    "ToolTipJp": "ナビゲーターをみここに変更します\nボイスを変更します(CV:ねこます)",
+    "ToolTipEn": "Change the navigator to MIKOKO\nCV: Nekomasu"
+  },
+  {
+    "Id": 44,
+    "NavigatorName": "Voidoll",
+    "Genre": 6,
+    "IllustrationCredit": "illustration by ちゃもーい\n「#コンパス\n戦闘摂理解析システム」より",
+    "ToolTipJp": "ナビゲーターをVoidollに変更します",
+    "ToolTipEn": "Change the navigator to Voidoll"
+  },
+  {
+    "Id": 45,
+    "NavigatorName": "13",
+    "Genre": 6,
+    "IllustrationCredit": "illustration by 緋紅 \u0026 NHN PlayArt\n「#コンパス\n戦闘摂理解析システム」より",
+    "ToolTipJp": "ナビゲーターを\n13\u002Bサーティーン\u002Bに変更します",
+    "ToolTipEn": "Change the navigator to 13"
+  },
+  {
+    "Id": 46,
+    "NavigatorName": "MIKU(MAGICAL MIRAI)",
+    "Genre": 5,
+    "IllustrationCredit": "illustration by Mika Pikazo",
+    "ToolTipJp": "ナビゲーターを\n初音ミク(マジカルミライ2018 Ver.)\nに変更します\nボイスを変更します(ボイスアクター:藤田咲)",
+    "ToolTipEn": "Change the navigator to\nMIKU(MAGICAL MIRAI)\nCV: Saki Fujita"
+  },
+  {
+    "Id": 47,
+    "NavigatorName": "UDONGEIN",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by Sara Matsuura\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターを鈴仙・優曇華院・イナバ\nに変更します",
+    "ToolTipEn": "Change the navigator to UDONGEIN"
+  },
+  {
+    "Id": 48,
+    "NavigatorName": "JUNKO",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by Sody\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターを純狐に変更します",
+    "ToolTipEn": "Change the navigator to JUNKO"
+  },
+  {
+    "Id": 49,
+    "NavigatorName": "KEFIR KOIZUMI",
+    "Genre": 2,
+    "IllustrationCredit": "illustration by ひろひろき",
+    "ToolTipJp": "ナビゲーターを小泉ケフィアに変更します",
+    "ToolTipEn": "Change the navigator to KEFIA KOIZUMI"
+  },
+  {
+    "Id": 50,
+    "NavigatorName": "UNA OTOMACHI",
+    "Genre": 5,
+    "IllustrationCredit": "(C)MTK / INTERNET Co., Ltd.",
+    "ToolTipJp": "ナビゲーターを音街ウナに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to UNA OTOMACHI"
+  },
+  {
+    "Id": 51,
+    "NavigatorName": "SEINE (PRINCESS)",
+    "Genre": 2,
+    "IllustrationCredit": "illustration by 未早",
+    "ToolTipJp": "ナビゲーターをセイネ(プリンセス)\nに変更します\nボイスを変更します(CV:河上英里子)",
+    "ToolTipEn": "Change the navigator to SEINE(PRINCESS)\nCV: Eriko Kawakami"
+  },
+  {
+    "Id": 52,
+    "NavigatorName": "SUWAKO",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by Sody\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターを洩矢諏訪子\nに変更します",
+    "ToolTipEn": "Change the navigator to SUWAKO"
+  },
+  {
+    "Id": 53,
+    "NavigatorName": "Sans",
+    "Genre": 6,
+    "IllustrationCredit": "「UNDERTALE」より",
+    "ToolTipJp": "ナビゲーターをサンズに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to Sans"
+  },
+  {
+    "Id": 54,
+    "NavigatorName": "HIKARI",
+    "Genre": 6,
+    "IllustrationCredit": "「Arcaea」より\n(C)lowiro 2019",
+    "ToolTipJp": "ナビゲーターを光に変更します",
+    "ToolTipEn": "Change the navigator to Hikari"
+  },
+  {
+    "Id": 55,
+    "NavigatorName": "TAIRITSU",
+    "Genre": 6,
+    "IllustrationCredit": "「Arcaea」より\n(C)lowiro 2019",
+    "ToolTipJp": "ナビゲーターを対立に変更します",
+    "ToolTipEn": "Change the navigator to Tairitsu"
+  },
+  {
+    "Id": 56,
+    "NavigatorName": "Rarari Really",
+    "Genre": 2,
+    "IllustrationCredit": "illustration by ひろひろき",
+    "ToolTipJp": "ナビゲーターをRa々理りありに変更します",
+    "ToolTipEn": "Change the navigator to Rarari Really"
+  },
+  {
+    "Id": 57,
+    "NavigatorName": "Lalari Fairy",
+    "Genre": 2,
+    "IllustrationCredit": "illustration by ひろひろき",
+    "ToolTipJp": "ナビゲーターをLa々理ふぇありに変更します",
+    "ToolTipEn": "Change the navigator to Lalari Fairy"
+  },
+  {
+    "Id": 58,
+    "NavigatorName": "SAKUYA(Cool\u0026Create)",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by 未影\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターを十六夜咲夜\n(COOL\u0026CREATE Ver.)\nに変更します",
+    "ToolTipEn": "Change the navigator to SAKUYA\n(COOL\u0026CREATE Ver.)"
+  },
+  {
+    "Id": 59,
+    "NavigatorName": "EL CLEAR",
+    "Genre": 6,
+    "IllustrationCredit": "「DJMAX RESPECT」より",
+    "ToolTipJp": "ナビゲーターをエル・クレアに変更します",
+    "ToolTipEn": "Change the navigator to El Clear"
+  },
+  {
+    "Id": 60,
+    "NavigatorName": "EL FAIL",
+    "Genre": 6,
+    "IllustrationCredit": "「DJMAX RESPECT」より",
+    "ToolTipJp": "ナビゲーターをエル・フェイルに変更します",
+    "ToolTipEn": "Change the navigator to El Fail"
+  },
+  {
+    "Id": 61,
+    "NavigatorName": "YUKARI YUZUKI",
+    "Genre": 5,
+    "IllustrationCredit": "(c)VOCALOMAKETS Powered by \nBumpy Factory Corporation.",
+    "ToolTipJp": "ナビゲーターを結月ゆかりに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to YUKARI YUZUKI"
+  },
+  {
+    "Id": 62,
+    "NavigatorName": "ANDROMEDAKO",
+    "Genre": 5,
+    "IllustrationCredit": "illustration by NayutalieN",
+    "ToolTipJp": "ナビゲーターをアンドロメダ子に変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to ANDROMEDAKO"
+  },
+  {
+    "Id": 63,
+    "NavigatorName": "SEINE NAYUTAN Ver.",
+    "Genre": 2,
+    "IllustrationCredit": "illustration by Kenichirou Furuya\nsupervised by NayutalieN",
+    "ToolTipJp": "ナビゲーターをセイネ\n(ナユタン星人Ver.)に変更します\nボイスを変更します(CV:河上英里子)",
+    "ToolTipEn": "Change the navigator to SEINE(NAYUTANver.)\nCV: Eriko Kawakami"
+  },
+  {
+    "Id": 64,
+    "NavigatorName": "CIRNO (SUNTAN)",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by Tomoko Tachibana\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターを日焼けしたチルノに変更します",
+    "ToolTipEn": "Change the navigator to CIRNO\n(SUNTAN)"
+  },
+  {
+    "Id": 65,
+    "NavigatorName": "SUI",
+    "Genre": 6,
+    "IllustrationCredit": "「DJMAX RESPECT」より",
+    "ToolTipJp": "ナビゲーターをスイに変更します",
+    "ToolTipEn": "Change the navigator to Sui"
+  },
+  {
+    "Id": 66,
+    "NavigatorName": "Papyrus",
+    "Genre": 6,
+    "IllustrationCredit": "「UNDERTALE」より",
+    "ToolTipJp": "ナビゲーターをパピルスに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to Papyrus"
+  },
+  {
+    "Id": 67,
+    "NavigatorName": "OKINA",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by 秦 南乃花\n(Nanoha Hata)\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターを摩多羅隠岐奈に変更します",
+    "ToolTipEn": "Change the navigator to OKINA"
+  },
+  {
+    "Id": 68,
+    "NavigatorName": "RITMO",
+    "Genre": 6,
+    "IllustrationCredit": "「Lanota」より",
+    "ToolTipJp": "ナビゲーターをリツモに変更します",
+    "ToolTipEn": "Change the navigator to Ritomo"
+  },
+  {
+    "Id": 69,
+    "NavigatorName": "FISICA",
+    "Genre": 6,
+    "IllustrationCredit": "「Lanota」より",
+    "ToolTipJp": "ナビゲーターをフィシカに変更します",
+    "ToolTipEn": "Change the navigator to Fisica"
+  },
+  {
+    "Id": 70,
+    "NavigatorName": "YUKARI YAKUMO",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by 未影\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターを八雲紫に変更します",
+    "ToolTipEn": "Change the navigator to YUKARI YAKUMO"
+  },
+  {
+    "Id": 71,
+    "NavigatorName": "HIME TANAKA",
+    "Genre": 6,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターを田中ヒメに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to HIME TANAKA"
+  },
+  {
+    "Id": 72,
+    "NavigatorName": "HINA SUZUKI",
+    "Genre": 6,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターを鈴木ヒナに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to HINA SUZUKI"
+  },
+  {
+    "Id": 73,
+    "NavigatorName": "REIMU (TSB)",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by 藤ちょこ\n「東方スペルバブル」より",
+    "ToolTipJp": "ナビゲーターを博麗霊夢\n（東方スペルバブル）に変更します",
+    "ToolTipEn": "Change the navigator to REIMU (TSB)"
+  },
+  {
+    "Id": 74,
+    "NavigatorName": "MARISA (TSB)",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by 荻pote\n「東方スペルバブル」より",
+    "ToolTipJp": "ナビゲーターを霧雨魔理沙\n（東方スペルバブル）に変更します",
+    "ToolTipEn": "Change the navigator to MARISA (TSB)"
+  },
+  {
+    "Id": 75,
+    "NavigatorName": "MIRAI AKARI",
+    "Genre": 6,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターをミライアカリに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to MIRAI AKARI"
+  },
+  {
+    "Id": 76,
+    "NavigatorName": "ELIZABETH",
+    "Genre": 6,
+    "IllustrationCredit": "illustration by LAM\n「WACCA」より",
+    "ToolTipJp": "ナビゲーターをエリザベスに変更します\nボイスを変更します(CV：大西沙織)",
+    "ToolTipEn": "Change the navigator to ELIZABETH\nCV: Saori Onishi"
+  },
+  {
+    "Id": 77,
+    "NavigatorName": "KIZUNA AKARI",
+    "Genre": 5,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターを紲星あかりに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to KIZUNA AKARI"
+  },
+  {
+    "Id": 78,
+    "NavigatorName": "FLOWER  (V4)",
+    "Genre": 5,
+    "IllustrationCredit": "illustration by △〇□×",
+    "ToolTipJp": "ナビゲーターをflower(V4)に変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to flower(V4)"
+  },
+  {
+    "Id": 79,
+    "NavigatorName": "FLOWER  (Talk)",
+    "Genre": 5,
+    "IllustrationCredit": "illustration by △〇□×",
+    "ToolTipJp": "ナビゲーターをflower(Talk)に変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to flower(Talk)"
+  },
+  {
+    "Id": 80,
+    "NavigatorName": "NoA",
+    "Genre": 6,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターをNoAに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to NoA"
+  },
+  {
+    "Id": 81,
+    "NavigatorName": "Io",
+    "Genre": 6,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターをIoに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to Io"
+  },
+  {
+    "Id": 82,
+    "NavigatorName": "Mana",
+    "Genre": 6,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターをManaに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to Mana"
+  },
+  {
+    "Id": 83,
+    "NavigatorName": "REMILIA",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by Kenichirou Furuya\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターをレミリア・\nスカーレットに変更します",
+    "ToolTipEn": "Change the navigator to REMILIA"
+  },
+  {
+    "Id": 84,
+    "NavigatorName": "LUNA",
+    "Genre": 6,
+    "IllustrationCredit": "「Arcaea」より\n(C)lowiro 2020",
+    "ToolTipJp": "ナビゲーターをルナに変更します",
+    "ToolTipEn": "Change the navigator to Luna"
+  },
+  {
+    "Id": 85,
+    "NavigatorName": "AOI GYARI Ver.",
+    "Genre": 5,
+    "IllustrationCredit": "illustration by GYARI",
+    "ToolTipJp": "ナビゲーターを琴葉葵(GYARI Ver.)\nに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to AOI(GYARI Ver.)"
+  },
+  {
+    "Id": 86,
+    "NavigatorName": "SAKI",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by MAKI\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターを驪駒早鬼に変更します",
+    "ToolTipEn": "Change the navigator to SAKI"
+  },
+  {
+    "Id": 87,
+    "NavigatorName": "BURO",
+    "Genre": 6,
+    "IllustrationCredit": "「Muse Dash」より",
+    "ToolTipJp": "ナビゲーターをブロウに変更します\nボイスを変更します(CV:甘束まお)",
+    "ToolTipEn": "Change the navigator to BURO\nCV: Mao Amatsuka"
+  },
+  {
+    "Id": 88,
+    "NavigatorName": "YMIR",
+    "Genre": 2,
+    "IllustrationCredit": "illustration by 未早",
+    "ToolTipJp": "ナビゲーターをユミルに変更します",
+    "ToolTipEn": "Change the navigator to Ymir"
+  },
+  {
+    "Id": 89,
+    "NavigatorName": "SIRO",
+    "Genre": 6,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターを電脳少女シロに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to SIRO"
+  },
+  {
+    "Id": 90,
+    "NavigatorName": "MITO TSUKINO",
+    "Genre": 6,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターを月ノ美兎に変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to MITO TSUKINO"
+  },
+  {
+    "Id": 91,
+    "NavigatorName": "LILY",
+    "Genre": 6,
+    "IllustrationCredit": "illustration by LAM\n「WACCA」より",
+    "ToolTipJp": "ナビゲーターをリリィに変更します\nボイスを変更します(CV：青木志貴)",
+    "ToolTipEn": "Change the navigator to LILY\nCV: Shiki Aoki"
+  },
+  {
+    "Id": 92,
+    "NavigatorName": "REIMU(TouhouLW)",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by 夢野ろて\n「東方LostWord」より\n(C)上海アリス幻樂団 (C)GSC/NN",
+    "ToolTipJp": "ナビゲーターを博麗霊夢\n(東方LostWord)に変更します",
+    "ToolTipEn": "Change the navigator to REIMU(TouhouLW)"
+  },
+  {
+    "Id": 93,
+    "NavigatorName": "MARISA(TouhouLW)",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by 夢野ろて\n「東方LostWord」より\n(C)上海アリス幻樂団 (C)GSC/NN",
+    "ToolTipJp": "ナビゲーターを霧雨魔理沙\n(東方LostWord)に変更します",
+    "ToolTipEn": "Change the navigator to MARISA(TouhouLW)"
+  },
+  {
+    "Id": 94,
+    "NavigatorName": "CHUNI PENGUIN",
+    "Genre": 6,
+    "IllustrationCredit": "illustration by SEGA\n「CHUNITHM」より",
+    "ToolTipJp": "ナビゲーターをチュウニペンギンに\n変更します",
+    "ToolTipEn": "Change the navigator to CHUNI PENGUIN"
+  },
+  {
+    "Id": 95,
+    "NavigatorName": "RICHTSHUTZE",
+    "Genre": 6,
+    "IllustrationCredit": "illustration by タカヤマトシアキ\n「CHUNITHM」より",
+    "ToolTipJp": "ナビゲーターをリヒトシュッツェに\n変更します",
+    "ToolTipEn": "Change the navigator to RICHTSHUTZE"
+  },
+  {
+    "Id": 96,
+    "NavigatorName": "MAGELLAN MAGELLAN",
+    "Genre": 6,
+    "IllustrationCredit": "illustration by ちゃもーい\n「CHUNITHM」より",
+    "ToolTipJp": "ナビゲーターをマゼラン・マゼランに\n変更します",
+    "ToolTipEn": "Change the navigator to\nMAGELLAN MAGELLAN"
+  },
+  {
+    "Id": 97,
+    "NavigatorName": "MIKO SAKURA",
+    "Genre": 6,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターをさくらみこに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator \nto MIKO SAKURA"
+  },
+  {
+    "Id": 98,
+    "NavigatorName": "FUBUKI SHIRAKAMI",
+    "Genre": 6,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターを白上フブキに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator \nto FUBUKI SHIRAKAMI"
+  },
+  {
+    "Id": 99,
+    "NavigatorName": "MATSURI NATSUIRO",
+    "Genre": 6,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターを夏色まつりに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator \nto MATSURI NATSUIRO"
+  },
+  {
+    "Id": 100,
+    "NavigatorName": "MARINE HOUSHOU",
+    "Genre": 6,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターを宝鐘マリンに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator \nto MARINE HOUSHOU"
+  },
+  {
+    "Id": 101,
+    "NavigatorName": "SATORI",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by めばる\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターを古明地さとりに変更します",
+    "ToolTipEn": "Change the navigator to SATORI"
+  },
+  {
+    "Id": 102,
+    "NavigatorName": "KOISHI",
+    "Genre": 4,
+    "IllustrationCredit": "illustration by 西沢5㍉\n「東方Project」より",
+    "ToolTipJp": "ナビゲーターを古明地こいしに変更します",
+    "ToolTipEn": "Change the navigator to KOISHI"
+  },
+  {
+    "Id": 103,
+    "NavigatorName": "LINKA(Fairy)",
+    "Genre": 2,
+    "IllustrationCredit": "illustration by 未早",
+    "ToolTipJp": "ナビゲーターをリンカ\n(Fairy)に変更します\nボイスを変更します(CV:豊田萌絵)",
+    "ToolTipEn": "Change the navigator to LINKA(Fairy)\nCV: Moe Toyota"
+  },
+  {
+    "Id": 104,
+    "NavigatorName": "YUME(Fairy)",
+    "Genre": 2,
+    "IllustrationCredit": "illustration by 未早",
+    "ToolTipJp": "ナビゲーターをユメ\n(Fairy)に変更します\nボイスを変更します(CV:高橋菜々美)",
+    "ToolTipEn": "Change the navigator to YUME(Fairy)\nCV: Nanami Takahashi"
+  },
+  {
+    "Id": 105,
+    "NavigatorName": "SEINE(Fairy)",
+    "Genre": 2,
+    "IllustrationCredit": "illustration by 未早",
+    "ToolTipJp": "ナビゲーターをセイネ\n(Fairy)に変更します\nボイスを変更します(CV:河上英里子)",
+    "ToolTipEn": "Change the navigator to SEINE(Fairy)\nCV: Eriko Kawakami"
+  },
+  {
+    "Id": 106,
+    "NavigatorName": "REIMU(TouhouDK)",
+    "Genre": 4,
+    "IllustrationCredit": "「東方ダンマクカグラ」より\n(C)上海アリス幻樂団",
+    "ToolTipJp": "ナビゲーターを博麗霊夢\n(東方ダンマクカグラ)に変更します",
+    "ToolTipEn": "Change the navigator to\nREIMU(TouhouDK)"
+  },
+  {
+    "Id": 107,
+    "NavigatorName": "MARISA(TouhouDK)",
+    "Genre": 4,
+    "IllustrationCredit": "「東方ダンマクカグラ」より\n(C)上海アリス幻樂団",
+    "ToolTipJp": "ナビゲーターを霧雨魔理沙\n(東方ダンマクカグラ)に変更します",
+    "ToolTipEn": "Change the navigator to\nMARISA(TouhouDK)"
+  },
+  {
+    "Id": 108,
+    "NavigatorName": "HIME(Ver.2)",
+    "Genre": 6,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターを田中ヒメ\n(Mr.VIRTUALIZER)に変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to\nHIME(Mr.VIRTUALIZER)"
+  },
+  {
+    "Id": 109,
+    "NavigatorName": "HINA(Ver.2)",
+    "Genre": 6,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターを鈴木ヒナ\n(Mr.VIRTUALIZER)に変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to \nHINA(Mr.VIRTUALIZER)"
+  },
+  {
+    "Id": 110,
+    "NavigatorName": "RINKU AIMOTO",
+    "Genre": 6,
+    "IllustrationCredit": "「D4DJ Groovy Mix」より",
+    "ToolTipJp": "ナビゲーターを愛本りんくに変更します\nボイスを変更します(CV：西尾夕香)",
+    "ToolTipEn": "Change the navigator to \nRinku Aimoto\nCV: Yuka Nishio"
+  },
+  {
+    "Id": 111,
+    "NavigatorName": "KYOKO YAMATE",
+    "Genre": 6,
+    "IllustrationCredit": "「D4DJ Groovy Mix」より",
+    "ToolTipJp": "ナビゲーターを山手響子に変更します\nボイスを変更します(CV：愛美)",
+    "ToolTipEn": "Change the navigator to \nKyoko Yamate\nCV: Aimi"
+  },
+  {
+    "Id": 112,
+    "NavigatorName": "SHONI PENGUIN",
+    "Genre": 6,
+    "IllustrationCredit": "illustration by SEGA\n「CHUNITHM」より",
+    "ToolTipJp": "ナビゲーターをショウニペンギンに\n変更します",
+    "ToolTipEn": "Change the navigator to SHONI PENGUIN"
+  },
+  {
+    "Id": 113,
+    "NavigatorName": "SURVIVAL ZUNDOKO",
+    "Genre": 2,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターをサバイバル ずんど子ちゃん\nに変更します\nボイスを変更します(CV:ちよこ)",
+    "ToolTipEn": "Change the navigator to\nSURVIVAL ZUNDOKO CHAN\nCV: Chiyoko"
+  },
+  {
+    "Id": 114,
+    "NavigatorName": "HINATA NEKOMIYA",
+    "Genre": 6,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターを猫宮ひなたに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to\nHINATA NEKOMIYA"
+  },
+  {
+    "Id": 115,
+    "NavigatorName": "AKARI HOSHIZAKI",
+    "Genre": 6,
+    "IllustrationCredit": "illustration by SEGA\n「オンゲキ」より",
+    "ToolTipJp": "ナビゲーターを星咲あかりに変更します\nボイスを変更します(CV:赤尾ひかる)",
+    "ToolTipEn": "Change the navigator to\nAKARI HOSHIZAKI\nCV: Hikaru Akao"
+  },
+  {
+    "Id": 116,
+    "NavigatorName": "SETSUNA SUMERAGI",
+    "Genre": 6,
+    "IllustrationCredit": "illustration by SEGA\n「オンゲキ」より",
+    "ToolTipJp": "ナビゲーターを皇城セツナに変更します\nボイスを変更します(CV:八巻アンナ)",
+    "ToolTipEn": "Change the navigator to\nSETSUNA SUMERAGI\nCV: Anna Yamaki"
+  },
+  {
+    "Id": 117,
+    "NavigatorName": "KAGURANANA",
+    "Genre": 6,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターをカグラナナに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to\nKAGURANANA"
+  }
+]

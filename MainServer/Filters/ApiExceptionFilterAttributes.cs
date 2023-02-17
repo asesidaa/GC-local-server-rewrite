@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
-using Application.Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Shared.Models;
 
 namespace MainServer.Filters;
 

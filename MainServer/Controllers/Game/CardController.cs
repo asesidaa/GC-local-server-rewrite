@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using Application.Common.Models;
 using Application.Game.Card;
 using Application.Game.Card.Management;
 using Application.Game.Card.OnlineMatching;
@@ -8,6 +7,7 @@ using Application.Game.Card.Session;
 using Application.Game.Card.Write;
 using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Models;
 using Throw;
 
 namespace MainServer.Controllers.Game;

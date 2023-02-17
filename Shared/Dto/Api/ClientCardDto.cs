@@ -1,4 +1,4 @@
-﻿namespace Application.Dto.Api;
+﻿namespace Shared.Dto.Api;
 
 public class ClientCardDto
 {

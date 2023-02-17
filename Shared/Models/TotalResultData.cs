@@ -1,4 +1,4 @@
-﻿namespace Application.Common.Models;
+﻿namespace Shared.Models;
 
 public class TotalResultData
 {

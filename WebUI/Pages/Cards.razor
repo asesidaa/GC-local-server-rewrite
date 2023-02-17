@@ -1,2 +1,73 @@
 ﻿@page "/Cards"
-<h3>Cards</h3>
+
+<PageTitle>Cards</PageTitle>
+
+<MudContainer>
+    @if (ErrorMessage != string.Empty)
+    {
+        <MudText Color="Color.Error" Typo="Typo.h3">@ErrorMessage</MudText>
+        return;
+    }
+    
+    @if (CardDtos is null)
+    {
+        <MudGrid>
+            @for (var i = 0; i < 5; i++)
+            {
+                <MudItem>
+                    <MudCard>
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="32px"/>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                        <MudCardContent>
+                            <MudSkeleton Width="80px" Height="32px"/>
+                            <MudSkeleton Width="147px" Height="28px"/>
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="99px" Height="25px" Class="ml-2"/>
+                        </MudCardActions>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudGrid>
+        return;
+    }
+    
+    @if (CardDtos.Count != 0)
+    {
+        <MudGrid>
+            @foreach (var card in CardDtos)
+            {
+                <MudItem>
+                    <MudCard>
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.h5">@card.PlayerName</MudText>
+                            </CardHeaderContent>
+                            <CardHeaderActions>
+                                <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Default"
+                                               OnClick="() => OnEditPlayerNameClicked(card)"/>
+                            </CardHeaderActions>
+                        </MudCardHeader>
+                        <MudCardContent>
+                            <MudText Style="font-weight: bold">Card ID</MudText>
+                            <MudText>@card.CardId</MudText>
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudButton Variant="Variant.Text" Color="Color.Primary">
+                                Check detail
+                            </MudButton>
+                        </MudCardActions>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudGrid>
+        return;
+    }
+    
+    <MudText Align="Align.Center" Typo="Typo.h3">
+        No Data
+    </MudText>
+</MudContainer>

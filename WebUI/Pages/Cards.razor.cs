@@ -1,14 +1,18 @@
 ﻿using System.Net.Http.Json;
-using Application.Common.Models;
-using Application.Dto.Api;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
+using Shared.Dto.Api;
+using Shared.Models;
 
 namespace WebUI.Pages;
 
 public partial class Cards
 {
     [Inject]
-    public HttpClient Client { get; set; } = null!;
+    public required HttpClient Client { get; set; }
+
+    [Inject]
+    public required IDialogService DialogService { get; set; }
     
     private List<ClientCardDto>? CardDtos { get; set; }
 
@@ -30,5 +34,18 @@ public partial class Cards
             return;
         }
         CardDtos = result.Data;
+    }
+
+    private async Task OnEditPlayerNameClicked(ClientCardDto card)
+    {
+        var options = new DialogOptions
+        {
+            CloseOnEscapeKey = false,
+            DisableBackdropClick = true,
+            FullWidth = true
+        };
+        var parameters = new DialogParameters { { "Data", card } };
+        var dialog = await DialogService.ShowAsync<ChangePlayerNameDialog>("Favorite", parameters, options);
+        var result = await dialog.Result;
     }
 }

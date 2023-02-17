@@ -1,4 +1,6 @@
-﻿namespace Application.Api;
+﻿using Shared.Models;
+
+namespace Application.Api;
 
 public record GetPlayOptionQuery(long CardId) : IRequestWrapper<PlayOptionData>;
 

@@ -1,4 +1,4 @@
-﻿namespace Application.Common.Models;
+﻿namespace Shared.Models;
 
 /// <summary>
 /// A standard response for service calls.
@@ -7,6 +7,8 @@
 public class ServiceResult<T> : ServiceResult
 {
     public T? Data { get; set; }
+
+    public ServiceResult() { }
 
     public ServiceResult(T? data)
     {
