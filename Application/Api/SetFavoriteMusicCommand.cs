@@ -2,7 +2,7 @@
 
 namespace Application.Api;
 
-public record SetFavoriteMusicCommand(MusicDetailDto Data) : IRequestWrapper<bool>;
+public record SetFavoriteMusicCommand(MusicFavoriteDto Data) : IRequestWrapper<bool>;
 
 public class SetFavoriteMusicCommandHandler : RequestHandlerBase<SetFavoriteMusicCommand, bool>
 {

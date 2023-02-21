@@ -1,4 +1,6 @@
-﻿namespace Shared.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace Shared.Models;
 
 /// <summary>
 /// A standard response for service calls.
@@ -14,7 +16,7 @@ public class ServiceResult<T> : ServiceResult
     {
         Data = data;
     }
-
+    
     public ServiceResult(T? data, ServiceError error) : base(error)
     {
         Data = data;
@@ -22,7 +24,7 @@ public class ServiceResult<T> : ServiceResult
 
     public ServiceResult(ServiceError error) : base(error)
     {
-
+        
     }
 }
 

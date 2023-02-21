@@ -14,6 +14,12 @@ public class DataService : IDataService
     
     private Dictionary<uint, Title> titles = new();
 
+    private List<Avatar> sortedAvatarList = new();
+
+    private List<Navigator> sortedNavigatorList = new();
+
+    private List<Title> sortedTitleList = new();
+
     private readonly HttpClient client;
 
     public DataService(HttpClient client)
@@ -26,29 +32,47 @@ public class DataService : IDataService
         var avatarList = await client.GetFromJsonAsync("data/Avatars.json", SourceGenerationContext.Default.ListAvatar);
         avatarList.ThrowIfNull();
         avatars = avatarList.ToDictionary(avatar => avatar.AvatarId);
+        sortedAvatarList = avatarList.OrderBy(avatar => avatar.AvatarId).ToList();
         
         var navigatorList = await client.GetFromJsonAsync("data/Navigators.json", SourceGenerationContext.Default.ListNavigator);
         navigatorList.ThrowIfNull();
         navigators = navigatorList.ToDictionary(navigator => navigator.Id);
+        sortedNavigatorList = navigatorList.OrderBy(navigator => navigator.Id).ToList();
         
         var titleList = await client.GetFromJsonAsync("data/Titles.json", SourceGenerationContext.Default.ListTitle);
         titleList.ThrowIfNull();
         titles = titleList.ToDictionary(title => title.Id);
+        sortedTitleList = titleList.OrderBy(title => title.Id).ToList();
     }
 
-    public IReadOnlyDictionary<uint, Avatar> GetAvatars()
+    public IReadOnlyList<Avatar> GetAvatarsSortedById()
     {
-        return new ReadOnlyDictionary<uint, Avatar>(avatars);
+        return sortedAvatarList;
     }
 
-    public IReadOnlyDictionary<uint, Navigator> GetNavigators()
+    public IReadOnlyList<Navigator> GetNavigatorsSortedById()
     {
-        return new ReadOnlyDictionary<uint, Navigator>(navigators);
+        return sortedNavigatorList;
     }
 
-    public IReadOnlyDictionary<uint, Title> GetTitles()
+    public IReadOnlyList<Title> GetTitlesSortedById()
     {
-        return new ReadOnlyDictionary<uint, Title>(titles);
+        return sortedTitleList;
+    }
+
+    public Avatar? GetAvatarById(uint id)
+    {
+        return avatars.GetValueOrDefault(id);
+    }
+
+    public Title? GetTitleById(uint id)
+    {
+        return titles.GetValueOrDefault(id);
+    }
+
+    public Navigator? GetNavigatorById(uint id)
+    {
+        return navigators.GetValueOrDefault(id);
     }
 }
 

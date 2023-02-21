@@ -1,0 +1,123 @@
+﻿@using WebUI.Services
+@using Shared.Models
+@using WebUI.Common.Models
+@inject IDataService DataService
+
+<MudDialog>
+    <DialogContent>
+        <MudTable Items="@navigators" Filter="@Filter" @bind-SelectedItem="@selectedNavigator" Hover="true"
+                  FixedHeader="true" Height="70vh">
+            <ColGroup>
+                <col style="width: 50px;"/>
+                <col/>
+            </ColGroup>
+            <ToolBarContent>
+                <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="false"
+                              AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0">
+                </MudTextField>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh>
+                    <MudTableSortLabel SortBy="@(new Func<Navigator, object>(x => x.Id))">
+                        Navigator Id
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="@(new Func<Navigator, object>(x => x.NavigatorName))">
+                        Navigator Name
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="@(new Func<Navigator, object>(x => x.Genre))">
+                        Navigator Genre
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="@(new Func<Navigator, object>(x => x.IllustrationCredit))">
+                        Illustration Credit
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="@(new Func<Navigator, object>(x => x.ToolTipJp))">
+                        Tooltip (Japanese)
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="@(new Func<Navigator, object>(x => x.ToolTipEn))">
+                        Tooltip (English)
+                    </MudTableSortLabel>
+                </MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                @{
+                    # pragma warning disable CS8602
+                }
+                <MudTd DataLabel="Id" Class="cursor-pointer">@context.Id</MudTd>
+                <MudTd DataLabel="Navigator" Class="cursor-pointer">@context.NavigatorName</MudTd>
+                <MudTd DataLabel="Genre" Class="cursor-pointer">@context.Genre</MudTd>
+                <MudTd DataLabel="IllustrationCredit" Class="cursor-pointer">@context.IllustrationCredit</MudTd>
+                <MudTd DataLabel="ToolTipJp" Class="cursor-pointer">@context.ToolTipJp</MudTd>
+                <MudTd DataLabel="ToolTipEn" Class="cursor-pointer">@context.ToolTipEn</MudTd>
+                @{
+                    # pragma warning restore CS8602
+                }
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new[] { 10, 25, 50, 100 }"/>
+            </PagerContent>
+        </MudTable>
+        <MudText Class="mt-4 d-block" Typo="Typo.caption">
+            <b>Selected Navigator:</b> @selectedNavigator?.NavigatorName
+        </MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code{
+
+    [CascadingParameter]
+    public required MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public required PlayOptionData Data { get; set; }
+
+    private Navigator? selectedNavigator;
+
+    private IReadOnlyList<Navigator> navigators = new List<Navigator>();
+
+    private string searchString = string.Empty;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        selectedNavigator = DataService.GetNavigatorById((uint)Data.OptionPart2.NavigatorId);
+        navigators = DataService.GetNavigatorsSortedById();
+    }
+
+
+    private bool Filter(Navigator? navigator)
+    {
+        if (navigator is null)
+        {
+            return false;
+        }
+        var aggregate = $"{navigator.NavigatorName}{navigator.IllustrationCredit}{navigator.ToolTipEn}{navigator.ToolTipJp}";
+        return string.IsNullOrEmpty(searchString) ||
+               aggregate.Contains(searchString, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private void Submit()
+    {
+        if (selectedNavigator is not null)
+        {
+            Data.OptionPart2.NavigatorId = (int)selectedNavigator.Id;
+        }
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}

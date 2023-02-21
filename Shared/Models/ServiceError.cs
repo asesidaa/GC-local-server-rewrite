@@ -1,4 +1,5 @@
-﻿using Domain.Enums;
+﻿using System.Text.Json.Serialization;
+using Domain.Enums;
 
 namespace Shared.Models;
 
@@ -12,9 +13,7 @@ namespace Shared.Models;
 [Serializable]
 public class ServiceError
 {
-    /// <summary>
-    /// CTOR
-    /// </summary>
+    [JsonConstructor]
     public ServiceError(string message, int code)
     {
         Message = message;
@@ -62,9 +61,10 @@ public class ServiceError
     }
 
     public static ServiceError DatabaseSaveFailed => new ServiceError("Database save failed", 800);
-    
-    public static ServiceError NotReissue => new ServiceError("Not reissue, registering a new card", (int)CardReturnCode.NotReissue);
-    
+
+    public static ServiceError NotReissue =>
+        new ServiceError("Not reissue, registering a new card", (int)CardReturnCode.NotReissue);
+
     public static ServiceError UserNotFound => new("Card with this id does not exist", 996);
 
     public static ServiceError UserFailedToCreate => new("Failed to create User.", 995);

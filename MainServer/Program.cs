@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Extensions.Logging;
 using Throw;
-using Shared.SerializerContexts;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -58,7 +57,7 @@ try
 
     builder.Services.AddControllers(options =>
         options.Filters.Add<ApiExceptionFilterService>())
-        .AddJsonOptions(options => options.JsonSerializerOptions.AddContext<SourceGenerationContext>());
+        .AddJsonOptions(options => options.JsonSerializerOptions.WriteIndented = true);
     
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();

@@ -1,0 +1,99 @@
+﻿@using WebUI.Services
+@using Shared.Models
+@using WebUI.Common.Models
+@inject IDataService DataService
+
+<MudDialog>
+    <DialogContent>
+        <MudTable Items="@avatars" Filter="@Filter" @bind-SelectedItem="@selectedAvatar" Hover="true"
+                  FixedHeader="true" Height="70vh">
+            <ColGroup>
+                <col style="width: 50px;"/>
+                <col/>
+            </ColGroup>
+            <ToolBarContent>
+                <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="false"
+                              AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0">
+                </MudTextField>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh>
+                    <MudTableSortLabel SortBy="@(new Func<Avatar, object>(x => x.AvatarId))">
+                        Avatar Id
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="@(new Func<Avatar, object>(x => x.AvatarName))">
+                        Avatar Name
+                    </MudTableSortLabel>
+                </MudTh>
+
+            </HeaderContent>
+            <RowTemplate>
+                @{
+                    # pragma warning disable CS8602
+                }
+                <MudTd DataLabel="Id" Class="cursor-pointer">@context.AvatarId</MudTd>
+                <MudTd DataLabel="Title" Class="cursor-pointer">@context.AvatarName</MudTd>
+                @{
+                    # pragma warning restore CS8602
+                }
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new[] { 10, 25, 50, 100 }"/>
+            </PagerContent>
+        </MudTable>
+        <MudText Class="mt-4 d-block" Typo="Typo.caption">
+            <b>Selected Title:</b> @selectedAvatar?.AvatarName
+        </MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code{
+
+    [CascadingParameter]
+    public required MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public required PlayOptionData Data { get; set; }
+
+    private Avatar? selectedAvatar;
+
+    private IReadOnlyList<Avatar> avatars = new List<Avatar>();
+
+    private string searchString = string.Empty;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        selectedAvatar = DataService.GetAvatarById((uint)Data.OptionPart1.AvatarId);
+        avatars = DataService.GetAvatarsSortedById();
+    }
+
+
+    private bool Filter(Avatar? avatar)
+    {
+        if (avatar is null)
+        {
+            return false;
+        }
+        return string.IsNullOrEmpty(searchString) ||
+               avatar.AvatarName.Contains(searchString, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private void Submit()
+    {
+        if (selectedAvatar is not null)
+        {
+            Data.OptionPart1.AvatarId = (int)selectedAvatar.AvatarId;
+        }
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}

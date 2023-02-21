@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components;
 using Shared.Dto.Api;
 using Shared.Models;
 using Throw;
-using Shared.SerializerContexts;
 using WebUI.Pages.Dialogs;
 
 namespace WebUI.Pages;
@@ -26,11 +25,11 @@ public partial class Cards
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        await Task.Delay(3000);
+
         var result = await Client.GetFromJsonAsync<ServiceResult<List<ClientCardDto>>>("api/Profiles");
         result.ThrowIfNull();
         
-        Logger.LogInformation("Result: {Result}", result.Data);
+        Logger.LogInformation("Result: {Result}", result.Succeeded);
 
         if (!result.Succeeded)
         {
@@ -52,5 +51,9 @@ public partial class Cards
         var dialog = await DialogService.ShowAsync<ChangePlayerNameDialog>("Favorite", parameters, options);
         // ReSharper disable once UnusedVariable
         var result = await dialog.Result;
+        if (!result.Canceled)
+        {
+            StateHasChanged();
+        }
     }
 }

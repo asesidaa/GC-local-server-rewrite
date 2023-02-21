@@ -7,9 +7,15 @@ public interface IDataService
 {
     public Task InitializeAsync();
 
-    public IReadOnlyDictionary<uint, Avatar> GetAvatars();
+    public IReadOnlyList<Avatar> GetAvatarsSortedById();
 
-    public IReadOnlyDictionary<uint, Navigator> GetNavigators();
+    public IReadOnlyList<Navigator> GetNavigatorsSortedById();
 
-    public IReadOnlyDictionary<uint, Title> GetTitles();
+    public IReadOnlyList<Title> GetTitlesSortedById();
+
+    public Avatar? GetAvatarById(uint id);
+    
+    public Title? GetTitleById(uint id);
+    
+    public Navigator? GetNavigatorById(uint id);
 }

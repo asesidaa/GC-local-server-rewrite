@@ -31,7 +31,7 @@ public enum UnlockType
     Prefecture            = 13,
     ChainMilestone        = 14,
     Adlibs                = 15,
-    ConsequtiveNoMiss     = 16,
+    ConsecutiveNoMiss     = 16,
     ClearsUsingItems      = 17,
     Avatars               = 18,
     MultiplayerStarsTotal = 19,

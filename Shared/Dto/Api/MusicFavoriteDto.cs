@@ -1,6 +1,6 @@
 ﻿namespace Shared.Dto.Api;
 
-public class MusicDetailDto
+public class MusicFavoriteDto
 {
     public long CardId { get; set; }
 
