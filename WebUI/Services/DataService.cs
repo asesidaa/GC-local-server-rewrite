@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.Net.Http.Json;
+using System.Text.Json.Serialization;
 using Throw;
 using WebUI.Common.Models;
-using SourceGenerationContext = WebUI.Common.SerializerContexts.SourceGenerationContext;
 
 namespace WebUI.Services;
 
@@ -50,4 +50,12 @@ public class DataService : IDataService
     {
         return new ReadOnlyDictionary<uint, Title>(titles);
     }
+}
+
+[JsonSerializable(typeof(List<Avatar>))]
+[JsonSerializable(typeof(List<Navigator>))]
+[JsonSerializable(typeof(List<Title>))]
+internal partial class SourceGenerationContext : JsonSerializerContext
+{
+    
 }

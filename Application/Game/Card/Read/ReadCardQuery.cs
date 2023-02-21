@@ -18,7 +18,7 @@ public class ReadQueryHandler : RequestHandlerBase<ReadCardQuery, string>
         var card = await CardDbContext.CardMains.FirstOrDefaultAsync(card => card.CardId == request.CardId, cancellationToken: cancellationToken);
         if (card is null)
         {
-            logger.LogInformation("Card with {CardId} does not exist! Registering a new one...", request.CardId);
+            logger.LogInformation("Card of id: {CardId} does not exist! Registering a new one...", request.CardId);
             return ServiceResult.Failed<string>(new ServiceError($"Card id: {request.CardId} does not exist!", (int)CardReturnCode.CardNotRegistered));
         }
 

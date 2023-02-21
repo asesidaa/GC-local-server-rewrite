@@ -10,28 +10,28 @@ namespace MainServer.Controllers.API;
 public class ProfilesController : BaseController<ProfilesController>
 {
     [HttpGet]
-    public async Task<ActionResult<ServiceResult<List<ClientCardDto>>>> GetAllCards()
+    public async Task<ServiceResult<List<ClientCardDto>>> GetAllCards()
     {
         var result = await Mediator.Send(new GetCardsQuery());
         return result;
     }
 
     [HttpGet("{cardId:long}")]
-    public async Task<ActionResult<ServiceResult<TotalResultData>>> GetCardTotalResultById(long cardId)
+    public async Task<ServiceResult<TotalResultData>> GetCardTotalResultById(long cardId)
     {
         var result = await Mediator.Send(new GetTotalResultQuery(cardId));
         return result;
     }
 
     [HttpPost("Favorite")]
-    public async Task<ActionResult<ServiceResult<bool>>> SetFavoriteMusic(MusicDetailDto detail)
+    public async Task<ServiceResult<bool>> SetFavoriteMusic(MusicDetailDto detail)
     {
         var result = await Mediator.Send(new SetFavoriteMusicCommand(detail));
         return result;
     }
 
     [HttpPost("PlayerName")]
-    public async Task<ActionResult<ServiceResult<bool>>> SetPlayerName(ClientCardDto card)
+    public async Task<ServiceResult<bool>> SetPlayerName(ClientCardDto card)
     {
         var result = await Mediator.Send(new SetPlayerNameCommand(card));
         return result;

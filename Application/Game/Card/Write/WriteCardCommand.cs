@@ -26,6 +26,7 @@ public class WriteCommandHandler : RequestHandlerBase<WriteCardCommand, string>
             logger.LogInformation("Creating new card {CardId}", request.CardId);
             card = dto.CardDtoToCardMain();
             card.Created = TimeHelper.CurrentTimeToString();
+            card.Modified = TimeHelper.CurrentTimeToString();
             CardDbContext.CardMains.Add(card);
         }
         else

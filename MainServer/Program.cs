@@ -8,10 +8,10 @@ using Infrastructure.Persistence;
 using MainServer.Filters;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
 using Serilog;
 using Serilog.Extensions.Logging;
 using Throw;
+using Shared.SerializerContexts;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -57,7 +57,8 @@ try
     });
 
     builder.Services.AddControllers(options =>
-        options.Filters.Add<ApiExceptionFilterService>());
+        options.Filters.Add<ApiExceptionFilterService>())
+        .AddJsonOptions(options => options.JsonSerializerOptions.AddContext<SourceGenerationContext>());
     
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
@@ -99,6 +100,7 @@ try
     {
         app.UseSwagger();
         app.UseSwaggerUI();
+        app.UseWebAssemblyDebugging();
     }
 
     // Add content type for .cmp and .evt files as static files with unknown file extensions return 404 by default

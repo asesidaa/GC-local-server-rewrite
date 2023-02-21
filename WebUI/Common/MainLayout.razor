@@ -7,7 +7,7 @@
 <MudLayout>
     <MudAppBar Elevation="0" Dense="true">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" 
-                       OnClick="@(_ => DrawerToggle())"/>
+                       OnClick="@DrawerToggle"/>
         <MudSpacer/>
         <MudTooltip Duration="1000" Text="Powered by MudBlazor">
             <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" 
@@ -35,26 +35,3 @@
         </MudContainer>
     </MudMainContent>
 </MudLayout>
-
-@code {
-    bool drawerOpen = true;
-    
-    public bool IsDarkMode { get; set; }
-
-    public MudThemeProvider MudThemeProvider { get; set; } = null!;
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            IsDarkMode = await MudThemeProvider.GetSystemPreference();
-            StateHasChanged();
-        }
-    }
-
-    void DrawerToggle()
-    {
-        drawerOpen = !drawerOpen;
-    }
-
-}

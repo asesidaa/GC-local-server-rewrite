@@ -17,7 +17,7 @@ public class GetDataQueryHandler : IRequestHandler<GetDataQuery, string>
     public Task<string> Handle(GetDataQuery request, CancellationToken cancellationToken)
     {
         var response = "count=0\n" +
-                       "nexttime=0\n";
+                       "nexttime=180\n";
         if (!eventManagerService.UseEvents())
         {
             return Task.FromResult(response);
@@ -38,7 +38,7 @@ public class GetDataQueryHandler : IRequestHandler<GetDataQuery, string>
         }
 
         response = $"count={count}\n" +
-                   "nexttime=1\n" +
+                   "nexttime=180\n" +
                    $"{dataString}";
 
         return Task.FromResult(response);

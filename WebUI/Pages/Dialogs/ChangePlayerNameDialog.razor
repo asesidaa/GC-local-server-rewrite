@@ -50,6 +50,12 @@
 
     async Task Submit()
     {
+        if (originalName.Equals(Data.PlayerName))
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            return;
+        }
+        
         Logger.LogInformation("Data is {CardId}, {Name}", Data.CardId, Data.PlayerName);
         var response = await Client.PostAsJsonAsync("api/Profiles/PlayerName", Data);
         var result = await response.Content.ReadFromJsonAsync<ServiceResult<bool>>();

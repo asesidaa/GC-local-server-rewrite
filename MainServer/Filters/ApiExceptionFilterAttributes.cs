@@ -47,6 +47,7 @@ public class ApiExceptionFilterService : ExceptionFilterAttribute
             return;
         }
 
+        logger.LogError(context.Exception, "An unknown exception happens");
         HandleUnknownException(context);
     }
 

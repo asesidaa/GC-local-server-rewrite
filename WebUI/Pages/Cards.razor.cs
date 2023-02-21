@@ -1,8 +1,10 @@
 ﻿using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components;
-using MudBlazor;
 using Shared.Dto.Api;
 using Shared.Models;
+using Throw;
+using Shared.SerializerContexts;
+using WebUI.Pages.Dialogs;
 
 namespace WebUI.Pages;
 
@@ -14,6 +16,9 @@ public partial class Cards
     [Inject]
     public required IDialogService DialogService { get; set; }
     
+    [Inject]
+    public required ILogger<Cards> Logger { get; set; }
+
     private List<ClientCardDto>? CardDtos { get; set; }
 
     private string ErrorMessage { get; set; } = string.Empty;
@@ -21,12 +26,11 @@ public partial class Cards
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
+        await Task.Delay(3000);
         var result = await Client.GetFromJsonAsync<ServiceResult<List<ClientCardDto>>>("api/Profiles");
-        if (result is null)
-        {
-            ErrorMessage = "Parse result failed";
-            return;
-        }
+        result.ThrowIfNull();
+        
+        Logger.LogInformation("Result: {Result}", result.Data);
 
         if (!result.Succeeded)
         {
@@ -46,6 +50,7 @@ public partial class Cards
         };
         var parameters = new DialogParameters { { "Data", card } };
         var dialog = await DialogService.ShowAsync<ChangePlayerNameDialog>("Favorite", parameters, options);
+        // ReSharper disable once UnusedVariable
         var result = await dialog.Result;
     }
 }

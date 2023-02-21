@@ -1,0 +1,61 @@
+﻿@page "/Cards/Option/{cardId:long}"
+@using Domain.Enums
+
+
+<MudBreadcrumbs Items="breadcrumbs" Class="px-0"></MudBreadcrumbs>
+
+<PageTitle>Option</PageTitle>
+<h1>Play Options</h1>
+@if (playOptionData is null)
+{
+    <MudStack>
+            <MudSkeleton Width="100%"/>
+            <MudSkeleton Width="100%"/>
+            <MudSkeleton Width="100%"/>
+            <MudSkeleton Width="100%"/>
+            <MudSkeleton Width="100%"/>
+            <MudSkeleton Width="100%"/>
+    </MudStack>
+    return;
+}
+
+@if (errorMessage != string.Empty)
+{
+    <MudText Color="Color.Error" Typo="Typo.h3">@errorMessage</MudText>
+    return;
+}
+<MudStack>
+    <MudStack Row="true">
+        <MudField Label="Avatar">@GetAvatarName((uint)playOptionData.OptionPart1.AvatarId)</MudField>
+        <MudButton Variant="Variant.Text">Change Avatar</MudButton>
+    </MudStack>
+
+    <MudStack Row="true">
+        <MudField Label="Title">@GetTitleName((uint)playOptionData.OptionPart1.TitleId)</MudField>
+        <MudButton Variant="Variant.Text">Change Title</MudButton>
+    </MudStack>
+
+    <MudStack Row="true">
+        <MudField Label="Navigator">@GetNavigatorName((uint)playOptionData.OptionPart2.NavigatorId)</MudField>
+        <MudButton Variant="Variant.Text">Change Navigator</MudButton>
+    </MudStack>
+
+
+    <MudSelect T="ShowFastSlowOption" Label="Fast/Slow option" Variant="Variant.Outlined"
+               @bind-Value="@playOptionData.OptionPart1.ShowFastSlowOption">
+        @foreach (var item in ShowFastSlowOptionExtensions.GetValues())
+        {
+            <MudSelectItem Value="item">@item.ToStringFast()</MudSelectItem>
+        }
+    </MudSelect>
+
+    <MudSelect T="ShowFeverTranceOption" Label="Fever/Trance option" Variant="Variant.Outlined"
+               @bind-Value="@playOptionData.OptionPart1.ShowFeverTranceOption">
+        @foreach (var item in ShowFeverTranceOptionExtensions.GetValues())
+        {
+            <MudSelectItem Value="item">@item.ToStringFast()</MudSelectItem>
+        }
+    </MudSelect>
+
+    <MudButton Color="Color.Info" Variant="Variant.Filled">Save Options</MudButton>
+</MudStack>

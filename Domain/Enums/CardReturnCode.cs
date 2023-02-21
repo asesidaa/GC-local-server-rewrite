@@ -23,5 +23,5 @@ public enum CardReturnCode
     /// <summary>
     /// Server side validation error
     /// </summary>
-    Unknown = -1
+    Unknown = 9999
 }
