@@ -1,6 +1,6 @@
 ﻿{
   "Events": {
-    "UseEvents": true,
+    "UseEvents": false,
     "EventFiles": [
       {
         "FileName": "event_103_20201125.evt",
