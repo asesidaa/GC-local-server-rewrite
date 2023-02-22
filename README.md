@@ -88,3 +88,7 @@ The most important bit, **choose MD5 or SHA1 as signature algorithm**.
 # Web UI
 
 There's a basic web interface for check scores and set options.
+
+## Song unlock
+
+To unlock all songs, first play for one time and save, then in web UI, go to `Edit Options` to unlock all songs.
