@@ -94,14 +94,14 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
-        <ProjectReference Include="..\WebUI\WebUI.csproj" />
     </ItemGroup>
 
     <ItemGroup>
         <Folder Include="Logs" />
     </ItemGroup>
 
-    <ItemGroup>
+    <ItemGroup Condition="'$(Configuration)'=='Debug'">
+      <ProjectReference Include="..\WebUI\WebUI.csproj" />
       <_ContentIncludedByDefault Remove="wwwroot\_framework\blazor.boot.json" />
       <_ContentIncludedByDefault Remove="wwwroot\_framework\blazor.webassembly.js" />
       <_ContentIncludedByDefault Remove="wwwroot\_framework\blazor.webassembly.js.gz" />

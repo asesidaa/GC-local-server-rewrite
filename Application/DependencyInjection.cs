@@ -56,11 +56,11 @@ public static class DependencyInjection
                     });
             });
             
-            q.AddJob<MaintainTenpoIdJob>(options => options.WithIdentity(MaintainTenpoIdJob.KEY));
+            q.AddJob<MaintainNullValuesJob>(options => options.WithIdentity(MaintainNullValuesJob.KEY));
             q.AddTrigger(options =>
             {
-                options.ForJob(MaintainTenpoIdJob.KEY)
-                    .WithIdentity("MaintainTenpoIdJob-trigger")
+                options.ForJob(MaintainNullValuesJob.KEY)
+                    .WithIdentity("MaintainNullValuesJob-trigger")
                     .StartNow()
                     .WithSimpleSchedule(x =>
                     {

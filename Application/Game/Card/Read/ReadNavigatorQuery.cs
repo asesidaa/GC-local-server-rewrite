@@ -26,7 +26,7 @@ public class ReadNavigatorQueryHandler : RequestHandlerBase<ReadNavigatorQuery, 
                 Created = "2013-01-01 08:00:00",
                 Modified = "2013-01-01 08:00:00",
                 NewFlag = 0,
-                UseFlag = i == 10 ? 0 : 1
+                UseFlag = 1
             };
             list.Add(navigator);
         }

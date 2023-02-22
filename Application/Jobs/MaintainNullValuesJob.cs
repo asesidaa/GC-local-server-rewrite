@@ -4,15 +4,15 @@ using Quartz;
 
 namespace Application.Jobs;
 
-public class MaintainTenpoIdJob : IJob
+public class MaintainNullValuesJob : IJob
 {
-    private readonly ILogger<MaintainTenpoIdJob> logger;
+    private readonly ILogger<MaintainNullValuesJob> logger;
 
     private readonly ICardDbContext cardDbContext;
     
-    public static readonly JobKey KEY = new("MaintainTenpoIdJob");
+    public static readonly JobKey KEY = new("MaintainNullValuesJob");
 
-    public MaintainTenpoIdJob(ILogger<MaintainTenpoIdJob> logger, ICardDbContext cardDbContext)
+    public MaintainNullValuesJob(ILogger<MaintainNullValuesJob> logger, ICardDbContext cardDbContext)
     {
         this.logger = logger;
         this.cardDbContext = cardDbContext;
@@ -26,8 +26,13 @@ public class MaintainTenpoIdJob : IJob
         logger.LogInformation("Starting changing null values in card detail table");
 
         var details = await cardDbContext.CardDetails.Where(detail => detail.LastPlayTenpoId == null ||
-                                                                      detail.LastPlayTenpoId == "GC local server").ToListAsync();
-        details.ForEach(detail => detail.LastPlayTenpoId="1337");
+                                                                      detail.LastPlayTenpoId == "GC local server"
+                                                                      || detail.LastPlayTime == null).ToListAsync();
+        details.ForEach(detail =>
+        {
+            detail.LastPlayTenpoId = "1337";
+            detail.LastPlayTime = DateTime.MinValue;
+        });
 
         cardDbContext.CardDetails.UpdateRange(details);
         var count = await cardDbContext.SaveChangesAsync(new CancellationToken());
