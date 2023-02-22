@@ -54,6 +54,10 @@ public class EventManagerService : IEventManagerService
 
     public void InitializeEvents()
     {
+        if (!useEvents)
+        {
+            return;
+        }
         foreach (var eventData in config.EventFiles)
         {
             var filePath = Path.Combine(WWWROOT, EVENT_FOLDER, eventData.FileName);
