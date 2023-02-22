@@ -1,7 +1,4 @@
-﻿using System.Net.Http.Json;
-using Microsoft.AspNetCore.Components;
-using Shared.Dto.Api;
-using Shared.Models;
+﻿using Shared.Dto.Api;
 using Throw;
 using WebUI.Pages.Dialogs;
 

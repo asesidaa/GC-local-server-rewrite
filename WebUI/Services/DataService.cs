@@ -1,7 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Net.Http.Json;
-using System.Text.Json.Serialization;
-using Throw;
+﻿ using Throw;
 using WebUI.Common.Models;
 
 namespace WebUI.Services;
@@ -29,17 +26,17 @@ public class DataService : IDataService
 
     public async Task InitializeAsync()
     {
-        var avatarList = await client.GetFromJsonAsync("data/Avatars.json", SourceGenerationContext.Default.ListAvatar);
+        var avatarList = await client.GetFromJsonAsync<List<Avatar>>("data/Avatars.json");
         avatarList.ThrowIfNull();
         avatars = avatarList.ToDictionary(avatar => avatar.AvatarId);
         sortedAvatarList = avatarList.OrderBy(avatar => avatar.AvatarId).ToList();
         
-        var navigatorList = await client.GetFromJsonAsync("data/Navigators.json", SourceGenerationContext.Default.ListNavigator);
+        var navigatorList = await client.GetFromJsonAsync<List<Navigator>>("data/Navigators.json");
         navigatorList.ThrowIfNull();
         navigators = navigatorList.ToDictionary(navigator => navigator.Id);
         sortedNavigatorList = navigatorList.OrderBy(navigator => navigator.Id).ToList();
         
-        var titleList = await client.GetFromJsonAsync("data/Titles.json", SourceGenerationContext.Default.ListTitle);
+        var titleList = await client.GetFromJsonAsync<List<Title>>("data/Titles.json");
         titleList.ThrowIfNull();
         titles = titleList.ToDictionary(title => title.Id);
         sortedTitleList = titleList.OrderBy(title => title.Id).ToList();
@@ -74,12 +71,4 @@ public class DataService : IDataService
     {
         return navigators.GetValueOrDefault(id);
     }
-}
-
-[JsonSerializable(typeof(List<Avatar>))]
-[JsonSerializable(typeof(List<Navigator>))]
-[JsonSerializable(typeof(List<Title>))]
-internal partial class SourceGenerationContext : JsonSerializerContext
-{
-    
 }

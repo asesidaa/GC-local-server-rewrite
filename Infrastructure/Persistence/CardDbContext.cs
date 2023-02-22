@@ -76,7 +76,7 @@ public partial class CardDbContext : DbContext, ICardDbContext
             entity.Property(e => e.Fcol3).HasColumnName("fcol3");
             entity.Property(e => e.LastPlayTenpoId).HasColumnName("last_play_tenpo_id").IsRequired(false);
             entity.Property(e => e.LastPlayTime).HasColumnName("last_play_time")
-                .HasConversion<DateTimeToTicksConverter>();
+                .HasConversion<DateTimeToTicksConverter>().IsRequired(false);
             entity.Property(e => e.ScoreBi1).HasColumnName("score_bi1");
             entity.Property(e => e.ScoreI1).HasColumnName("score_i1");
             entity.Property(e => e.ScoreUi1).HasColumnName("score_ui1");

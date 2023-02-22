@@ -1,7 +1,4 @@
-﻿using System.Net.Http.Json;
-using Microsoft.AspNetCore.Components;
-using Shared.Models;
-using Throw;
+﻿using Throw;
 
 namespace WebUI.Pages;
 

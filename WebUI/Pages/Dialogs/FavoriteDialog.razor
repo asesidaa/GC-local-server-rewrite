@@ -1,0 +1,61 @@
+﻿@using Shared.Dto.Api
+@using Throw
+@inject HttpClient Client
+
+<MudDialog>
+    <TitleContent>
+        @if (!Data.IsFavorite)
+        {
+            <MudText Typo="Typo.h6">
+                <MudIcon Icon="@Icons.Material.Filled.BookmarkAdd" Color="Color.Secondary"/>
+                Add to favorite?
+            </MudText>
+        }
+        else
+        {
+            <MudText Typo="Typo.h6">
+                <MudIcon Icon="@Icons.Material.Filled.BookmarkRemove" Color="Color.Secondary"/>
+                Remove from favorite?
+            </MudText>
+        }
+    </TitleContent>
+    <DialogContent>
+        <MudTextField Value="@Data.Title" Label="Song Title" ReadOnly="true"/>
+        <MudTextField Value="@Data.Artist" Label="Artist Name" ReadOnly="true"/>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Confirm</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code{
+
+    [CascadingParameter]
+    public required MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public required SongPlayRecord Data { get; set; }
+    
+    [Parameter]
+    public long CardId { get; set; }
+
+    private async Task Submit()
+    {
+        var favoriteData = new MusicFavoriteDto
+        {
+            CardId = CardId,
+            IsFavorite = !Data.IsFavorite,
+            MusicId = Data.MusicId
+        };
+
+        var response = await Client.PostAsJsonAsync("api/Profiles/SetFavorite", favoriteData);
+        var result = await response.Content.ReadFromJsonAsync<ServiceResult<bool>>();
+        result.ThrowIfNull();
+        
+        MudDialog.Close(DialogResult.Ok(result));
+    }
+    
+    private void Cancel() => MudDialog.Cancel();
+
+}

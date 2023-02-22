@@ -1,0 +1,84 @@
+﻿@page "/Cards/PlayRecords/{cardId:long}"
+
+<MudBreadcrumbs Items="breadcrumbs" Class="px-0"></MudBreadcrumbs>
+
+<PageTitle>Song Play Records</PageTitle>
+<h1>Song Play Records</h1>
+@if (errorMessage is not null)
+{
+    <MudText Color="Color.Error" Typo="Typo.h3">@errorMessage</MudText>
+    return;
+}
+
+@if (songPlayRecords is null)
+{
+    <MudStack>
+        <MudSkeleton Width="100%"/>
+        <MudSkeleton Width="100%"/>
+        <MudSkeleton Width="100%"/>
+        <MudSkeleton Width="100%"/>
+        <MudSkeleton Width="100%"/>
+        <MudSkeleton Width="100%"/>
+    </MudStack>
+    return;
+}
+
+<MudDataGrid T="SongPlayRecord"
+             Items="songPlayRecords"
+             SortMode="SortMode.Single">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Played Songs</MudText>
+    </ToolBarContent>
+    <Columns>
+        <HierarchyColumn T="SongPlayRecord"></HierarchyColumn>
+        <Column T="SongPlayRecord" Field="@nameof(SongPlayRecord.Title)" Title="Song Title"/>
+        <Column T="SongPlayRecord" Field="@nameof(SongPlayRecord.Artist)" Title="Artist"/>
+        <Column T="SongPlayRecord" Field="@nameof(SongPlayRecord.TotalPlayCount)" Title="Total Play Count"/>
+        <Column T="SongPlayRecord" Field="@nameof(SongPlayRecord.IsFavorite)" Title="Is Favorite">
+            <CellTemplate>
+                <MudToggleIconButton Toggled="@context.Item.IsFavorite"
+                                     ToggledChanged="@(() => OnFavoriteToggled(context.Item))"
+                                     Icon="@Icons.Material.Filled.FavoriteBorder"
+                                     Color="@Color.Secondary"
+                                     Title="Add to favorite"
+                                     ToggledIcon="@Icons.Material.Filled.Favorite"
+                                     ToggledColor="@Color.Secondary"
+                                     ToggledTitle="Remove from favorite"/>
+            </CellTemplate>
+        </Column>
+    </Columns>
+    <ChildRowContent>
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.body1">Song Play Details</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudTable Items="@context.Item.StagePlayRecords">
+                    <HeaderContent>
+                        <MudTh>Difficulty</MudTh>
+                        <MudTh>Play Count</MudTh>
+                        <MudTh>Clear State</MudTh>
+                        <MudTh>Score</MudTh>
+                        <MudTh>Rating</MudTh>
+                        <MudTh>Max Chain</MudTh>
+                        <MudTh>Last Play Time</MudTh>
+                    </HeaderContent>
+                    <RowTemplate Context="stage">
+                        <MudTd DataLabel="Difficulty">@stage.Difficulty</MudTd>
+                        <MudTd DataLabel="PlayCount">@stage.PlayCount</MudTd>
+                        <MudTd DataLabel="ClearState">@stage.ClearState</MudTd>
+                        <MudTd DataLabel="Score">@stage.Score</MudTd>
+                        <MudTd DataLabel="Rating">@GetRating(stage.Score)</MudTd>
+                        <MudTd DataLabel="MaxChain">@stage.MaxChain</MudTd>
+                        <MudTd DataLabel="LastPlayTime">@stage.LastPlayTime</MudTd>
+                    </RowTemplate>
+                </MudTable>
+            </MudCardContent>
+        </MudCard>
+    </ChildRowContent>
+    <PagerContent>
+        <MudDataGridPager T="SongPlayRecord"/>
+    </PagerContent>
+</MudDataGrid>

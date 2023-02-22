@@ -23,7 +23,15 @@ public class ProfilesController : BaseController<ProfilesController>
         return result;
     }
 
-    [HttpPost("Favorite")]
+    [HttpGet("SongPlayRecords/{cardId:long}")]
+    public async Task<ServiceResult<List<SongPlayRecord>>> GetSongPlayRecords(long cardId)
+    {
+        var result = await Mediator.Send(new GetSongPlayRecordsQuery(cardId));
+
+        return result;
+    }
+
+    [HttpPost("SetFavorite")]
     public async Task<ServiceResult<bool>> SetFavoriteMusic(MusicFavoriteDto favorite)
     {
         var result = await Mediator.Send(new SetFavoriteMusicCommand(favorite));

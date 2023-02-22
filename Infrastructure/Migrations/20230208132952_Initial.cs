@@ -48,7 +48,7 @@ namespace Infrastructure.Migrations
                         fcol1 = table.Column<long>(type: "INTEGER", nullable: false),
                         fcol2 = table.Column<long>(type: "INTEGER", nullable: false),
                         fcol3 = table.Column<long>(type: "INTEGER", nullable: false),
-                        lastplaytime = table.Column<long>(name: "last_play_time", type: "INTEGER", nullable: false)
+                        lastplaytime = table.Column<long>(name: "last_play_time", type: "INTEGER", nullable: true)
                     },
                     constraints: table =>
                     {

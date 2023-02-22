@@ -34,5 +34,5 @@ public partial class CardDetail
 
     public long Fcol3 { get; set; }
 
-    public DateTime LastPlayTime { get; set; }
+    public DateTime? LastPlayTime { get; set; }
 }
