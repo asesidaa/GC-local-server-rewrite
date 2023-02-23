@@ -73,11 +73,23 @@ To enable these, try use the omnimixed version of stage_param.dat. That can fix 
 
 ## Local network
 
-If your game and server is not on the same computer, import the certificates in `Certificates`  folder. `root.pfx` goes into LocalMachine/My and Trusted root, the other only LocalMachine/My.
+If your game and server is not on the same computer, import the certificates in `BundledCertificates`  folder. `root.pfx` goes into LocalMachine/My and Trusted root, `cert.pfx` only LocalMachine/My. Then in `server.json`, modify the following section:
+
+```
+      "Https": {
+        "Url": "https://0.0.0.0:443",
+        "Certificate": {
+          "Path": "BundledCertificates/cert.pfx",
+          "Password": ""
+        }
+      },
+```
+
+
 
 ## Windows XP
 
-If you are using Windows XP (e.g. using real machine), it will not recognize the generated certificate since it uses SHA256.
+If you are using Windows XP (e.g. using a real arcade machine), it will not recognize the generated certificate since it uses SHA256.
 
 You will have to generate the certificates yourself. 
 
@@ -92,3 +104,10 @@ There's a basic web interface for check scores and set options.
 ## Song unlock
 
 To unlock all songs, first play for one time and save, then in web UI, go to `Edit Options` to unlock all songs.
+
+Notice that unlock all songs without playing them can increase card saving time a lot, so it is better to play them, or manually create an empty failed record, using the following SQL
+
+```sqlite
+INSERT INTO "main"."card_detail" VALUES ({card_id}, {song_id}, 0, 2, 5, 1, 0,0,0,0,0,0,'1337',0,0,0,638127691353989741);
+```
+

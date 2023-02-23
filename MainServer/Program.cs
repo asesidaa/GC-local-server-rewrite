@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Security.Authentication;
 using Application;
 using Application.Interfaces;
 using Domain.Config;
@@ -45,10 +46,15 @@ try
 
     var serverIp = builder.Configuration["ServerIp"] ?? "127.0.0.1";
     var certificateManager = new CertificateService(serverIp, new SerilogLoggerFactory(Log.Logger).CreateLogger(""));
-    builder.WebHost.ConfigureKestrel(options => 
-        options.ConfigureHttpsDefaults(adapterOptions => 
-            adapterOptions.ServerCertificate = certificateManager.InitializeCertificate()
-        ));
+    if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+    {
+            builder.WebHost.UseKestrel(options =>
+                options.ConfigureHttpsDefaults(adapterOptions =>
+                {
+                    adapterOptions.ServerCertificate = certificateManager.InitializeCertificate();
+                }));
+    }
+
 
     builder.Host.UseSerilog((context, configuration) =>
     {

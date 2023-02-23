@@ -24,6 +24,7 @@ public class CertificateService
 
     private const string ROOT_CA_CN = "Taito Arcade Machine CA";
     private const string CERT_CN = "GC local server";
+    private const string CERT_CN2 = "nesys";
     private const string CERT_DIR = "Certificates";
     private const string CERT_FILE_NAME = "cert.pfx";
     private const string ROOT_CERT_FILE_NAME = "root.pfx";
@@ -116,7 +117,15 @@ public class CertificateService
         {
             var existingCert = GetCertificate(StoreName.My, StoreLocation.LocalMachine, CERT_CN);
 
-            if (existingCert != null)
+            if (existingCert is not null)
+            {
+                return existingCert;
+            }
+            
+            logger.LogInformation("First try not found, changing CN to nesys");
+            
+            existingCert = GetCertificate(StoreName.My, StoreLocation.LocalMachine, CERT_CN2);
+            if (existingCert is not null)
             {
                 return existingCert;
             }
@@ -257,7 +266,7 @@ public class CertificateService
                 store.Open(OpenFlags.ReadOnly);
                 var result = store.Certificates.Find(X509FindType.FindByIssuerName, ROOT_CA_CN, true);
 
-                certificateExists = result.Count == 2;
+                certificateExists = result.Count != 0;
 
                 store.Close();
             }
@@ -286,9 +295,9 @@ public class CertificateService
         try
         {
             var store = new X509Store(storeName, storeLocation);
-            store.Open(OpenFlags.ReadWrite);
-            var result = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName,
-                $"CN={commonName}", true);
+            store.Open(OpenFlags.ReadOnly);
+            var result = store.Certificates.Find(X509FindType.FindBySubjectName,
+                $"{commonName}", true);
 
             if (result.Any())
             {

@@ -68,27 +68,45 @@
         </Content>
         <Content Update="wwwroot\events\event_103_20201125.evt">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         </Content>
         <Content Update="wwwroot\events\event_20201125_reg.jpg">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         </Content>
         <Content Update="wwwroot\events\event_20201125_sgreg.png">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         </Content>
         <Content Update="wwwroot\events\event_unlock_20201125.cmp">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         </Content>
         <Content Update="wwwroot\events\news_big_20201125_0.jpg">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         </Content>
         <Content Update="wwwroot\events\news_big_20201125_2.jpg">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         </Content>
         <Content Update="wwwroot\events\news_small_20201125_1.jpg">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         </Content>
         <Content Update="wwwroot\events\telop_20201125.txt">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        </Content>
+        <None Remove="BundledCertificates\cert.pfx" />
+        <Content Include="BundledCertificates\cert.pfx">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        </Content>
+        <None Remove="BundledCertificates\root.pfx" />
+        <Content Include="BundledCertificates\root.pfx">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         </Content>
     </ItemGroup>
 

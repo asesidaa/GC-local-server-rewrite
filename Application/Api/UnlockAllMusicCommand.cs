@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Api;
 
@@ -14,6 +15,8 @@ public class UnlockAllMusicCommandHandler : RequestHandlerBase<UnlockAllMusicCom
         this.logger = logger;
     }
 
+    [SuppressMessage("ReSharper.DPA", "DPA0007: Large number of DB records")]
+    [SuppressMessage("ReSharper.DPA", "DPA0006: Large number of DB commands")]
     public override async Task<ServiceResult<bool>> Handle(UnlockAllMusicCommand request, CancellationToken cancellationToken)
     {
         var unlocks = await CardDbContext.CardDetails.Where(
