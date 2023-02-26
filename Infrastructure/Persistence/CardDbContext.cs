@@ -33,6 +33,10 @@ public partial class CardDbContext : DbContext, ICardDbContext
     
     public virtual DbSet<ShopScoreRank> ShopScoreRanks { get; set; } = null!;
 
+    public virtual DbSet<OnlineMatch> OnlineMatches { get; set; } = null!;
+
+    public virtual DbSet<OnlineMatchEntry> OnlineMatchEntries { get; set; } = null!;
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -200,6 +204,23 @@ public partial class CardDbContext : DbContext, ICardDbContext
             entity.Property(e => e.Pref);
             entity.Property(e => e.TotalScore);
             entity.Property(e => e.PlayerName);
+        });
+
+        modelBuilder.Entity<OnlineMatch>(entity =>
+        {
+            entity.HasKey(e => e.MatchId);
+
+            entity.Property(e => e.MatchId).ValueGeneratedNever();
+            entity.Property(e => e.Guid).IsConcurrencyToken();
+
+            entity.HasMany(e => e.Entries)
+                .WithOne()
+                .HasForeignKey(p => p.MatchId);
+        });
+
+        modelBuilder.Entity<OnlineMatchEntry>(entity =>
+        {
+            entity.HasKey(e => new { e.MatchId, e.EntryId });
         });
 
         OnModelCreatingPartial(modelBuilder);

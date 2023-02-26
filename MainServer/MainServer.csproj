@@ -108,6 +108,11 @@
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
           <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         </Content>
+        <None Remove="BundledCertificates\Import.ps1" />
+        <Content Include="BundledCertificates\Import.ps1">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>

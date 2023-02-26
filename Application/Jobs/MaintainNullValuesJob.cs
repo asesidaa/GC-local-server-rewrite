@@ -38,5 +38,13 @@ public class MaintainNullValuesJob : IJob
         var count = await cardDbContext.SaveChangesAsync(new CancellationToken());
 
         logger.LogInformation("Updated {Count} entries in card detail table", count);
+        
+        logger.LogInformation("Starting closing unfinished matches");
+        var matches = await cardDbContext.OnlineMatches.Where(match => match.IsOpen == true).ToListAsync();
+        matches.ForEach(match => match.IsOpen = false);
+        cardDbContext.OnlineMatches.UpdateRange(matches);
+        count = await cardDbContext.SaveChangesAsync(new CancellationToken());
+
+        logger.LogInformation("Closed {Count} matches", count);
     }
 }

@@ -38,7 +38,7 @@ public class GetDataQueryHandler : IRequestHandler<GetDataQuery, string>
         }
 
         response = $"count={count}\n" +
-                   "nexttime=180\n" +
+                   "nexttime=1\n" +
                    $"{dataString}";
 
         return Task.FromResult(response);

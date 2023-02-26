@@ -19,6 +19,10 @@ public interface ICardDbContext
     public DbSet<MonthlyScoreRank> MonthlyScoreRanks { get; set; } 
     
     public DbSet<ShopScoreRank> ShopScoreRanks { get; set; } 
+    
+    public DbSet<OnlineMatch> OnlineMatches { get; set; }
+    
+    public DbSet<OnlineMatchEntry> OnlineMatchEntries { get; set; }
 
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     
