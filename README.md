@@ -111,3 +111,6 @@ Notice that unlock all songs without playing them can increase card saving time 
 INSERT INTO "main"."card_detail" VALUES ({card_id}, {song_id}, 0, 2, 5, 1, 0,0,0,0,0,0,'1337',0,0,0,638127691353989741);
 ```
 
+# Online Matching
+
+Open GCRelayServer, make sure the event is set to online (play_mode = 0).
