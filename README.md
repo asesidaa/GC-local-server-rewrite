@@ -73,7 +73,7 @@ To enable these, try use the omnimixed version of stage_param.dat. That can fix 
 
 ## Local network
 
-If your game and server is not on the same computer, import the certificates in `BundledCertificates`  folder. `root.pfx` goes into LocalMachine/My and Trusted root, `cert.pfx` only LocalMachine/My. Then in `server.json`, modify the following section:
+If your game and server is not on the same computer, import the certificates in `BundledCertificates`  folder by running `Import.ps1` as admin (The certificates need to be put next to the script). `root.pfx` goes into LocalMachine/My and Trusted root, `cert.pfx` only LocalMachine/My. Then in `server.json`, modify the following section:
 
 ```
       "Https": {
@@ -85,7 +85,7 @@ If your game and server is not on the same computer, import the certificates in 
       },
 ```
 
-
+Then in hosts, change the ip to server ip.
 
 ## Windows XP
 
@@ -113,4 +113,10 @@ INSERT INTO "main"."card_detail" VALUES ({card_id}, {song_id}, 0, 2, 5, 1, 0,0,0
 
 # Online Matching
 
-Open GCRelayServer, make sure the event is set to online (play_mode = 0).
+Run GCRelayServer on server.
+
+In `matching.json`, change `RelayServer` and `RelayPort` to the relay server IP and port.
+
+Make sure the event is set to online (play_mode = 0).
+
+Note that if you quit game when matching is not complete, it is suggested to restart the server, otherwise it will introduce the bug of non-existing player being included in match.
