@@ -1,6 +1,6 @@
 # Run on Arcade Machine
 
-Since the arcade is using some version XP, which does not support SHA256, the generated certification will not work.
+Since the arcade is using some version of Windows XP, which does not support SHA256, the generated certification will not work.
 
 To solve this issue, you have to generate a certification using weaker signature algorithm.
 
@@ -14,7 +14,7 @@ Under Subject Attributes, set Common Name to "Taito Arcade Machine CA", others a
 
 Under CSR options, choose MD5 as hash algorithm, choose Self-Sign type, then input year number. 
 
-Submit and download "PKCS#12 Certificate and Key".
+Submit and download "PKCS#12 Certificate and Key", name the file as `root.pfx`.
 
 ## Generate Server Certificate
 
@@ -26,9 +26,9 @@ Under Subject Alternative Names, add DNS: cert.nesys.jp,data.nesys.jp,nesys.tait
 
 Under CSR options, choose MD5 as hash algorithm, choose Sign With Certificate Authority 0 (the one just generated), then input year number. 
 
-Submit and download "PKCS#12 Certificate and Key".
+Submit and download "PKCS#12 Certificate and Key", name the file as `cert.pfx`.
 
-## Import to server side
+## Import certificates to server side
 
 In server side, import the certificates using mmc.exe. You can find a detailed guide at https://www.thesslstore.com/knowledgebase/ssl-install/how-to-import-intermediate-root-certificates-using-mmc/
 
@@ -38,6 +38,15 @@ The root certificate goes to "Personal" and "Trusted Root Certification Authorit
 
 The server certificate goes to "Personal"
 
+### Alternate way
+Put `cert.pfx` and `root.pfx` under `BundledCertificates`, replace the original files. Then run `Import.ps1` as admin
+
+Now start the game, if it says
+```
+Certificate CN=GC local server found!
+```
+The certificates are imported successfully.
+
 ## Import to game side
 
 On the machine, first download and install  http://outwardtruth.com/tools/win2k3tools/win2k3resourcetoolkit.htm 
@@ -45,34 +54,14 @@ On the machine, first download and install  http://outwardtruth.com/tools/win2k3
 After that, you will get WinHttpCertCfg.exe in "C:\Program Files\Windows Resource Kits\Tools". Use the following cmd to import root certificate
 
 ```
-WinHttpCertCfg -i "E:\0_GC_LOCAL_SERVER\root.pfx" -C LOCAL_MACHINE\Root -a SYSTEM
+WinHttpCertCfg -i "path\to\root.pfx" -C LOCAL_MACHINE\Root -a SYSTEM
 ```
 
 After that, using IE to install the 2 certificates to MY(Personal) tab
 
-## Config the server
-
-In server, the config file is GC-local-server-rewrite.exe.config
-
-There, you will find an XML entry 
-
-```xml
-<add key="ServerIp" value="127.0.0.1"/>
-```
-
-Change value to the real server Ip
-
-Currently, there are two DB files, music.db3 and music4MAX.db3, which correspond to 4.52 and 4.61 data, change the following field according to your game version.
-
-```xml
-<add key="MusicDBName" value="music.db3"/>
-```
-
-
-
 ## Config host file
 
-In game side, change the host file, add the following entries
+In game (machine) side, change the host file, add the following entries
 
 ```
 127.0.0.1 cert.nesys.jp
@@ -124,11 +113,3 @@ Some common errors:
 0x00002F8F: Certificate error, either the root certificate is not imported (so not trusted), or the certificate is not correct/not recognized by XP
 
 0x00002F9A: No private key, check if your certificate file is imported with private key.
-
-# DAT files
-
-Under game folder data/boot, there are all the dat files.
-
-If you have a new version, contact @Javaguru to use his template to parse these, and send me the parsed data.
-
-For music db, ask for a parsed json file for the new stage_param.dat. I can import these and make a new db file for the new version.
