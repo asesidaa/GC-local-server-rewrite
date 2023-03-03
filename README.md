@@ -105,51 +105,7 @@ There's a basic web interface for check scores and set options.
 
 To unlock all songs, first play for one time and save, then in web UI, go to `Edit Options` to unlock all songs.
 
-Notice that unlock all songs without playing them can increase card saving time a lot, so it is better to play them, or manually create an empty failed record, using the following SQL
-
-```sql
-INSERT INTO card_detail (
-    card_id,
-    pcol1,
-    pcol2,
-    pcol3,
-    fcol1,
-    fcol2,
-    fcol3,
-    last_play_tenpo_id,
-    last_play_time,
-    score_bi1,
-    score_i1,
-    score_ui1,
-    score_ui2,
-    score_ui3,
-    score_ui4,
-    score_ui5,
-    score_ui6 
-) SELECT
-c1.card_id,
-20 AS pcol1,
-c1.pcol2,
-0 AS pcol3,
-0 AS fcol1,
-0 AS fcol2,
-0 AS fcol3,
-1337 AS last_play_tenpo_id,
-c1.last_play_time,
-0 AS score_bi1,
-5 AS score_i1,
-1 AS score_ui1,
-0 AS score_ui2,
-0 AS score_ui3,
-0 AS score_ui4,
-0 AS score_ui5,
-0 AS score_ui6 
-FROM
-    ( SELECT * FROM card_detail WHERE pcol1 = 10 ) c1
-    LEFT JOIN ( SELECT * FROM card_detail WHERE pcol1 = 20 ) c2 ON c1.pcol2 = c2.pcol2 
-WHERE
-    c2.card_id IS NULL;
-```
+~~Notice that unlock all songs without playing them can increase card saving time a lot, so it is better to play them, or manually create an empty failed record, using the following SQL~~ Fixed since v3.2.0
 
 # Online Matching
 
