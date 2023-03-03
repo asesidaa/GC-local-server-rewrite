@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using ChoETL;
+using Domain.Enums;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Api;
@@ -19,21 +21,30 @@ public class UnlockAllMusicCommandHandler : RequestHandlerBase<UnlockAllMusicCom
     [SuppressMessage("ReSharper.DPA", "DPA0006: Large number of DB commands")]
     public override async Task<ServiceResult<bool>> Handle(UnlockAllMusicCommand request, CancellationToken cancellationToken)
     {
-        var unlocks = await CardDbContext.CardDetails.Where(
-            detail => detail.CardId   == request.CardId &&
-                      detail.Pcol1    == 10             &&
-                      detail.ScoreUi6 == 1).ToListAsync(cancellationToken: cancellationToken);
-        if (unlocks.Count == 0)
+        var exists = await CardDbContext.CardDetails.AnyAsync(
+            detail => detail.CardId == request.CardId, cancellationToken);
+
+        if (!exists)
         {
             logger.LogWarning("Attempt to unlock for card {Card} that does not exist or is empty!", request.CardId);
             return ServiceResult.Failed<bool>(ServiceError.CustomMessage("Unlock failed"));
         }
 
-        foreach (var unlock in unlocks)
-        {
-            unlock.ScoreUi2 = 1;
-        }
-        CardDbContext.CardDetails.UpdateRange(unlocks);
+        var unlockables = Config.UnlockRewards
+            .Where(config => config.RewardType == RewardType.Music)
+            .Select(config => new CardDetailDto
+            {
+                CardId = request.CardId,
+                Pcol1 = 10,
+                Pcol2 = config.TargetId,
+                Pcol3 = 0,
+                LastPlayTenpoId = "1337",
+                LastPlayTime = DateTime.Now,
+                ScoreUi2 = 1,
+                ScoreUi6 = 1
+            }.DtoToCardDetail());
+
+        await CardDbContext.CardDetails.UpsertRange(unlockables).RunAsync(cancellationToken);
         await CardDbContext.SaveChangesAsync(cancellationToken);
 
         return new ServiceResult<bool>(true);

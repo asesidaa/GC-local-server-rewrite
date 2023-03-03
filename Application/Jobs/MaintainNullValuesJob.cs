@@ -1,5 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Domain.Config;
+using Domain.Enums;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Quartz;
 
 namespace Application.Jobs;
@@ -9,13 +12,16 @@ public class MaintainNullValuesJob : IJob
     private readonly ILogger<MaintainNullValuesJob> logger;
 
     private readonly ICardDbContext cardDbContext;
-    
+
+    private readonly GameConfig config;
+
     public static readonly JobKey KEY = new("MaintainNullValuesJob");
 
-    public MaintainNullValuesJob(ILogger<MaintainNullValuesJob> logger, ICardDbContext cardDbContext)
+    public MaintainNullValuesJob(ILogger<MaintainNullValuesJob> logger, ICardDbContext cardDbContext, IOptions<GameConfig> options)
     {
         this.logger = logger;
         this.cardDbContext = cardDbContext;
+        config = options.Value;
     }
 
     [SuppressMessage("ReSharper.DPA", "DPA0007: Large number of DB records", 
@@ -46,5 +52,23 @@ public class MaintainNullValuesJob : IJob
         count = await cardDbContext.SaveChangesAsync(new CancellationToken());
 
         logger.LogInformation("Closed {Count} matches", count);
+        
+        logger.LogInformation("Starting to remove previously new songs");
+        var unlockables = config.UnlockRewards
+            .Where(c => c.RewardType == RewardType.Music).ToDictionary(rewardConfig => rewardConfig.TargetId);
+        var targets = await cardDbContext.CardDetails.Where(detail => detail.Pcol1 == 10).ToListAsync();
+        foreach (var target in targets)
+        {
+            if (unlockables.ContainsKey((int)target.Pcol2))
+            {
+                continue;
+            }
+            target.ScoreUi2 = 0;
+            target.ScoreUi6 = 0;
+        }
+        cardDbContext.CardDetails.UpdateRange(targets);
+        count = await cardDbContext.SaveChangesAsync(new CancellationToken());
+
+        logger.LogInformation("Fixed {Count} records", count);
     }
 }

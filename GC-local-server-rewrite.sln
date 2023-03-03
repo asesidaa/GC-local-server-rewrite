@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32126.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GC-local-server-rewrite", "GC-local-server-rewrite\GC-local-server-rewrite.csproj", "{D5FFF2E8-6591-4967-8883-A28F453F0524}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedProject", "SharedProject\SharedProject.csproj", "{C01D0576-9D4E-4535-8055-C4905433A1EB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GCRelayServer", "GCRelayServer\GCRelayServer.csproj", "{268178DF-6345-4D9E-A389-9E809CBF39C9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainServer", "MainServer\MainServer.csproj", "{B8C6CA7E-5E58-43BC-8E03-84306916DE39}"
@@ -27,14 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D5FFF2E8-6591-4967-8883-A28F453F0524}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D5FFF2E8-6591-4967-8883-A28F453F0524}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D5FFF2E8-6591-4967-8883-A28F453F0524}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D5FFF2E8-6591-4967-8883-A28F453F0524}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C01D0576-9D4E-4535-8055-C4905433A1EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C01D0576-9D4E-4535-8055-C4905433A1EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C01D0576-9D4E-4535-8055-C4905433A1EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C01D0576-9D4E-4535-8055-C4905433A1EB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{268178DF-6345-4D9E-A389-9E809CBF39C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{268178DF-6345-4D9E-A389-9E809CBF39C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{268178DF-6345-4D9E-A389-9E809CBF39C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
