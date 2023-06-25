@@ -942,5 +942,69 @@
     "IllustrationCredit": "",
     "ToolTipJp": "ナビゲーターをカグラナナに変更します\nボイスを変更します",
     "ToolTipEn": "Change the navigator to\nKAGURANANA"
+  },
+  {
+    "Id": 118,
+    "NavigatorName": "SHIRAHIME",
+    "Genre": 6,
+    "IllustrationCredit": "「Arcaea」より\n(C)lowiro 2022",
+    "ToolTipJp": "ナビゲーターを白姫に変更します",
+    "ToolTipEn": "Change the navigator to Shirahime"
+  },
+  {
+    "Id": 119,
+    "NavigatorName": "HEADPHONE CRAB",
+    "Genre": 2,
+    "IllustrationCredit": "",
+    "ToolTipJp": "ナビゲーターを\nヘッドフォンクラブに変更します\n専用システムボイスに変更します",
+    "ToolTipEn": "Change the navigator to\nHeadphone Crab\n*with special system voice"
+  },
+  {
+    "Id": 120,
+    "NavigatorName": "CIRNO(Sukakei)",
+    "Genre": 4,
+    "IllustrationCredit": "「スカーレット警察」シリーズより\nillustration by 216",
+    "ToolTipJp": "ナビゲーターをチルノ(スカ警ver.)\nに変更します\nボイスを変更します(CV:miko)",
+    "ToolTipEn": "Change the navigator to\nCIRNO(Scarlet Police)\nCV:miko"
+  },
+  {
+    "Id": 121,
+    "NavigatorName": "SCARLET POLICE",
+    "Genre": 4,
+    "IllustrationCredit": "「スカーレット警察」シリーズより\nillustration by 216",
+    "ToolTipJp": "ナビゲーターをスカーレット警察\nに変更します\nボイスを変更します(CV:小紺ココ、96、岩杉夏)",
+    "ToolTipEn": "Change the navigator to Scarlet \nPolice\nCV:Kokon Koko, 96, Iwasugi Natsu"
+  },
+  {
+    "Id": 122,
+    "NavigatorName": "UNA (GuruGuru)",
+    "Genre": 5,
+    "IllustrationCredit": "illustration by キノシタ",
+    "ToolTipJp": "ナビゲーターを音街ウナ(ぐるぐる)\nに変更します\nボイスを変更します",
+    "ToolTipEn": "Change the navigator to\nUna Otomachi(GuruGuru) \n*with voice"
+  },
+  {
+    "Id": 123,
+    "NavigatorName": "RIN (GuruGuru)",
+    "Genre": 5,
+    "IllustrationCredit": "illustration by キノシタ",
+    "ToolTipJp": "ナビゲーターを鏡音リン(ぐるぐる)\nに変更します\nボイスを変更します(ボイスアクター:下田麻美)",
+    "ToolTipEn": "Change the navigator to\nRin Kagamine(GuruGuru)\nCV:Asami Shimoda"
+  },
+  {
+    "Id": 124,
+    "NavigatorName": "LINKA(BIKINI)",
+    "Genre": 2,
+    "IllustrationCredit": "illustration by 未早",
+    "ToolTipJp": "ナビゲーターをリンカ(ビキニ)\nに変更します\nボイスを変更します(CV:豊田萌絵)",
+    "ToolTipEn": "Change the navigator to LINKA(BIKINI)\nCV: Moe Toyota"
+  },
+  {
+    "Id": 125,
+    "NavigatorName": "YUME(BIKINI)",
+    "Genre": 2,
+    "IllustrationCredit": "illustration by 未早",
+    "ToolTipJp": "ナビゲーターをユメ(ビキニ)\nに変更します\nボイスを変更します(CV:高橋菜々美)",
+    "ToolTipEn": "Change the navigator to YUME(BIKINI)\nCV: Nanami Takahashi"
   }
 ]

@@ -1,11 +1,11 @@
 ﻿{
   "Game": {
-    "AvatarCount": 356,
-    "NavigatorCount": 118,
+    "AvatarCount": 377,
+    "NavigatorCount": 126,
     "ItemCount": 21,
     "SkinCount": 21,
     "SeCount": 26,
-    "TitleCount": 5530,
+    "TitleCount": 5685,
     "UnlockRewards": [
       {
         "RewardId": 1,
