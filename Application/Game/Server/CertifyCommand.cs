@@ -12,11 +12,13 @@ public record CertifyCommand(string? Gid, string? Mac, string? Random, string? M
 public partial class CertifyCommandHandler : IRequestHandler<CertifyCommand, string>
 {
     private readonly RelayConfig relayConfig;
-    
+    private readonly MachineConfig machineConfig;
 
-    public CertifyCommandHandler(IOptions<RelayConfig> relayOptions)
+
+    public CertifyCommandHandler(IOptions<RelayConfig> relayOptions,IOptions<MachineConfig> machineOptions)
     {
         relayConfig = relayOptions.Value;
+        machineConfig = machineOptions.Value;
     }
 
     public Task<string> Handle(CertifyCommand request, CancellationToken cancellationToken)
@@ -50,23 +52,77 @@ public partial class CertifyCommandHandler : IRequestHandler<CertifyCommand, str
         {
             return Task.FromResult(QuitWithError(ErrorCode.ErrorInvalidHash));
         }
-        
-        var ticket = string.Join(string.Empty, 
-            MD5.HashData(Encoding.UTF8.GetBytes(request.Gid)).Select(b => b.ToString("x2")));
-        
-        var response = $"host=card_id=7020392000147361,relay_addr={relayConfig.RelayServer},relay_port={relayConfig.RelayPort}\n" +
-                       "no=1337\n" +
-                       "name=GCLocalServer\n" +
-                       "pref=nesys\n" +
-                       "addr=Local\n" +
-                       "x-next-time=15\n" +
-                       $"x-img=http://{request.Host}/news.png\n" +
-                       $"x-ranking=http://{request.Host}/ranking/ranking.php\n" +
-                       $"ticket={ticket}";
+
+        string ticket;
+        string response;
+       
+        if (machineConfig.MachineCheckEnable)
+        {
+            if (CheckMac(request.Mac))
+            {
+                var TInfo = GetTenpoInfo(request.Mac);
+                ticket = string.Join(string.Empty,
+                   MD5.HashData(Encoding.UTF8.GetBytes(request.Gid)).Select(b => b.ToString("x2")));
+
+                response = $"host=card_id=7020392000147361,relay_addr={relayConfig.RelayServer},relay_port={relayConfig.RelayPort}\n" +
+                              $"no={TInfo[0]}\n" + //店舗ID
+                              $"name={TInfo[1]}\n" +//店舗
+                              $"pref={TInfo[2]}\n" + //県
+                              $"addr={TInfo[3]}\n" + //住所
+                              "x-next-time=15\n" +
+                              $"x-img=http://{request.Host}/news.png\n" +
+                              $"x-ranking=http://{request.Host}/ranking/ranking.php\n" +
+                              $"ticket={ticket}";
+
+                return Task.FromResult(response);
+
+            }
+            else
+            {
+                return Task.FromResult(QuitWithError(ErrorCode.ErrorInvalidMac));
+            }
+        }
+
+        ticket = string.Join(string.Empty,
+           MD5.HashData(Encoding.UTF8.GetBytes(request.Gid)).Select(b => b.ToString("x2")));
+
+        response = $"host=card_id=7020392000147361,relay_addr={relayConfig.RelayServer},relay_port={relayConfig.RelayPort}\n" +
+                      "no=1337\n" +
+                      "name=GCLocalServer\n" +
+                      "pref=nesys\n" +
+                      "addr=Local\n" +
+                      "x-next-time=15\n" +
+                      $"x-img=http://{request.Host}/news.png\n" +
+                      $"x-ranking=http://{request.Host}/ranking/ranking.php\n" +
+                      $"ticket={ticket}";
 
         return Task.FromResult(response);
     }
-    
+    private  bool CheckMac(string mac)
+    {
+        foreach (var t in machineConfig.Machines)
+        {
+            if (t.Mac == mac) { return true; }
+        }
+
+        return false;
+    }
+    private  List<string> GetTenpoInfo(string mac)
+    {
+        var list = new List<string>();
+        foreach (var t in machineConfig.Machines)
+        {
+            if (t.Mac == mac)
+            {
+                list.Add(t.TenpoID);
+                list.Add(t.Name);
+                list.Add(t.Pref);
+                list.Add(t.Location);
+                break;
+            }
+        }
+        return list;
+    }
     private static bool MacValid(string mac)
     {
         return MacRegex().IsMatch(mac);

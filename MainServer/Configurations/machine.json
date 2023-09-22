@@ -1,0 +1,15 @@
+﻿{
+  "Config": {
+    "MachineCheckEnable": false,
+    "Machines": [
+      {
+        "Name": "Tenpo",
+        "Pref": "Pref",
+        "Location": "Location",
+        "TenpoID": "1",
+        "Mac": "0123456789AB"
+      }
+    ]
+
+  }
+}

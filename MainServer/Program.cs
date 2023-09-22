@@ -35,14 +35,17 @@ try
         .AddJsonFile($"{configurationsDirectory}/logging.json", optional: false, reloadOnChange: false)
         .AddJsonFile($"{configurationsDirectory}/events.json", optional: true, reloadOnChange: false)
         .AddJsonFile($"{configurationsDirectory}/matching.json", optional: true, reloadOnChange: false)
-        .AddJsonFile($"{configurationsDirectory}/server.json", optional: true, reloadOnChange: false);
+        .AddJsonFile($"{configurationsDirectory}/server.json", optional: true, reloadOnChange: false)
+        .AddJsonFile($"{configurationsDirectory}/machine.json", optional: false, reloadOnChange: false);
     
     builder.Services.Configure<EventConfig>(
         builder.Configuration.GetSection(EventConfig.EVENT_SECTION));
     builder.Services.Configure<RelayConfig>(
         builder.Configuration.GetSection(RelayConfig.RELAY_SECTION));
     builder.Services.Configure<GameConfig>(
-        builder.Configuration.GetSection(GameConfig.GAME_SECTION));     
+        builder.Configuration.GetSection(GameConfig.GAME_SECTION));
+    builder.Services.Configure<MachineConfig>(
+        builder.Configuration.GetSection(MachineConfig.MACHINE_SECTION));
 
     var serverIp = builder.Configuration["ServerIp"] ?? "127.0.0.1";
     var certificateManager = new CertificateService(serverIp, new SerilogLoggerFactory(Log.Logger).CreateLogger(""));
