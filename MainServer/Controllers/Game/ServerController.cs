@@ -1,4 +1,5 @@
-﻿using Application.Game.Server;
+﻿using System.Text;
+using Application.Game.Server;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MainServer.Controllers.Game;
@@ -24,12 +25,19 @@ public class ServerController : BaseController<ServerController>
     }
 
     [HttpGet("certify.php")]
-    public async Task<ActionResult<string>> Certify(string? gid, string? mac, 
+    public async Task<ContentResult> Certify(string? gid, string? mac, 
         [FromQuery(Name = "r")]string? random, [FromQuery(Name = "md")]string? md5)
     {
         var host = Request.Host.Value;
         var command = new CertifyCommand(gid, mac, random, md5, host);
-        return Ok(await Mediator.Send(command));
+        var result = await Mediator.Send(command);
+        var shiftJis = Encoding.GetEncoding(932);
+        var originalBytes = Encoding.UTF8.GetBytes(result);
+        var converted = Encoding.Convert(Encoding.Default, shiftJis, originalBytes);
+        result = shiftJis.GetString(converted);
+        //Response.ContentType = "text/plain; charset=shift_jis";
+
+        return Content(result, "text/plain", shiftJis);
     }
 
     [HttpGet("data.php")]

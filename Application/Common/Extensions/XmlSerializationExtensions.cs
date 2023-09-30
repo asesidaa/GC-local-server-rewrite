@@ -9,6 +9,7 @@ public static class XmlSerializationExtensions
     public static T DeserializeCardData<T>(this string source) where T : class
     {
         using var reader = new ChoXmlReader<T>(new StringReader(source)).WithXPath("/root/data");
+        reader.Configuration.IgnoreFieldValueMode = ChoIgnoreFieldValueMode.Any;
 
         var result = reader.Read();
         result.ThrowIfNull();

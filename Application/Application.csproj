@@ -12,10 +12,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="ChoETL" Version="1.2.1.52" />
+      <PackageReference Include="ChoETL" Version="1.2.1.64" />
       <PackageReference Include="FlexLabs.EntityFrameworkCore.Upsert" Version="7.0.0" />
-      <PackageReference Include="MediatR" Version="11.1.0" />
-      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+      <PackageReference Include="MediatR" Version="12.1.1" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
       <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0" />

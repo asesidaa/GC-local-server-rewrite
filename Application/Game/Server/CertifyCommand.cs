@@ -12,11 +12,13 @@ public record CertifyCommand(string? Gid, string? Mac, string? Random, string? M
 public partial class CertifyCommandHandler : IRequestHandler<CertifyCommand, string>
 {
     private readonly RelayConfig relayConfig;
-    
 
-    public CertifyCommandHandler(IOptions<RelayConfig> relayOptions)
+    private readonly AuthConfig authConfig;
+
+    public CertifyCommandHandler(IOptions<RelayConfig> relayOptions, IOptions<AuthConfig> authOptions)
     {
         relayConfig = relayOptions.Value;
+        authConfig = authOptions.Value;
     }
 
     public Task<string> Handle(CertifyCommand request, CancellationToken cancellationToken)
@@ -41,7 +43,7 @@ public partial class CertifyCommandHandler : IRequestHandler<CertifyCommand, str
             return Task.FromResult(QuitWithError(ErrorCode.ErrorNoHash));
         }
 
-        if (!MacValid(request.Mac))
+        if (!MacValid(request.Mac) )
         {
             return Task.FromResult(QuitWithError(ErrorCode.ErrorInvalidMac));
         }
@@ -50,15 +52,31 @@ public partial class CertifyCommandHandler : IRequestHandler<CertifyCommand, str
         {
             return Task.FromResult(QuitWithError(ErrorCode.ErrorInvalidHash));
         }
+        var machine = new Machine
+        {
+            TenpoId = "1337",
+            TenpoName = "GCLocalServer",
+            Pref = "nesys",
+            Location = "Local",
+            Mac = request.Mac
+        };
+        if (authConfig.Enabled)
+        {
+            machine = authConfig.Machines.FirstOrDefault(m => m.Mac == request.Mac);
+            if (machine is null)
+            {
+                return Task.FromResult(QuitWithError(ErrorCode.ErrorInvalidMac));
+            }
+        }
         
         var ticket = string.Join(string.Empty, 
             MD5.HashData(Encoding.UTF8.GetBytes(request.Gid)).Select(b => b.ToString("x2")));
         
         var response = $"host=card_id=7020392000147361,relay_addr={relayConfig.RelayServer},relay_port={relayConfig.RelayPort}\n" +
-                       "no=1337\n" +
-                       "name=GCLocalServer\n" +
-                       "pref=nesys\n" +
-                       "addr=Local\n" +
+                       $"no={machine.TenpoId}\n" +
+                       $"name={machine.TenpoName}\n" +
+                       $"pref={machine.Pref}\n" +
+                       $"addr={machine.Location}\n" +
                        "x-next-time=15\n" +
                        $"x-img=http://{request.Host}/news.png\n" +
                        $"x-ranking=http://{request.Host}/ranking/ranking.php\n" +

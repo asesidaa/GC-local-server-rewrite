@@ -1,7 +1,9 @@
 using System.Reflection;
 using System.Security.Authentication;
+using System.Text;
 using Application;
 using Application.Interfaces;
+using ChoETL;
 using Domain.Config;
 using Infrastructure;
 using Infrastructure.Common;
@@ -25,6 +27,8 @@ Log.Information("Server starting up...");
 
 try
 { 
+    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+    ChoETLFrxBootstrap.IsSandboxEnvironment = true;
     var builder = WebApplication.CreateBuilder(args);
     
     // Add services to the container.
@@ -35,6 +39,7 @@ try
         .AddJsonFile($"{configurationsDirectory}/logging.json", optional: false, reloadOnChange: false)
         .AddJsonFile($"{configurationsDirectory}/events.json", optional: true, reloadOnChange: false)
         .AddJsonFile($"{configurationsDirectory}/matching.json", optional: true, reloadOnChange: false)
+        .AddJsonFile($"{configurationsDirectory}/auth.json", optional: true, reloadOnChange: false)
         .AddJsonFile($"{configurationsDirectory}/server.json", optional: true, reloadOnChange: false);
     
     builder.Services.Configure<EventConfig>(
@@ -42,7 +47,9 @@ try
     builder.Services.Configure<RelayConfig>(
         builder.Configuration.GetSection(RelayConfig.RELAY_SECTION));
     builder.Services.Configure<GameConfig>(
-        builder.Configuration.GetSection(GameConfig.GAME_SECTION));     
+        builder.Configuration.GetSection(GameConfig.GAME_SECTION));
+    builder.Services.Configure<AuthConfig>(
+        builder.Configuration.GetSection(AuthConfig.AUTH_SECTION));
 
     var serverIp = builder.Configuration["ServerIp"] ?? "127.0.0.1";
     var certificateManager = new CertificateService(serverIp, new SerilogLoggerFactory(Log.Logger).CreateLogger(""));

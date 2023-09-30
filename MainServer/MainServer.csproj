@@ -123,6 +123,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="Formatters\" />
         <Folder Include="Logs" />
     </ItemGroup>
 
