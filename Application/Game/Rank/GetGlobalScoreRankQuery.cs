@@ -51,7 +51,7 @@ public class GetGlobalScoreRankQueryHandler : IRequestHandlerWrapper<GetGlobalSc
         container.Status.Rows++;
         return new ServiceResult<string>(container.SerializeCardData());
     }
-
+    　
     private async Task<ServiceResult<string>> GetAllRanks(CancellationToken cancellationToken)
     {
         var ranks = await cardDbContext.GlobalScoreRanks.OrderBy(rank => rank.Rank)

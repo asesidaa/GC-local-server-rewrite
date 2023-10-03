@@ -16,6 +16,16 @@ public static class XmlSerializationExtensions
 
         return result;
     }
+    public static T DeserializeCardInfo<T>(this string source) where T : class
+    {
+        using var reader = new ChoXmlReader<T>(new StringReader(source)).WithXPath("/root/info");
+        reader.Configuration.IgnoreFieldValueMode = ChoIgnoreFieldValueMode.Any;
+
+        var result = reader.Read();
+        result.ThrowIfNull();
+
+        return result;
+    }
 
     public static string SerializeCardData<T>(this T source, string xpath) where T : class
     {

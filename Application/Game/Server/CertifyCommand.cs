@@ -84,7 +84,7 @@ public partial class CertifyCommandHandler : IRequestHandler<CertifyCommand, str
 
         return Task.FromResult(response);
     }
-    
+
     private static bool MacValid(string mac)
     {
         return MacRegex().IsMatch(mac);

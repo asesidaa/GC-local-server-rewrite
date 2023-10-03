@@ -23,11 +23,14 @@ public class WriteDetailCommandHandler : RequestHandlerBase<WriteCardDetailComma
             return ServiceResult.Failed<string>(
                 new ServiceError($"Card id: {request.CardId} does not exist!", (int)CardReturnCode.CardNotRegistered));
         }
-
+        logger.LogInformation("RequestData:"+request.Data);
         var dto = request.Data.DeserializeCardData<CardDetailDto>();
+        var info = request.Data.DeserializeCardInfo<CardDetailInfoDto>();
         var detail = dto.DtoToCardDetail();
         detail.CardId = request.CardId;
         detail.LastPlayTime = DateTime.Now;
+        detail.LastPlayTenpoId = info.TenpoId;
+        logger.LogInformation($"CardID:{detail.CardId}/LastPlayTenpoID:{detail.LastPlayTenpoId}/TenpoIDInfo:{info.TenpoId}");
         await CardDbContext.CardDetails.Upsert(detail).RunAsync(cancellationToken);
 
         await CardDbContext.SaveChangesAsync(cancellationToken);

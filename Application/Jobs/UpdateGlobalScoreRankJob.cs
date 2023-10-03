@@ -1,10 +1,23 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Reflection.PortableExecutable;
+using Domain.Config;
 using Domain.Entities;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Quartz;
 
 namespace Application.Jobs;
-
+public class TInfo
+{
+    public string Area { get; set; } = "Local";
+    public int AreaID { get; set; } = 1;
+    public string Pref { get; set; } = "nesys";
+    public int PrefID { get; set; } = 1337;
+    public int LastPlayTenpoId { get; set; } = 1337;
+    public string TenpoName { get; set; } = "GCLocalServer";
+}
 public class UpdateGlobalScoreRankJob : IJob
 {
     private readonly ILogger<UpdateGlobalScoreRankJob> logger;
@@ -13,10 +26,12 @@ public class UpdateGlobalScoreRankJob : IJob
     
     public static readonly JobKey KEY = new("UpdateGlobalScoreRankJob");
 
-    public UpdateGlobalScoreRankJob(ILogger<UpdateGlobalScoreRankJob> logger, ICardDbContext cardDbContext)
+    private readonly AuthConfig authConfig;
+    public UpdateGlobalScoreRankJob(ILogger<UpdateGlobalScoreRankJob> logger, ICardDbContext cardDbContext, IOptions<AuthConfig> authOptions)
     {
         this.logger = logger;
         this.cardDbContext = cardDbContext;
+        authConfig = authOptions.Value;
     }
 
     [SuppressMessage("ReSharper.DPA", "DPA0007: Large number of DB records", 
@@ -51,20 +66,29 @@ public class UpdateGlobalScoreRankJob : IJob
                 logger.LogWarning("Card id {CardId} missing in main card table!", cardId);
                 continue;
             }
-
             var detail = avatarAndTitles.First(detail => detail.CardId == cardId);
-
+            var TInfo = new TInfo();
+            if (authConfig.Enabled)
+            {
+              var Ti = authConfig.Machines.FirstOrDefault(m => m.TenpoId == detail.LastPlayTenpoId);
+                if (Ti != null)
+                {
+                    TInfo.Pref = Ti.Pref;
+                    TInfo.LastPlayTenpoId = Convert.ToInt32(Ti.TenpoId);
+                    TInfo.TenpoName = Ti.TenpoName;
+                }
+            }
             var globalRank = new GlobalScoreRank
             {
                 CardId = cardId,
                 PlayerName = card.PlayerName,
                 Fcol1 = detail.Fcol1,
-                Area = "Local",
-                AreaId = 1,
-                Pref = "nesys",
-                PrefId = 1337,
-                LastPlayTenpoId = 1337,
-                TenpoName = "GCLocalServer",
+                Area = TInfo.Area,
+                AreaId = TInfo.AreaID,
+                Pref = TInfo.Pref,
+                PrefId = TInfo.PrefID,
+                LastPlayTenpoId = TInfo.LastPlayTenpoId,
+                TenpoName = TInfo.TenpoName,
                 AvatarId = (int)detail.ScoreI1,
                 Title = "Title",
                 TitleId = detail.Fcol2,

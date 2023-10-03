@@ -28,7 +28,7 @@ public static class DependencyInjection
                     .StartNow()
                     .WithSimpleSchedule(x =>
                     {
-                        x.WithIntervalInHours(24).RepeatForever();
+                        x.WithIntervalInHours(1).RepeatForever();
                     });
             });
             
@@ -40,7 +40,7 @@ public static class DependencyInjection
                     .StartNow()
                     .WithSimpleSchedule(x =>
                     {
-                        x.WithIntervalInHours(24).RepeatForever();
+                        x.WithIntervalInHours(1).RepeatForever();
                     });
             });
             
@@ -52,7 +52,7 @@ public static class DependencyInjection
                     .StartNow()
                     .WithSimpleSchedule(x =>
                     {
-                        x.WithIntervalInHours(24).RepeatForever();
+                        x.WithIntervalInHours(1).RepeatForever();
                     });
             });
             
@@ -64,7 +64,7 @@ public static class DependencyInjection
                     .StartNow()
                     .WithSimpleSchedule(x =>
                     {
-                        x.WithIntervalInHours(24).RepeatForever();
+                        x.WithIntervalInHours(1).RepeatForever();
                     });
             });
         });
