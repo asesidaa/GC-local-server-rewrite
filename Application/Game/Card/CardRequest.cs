@@ -15,6 +15,9 @@ public class CardRequest
 
     [ModelBinder(Name = "card_no")]
     public long CardId { get; set; }
+    
+    [ModelBinder(Name = "tenpo_id")]
+    public string TenpoId { get; set; } = "1337";
 
     [ModelBinder(Name = "data")]
     public string Data { get; set; } = string.Empty;

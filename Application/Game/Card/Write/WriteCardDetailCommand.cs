@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Game.Card.Write;
 
-public record WriteCardDetailCommand(long CardId, string Data) : IRequestWrapper<string>;
+public record WriteCardDetailCommand(long CardId, string TenpoId, string Data) : IRequestWrapper<string>;
 
 public class WriteDetailCommandHandler : RequestHandlerBase<WriteCardDetailCommand, string>
 {
@@ -28,6 +28,7 @@ public class WriteDetailCommandHandler : RequestHandlerBase<WriteCardDetailComma
         var detail = dto.DtoToCardDetail();
         detail.CardId = request.CardId;
         detail.LastPlayTime = DateTime.Now;
+        detail.LastPlayTenpoId = request.TenpoId;
         await CardDbContext.CardDetails.Upsert(detail).RunAsync(cancellationToken);
 
         await CardDbContext.SaveChangesAsync(cancellationToken);

@@ -10,7 +10,7 @@ namespace Application;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services)
+    public static IServiceCollection AddApplication(this IServiceCollection services, int refreshIntervalHours = 24)
     {
         services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
@@ -28,7 +28,7 @@ public static class DependencyInjection
                     .StartNow()
                     .WithSimpleSchedule(x =>
                     {
-                        x.WithIntervalInHours(24).RepeatForever();
+                        x.WithIntervalInHours(refreshIntervalHours).RepeatForever();
                     });
             });
             
@@ -40,7 +40,7 @@ public static class DependencyInjection
                     .StartNow()
                     .WithSimpleSchedule(x =>
                     {
-                        x.WithIntervalInHours(24).RepeatForever();
+                        x.WithIntervalInHours(refreshIntervalHours).RepeatForever();
                     });
             });
             
@@ -52,7 +52,7 @@ public static class DependencyInjection
                     .StartNow()
                     .WithSimpleSchedule(x =>
                     {
-                        x.WithIntervalInHours(24).RepeatForever();
+                        x.WithIntervalInHours(refreshIntervalHours).RepeatForever();
                     });
             });
             
@@ -64,7 +64,7 @@ public static class DependencyInjection
                     .StartNow()
                     .WithSimpleSchedule(x =>
                     {
-                        x.WithIntervalInHours(24).RepeatForever();
+                        x.WithIntervalInHours(refreshIntervalHours).RepeatForever();
                     });
             });
         });

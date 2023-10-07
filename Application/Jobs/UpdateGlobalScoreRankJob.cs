@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Domain.Config;
 using Domain.Entities;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Quartz;
 
 namespace Application.Jobs;
@@ -11,12 +13,17 @@ public class UpdateGlobalScoreRankJob : IJob
 
     private readonly ICardDbContext cardDbContext;
     
+    private readonly AuthConfig authConfig;
+    
     public static readonly JobKey KEY = new("UpdateGlobalScoreRankJob");
 
-    public UpdateGlobalScoreRankJob(ILogger<UpdateGlobalScoreRankJob> logger, ICardDbContext cardDbContext)
+    public UpdateGlobalScoreRankJob(ILogger<UpdateGlobalScoreRankJob> logger, 
+        ICardDbContext cardDbContext,
+        IOptions<AuthConfig> authConfig)
     {
         this.logger = logger;
         this.cardDbContext = cardDbContext;
+        this.authConfig = authConfig.Value;
     }
 
     [SuppressMessage("ReSharper.DPA", "DPA0007: Large number of DB records", 
@@ -54,6 +61,20 @@ public class UpdateGlobalScoreRankJob : IJob
 
             var detail = avatarAndTitles.First(detail => detail.CardId == cardId);
 
+            var pref = "nesys";
+            var lastPlayTenpoId = 1337;
+            var tenpoName = "GCLocalServer";
+            if (authConfig.Enabled)
+            {
+                var result = int.TryParse(detail.LastPlayTenpoId, out lastPlayTenpoId);
+                if (!result)
+                {
+                    lastPlayTenpoId = 1337;
+                }
+                pref = authConfig.Machines.FirstOrDefault(m => m.TenpoId == detail.LastPlayTenpoId)?.Pref ?? "nesys";
+                tenpoName = authConfig.Machines.FirstOrDefault(m => m.TenpoId == detail.LastPlayTenpoId)?.TenpoName ?? "GCLocalServer";
+            }
+
             var globalRank = new GlobalScoreRank
             {
                 CardId = cardId,
@@ -61,10 +82,10 @@ public class UpdateGlobalScoreRankJob : IJob
                 Fcol1 = detail.Fcol1,
                 Area = "Local",
                 AreaId = 1,
-                Pref = "nesys",
+                Pref = pref,
                 PrefId = 1337,
-                LastPlayTenpoId = 1337,
-                TenpoName = "GCLocalServer",
+                LastPlayTenpoId = lastPlayTenpoId,
+                TenpoName = tenpoName,
                 AvatarId = (int)detail.ScoreI1,
                 Title = "Title",
                 TitleId = detail.Fcol2,

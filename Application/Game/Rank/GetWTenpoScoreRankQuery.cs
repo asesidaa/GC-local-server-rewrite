@@ -2,18 +2,18 @@
 
 namespace Application.Game.Rank;
 
-public record GetTenpoScoreRankQuery(int TenpoId, string Param) : IRequestWrapper<string>;
+public record GetWTenpoScoreRankQuery(int TenpoId, string Param) : IRequestWrapper<string>;
 
-public class GetTenpoScoreRankQueryHandler : IRequestHandlerWrapper<GetTenpoScoreRankQuery, string>
+public class GetWTenpoScoreRankQueryHandler : IRequestHandlerWrapper<GetWTenpoScoreRankQuery, string>
 {
     private readonly ICardDbContext cardDbContext;
 
-    public GetTenpoScoreRankQueryHandler(ICardDbContext cardDbContext)
+    public GetWTenpoScoreRankQueryHandler(ICardDbContext cardDbContext)
     {
         this.cardDbContext = cardDbContext;
     }
 
-    public async Task<ServiceResult<string>> Handle(GetTenpoScoreRankQuery request, CancellationToken cancellationToken)
+    public async Task<ServiceResult<string>> Handle(GetWTenpoScoreRankQuery request, CancellationToken cancellationToken)
     {
         var param = request.Param.DeserializeCardData<RankParam>();
         if (param.CardId == 0)
@@ -72,12 +72,12 @@ public class GetTenpoScoreRankQueryHandler : IRequestHandlerWrapper<GetTenpoScor
             return dto;
         }).ToList();
 
-        var container = new TenpoScoreRankContainer
+        var container = new WTenpoScoreRankContainer
         {
             Ranks = dtoList,
             Status = new RankStatus
             {
-                TableName = "CardTenpoScoreRank",
+                TableName = "TenpoScoreRank",
                 StartDate = TimeHelper.DateToString(DateTime.Today),
                 EndDate = TimeHelper.DateToString(DateTime.Today),
                 Rows = dtoList.Count,
@@ -87,4 +87,16 @@ public class GetTenpoScoreRankQueryHandler : IRequestHandlerWrapper<GetTenpoScor
 
         return new ServiceResult<string>(container.SerializeCardData());
     }
+}
+
+[XmlRoot("root")]
+public class WTenpoScoreRankContainer
+{
+    [XmlArray(ElementName = "w_t_score_rank")]
+    [XmlArrayItem(ElementName = "record")]
+    // ReSharper disable once UnusedAutoPropertyAccessor.Global
+    public List<ScoreRankDto> Ranks { get; init; } = new();
+
+    [XmlElement("ranking_status")] 
+    public RankStatus Status { get; set; } = new();
 }

@@ -264,7 +264,7 @@ public class CertificateService
             {
                 var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
                 store.Open(OpenFlags.ReadOnly);
-                var result = store.Certificates.Find(X509FindType.FindByIssuerName, ROOT_CA_CN, true);
+                var result = store.Certificates.Find(X509FindType.FindByIssuerName, ROOT_CA_CN, false);
 
                 certificateExists = result.Count != 0;
 

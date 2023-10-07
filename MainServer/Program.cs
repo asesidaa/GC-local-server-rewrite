@@ -1,3 +1,4 @@
+using System.Net.Security;
 using System.Reflection;
 using System.Security.Authentication;
 using System.Text;
@@ -30,7 +31,7 @@ try
     Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
     ChoETLFrxBootstrap.IsSandboxEnvironment = true;
     var builder = WebApplication.CreateBuilder(args);
-    
+
     // Add services to the container.
     const string configurationsDirectory = "Configurations";
     builder.Configuration
@@ -40,6 +41,7 @@ try
         .AddJsonFile($"{configurationsDirectory}/events.json", optional: true, reloadOnChange: false)
         .AddJsonFile($"{configurationsDirectory}/matching.json", optional: true, reloadOnChange: false)
         .AddJsonFile($"{configurationsDirectory}/auth.json", optional: true, reloadOnChange: false)
+        .AddJsonFile($"{configurationsDirectory}/rank.json", optional: true, reloadOnChange: false)
         .AddJsonFile($"{configurationsDirectory}/server.json", optional: true, reloadOnChange: false);
     
     builder.Services.Configure<EventConfig>(
@@ -50,6 +52,8 @@ try
         builder.Configuration.GetSection(GameConfig.GAME_SECTION));
     builder.Services.Configure<AuthConfig>(
         builder.Configuration.GetSection(AuthConfig.AUTH_SECTION));
+    builder.Services.Configure<RankConfig>(
+        builder.Configuration.GetSection(RankConfig.RANK_SECTION));
 
     var serverIp = builder.Configuration["ServerIp"] ?? "127.0.0.1";
     var certificateManager = new CertificateService(serverIp, new SerilogLoggerFactory(Log.Logger).CreateLogger(""));
@@ -76,7 +80,9 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
-    builder.Services.AddApplication();
+    var refreshIntervalHours = builder.Configuration.GetSection(RankConfig.RANK_SECTION).
+        GetValue<int>("RefreshIntervalHours");
+    builder.Services.AddApplication(refreshIntervalHours);
     builder.Services.AddInfrastructure(builder.Configuration);
     
     builder.Services.AddResponseCompression(options =>

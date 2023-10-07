@@ -1,5 +1,7 @@
-﻿using Domain.Entities;
+﻿using Domain.Config;
+using Domain.Entities;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Quartz;
 
 namespace Application.Jobs;
@@ -10,12 +12,17 @@ public class UpdateMonthlyScoreRankJob : IJob
 
     private readonly ICardDbContext cardDbContext;
     
+    private readonly AuthConfig authConfig;
+    
     public static readonly JobKey KEY = new JobKey("UpdateMonthlyScoreRankJob");
 
-    public UpdateMonthlyScoreRankJob(ILogger<UpdateMonthlyScoreRankJob> logger, ICardDbContext cardDbContext)
+    public UpdateMonthlyScoreRankJob(ILogger<UpdateMonthlyScoreRankJob> logger, 
+        ICardDbContext cardDbContext,
+        IOptions<AuthConfig> authConfig)
     {
         this.logger = logger;
         this.cardDbContext = cardDbContext;
+        this.authConfig = authConfig.Value;
     }
 
     public async Task Execute(IJobExecutionContext context)
@@ -51,24 +58,38 @@ public class UpdateMonthlyScoreRankJob : IJob
 
             var detail = avatarAndTitles.First(detail => detail.CardId == cardId);
 
-            var globalRank = new MonthlyScoreRank
+            var pref = "nesys";
+            var lastPlayTenpoId = 1337;
+            var tenpoName = "GCLocalServer";
+            if (authConfig.Enabled)
+            {
+                var result = int.TryParse(detail.LastPlayTenpoId, out lastPlayTenpoId);
+                if (!result)
+                {
+                    lastPlayTenpoId = 1337;
+                }
+                pref = authConfig.Machines.FirstOrDefault(m => m.TenpoId == detail.LastPlayTenpoId)?.Pref ?? "nesys";
+                tenpoName = authConfig.Machines.FirstOrDefault(m => m.TenpoId == detail.LastPlayTenpoId)?.TenpoName ?? "GCLocalServer";
+            }
+
+            var monthlyScoreRank = new MonthlyScoreRank
             {
                 CardId = cardId,
                 PlayerName = card.PlayerName,
                 Fcol1 = detail.Fcol1,
                 Area = "Local",
                 AreaId = 1,
-                Pref = "nesys",
+                Pref = pref,
                 PrefId = 1337,
-                LastPlayTenpoId = 1337,
-                TenpoName = "GCLocalServer",
+                LastPlayTenpoId = lastPlayTenpoId,
+                TenpoName = tenpoName,
                 AvatarId = (int)detail.ScoreI1,
                 Title = "Title",
                 TitleId = detail.Fcol2,
                 TotalScore = score
             };
             
-            ranks.Add(globalRank);
+            ranks.Add(monthlyScoreRank);
         }
 
         ranks.AddRange(GetFakeRanks());

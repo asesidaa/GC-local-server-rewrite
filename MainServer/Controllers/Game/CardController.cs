@@ -63,7 +63,7 @@ public class CardController : BaseController<CardController>
                     CardRequestType.WriteCard =>
                         await Mediator.Send(new WriteCardCommand(request.CardId, request.Data)),
                     CardRequestType.WriteCardDetail => await Mediator.Send(
-                        new WriteCardDetailCommand(request.CardId, request.Data)),
+                        new WriteCardDetailCommand(request.CardId, request.TenpoId, request.Data)),
                     CardRequestType.WriteCardBData => await Mediator.Send(
                         new WriteCardBDataCommand(request.CardId, request.Data)),
                     CardRequestType.WriteAvatar => await Mediator.Send(new WriteAvatarCommand(request.CardId,

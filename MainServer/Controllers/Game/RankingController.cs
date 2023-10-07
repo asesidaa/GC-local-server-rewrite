@@ -19,12 +19,15 @@ public class RankingController : BaseController<RankingController>
 
         var result = type switch
         {
-            RankingCommandType.GlobalRank => await Mediator.Send(new GetGlobalScoreRankQuery(param)),
-            RankingCommandType.PlayNumRank => await Mediator.Send(new GetPlayNumRankQuery()),
-            RankingCommandType.EventRank => await Mediator.Send(new GetEventRankQuery()),
-            RankingCommandType.MonthlyRank => await Mediator.Send(new GetMonthlyScoreRankQuery()),
-            RankingCommandType.ShopRank => await Mediator.Send(new GetTenpoScoreRankQuery(tenpoId, param)),
-            _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Should not happen!")
+            RankingCommandType.GlobalRank   => await Mediator.Send(new GetGlobalScoreRankQuery(param)),
+            RankingCommandType.PlayNumRank  => await Mediator.Send(new GetPlayNumRankQuery()),
+            RankingCommandType.EventRank    => await Mediator.Send(new GetEventRankQuery()),
+            RankingCommandType.MonthlyRank  => await Mediator.Send(new GetMonthlyScoreRankQuery()),
+            RankingCommandType.ShopRank     => await Mediator.Send(new GetTenpoScoreRankQuery(tenpoId, param)),
+            RankingCommandType.WScoreRank   => await Mediator.Send(new GetWScoreRankQuery(param)),
+            RankingCommandType.WPlayNumRank => await Mediator.Send(new GetWPlayNumRankQuery()),
+            RankingCommandType.WShopRank    => await Mediator.Send(new GetWTenpoScoreRankQuery(tenpoId, param)),
+            _                               => throw new ArgumentOutOfRangeException(nameof(type), type, "Should not happen!")
         };
 
         if (result.Succeeded)
