@@ -52,8 +52,10 @@ try
         builder.Configuration.GetSection(GameConfig.GAME_SECTION));
     builder.Services.Configure<AuthConfig>(
         builder.Configuration.GetSection(AuthConfig.AUTH_SECTION));
-    builder.Services.Configure<RankConfig>(
-        builder.Configuration.GetSection(RankConfig.RANK_SECTION));
+    builder.Services.AddOptions<RankConfig>()
+        .Bind(builder.Configuration.GetSection(RankConfig.RANK_SECTION))
+        .ValidateDataAnnotations()
+        .ValidateOnStart();
 
     var serverIp = builder.Configuration["ServerIp"] ?? "127.0.0.1";
     var certificateManager = new CertificateService(serverIp, new SerilogLoggerFactory(Log.Logger).CreateLogger(""));
@@ -82,6 +84,8 @@ try
 
     var refreshIntervalHours = builder.Configuration.GetSection(RankConfig.RANK_SECTION).
         GetValue<int>("RefreshIntervalHours");
+    refreshIntervalHours.Throw().IfLessThanOrEqualTo(0);
+    Log.Information("Rank refresh interval: {RefreshIntervalHours} hours", refreshIntervalHours);
     builder.Services.AddApplication(refreshIntervalHours);
     builder.Services.AddInfrastructure(builder.Configuration);
     
