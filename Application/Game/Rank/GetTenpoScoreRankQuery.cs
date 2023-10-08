@@ -25,15 +25,23 @@ public class GetTenpoScoreRankQueryHandler : IRequestHandlerWrapper<GetTenpoScor
 
     private async Task<ServiceResult<string>> GetCardRank(long cardId, int tenpoId, CancellationToken cancellationToken)
     {
-        var rank = await cardDbContext.GlobalScoreRanks.FirstOrDefaultAsync(scoreRank => scoreRank.CardId == cardId &&
-            scoreRank.LastPlayTenpoId == tenpoId, 
-            cancellationToken: cancellationToken);
+        var ranks = await cardDbContext.GlobalScoreRanks.Where(rank => rank.LastPlayTenpoId == tenpoId)
+            .OrderByDescending(rank => rank.TotalScore)
+            .ToListAsync(cancellationToken: cancellationToken);
+        ranks = ranks.Select((rank, i) =>
+        {
+            rank.Rank = i + 1;
+            return rank;
+        }).ToList();
+        
+        var rank = ranks.FirstOrDefault(rank => rank.CardId == cardId);
+        
         var container = new TenpoScoreRankContainer
         {
             Ranks = new List<ScoreRankDto>(),
             Status = new RankStatus
             {
-                TableName = "TenpoScoreRank",
+                TableName = "CardTenpoScoreRank",
                 StartDate = TimeHelper.DateToString(DateTime.Today),
                 EndDate = TimeHelper.DateToString(DateTime.Today),
                 Rows = 0,
