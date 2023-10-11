@@ -25,7 +25,7 @@ public class CardController : BaseController<CardController>
         cardCommandType.Throw().IfOutOfRange();
         if (cardCommandType is CardCommandType.CardReadRequest or CardCommandType.CardWriteRequest)
         {
-            cardRequestType.Throw().IfOutOfRange();
+            cardRequestType.Throw($"Failed to process {cardCommandType.ToString()}").IfOutOfRange();
         }
 
         request.Data = WebUtility.UrlDecode(request.Data);
@@ -84,6 +84,8 @@ public class CardController : BaseController<CardController>
                         new WriteUnlockKeynumCommand(request.CardId, request.Data)),
                     CardRequestType.WriteSoundEffect => await Mediator.Send(
                         new WriteSoundEffectCommand(request.CardId, request.Data)),
+                    CardRequestType.WriteCond => await Mediator.Send(
+                        new WriteCondCommand(request.CardId, request.Data)),
                     CardRequestType.StartOnlineMatching => await Mediator.Send(
                         new StartOnlineMatchingCommand(request.CardId, request.Data)),
                     CardRequestType.UpdateOnlineMatching => await Mediator.Send(

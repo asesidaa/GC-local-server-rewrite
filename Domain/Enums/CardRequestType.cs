@@ -53,6 +53,7 @@ public enum CardRequestType
     WriteCoin         = 980,
     WriteUnlockKeynum = 1020,
     WriteSoundEffect  = 8969,
+    WriteCond         = 8976,
 
     #endregion
 
