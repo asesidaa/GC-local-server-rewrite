@@ -73,6 +73,7 @@ public partial class MusicDbContext : DbContext, IMusicDbContext
             entity.Property(e => e.EndDate).HasColumnName("end_date");
             entity.Property(e => e.NewFlag).HasColumnName("new_flag");
             entity.Property(e => e.UseFlag).HasColumnName("use_flag");
+            entity.Property(e => e.CalcFlag).HasColumnName("calc_flag");
         });
 
         OnModelCreatingPartial(modelBuilder);

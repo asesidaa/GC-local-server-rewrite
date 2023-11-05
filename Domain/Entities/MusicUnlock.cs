@@ -15,4 +15,6 @@ public partial class MusicUnlock
     public bool NewFlag { get; set; }
 
     public bool UseFlag { get; set; }
+
+    public bool CalcFlag { get; set; }
 }

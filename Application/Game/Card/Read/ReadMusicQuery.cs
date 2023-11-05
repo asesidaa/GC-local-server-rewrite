@@ -21,8 +21,6 @@ public class ReadMusicQueryHandler : RequestHandlerBase<ReadMusicQuery, string>
         {
             var dto = unlock.MusicToDto();
             dto.Id = i;
-            dto.CalcFlag = dto.NewFlag;
-            dto.NewFlag = 0;
             return dto;
         });
         

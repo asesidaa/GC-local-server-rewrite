@@ -298,7 +298,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("MatchId");
 
-                    b.ToTable("OnlineMatches");
+                    b.ToTable("OnlineMatches", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.OnlineMatchEntry", b =>
@@ -368,7 +368,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("MatchId", "EntryId");
 
-                    b.ToTable("OnlineMatchEntries");
+                    b.ToTable("OnlineMatchEntries", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.PlayNumRank", b =>

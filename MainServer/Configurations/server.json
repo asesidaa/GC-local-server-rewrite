@@ -2,13 +2,13 @@
   "Kestrel": {
     "Endpoints": {
       "Http": {
-        "Url": "http://0.0.0.0:80"
+        "Url": "http://*:80"
       },
       "Https": {
-        "Url": "https://0.0.0.0:443"
+        "Url": "https://*:443"
       },
       "Test": {
-        "Url": "http://0.0.0.0:5107"
+        "Url": "http://*:5107"
       }
     }
   },
