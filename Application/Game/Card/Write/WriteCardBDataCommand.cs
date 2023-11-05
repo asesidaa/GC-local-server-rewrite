@@ -1,4 +1,5 @@
-﻿using Domain.Enums;
+﻿using Domain.Entities;
+using Domain.Enums;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Game.Card.Write;
@@ -28,6 +29,21 @@ public class WriteBDataCommandHandler : RequestHandlerBase<WriteCardBDataCommand
         var data = dto.DtoToCardBDatum();
         data.CardId = request.CardId;
         await CardDbContext.CardBdata.Upsert(data).RunAsync(cancellationToken);
+
+        var cardPlayCount = await CardDbContext.CardPlayCounts
+            .FirstOrDefaultAsync(count => count.CardId == request.CardId, cancellationToken);
+        if (cardPlayCount is null)
+        {
+            cardPlayCount = new CardPlayCount
+            {
+                CardId = request.CardId,
+                PlayCount = 0,
+                LastPlayedTime = DateTime.Now
+            };
+        }
+        cardPlayCount.PlayCount++;
+        cardPlayCount.LastPlayedTime = DateTime.Now;
+        await CardDbContext.CardPlayCounts.Upsert(cardPlayCount).RunAsync(cancellationToken);
 
         await CardDbContext.SaveChangesAsync(cancellationToken);
         
