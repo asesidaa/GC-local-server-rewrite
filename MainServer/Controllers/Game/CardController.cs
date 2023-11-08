@@ -72,7 +72,7 @@ public class CardController : BaseController<CardController>
                         await Mediator.Send(new WriteItemCommand(request.CardId, request.Data)),
                     CardRequestType.WriteTitle => await Mediator.Send(new WriteTitleCommand(request.CardId,
                         request.Data)),
-                    CardRequestType.WriteMusicDetail => await Mediator.Send(
+                    CardRequestType.WriteMusicDetail or CardRequestType.WriteWMusicDetail => await Mediator.Send(
                         new WriteMusicDetailCommand(request.CardId, request.Data)),
                     CardRequestType.WriteNavigator => await Mediator.Send(
                         new WriteNavigatorCommand(request.CardId, request.Data)),
@@ -103,6 +103,7 @@ public class CardController : BaseController<CardController>
                 result = await Mediator.Send(new CardReissueCommand(request.CardId));
                 break;
             default:
+                Logger.LogWarning("Unimplemented: {CardCommandType}, data is {Data}", cardCommandType, request.Data);
                 throw new ArgumentOutOfRangeException(nameof(cardCommandType), cardCommandType, "Should not happen");
         }
 
