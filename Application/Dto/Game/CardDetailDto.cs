@@ -16,13 +16,13 @@ public class CardDetailDto
     public long CardId { get; set; }
     
     [XmlElement(ElementName = "pcol1")]
-    public int Pcol1 { get; set; }
-    
+    public long Pcol1 { get; set; }
+
     [XmlElement(ElementName = "pcol2")]
-    public int Pcol2 { get; set; }
-    
+    public long Pcol2 { get; set; }
+
     [XmlElement(ElementName = "pcol3")]
-    public int Pcol3 { get; set; }
+    public long Pcol3 { get; set; }
 
     [XmlElement(ElementName = "score_i1")]
     public long ScoreI1 { get; set; }
@@ -53,13 +53,13 @@ public class CardDetailDto
     public string LastPlayTenpoId { get; set; } = "1337";
 
     [XmlElement("fcol1")]
-    public int Fcol1 { get; set; }
-    
+    public long Fcol1 { get; set; }
+
     [XmlElement("fcol2")]
-    public int Fcol2 { get; set; }
+    public long Fcol2 { get; set; }
 
     [XmlElement("fcol3")]
-    public int Fcol3 { get; set; }
+    public long Fcol3 { get; set; }
     
     [XmlIgnore]
     public DateTime LastPlayTime { get; set; } = DateTime.MinValue;

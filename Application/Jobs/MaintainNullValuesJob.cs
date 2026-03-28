@@ -41,17 +41,9 @@ public class MaintainNullValuesJob : IJob
         });
 
         cardDbContext.CardDetails.UpdateRange(details);
-        var count = await cardDbContext.SaveChangesAsync(new CancellationToken());
+        var count = await cardDbContext.SaveChangesAsync(context.CancellationToken);
 
         logger.LogInformation("Updated {Count} entries in card detail table", count);
-        
-        logger.LogInformation("Starting closing unfinished matches");
-        var matches = await cardDbContext.OnlineMatches.Where(match => match.IsOpen == true).ToListAsync();
-        matches.ForEach(match => match.IsOpen = false);
-        cardDbContext.OnlineMatches.UpdateRange(matches);
-        count = await cardDbContext.SaveChangesAsync(new CancellationToken());
-
-        logger.LogInformation("Closed {Count} matches", count);
         
         logger.LogInformation("Starting to remove previously new songs");
         var unlockables = config.UnlockRewards
@@ -67,7 +59,7 @@ public class MaintainNullValuesJob : IJob
             target.ScoreUi6 = 0;
         }
         cardDbContext.CardDetails.UpdateRange(targets);
-        count = await cardDbContext.SaveChangesAsync(new CancellationToken());
+        count = await cardDbContext.SaveChangesAsync(context.CancellationToken);
 
         logger.LogInformation("Fixed {Count} records", count);
     }

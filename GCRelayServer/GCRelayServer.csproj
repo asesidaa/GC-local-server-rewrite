@@ -2,16 +2,17 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <LangVersion>11</LangVersion>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="BinarySerializer" Version="8.6.3.2" />
-      <PackageReference Include="NetCoreServer" Version="7.0.0" />
-      <PackageReference Include="Swan.Logging" Version="6.0.2-beta.96" />
+      <PackageReference Include="BinarySerializer" Version="8.6.4.1" />
+      <PackageReference Include="NetCoreServer" Version="8.0.7" />
+      <PackageReference Include="Serilog" Version="4.2.0" />
+      <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     </ItemGroup>
 
 </Project>

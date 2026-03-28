@@ -31,21 +31,19 @@
     </ToolBarContent>
     <Columns>
         <HierarchyColumn T="SongPlayRecord"></HierarchyColumn>
-        <Column T="SongPlayRecord" Field="@nameof(SongPlayRecord.Title)" Title="Song Title"/>
-        <Column T="SongPlayRecord" Field="@nameof(SongPlayRecord.Artist)" Title="Artist"/>
-        <Column T="SongPlayRecord" Field="@nameof(SongPlayRecord.TotalPlayCount)" Title="Total Play Count"/>
-        <Column T="SongPlayRecord" Field="@nameof(SongPlayRecord.IsFavorite)" Title="Is Favorite">
+        <PropertyColumn T="SongPlayRecord" TProperty="string" Property="x => x.Title" Title="Song Title"/>
+        <PropertyColumn T="SongPlayRecord" TProperty="string" Property="x => x.Artist" Title="Artist"/>
+        <PropertyColumn T="SongPlayRecord" TProperty="int" Property="x => x.TotalPlayCount" Title="Total Play Count"/>
+        <TemplateColumn T="SongPlayRecord" Title="Is Favorite">
             <CellTemplate>
                 <MudToggleIconButton Toggled="@context.Item.IsFavorite"
                                      ToggledChanged="@(() => OnFavoriteToggled(context.Item))"
                                      Icon="@Icons.Material.Filled.FavoriteBorder"
                                      Color="@Color.Secondary"
-                                     Title="Add to favorite"
                                      ToggledIcon="@Icons.Material.Filled.Favorite"
-                                     ToggledColor="@Color.Secondary"
-                                     ToggledTitle="Remove from favorite"/>
+                                     ToggledColor="@Color.Secondary"/>
             </CellTemplate>
-        </Column>
+        </TemplateColumn>
     </Columns>
     <ChildRowContent>
         <MudCard>

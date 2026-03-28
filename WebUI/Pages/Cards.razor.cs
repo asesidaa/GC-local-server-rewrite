@@ -41,14 +41,13 @@ public partial class Cards
         var options = new DialogOptions
         {
             CloseOnEscapeKey = false,
-            DisableBackdropClick = true,
+            BackdropClick = false,
             FullWidth = true
         };
         var parameters = new DialogParameters { { "Data", card } };
         var dialog = await DialogService.ShowAsync<ChangePlayerNameDialog>("Favorite", parameters, options);
-        // ReSharper disable once UnusedVariable
         var result = await dialog.Result;
-        if (!result.Canceled)
+        if (result is not null && !result.Canceled)
         {
             StateHasChanged();
         }

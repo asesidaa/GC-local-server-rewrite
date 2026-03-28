@@ -30,7 +30,7 @@
 
 @code {
     [CascadingParameter]
-    MudDialogInstance MudDialog { get; set; } = null!;
+    IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter]
     public ClientCardDto Data { get; set; } = null!;
@@ -69,15 +69,15 @@
         MudDialog.Cancel();
     }
     
+    private static readonly Regex PlayerNamePattern = new(@"^[a-zA-Z0-9!?,./\-+:<>_\\@*#&=() ]{1,8}$", RegexOptions.Compiled);
+
     private static string? ValidatePlayerName(string playerName)
     {
-        const string pattern = @"^[a-zA-Z0-9!?,./\-+:<>_\\@*#&=() ]{1,8}$";
-
         return playerName.Length switch
         {
             0 => "Player name cannot be empty!",
             > PLAYER_NAME_MAX_LENGTH => "Player name cannot be longer than 8 characters!",
-            _ => !Regex.IsMatch(playerName, pattern) ? "Player name contains invalid character!" : null
-            };
+            _ => !PlayerNamePattern.IsMatch(playerName) ? "Player name contains invalid character!" : null
+        };
     }
 }

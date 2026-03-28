@@ -28,7 +28,7 @@ public class ServerController : BaseController<ServerController>
     public async Task<ContentResult> Certify(string? gid, string? mac, 
         [FromQuery(Name = "r")]string? random, [FromQuery(Name = "md")]string? md5)
     {
-        var host = Request.Host.Value;
+        var host = Request.Host.Value ?? "localhost";
         var command = new CertifyCommand(gid, mac, random, md5, host);
         var result = await Mediator.Send(command);
         var shiftJis = Encoding.GetEncoding(932);
@@ -43,7 +43,7 @@ public class ServerController : BaseController<ServerController>
     [HttpGet("data.php")]
     public async Task<ActionResult<string>> GetData()
     {
-        var query = new GetDataQuery(Request.Host.Value, Request.Scheme);
+        var query = new GetDataQuery(Request.Host.Value ?? "localhost", Request.Scheme);
         return Ok(await Mediator.Send(query));
     }
 }

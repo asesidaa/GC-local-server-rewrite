@@ -26,10 +26,12 @@ public class UpdateMonthlyScoreRankJob : IJob
     }
 
     public async Task Execute(IJobExecutionContext context)
-     {
-        logger.LogInformation("Starting update montly global rank");
+    {
+        logger.LogInformation("Starting update monthly global rank");
+        var cancellationToken = context.CancellationToken;
 
-        var cardMains = await cardDbContext.CardMains.ToListAsync();
+        var cardMainsById = await cardDbContext.CardMains
+            .ToDictionaryAsync(c => c.CardId, cancellationToken);
 
         var totalScoresByCardId = await cardDbContext.CardDetails.Where(detail => detail.Pcol1 == 21 && detail.LastPlayTime >= DateTime.Today.AddDays(-30))
             .GroupBy(detail => detail.CardId)
@@ -38,25 +40,29 @@ public class UpdateMonthlyScoreRankJob : IJob
                 CardId = detailGroup.Key,
                 TotalScore = detailGroup.Sum(detail => detail.ScoreUi1)
             })
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
-        var avatarAndTitles = await cardDbContext.CardDetails.Where(detail => detail.Pcol1 == 0 &&
+        var avatarAndTitlesById = await cardDbContext.CardDetails.Where(detail => detail.Pcol1 == 0 &&
                                                                         detail.Pcol2 == 0 &&
-                                                                        detail.Pcol3 == 0).ToListAsync();
+                                                                        detail.Pcol3 == 0)
+            .ToDictionaryAsync(d => d.CardId, cancellationToken);
 
         var ranks = new List<MonthlyScoreRank>();
         foreach (var record in totalScoresByCardId)
         {
             var cardId = record.CardId;
             var score = record.TotalScore;
-            var card = cardMains.FirstOrDefault(card => card.CardId == cardId);
-            if (card is null)
+            if (!cardMainsById.TryGetValue(cardId, out var card))
             {
                 logger.LogWarning("Card id {CardId} missing in main card table!", cardId);
                 continue;
             }
 
-            var detail = avatarAndTitles.First(detail => detail.CardId == cardId);
+            if (!avatarAndTitlesById.TryGetValue(cardId, out var detail))
+            {
+                logger.LogWarning("Card id {CardId} missing avatar/title detail!", cardId);
+                continue;
+            }
 
             var pref = "nesys";
             var lastPlayTenpoId = 1337;
@@ -100,8 +106,8 @@ public class UpdateMonthlyScoreRankJob : IJob
             return rank;
         }).ToList();
         
-        await cardDbContext.MonthlyScoreRanks.UpsertRange(ranks).RunAsync();
-        await cardDbContext.SaveChangesAsync(new CancellationToken());
+        await cardDbContext.MonthlyScoreRanks.UpsertRange(ranks).RunAsync(cancellationToken);
+        await cardDbContext.SaveChangesAsync(cancellationToken);
         
         logger.LogInformation("Updating monthly score rank done");
     }

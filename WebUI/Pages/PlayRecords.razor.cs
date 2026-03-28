@@ -59,7 +59,7 @@ public partial class PlayRecords
         var options = new DialogOptions
         {
             CloseOnEscapeKey = false,
-            DisableBackdropClick = true,
+            BackdropClick = false,
             FullWidth = true
         };
 
@@ -71,7 +71,7 @@ public partial class PlayRecords
         var dialog = await DialogService.ShowAsync<FavoriteDialog>("Favorite", parameters, options);
         var result = await dialog.Result;
 
-        if (result.Canceled)
+        if (result is null || result.Canceled)
         {
             return;
         }

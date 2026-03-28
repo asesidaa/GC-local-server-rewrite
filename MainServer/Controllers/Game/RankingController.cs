@@ -10,7 +10,7 @@ namespace MainServer.Controllers.Game;
 public class RankingController : BaseController<RankingController>
 {
     [HttpGet("ranking.php")]
-    public async Task<ActionResult<string>> Ranking([FromQuery(Name = "cmd_type")] int rankType,
+    public async Task<IActionResult> Ranking([FromQuery(Name = "cmd_type")] int rankType,
         [FromQuery(Name = "tenpo_id")] int tenpoId,
         [FromQuery(Name = "param")] string param)
     {
@@ -30,16 +30,6 @@ public class RankingController : BaseController<RankingController>
             _                               => throw new ArgumentOutOfRangeException(nameof(type), type, "Should not happen!")
         };
 
-        if (result.Succeeded)
-        {
-            var normalResult = "1\n" +
-                               $"{result.Data}";
-            return Ok(normalResult);
-        }
-
-        // Here error is not null since Succeeded => Error is null; 
-        var errorMessage = $"{result.Error!.Code}\n" +
-                           $"{result.Error!.Message}";
-        return Ok(errorMessage);
+        return GameResult(result);
     }
 }

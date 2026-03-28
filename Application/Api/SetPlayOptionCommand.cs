@@ -44,6 +44,6 @@ public class SetPlayOptionCommandHandler : RequestHandlerBase<SetPlayOptionComma
         CardDbContext.CardDetails.Update(optionDetail2);
         
         var count = await CardDbContext.SaveChangesAsync(cancellationToken);
-        return count == 1 ? new ServiceResult<bool>(true) : ServiceResult.Failed<bool>(ServiceError.DatabaseSaveFailed);
+        return count > 0 ? new ServiceResult<bool>(true) : ServiceResult.Failed<bool>(ServiceError.DatabaseSaveFailed);
     }
 }

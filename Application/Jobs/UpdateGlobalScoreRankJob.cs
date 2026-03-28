@@ -31,8 +31,10 @@ public class UpdateGlobalScoreRankJob : IJob
     public async Task Execute(IJobExecutionContext context)
     {
         logger.LogInformation("Starting update global rank");
+        var cancellationToken = context.CancellationToken;
 
-        var cardMains = await cardDbContext.CardMains.ToListAsync();
+        var cardMainsById = await cardDbContext.CardMains
+            .ToDictionaryAsync(c => c.CardId, cancellationToken);
 
         var totalScoresByCardId = await cardDbContext.CardDetails.Where(detail => detail.Pcol1 == 21)
             .GroupBy(detail => detail.CardId)
@@ -41,25 +43,29 @@ public class UpdateGlobalScoreRankJob : IJob
                 CardId = detailGroup.Key,
                 TotalScore = detailGroup.Sum(detail => detail.ScoreUi1)
             })
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
-        var avatarAndTitles = await cardDbContext.CardDetails.Where(detail => detail.Pcol1 == 0 &&
+        var avatarAndTitlesById = await cardDbContext.CardDetails.Where(detail => detail.Pcol1 == 0 &&
                                                                         detail.Pcol2 == 0 &&
-                                                                        detail.Pcol3 == 0).ToListAsync();
+                                                                        detail.Pcol3 == 0)
+            .ToDictionaryAsync(d => d.CardId, cancellationToken);
 
         var ranks = new List<GlobalScoreRank>();
         foreach (var record in totalScoresByCardId)
         {
             var cardId = record.CardId;
             var score = record.TotalScore;
-            var card = cardMains.FirstOrDefault(card => card.CardId == cardId);
-            if (card is null)
+            if (!cardMainsById.TryGetValue(cardId, out var card))
             {
                 logger.LogWarning("Card id {CardId} missing in main card table!", cardId);
                 continue;
             }
 
-            var detail = avatarAndTitles.First(detail => detail.CardId == cardId);
+            if (!avatarAndTitlesById.TryGetValue(cardId, out var detail))
+            {
+                logger.LogWarning("Card id {CardId} missing avatar/title detail!", cardId);
+                continue;
+            }
 
             var pref = "nesys";
             var lastPlayTenpoId = 1337;
@@ -103,8 +109,8 @@ public class UpdateGlobalScoreRankJob : IJob
             return rank;
         }).ToList();
         
-        await cardDbContext.GlobalScoreRanks.UpsertRange(ranks).RunAsync();
-        await cardDbContext.SaveChangesAsync(new CancellationToken());
+        await cardDbContext.GlobalScoreRanks.UpsertRange(ranks).RunAsync(cancellationToken);
+        await cardDbContext.SaveChangesAsync(cancellationToken);
         
         logger.LogInformation("Updating global score rank done");
     }
