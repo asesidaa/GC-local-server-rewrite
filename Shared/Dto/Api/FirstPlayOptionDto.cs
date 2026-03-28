@@ -8,7 +8,7 @@ public class FirstPlayOptionDto
 
     public long AvatarId { get; set; }
 
-    public int TitleId { get; set; }
+    public long TitleId { get; set; }
 
     public ShowFastSlowOption ShowFastSlowOption { get; set; }
 

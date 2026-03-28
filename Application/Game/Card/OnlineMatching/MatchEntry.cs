@@ -1,18 +1,18 @@
-﻿namespace Domain.Entities;
+namespace Application.Game.Card.OnlineMatching;
 
-public partial class OnlineMatchEntry
+public class MatchEntry
 {
     public long MatchId { get; set; }
-    
+
     public long EntryId { get; set; }
-    
+
     public long MachineId { get; set; }
 
     public long EventId { get; set; }
-    
+
     public DateTime StartTime { get; set; }
 
-    public long Status { get; set; }
+    public long Status { get; set; } = 1;
 
     public long CardId { get; set; }
 
@@ -35,11 +35,10 @@ public partial class OnlineMatchEntry
     public string Pref { get; set; } = "nesys";
 
     public long MessageId { get; set; }
-    
+
     public long MatchTimeout { get; set; } = 99;
 
     public long MatchWaitTime { get; set; } = 10;
 
     public long MatchRemainingTime { get; set; } = 89;
-
 }

@@ -32,7 +32,7 @@ public partial class Option
     private static readonly DialogOptions OPTIONS = new()
     {
         CloseOnEscapeKey = false,
-        DisableBackdropClick = true,
+        BackdropClick = false,
         FullWidth = true,
         MaxWidth = MaxWidth.ExtraExtraLarge
     };
@@ -85,7 +85,7 @@ public partial class Option
 
         var dialog = await DialogService.ShowAsync<ChangeTitleDialog>("Change Title", parameters, OPTIONS);
         var result = await dialog.Result;
-        if (!result.Canceled)
+        if (result is not null && !result.Canceled)
         {
             StateHasChanged();
         }
@@ -100,7 +100,7 @@ public partial class Option
 
         var dialog = await DialogService.ShowAsync<ChangeNavigatorDialog>("Change Navigator", parameters, OPTIONS);
         var result = await dialog.Result;
-        if (!result.Canceled)
+        if (result is not null && !result.Canceled)
         {
             StateHasChanged();
         }
@@ -114,7 +114,7 @@ public partial class Option
 
         var dialog = await DialogService.ShowAsync<ChangeAvatarDialog>("Change Navigator", parameters, OPTIONS);
         var result = await dialog.Result;
-        if (!result.Canceled)
+        if (result is not null && result is not null && !result.Canceled)
         {
             StateHasChanged();
         }

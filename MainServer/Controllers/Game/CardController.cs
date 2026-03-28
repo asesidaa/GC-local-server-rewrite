@@ -17,7 +17,7 @@ namespace MainServer.Controllers.Game;
 public class CardController : BaseController<CardController>
 {
     [HttpPost("cardn.cgi")]
-    public async Task<ActionResult<string>> CardService([FromForm]CardRequest request)
+    public async Task<IActionResult> CardService([FromForm]CardRequest request)
     {
         var cardRequestType = (CardRequestType)request.CardRequestType;
         var cardCommandType = (CardCommandType)request.CardCommandType;
@@ -107,17 +107,6 @@ public class CardController : BaseController<CardController>
                 throw new ArgumentOutOfRangeException(nameof(cardCommandType), cardCommandType, "Should not happen");
         }
 
-        if (result.Succeeded)
-        {
-            var normalResult = "1\n" +
-                               "1,1\n" +
-                               $"{result.Data}";
-            return Ok(normalResult);
-        }
-
-        // Here error is not null since Succeeded => Error is null; 
-        var errorMessage = $"{result.Error!.Code}\n" +
-                           $"{result.Error!.Message}";
-        return Ok(errorMessage);
+        return CardGameResult(result);
     }
 }

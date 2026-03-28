@@ -1,6 +1,7 @@
 ﻿@inherits LayoutComponentBase
 
 <MudThemeProvider @ref="@MudThemeProvider" @bind-IsDarkMode="@IsDarkMode"/>
+<MudPopoverProvider/>
 <MudDialogProvider/>
 <MudSnackbarProvider/>
 
@@ -11,11 +12,11 @@
         <MudSpacer/>
         <MudTooltip Duration="1000" Text="Powered by MudBlazor">
             <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" 
-                           Link="https://mudblazor.com/" Target="_blank"/>
+                           Href="https://mudblazor.com/" Target="_blank"/>
         </MudTooltip>
         <MudTooltip Duration="1000" Text="Github Repository">
             <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" 
-                           Link="https://github.com/asesidaa/GC-local-server-rewrite/" Target="_blank"/>
+                           Href="https://github.com/asesidaa/GC-local-server-rewrite/" Target="_blank"/>
         </MudTooltip>
         <MudTooltip Duration="1000" Text="@(IsDarkMode ? "Switch to Light Mode" : "Switch to DarkMode")">
                     <MudToggleIconButton @bind-Toggled="@IsDarkMode"

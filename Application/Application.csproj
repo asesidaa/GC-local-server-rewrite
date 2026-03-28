@@ -1,9 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <LangVersion>14</LangVersion>
+        <!-- Suppress Mapperly unmapped-member warnings — partial mappings are intentional -->
+        <NoWarn>RMG012;RMG020</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,16 +15,16 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="ChoETL" Version="1.2.1.64" />
-      <PackageReference Include="FlexLabs.EntityFrameworkCore.Upsert" Version="7.0.0" />
-      <PackageReference Include="MediatR" Version="12.1.1" />
-      <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
-      <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0" />
-      <PackageReference Include="Microsoft.NETCore.Targets" Version="6.0.0-preview.4.21253.7" />
-      <PackageReference Include="Quartz.AspNetCore" Version="3.6.0" />
-      <PackageReference Include="Riok.Mapperly" Version="2.7.0-next.2" />
-      <PackageReference Include="Throw" Version="1.3.1" />
+      <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FlexLabs.EntityFrameworkCore.Upsert" Version="10.0.0" />
+      <PackageReference Include="MediatR" Version="14.1.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
+      <PackageReference Include="Quartz.AspNetCore" Version="3.16.1" />
+      <PackageReference Include="Riok.Mapperly" Version="5.0.0-next.3" />
+      <PackageReference Include="Throw" Version="1.4.0" />
     </ItemGroup>
 
 </Project>

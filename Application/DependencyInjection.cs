@@ -18,8 +18,6 @@ public static class DependencyInjection
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
         services.AddQuartz(q =>
         {
-            q.UseMicrosoftDependencyInjectionJobFactory();
-            
             q.AddJob<UpdatePlayNumRankJob>(options => options.WithIdentity(UpdatePlayNumRankJob.KEY));
             q.AddTrigger(options =>
             {
@@ -65,6 +63,18 @@ public static class DependencyInjection
                     .WithSimpleSchedule(x =>
                     {
                         x.WithIntervalInHours(refreshIntervalHours).RepeatForever();
+                    });
+            });
+
+            q.AddJob<CleanupOnlineMatchesJob>(options => options.WithIdentity(CleanupOnlineMatchesJob.KEY));
+            q.AddTrigger(options =>
+            {
+                options.ForJob(CleanupOnlineMatchesJob.KEY)
+                    .WithIdentity("CleanupOnlineMatchesJob-trigger")
+                    .StartNow()
+                    .WithSimpleSchedule(x =>
+                    {
+                        x.WithIntervalInMinutes(5).RepeatForever();
                     });
             });
         });

@@ -1,104 +1,134 @@
-﻿using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
 using BinarySerialization;
-using Swan.Logging;
+using Serilog;
 
 namespace GCRelayServer;
 
 public class RelayServer : NetCoreServer.UdpServer
 {
-    private ConcurrentDictionary<uint, DictEntry> matchingDictionary = new();
-    public RelayServer(IPAddress address, int port) : base(address, port) {}
-    
+    private readonly RoomManager roomManager;
+
+    public RelayServer(IPAddress address, int port, RoomManager roomManager) : base(address, port)
+    {
+        this.roomManager = roomManager;
+    }
 
     protected override void OnStarted()
     {
-        // Start receive datagrams
         ReceiveAsync();
     }
 
     protected override void OnReceived(EndPoint endpoint, byte[] buffer, long offset, long size)
     {
-        var serializer = new BinarySerializer();
-        var inputStream = new MemoryStream(buffer, (int)offset, (int)size, false);
-        var packet = serializer.Deserialize<RelayPacket>(inputStream);
-
-        if (!IsValidPacket(packet))
+        try
         {
-            "Received malformed packet!".Warn();
+            RelayPacket packet;
+            try
+            {
+                var serializer = new BinarySerializer();
+                var inputStream = new MemoryStream(buffer, (int)offset, (int)size, false);
+                packet = serializer.Deserialize<RelayPacket>(inputStream);
+            }
+            catch (Exception ex)
+            {
+                Log.Warning(ex, "Failed to deserialize packet from {Endpoint} ({Size} bytes)", endpoint, size);
+                return;
+            }
+
+            if (!IsValidPacket(packet))
+            {
+                Log.Warning("Received malformed packet from {Endpoint}", endpoint);
+                return;
+            }
+
+            if (endpoint is not IPEndPoint ipEndPoint)
+            {
+                Log.Error("Endpoint is not an IPEndPoint — this should not happen");
+                return;
+            }
+
+            Log.Debug("Received packet from {Endpoint}, type 0x{SubType:X2}, match {MatchingId:X8}",
+                endpoint, packet.RequestSubType, packet.MatchingId);
+
+            switch (packet.RequestSubType)
+            {
+                case RelayPacketTypes.HEART_BEAT:
+                    HandleHeartbeat(ipEndPoint, packet);
+                    break;
+
+                case RelayPacketTypes.START_MATCHING:
+                    HandleStartMatching(ipEndPoint, packet);
+                    break;
+
+                case RelayPacketTypes.REGISTER_MATCHING:
+                    HandleRegisterMatching(ipEndPoint, packet);
+                    break;
+
+                default:
+                    HandleRelay(ipEndPoint, packet);
+                    break;
+            }
+        }
+        finally
+        {
+            ReceiveAsync();
+        }
+    }
+
+    private void HandleHeartbeat(IPEndPoint sender, RelayPacket packet)
+    {
+        SendPacket(sender, packet, RelayPacketTypes.HEART_BEAT_RESPONSE);
+        SendPacket(sender, packet, RelayPacketTypes.HEART_BEAT_RESPONSE);
+    }
+
+    private void HandleStartMatching(IPEndPoint sender, RelayPacket packet)
+    {
+        roomManager.GetOrCreateRoom(packet.MatchingId, sender);
+        SendPacket(sender, packet, RelayPacketTypes.START_MATCHING_RESPONSE);
+        SendPacket(sender, packet, RelayPacketTypes.START_MATCHING_RESPONSE);
+    }
+
+    private void HandleRegisterMatching(IPEndPoint sender, RelayPacket packet)
+    {
+        var room = roomManager.GetOrCreateRoom(packet.MatchingId, sender);
+        var others = room.GetEndpointsExcluding(sender);
+        foreach (var other in others)
+        {
+            SendPacket(other, packet, packet.RequestSubType);
+        }
+    }
+
+    private void HandleRelay(IPEndPoint sender, RelayPacket packet)
+    {
+        var room = roomManager.TryGetRoom(packet.MatchingId);
+        if (room is null)
+        {
             return;
         }
-        
-        $"Received packet from {endpoint}, type is 0x{packet.RequestSubType:X2}".Info();
-        
-        switch (packet.RequestSubType)
+
+        var others = room.GetEndpointsExcluding(sender);
+        foreach (var other in others)
         {
-            case RelayPacketTypes.HEART_BEAT:
-            {
-                for (var i = 0; i < 2; i++)
-                {
-                    SendPacketSingle(endpoint, packet, RelayPacketTypes.HEART_BEAT_RESPONSE);
-                }
-                
-                break;
-            }
-            case RelayPacketTypes.START_MATCHING:
-            {
-                AddEntry(packet.MatchingId, endpoint);
-                for (var i = 0; i < 2; i++)
-                { 
-                    SendPacketSingle(endpoint, packet, RelayPacketTypes.START_MATCHING_RESPONSE);
-                }
-                break;
-            }
-            case RelayPacketTypes.REGISTER_MATCHING:
-            {
-                var entry = AddEntry(packet.MatchingId, endpoint);
-                SendPacketToOthers(entry.EndPoints, packet, endpoint);
-                break;
-            }
-            default:
-            {
-                var entry = GetEntry(packet.MatchingId);
-                if (entry is null)
-                {
-                    break;
-                }
-                SendPacketToOthers(entry.EndPoints, packet, endpoint);
-                break;
-            }
+            SendPacket(other, packet, packet.RequestSubType);
         }
-        ReceiveAsync();
     }
-    private void SendPacketSingle(EndPoint endpoint, RelayPacket packet, ushort subType)
+
+    private void SendPacket(EndPoint target, RelayPacket packet, ushort subType)
     {
+        // Serialize with the desired subType without mutating the shared packet object
+        var originalSubType = packet.RequestSubType;
         packet.RequestSubType = subType;
+
         var serializer = new BinarySerializer();
         var sendStream = new MemoryStream(1024);
         serializer.Serialize(sendStream, packet);
-        
-        $"Send packet to {endpoint}, type is 0x{packet.RequestSubType:X2}".Info();
-        SendAsync(endpoint, sendStream.GetBuffer(), 0, sendStream.Length);
-    }
 
-    private void SendPacketToOthers(IEnumerable<EndPoint> endPoints, RelayPacket packet, EndPoint owner)
-    {
-        if (owner is not IPEndPoint ipEndPoint)
-        {
-            "Endpoint is not IP endpoint! This should not happen!".Fatal();
-            throw new ApplicationException();
-        }
+        // Restore original to avoid corrupting concurrent readers
+        packet.RequestSubType = originalSubType;
 
-        foreach (var endPoint in endPoints.Where(endPoint => !ipEndPoint.Equals(endPoint)))
-        {
-            SendPacketSingle(endPoint, packet, packet.RequestSubType);
-        }
-    }
-
-    protected override void OnError(SocketError error)
-    {
-        $"Relay server caught an error with code {error}".Error();
+        Log.Debug("Sending packet to {Endpoint}, type 0x{SubType:X2}", target, subType);
+        SendAsync(target, sendStream.GetBuffer(), 0, sendStream.Length);
     }
 
     private static bool IsValidPacket(RelayPacket packet)
@@ -113,48 +143,9 @@ public class RelayServer : NetCoreServer.UdpServer
         return packet.Data.Length == packet.DataSize;
     }
 
-    private DictEntry AddEntry(uint matchingId, EndPoint endPoint)
+    protected override void OnError(SocketError error)
     {
-        var now = DateTime.Now;
-        var entry = matchingDictionary.GetValueOrDefault(matchingId, new DictEntry());
-        var shouldClear = false;
-
-        if (entry.LastAccessTime <= now && now - entry.LastAccessTime >= TimeSpan.FromMinutes(10))
-        {
-            $"Entry for matching id {matchingId:X8} has expired! Clients will be cleared!".Info();
-            shouldClear = true;
-        }
-        if (entry.EndPoints.Count >= 4)
-        {
-            $"Entry for matching id {matchingId:X8} contains more than 4 clients! Clients will be cleared!".Warn();
-            shouldClear = true;
-        }
-        entry.AddEndpoint(endPoint, shouldClear);
-        
-        entry.LastAccessTime = DateTime.Now;
-        matchingDictionary[matchingId] = entry;
-
-        return entry;
-    }
-
-    private DictEntry? GetEntry(uint matchingId)
-    {
-        var now = DateTime.Now;
-
-        if (!matchingDictionary.ContainsKey(matchingId))    
-        {
-            $"Entry for matching id {matchingId:X8} does not exist!".Warn();
-            return null;
-        }
-
-        var entry = matchingDictionary[matchingId];
-        if (entry.LastAccessTime <= now && now - entry.LastAccessTime >= TimeSpan.FromMinutes(10))
-        {
-            $"Entry for matching id {matchingId:X8} has expired!".Warn();
-            return null;
-        }
-        
-        entry.LastAccessTime = DateTime.Now;
-        return entry;
+        Log.Error("Relay server socket error: {Error}", error);
+        ReceiveAsync();
     }
 }

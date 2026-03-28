@@ -32,17 +32,17 @@
     return;
 }
 
-<MudList>
+<MudList T="string">
     <MudListSubheader>Player Name: @totalResultData.PlayerName</MudListSubheader>
-    <MudListItem>Total Score: @totalResultData.PlayerData.TotalScore</MudListItem>
-    <MudListItem>Rank: @totalResultData.PlayerData.Rank</MudListItem>
-    <MudListItem>Average Score: @totalResultData.PlayerData.AverageScore</MudListItem>
-    <MudListItem>Played Song Count: @totalResultData.PlayerData.PlayedSongCount / @totalResultData.PlayerData.TotalSongCount</MudListItem>
-    <MudListItem>Cleared Stage Count: @totalResultData.StageCountData.Cleared / @totalResultData.StageCountData.Total</MudListItem>
-    <MudListItem>No Miss Stage Count: @totalResultData.StageCountData.NoMiss / @totalResultData.StageCountData.Total</MudListItem>
-    <MudListItem>Full Chain Stage Count: @totalResultData.StageCountData.FullChain / @totalResultData.StageCountData.Total</MudListItem>
-    <MudListItem>Perfect Stage Count: @totalResultData.StageCountData.Perfect / @totalResultData.StageCountData.Total</MudListItem>
-    <MudListItem>S and Above Stage Count: @totalResultData.StageCountData.S / @totalResultData.StageCountData.Total</MudListItem>
-    <MudListItem>S+ and Above Stage Count: @totalResultData.StageCountData.Ss / @totalResultData.StageCountData.Total</MudListItem>
-    <MudListItem>S++ and Above Stage Count: @totalResultData.StageCountData.Sss / @totalResultData.StageCountData.Total</MudListItem>
+    <MudListItem T="string">Total Score: @totalResultData.PlayerData.TotalScore</MudListItem>
+    <MudListItem T="string">Rank: @totalResultData.PlayerData.Rank</MudListItem>
+    <MudListItem T="string">Average Score: @totalResultData.PlayerData.AverageScore</MudListItem>
+    <MudListItem T="string">Played Song Count: @totalResultData.PlayerData.PlayedSongCount / @totalResultData.PlayerData.TotalSongCount</MudListItem>
+    <MudListItem T="string">Cleared Stage Count: @totalResultData.StageCountData.Cleared / @totalResultData.StageCountData.Total</MudListItem>
+    <MudListItem T="string">No Miss Stage Count: @totalResultData.StageCountData.NoMiss / @totalResultData.StageCountData.Total</MudListItem>
+    <MudListItem T="string">Full Chain Stage Count: @totalResultData.StageCountData.FullChain / @totalResultData.StageCountData.Total</MudListItem>
+    <MudListItem T="string">Perfect Stage Count: @totalResultData.StageCountData.Perfect / @totalResultData.StageCountData.Total</MudListItem>
+    <MudListItem T="string">S and Above Stage Count: @totalResultData.StageCountData.S / @totalResultData.StageCountData.Total</MudListItem>
+    <MudListItem T="string">S+ and Above Stage Count: @totalResultData.StageCountData.Ss / @totalResultData.StageCountData.Total</MudListItem>
+    <MudListItem T="string">S++ and Above Stage Count: @totalResultData.StageCountData.Sss / @totalResultData.StageCountData.Total</MudListItem>
 </MudList>

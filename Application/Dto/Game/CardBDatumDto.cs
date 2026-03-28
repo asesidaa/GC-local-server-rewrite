@@ -9,5 +9,5 @@ public class CardBDatumDto
     public string CardBdata { get; set; } = string.Empty;
     
     [XmlElement(ElementName = "bdata_size")]
-    public int BDataSize { get; set; }
+    public long BDataSize { get; set; }
 }

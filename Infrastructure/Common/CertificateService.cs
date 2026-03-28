@@ -100,7 +100,7 @@ public class CertificateService
     {
         if (CertificateExists())
         {
-            return new X509Certificate2(CERT_PATH);
+            return X509CertificateLoader.LoadPkcs12FromFile(CERT_PATH, null);
         }
 
         logger.LogInformation("Existing certs not found! Removing old certificates and genrate new ones...");
@@ -186,10 +186,10 @@ public class CertificateService
         var rootCaPfxBytes = exportService.ExportRootPfx(null, rootCa);
         var certPfxBytes = exportService.ExportChainedCertificatePfx(null, cert, rootCa);
 
-        var rootCaWithPrivateKey = new X509Certificate2(rootCaPfxBytes, (string)null!,
+        var rootCaWithPrivateKey = X509CertificateLoader.LoadPkcs12(rootCaPfxBytes, null,
             X509_KEY_STORAGE_FLAGS_MACHINE);
 
-        var certWithPrivateKey = new X509Certificate2(certPfxBytes, (string)null!,
+        var certWithPrivateKey = X509CertificateLoader.LoadPkcs12(certPfxBytes, null,
             X509_KEY_STORAGE_FLAGS_MACHINE);
 
 

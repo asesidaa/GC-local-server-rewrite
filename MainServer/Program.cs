@@ -4,7 +4,6 @@ using System.Security.Authentication;
 using System.Text;
 using Application;
 using Application.Interfaces;
-using ChoETL;
 using Domain.Config;
 using Infrastructure;
 using Infrastructure.Common;
@@ -29,8 +28,12 @@ Log.Information("Server starting up...");
 try
 { 
     Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-    ChoETLFrxBootstrap.IsSandboxEnvironment = true;
     var builder = WebApplication.CreateBuilder(args);
+
+    // Enable static web assets resolution when running the exe directly (not via dotnet run).
+    // The manifest in bin/ contains absolute paths to WebUI's wwwroot, so this works from any CWD.
+    // In published output the manifest is absent, making this a no-op.
+    builder.WebHost.UseStaticWebAssets();
 
     // Add services to the container.
     const string configurationsDirectory = "Configurations";

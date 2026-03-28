@@ -6,7 +6,7 @@ public class MusicDto
     public int Id { get; set; }
     
     [XmlElement("music_id")]
-    public int MusicId { get; set; }
+    public long MusicId { get; set; }
     
     [XmlElement(ElementName = "title")]
     public string Title { get; set; } = string.Empty;

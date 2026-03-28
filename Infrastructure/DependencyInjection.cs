@@ -13,6 +13,7 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<IEventManagerService, EventManagerService>();
+        services.AddSingleton<IOnlineMatchingService, OnlineMatchingService>();
         
         services.AddDbContext<MusicDbContext>(option =>
         {
@@ -23,7 +24,8 @@ public static class DependencyInjection
             }
 
             var path = Path.Combine(PathHelper.DatabasePath, dbName);
-            option.UseSqlite($"Data Source={path}");
+            option.UseSqlite($"Data Source={path}")
+                  .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         });
     
         services.AddDbContext<CardDbContext>(option =>

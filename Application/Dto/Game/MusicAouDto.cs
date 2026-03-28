@@ -6,7 +6,7 @@ public class MusicAouDto
     public int Id { get; set; }
     
     [XmlElement(ElementName = "music_id")]
-    public int MusicId { get; set; }
+    public long MusicId { get; set; }
     
     [XmlElement(ElementName = "use_flag")]
     public int UseFlag { get; set; }
