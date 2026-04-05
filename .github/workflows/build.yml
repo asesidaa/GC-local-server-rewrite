@@ -1,0 +1,56 @@
+name: Build and Publish
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.x'
+          dotnet-quality: 'preview'
+
+      - name: Restore dependencies
+        run: dotnet restore GC-local-server-rewrite.sln
+
+      - name: Build solution
+        run: dotnet build GC-local-server-rewrite.sln -c Release --no-restore
+
+      - name: Run tests
+        run: dotnet test GC-local-server-rewrite.sln -c Release --no-build
+
+      - name: Publish MainServer
+        run: dotnet publish MainServer/MainServer.csproj -c Release -r win-x64 --self-contained true -o publish/MainServer
+
+      - name: Publish GCRelayServer
+        run: dotnet publish GCRelayServer/GCRelayServer.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -o publish/GCRelayServer
+
+      - name: Publish DatParser
+        run: dotnet publish DatParser/DatParser.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -o publish/DatParser
+
+      - name: Upload MainServer artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: MainServer-win-x64
+          path: publish/MainServer/
+
+      - name: Upload GCRelayServer artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: GCRelayServer-win-x64
+          path: publish/GCRelayServer/
+
+      - name: Upload DatParser artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: DatParser-win-x64
+          path: publish/DatParser/
