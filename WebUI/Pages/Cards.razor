@@ -1,7 +1,7 @@
 ﻿@page "/Cards"
 
 <PageTitle>Cards</PageTitle>
-<h1>Cards</h1>
+<MudText Typo="Typo.h4" Class="mb-4">Cards</MudText>
 
 @if (ErrorMessage != string.Empty)
 {
@@ -74,6 +74,7 @@
                                      TransformOrigin="Origin.TopCenter">
                                 <MudMenuItem Href="@($"Cards/TotalResult/{card.CardId}")">Total Result</MudMenuItem>
                                 <MudMenuItem Href="@($"Cards/PlayRecords/{card.CardId}")">Song Play Results</MudMenuItem>
+                                <MudMenuItem Href="@($"Shop/{card.CardId}")">Shop</MudMenuItem>
                             </MudMenu>
                         </MudStack>
                     </MudCardActions>

@@ -18,8 +18,18 @@ public interface ICardDbContext
     
     public DbSet<MonthlyScoreRank> MonthlyScoreRanks { get; set; } 
     
-    public DbSet<ShopScoreRank> ShopScoreRanks { get; set; } 
-    
+    public DbSet<ShopScoreRank> ShopScoreRanks { get; set; }
+
+    public DbSet<DefaultUnlockState> DefaultUnlockStates { get; set; }
+
+    public DbSet<PlayerUnlockState> PlayerUnlockStates { get; set; }
+
+    public DbSet<PlayerCoin> PlayerCoins { get; set; }
+
+    public DbSet<ShopItem> ShopItems { get; set; }
+
+    public DbSet<CardAccessCode> CardAccessCodes { get; set; }
+
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     
     

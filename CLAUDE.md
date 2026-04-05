@@ -22,10 +22,11 @@ dotnet run --project MainServer
 dotnet run --project GCRelayServer
 
 # Add an EF Core migration (card database)
-dotnet ef migrations add <MigrationName> --project Infrastructure --startup-project MainServer
-```
+dotnet ef migrations add <MigrationName> --project Infrastructure --startup-project MainServer --context CardDbContext
 
-There are no test projects in this solution.
+# Run tests
+dotnet test
+```
 
 ## Architecture
 
@@ -40,7 +41,8 @@ MainServer (ASP.NET Core host)
 Application (business logic)
   ├── Game/Card/Read/   — MediatR query handlers
   ├── Game/Card/Write/  — MediatR command handlers
-  ├── Game/Card/Management/, Session/, OnlineMatching/
+  ├── Game/Card/Management/, Session/
+  ├── Game/Card/OnlineMatching/ — in-memory matching (no DB, singleton service)
   ├── Api/              — Web UI query/command handlers
   ├── Jobs/             — Quartz scheduled jobs (rank updates)
   └── Mappers/          — Riok.Mapperly source-generated mappers
@@ -48,7 +50,7 @@ Application (business logic)
 Infrastructure (data access)
   ├── CardDbContext      — EF Core SQLite (read/write, player data)
   ├── MusicDbContext     — EF Core SQLite (read-only, song metadata)
-  └── Services/          — EventManagerService
+  └── Services/          — EventManagerService, OnlineMatchingService
 
 Domain (entities, enums, config)
   ├── Entities/  — EF Core entity models
@@ -66,7 +68,7 @@ GCRelayServer (standalone UDP relay, no project references)
 
 ## Key Patterns
 
-- **Request flow:** HTTP request hits a Controller, which sends a MediatR request. Handlers inherit `RequestHandlerBase<TIn, TOut>` and use `ICardDependencyAggregate` to access DbContexts and config.
+- **Request flow:** HTTP request hits a Controller, which sends a MediatR request. Most handlers inherit `RequestHandlerBase<TIn, TOut>` (provides `ICardDependencyAggregate` for DbContexts and config). Handlers that don't need DB access (e.g., OnlineMatching) implement `IRequestHandlerWrapper<TIn, TOut>` directly.
 - **CardController** (`MainServer/Controllers/Game/CardController.cs`) is the central game endpoint (`/service/card/cardn.cgi`). A large switch dispatches 40+ card operation types based on `CardCommandType` and `CardRequestType` enums.
 - **Object mapping:** Riok.Mapperly source-generated mappers in `Application/Mappers/` — no reflection.
 - **Return type:** Handlers return `ServiceResult<T>` wrapping either data or `ServiceError`.
@@ -81,6 +83,13 @@ All config files live in `MainServer/Configurations/`. Key ones:
 - `game.json` — avatar/navigator/item/skin/SE/title counts (version-specific)
 - `events.json` — event file list; event files go in `MainServer/wwwroot/events/`
 - `matching.json` — relay server IP/port for online matching
+
+## Gotchas
+
+- **Running exe directly (not `dotnet run`)**: `builder.WebHost.UseStaticWebAssets()` is needed for WebUI files to resolve from bin/Debug. Already configured.
+- **MudBlazor 9.x**: Requires `<MudPopoverProvider/>` in layout, uses `IMudDialogInstance`, `Href` not `Link`, `DialogResult` is nullable.
+- **`XmlSerializer` with custom `XmlRootAttribute`**: Must be cached (see `XmlSerializationExtensions.cs`) — runtime generates unbounded dynamic assemblies otherwise.
+- **Time format**: Use `HH:mm:ss` (24-hour), not `hh:mm:ss` (12-hour without AM/PM).
 
 # Agent Guidance: dotnet-skills
 

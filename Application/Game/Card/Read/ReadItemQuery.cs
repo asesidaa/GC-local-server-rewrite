@@ -1,3 +1,6 @@
+using Application.Common.Helpers;
+using Domain.Enums;
+
 namespace Application.Game.Card.Read;
 
 public record ReadItemQuery(long CardId) : IRequestWrapper<string>;
@@ -10,9 +13,11 @@ public class ReadItemQueryHandler : RequestHandlerBase<ReadItemQuery, string>
     {
     }
 
-    public override Task<ServiceResult<string>> Handle(ReadItemQuery request, CancellationToken cancellationToken)
+    public override async Task<ServiceResult<string>> Handle(ReadItemQuery request, CancellationToken cancellationToken)
     {
         var count = Config.ItemCount;
+        var bitset = await LoadBitset(request.CardId, UnlockItemType.Item, count, cancellationToken);
+
         var list = new List<ItemDto>();
         for (int i = 0; i < count; i++)
         {
@@ -25,13 +30,13 @@ public class ReadItemQueryHandler : RequestHandlerBase<ReadItemQuery, string>
                 Created = "2013-01-01",
                 Modified = "2013-01-01",
                 NewFlag = 0,
-                UseFlag = 1
+                UseFlag = bitset is null ? 1 : BitsetHelper.IsUnlocked(bitset, i + 1) ? 1 : 0
             };
             list.Add(item);
         }
 
         var result = list.SerializeCardDataList(ITEM_XPATH);
 
-        return Task.FromResult(new ServiceResult<string>(result));
+        return new ServiceResult<string>(result);
     }
 }

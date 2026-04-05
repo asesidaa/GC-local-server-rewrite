@@ -1,3 +1,6 @@
+using Application.Common.Helpers;
+using Domain.Enums;
+
 namespace Application.Game.Card.Read;
 
 
@@ -11,9 +14,11 @@ public class ReadAvatarQueryHandler : RequestHandlerBase<ReadAvatarQuery, string
     {
     }
 
-    public override Task<ServiceResult<string>> Handle(ReadAvatarQuery request, CancellationToken cancellationToken)
+    public override async Task<ServiceResult<string>> Handle(ReadAvatarQuery request, CancellationToken cancellationToken)
     {
         var count = Config.AvatarCount;
+        var bitset = await LoadBitset(request.CardId, UnlockItemType.Avatar, count, cancellationToken);
+
         var list = new List<AvatarDto>();
         for (int i = 0; i < count; i++)
         {
@@ -25,13 +30,13 @@ public class ReadAvatarQueryHandler : RequestHandlerBase<ReadAvatarQuery, string
                 Created = "2013-01-01 08:00:00",
                 Modified = "2013-01-01 08:00:00",
                 NewFlag = 0,
-                UseFlag = 1
+                UseFlag = bitset is null ? 1 : BitsetHelper.IsUnlocked(bitset, i + 1) ? 1 : 0
             };
             list.Add(avatar);
         }
 
         var result = list.SerializeCardDataList(AVATAR_XPATH);
 
-        return Task.FromResult(new ServiceResult<string>(result));
+        return new ServiceResult<string>(result);
     }
 }

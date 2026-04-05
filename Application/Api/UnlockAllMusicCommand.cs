@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
+using Application.Common.Helpers;
+using Domain.Entities;
 using Domain.Enums;
 using Microsoft.Extensions.Logging;
 
@@ -11,7 +13,7 @@ public class UnlockAllMusicCommandHandler : RequestHandlerBase<UnlockAllMusicCom
     private readonly ILogger<UnlockAllMusicCommandHandler> logger;
 
     public UnlockAllMusicCommandHandler(ICardDependencyAggregate aggregate,
-        ILogger<UnlockAllMusicCommandHandler>                    logger) : base(aggregate)
+        ILogger<UnlockAllMusicCommandHandler> logger) : base(aggregate)
     {
         this.logger = logger;
     }
@@ -29,6 +31,34 @@ public class UnlockAllMusicCommandHandler : RequestHandlerBase<UnlockAllMusicCom
             return ServiceResult.Failed<bool>(ServiceError.CustomMessage("Unlock failed"));
         }
 
+        // When lock system is enabled, set all bits in the Music bitmap
+        if (UnlockConfig.EnableLockSystem)
+        {
+            var maxMusicId = await MusicDbContext.MusicUnlocks.AnyAsync(cancellationToken)
+                ? await MusicDbContext.MusicUnlocks.MaxAsync(m => (int)m.MusicId, cancellationToken)
+                : 0;
+
+            if (maxMusicId > 0)
+            {
+                var typeInt = (int)UnlockItemType.Music;
+                var state = await CardDbContext.PlayerUnlockStates
+                    .FirstOrDefaultAsync(s => s.CardId == request.CardId && s.ItemType == typeInt, cancellationToken);
+
+                if (state is null)
+                {
+                    state = new PlayerUnlockState
+                    {
+                        CardId = request.CardId,
+                        ItemType = typeInt
+                    };
+                    CardDbContext.PlayerUnlockStates.Add(state);
+                }
+
+                state.UnlockedBitset = BitsetHelper.Serialize(BitsetHelper.CreateAllOnes(maxMusicId));
+            }
+        }
+
+        // Also upsert CardDetail rows for compatibility
         var unlockables = Config.UnlockRewards
             .Where(config => config.RewardType == RewardType.Music)
             .Select(config => new CardDetailDto

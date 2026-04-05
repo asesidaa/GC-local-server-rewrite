@@ -1,0 +1,6 @@
+{
+  "Unlock": {
+    "EnableLockSystem": false,
+    "DefaultCoins": 900000
+  }
+}

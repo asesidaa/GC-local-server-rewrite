@@ -1,0 +1,231 @@
+@page "/Admin/DefaultUnlocks"
+@inject HttpClient Client
+@inject IDataService DataService
+@inject ISnackbar Snackbar
+
+<PageTitle>Default Unlock Configuration</PageTitle>
+
+<MudBreadcrumbs Items="breadcrumbs" Class="px-0"/>
+
+<MudText Typo="Typo.h4" Class="mb-4">Default Unlock Configuration</MudText>
+<MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-4">
+    Configure which items are unlocked by default for new players.
+</MudText>
+
+<MudTabs Rounded="true" ApplyEffectsToContainer="true" TabPanelsClass="pa-4" @bind-ActivePanelIndex="activePanelIndex">
+    <MudTabPanel Text="Avatar" OnClick="() => LoadTab(0)">
+        @RenderItemGrid(0)
+    </MudTabPanel>
+    <MudTabPanel Text="Navigator" OnClick="() => LoadTab(1)">
+        @RenderItemGrid(1)
+    </MudTabPanel>
+    <MudTabPanel Text="Item" OnClick="() => LoadTab(2)">
+        @RenderItemGrid(2)
+    </MudTabPanel>
+    <MudTabPanel Text="Skin" OnClick="() => LoadTab(3)">
+        @RenderItemGrid(3)
+    </MudTabPanel>
+    <MudTabPanel Text="Sound Effect" OnClick="() => LoadTab(4)">
+        @RenderItemGrid(4)
+    </MudTabPanel>
+    <MudTabPanel Text="Title" OnClick="() => LoadTab(5)">
+        @RenderItemGrid(5)
+    </MudTabPanel>
+    <MudTabPanel Text="Music" OnClick="() => LoadTab(6)">
+        @RenderItemGrid(6)
+    </MudTabPanel>
+</MudTabs>
+
+@code {
+    private int activePanelIndex;
+    private readonly Dictionary<int, TabData> tabDataMap = new();
+    private readonly string[] typeNames = ["Avatar", "Navigator", "Item", "Skin", "SoundEffect", "Title", "Music"];
+    private List<MusicItemDto>? musicList;
+
+    private List<BreadcrumbItem> breadcrumbs =
+    [
+        new BreadcrumbItem("Admin", href: null, disabled: true),
+        new BreadcrumbItem("Default Unlocks", href: null, disabled: true)
+    ];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadTab(0);
+    }
+
+    private async Task LoadTab(int typeIndex)
+    {
+        if (tabDataMap.ContainsKey(typeIndex)) return;
+
+        var typeName = typeNames[typeIndex];
+        tabDataMap[typeIndex] = new TabData { IsLoading = true };
+
+        var result = await Client.GetFromJsonAsync<ServiceResult<DefaultUnlockDetailDto>>($"api/DefaultUnlock/{typeName}");
+        if (result is { Succeeded: true, Data: not null })
+        {
+            tabDataMap[typeIndex].Bitset = result.Data.Bitset;
+            tabDataMap[typeIndex].TotalCount = result.Data.TotalCount;
+            tabDataMap[typeIndex].Items = await GetItemsForType(typeIndex);
+        }
+
+        tabDataMap[typeIndex].IsLoading = false;
+        StateHasChanged();
+    }
+
+    private async Task<List<ItemInfo>> GetItemsForType(int typeIndex)
+    {
+        return typeIndex switch
+        {
+            0 => DataService.GetAvatarsSortedById().Select(a => new ItemInfo((int)a.AvatarId, a.AvatarName)).ToList(),
+            1 => DataService.GetNavigatorsSortedById().Select(n => new ItemInfo((int)n.Id, n.NavigatorName)).ToList(),
+            2 => DataService.GetItemsSortedById().Select(i => new ItemInfo((int)i.Id, i.ItemName)).ToList(),
+            3 => DataService.GetSkinsSortedById().Select(s => new ItemInfo((int)s.Id, s.SkinName)).ToList(),
+            4 => DataService.GetSoundEffectsSortedById().Select(s => new ItemInfo((int)s.Id, s.SoundEffectName)).ToList(),
+            5 => DataService.GetTitlesSortedById().Select(t => new ItemInfo((int)t.Id, t.TitleName)).ToList(),
+            6 => await GetMusicItems(),
+            _ => []
+        };
+    }
+
+    private async Task<List<ItemInfo>> GetMusicItems()
+    {
+        if (musicList is null)
+        {
+            var result = await Client.GetFromJsonAsync<ServiceResult<List<MusicItemDto>>>("api/Music");
+            musicList = result is { Succeeded: true } ? result.Data ?? [] : [];
+        }
+        return musicList.Where(m => m.UseFlag).Select(m => new ItemInfo((int)m.MusicId, $"{m.Title} - {m.Artist ?? ""}")).ToList();
+    }
+
+    private RenderFragment RenderItemGrid(int typeIndex) => builder =>
+    {
+        if (!tabDataMap.TryGetValue(typeIndex, out var data) || data.IsLoading)
+        {
+            builder.OpenComponent<MudProgressLinear>(0);
+            builder.AddAttribute(1, "Indeterminate", true);
+            builder.CloseComponent();
+            return;
+        }
+
+        if (data.Items is null || data.Items.Count == 0) return;
+
+        // Search field for large lists
+        if (data.Items.Count > 50)
+        {
+            builder.OpenComponent<MudTextField<string>>(10);
+            builder.AddAttribute(11, "Value", data.SearchText);
+            builder.AddAttribute(12, "ValueChanged", EventCallback.Factory.Create<string>(this, v =>
+            {
+                data.SearchText = v;
+                StateHasChanged();
+            }));
+            builder.AddAttribute(13, "Placeholder", "Search...");
+            builder.AddAttribute(14, "Adornment", Adornment.Start);
+            builder.AddAttribute(15, "AdornmentIcon", Icons.Material.Filled.Search);
+            builder.AddAttribute(16, "Immediate", true);
+            builder.AddAttribute(17, "Class", "mb-4");
+            builder.CloseComponent();
+        }
+
+        var items = data.Items;
+        if (!string.IsNullOrEmpty(data.SearchText) && data.Items.Count > 50)
+        {
+            items = items.Where(i => i.Name.Contains(data.SearchText, StringComparison.OrdinalIgnoreCase)
+                                     || i.Id.ToString() == data.SearchText).ToList();
+        }
+
+        builder.OpenComponent<MudTable<ItemInfo>>(20);
+        builder.AddAttribute(21, "Items", items);
+        builder.AddAttribute(22, "Dense", true);
+        builder.AddAttribute(23, "Hover", true);
+        builder.AddAttribute(24, "FixedHeader", true);
+        builder.AddAttribute(25, "Height", data.Items.Count > 20 ? "60vh" : null);
+        builder.AddAttribute(26, "Virtualize", data.Items.Count > 200);
+        builder.AddAttribute(27, "HeaderContent", (RenderFragment)(hb =>
+        {
+            hb.OpenComponent<MudTh>(0);
+            hb.AddAttribute(1, "ChildContent", (RenderFragment)(b => b.AddContent(0, "ID")));
+            hb.CloseComponent();
+            hb.OpenComponent<MudTh>(2);
+            hb.AddAttribute(3, "ChildContent", (RenderFragment)(b => b.AddContent(0, "Name")));
+            hb.CloseComponent();
+            hb.OpenComponent<MudTh>(4);
+            hb.AddAttribute(5, "ChildContent", (RenderFragment)(b => b.AddContent(0, "Unlocked")));
+            hb.CloseComponent();
+        }));
+        builder.AddAttribute(28, "RowTemplate", (RenderFragment<ItemInfo>)(item => rb =>
+        {
+            var isUnlocked = data.Bitset is not null && BitsetUtils.IsUnlocked(data.Bitset, item.Id);
+            rb.OpenComponent<MudTd>(0);
+            rb.AddAttribute(1, "DataLabel", "ID");
+            rb.AddAttribute(2, "ChildContent", (RenderFragment)(b => b.AddContent(0, item.Id)));
+            rb.CloseComponent();
+            rb.OpenComponent<MudTd>(3);
+            rb.AddAttribute(4, "DataLabel", "Name");
+            rb.AddAttribute(5, "ChildContent", (RenderFragment)(b => b.AddContent(0, item.Name)));
+            rb.CloseComponent();
+            rb.OpenComponent<MudTd>(6);
+            rb.AddAttribute(7, "DataLabel", "Unlocked");
+            rb.AddAttribute(8, "ChildContent", (RenderFragment)(b =>
+            {
+                b.OpenComponent<MudSwitch<bool>>(0);
+                b.AddAttribute(1, "Value", isUnlocked);
+                b.AddAttribute(2, "ValueChanged", EventCallback.Factory.Create<bool>(this,
+                    async (val) => await ToggleItem(typeIndex, item.Id, val)));
+                b.AddAttribute(3, "Color", Color.Success);
+                b.CloseComponent();
+            }));
+            rb.CloseComponent();
+        }));
+        builder.AddAttribute(29, "PagerContent", (RenderFragment)(pb =>
+        {
+            pb.OpenComponent<MudTablePager>(0);
+            pb.AddAttribute(1, "PageSizeOptions", new[] { 25, 50, 100, 500 });
+            pb.CloseComponent();
+        }));
+        builder.CloseComponent();
+    };
+
+    private async Task ToggleItem(int typeIndex, int itemId, bool unlock)
+    {
+        var typeName = typeNames[typeIndex];
+        HttpResponseMessage response;
+
+        if (unlock)
+        {
+            response = await Client.PostAsync($"api/DefaultUnlock/{typeName}/{itemId}", null);
+        }
+        else
+        {
+            response = await Client.DeleteAsync($"api/DefaultUnlock/{typeName}/{itemId}");
+        }
+
+        var result = await response.Content.ReadFromJsonAsync<ServiceResult<bool>>();
+
+        if (result is { Succeeded: true })
+        {
+            // Reload bitset to reflect the change
+            var bitsetResult = await Client.GetFromJsonAsync<ServiceResult<DefaultUnlockDetailDto>>($"api/DefaultUnlock/{typeName}");
+            if (bitsetResult is { Succeeded: true, Data: not null } && tabDataMap.TryGetValue(typeIndex, out var data))
+            {
+                data.Bitset = bitsetResult.Data.Bitset;
+                StateHasChanged();
+            }
+        }
+        else
+        {
+            Snackbar.Add(result?.Error?.Message ?? "Toggle failed", Severity.Error);
+        }
+    }
+
+    private class TabData
+    {
+        public bool IsLoading { get; set; }
+        public long[]? Bitset { get; set; }
+        public int TotalCount { get; set; }
+        public List<ItemInfo>? Items { get; set; }
+        public string SearchText { get; set; } = string.Empty;
+    }
+
+    private record ItemInfo(int Id, string Name);
+}

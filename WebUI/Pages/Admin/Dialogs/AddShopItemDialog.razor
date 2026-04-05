@@ -1,0 +1,79 @@
+@inject HttpClient Client
+@inject ISnackbar Snackbar
+
+<MudDialog>
+    <DialogContent>
+        <MudSelect T="string" @bind-Value="selectedItemType" Label="Item Type" Variant="Variant.Outlined" Class="mb-4">
+            <MudSelectItem Value="@("Avatar")">Avatar</MudSelectItem>
+            <MudSelectItem Value="@("Navigator")">Navigator</MudSelectItem>
+            <MudSelectItem Value="@("Item")">Item</MudSelectItem>
+            <MudSelectItem Value="@("Skin")">Skin</MudSelectItem>
+            <MudSelectItem Value="@("SoundEffect")">Sound Effect</MudSelectItem>
+            <MudSelectItem Value="@("Title")">Title</MudSelectItem>
+            <MudSelectItem Value="@("Music")">Music</MudSelectItem>
+        </MudSelect>
+
+        <MudNumericField T="int" @bind-Value="itemId" Label="Item ID" Variant="Variant.Outlined" Min="1" Class="mb-4"/>
+        <MudNumericField T="int" @bind-Value="coinCost" Label="Coin Cost" Variant="Variant.Outlined" Min="0" Class="mb-4"/>
+
+        @if (!string.IsNullOrEmpty(error))
+        {
+            <MudAlert Severity="Severity.Error" Class="mt-2">@error</MudAlert>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit" Disabled="isSubmitting || string.IsNullOrEmpty(selectedItemType)">
+            @if (isSubmitting)
+            {
+                <MudProgressCircular Size="Size.Small" Indeterminate="true" Class="ms-n1"/>
+                <MudText Class="ms-2">Adding...</MudText>
+            }
+            else
+            {
+                <MudText>Add</MudText>
+            }
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    public required IMudDialogInstance MudDialog { get; set; }
+
+    private string selectedItemType = string.Empty;
+    private int itemId = 1;
+    private int coinCost = 100;
+    private string error = string.Empty;
+    private bool isSubmitting;
+
+    private async Task Submit()
+    {
+        isSubmitting = true;
+        error = string.Empty;
+
+        var dto = new ShopItemDto
+        {
+            ItemType = selectedItemType,
+            ItemId = itemId,
+            CoinCost = coinCost
+        };
+
+        var response = await Client.PostAsJsonAsync("api/Shop", dto);
+        var result = await response.Content.ReadFromJsonAsync<ServiceResult<bool>>();
+
+        if (result is { Succeeded: true })
+        {
+            Snackbar.Add("Shop item added!", Severity.Success);
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        else
+        {
+            error = result?.Error?.Message ?? "Failed to add shop item";
+        }
+
+        isSubmitting = false;
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}

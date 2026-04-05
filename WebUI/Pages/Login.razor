@@ -1,0 +1,151 @@
+@page "/Login"
+@inject AuthStateService AuthState
+@inject HttpClient Client
+@inject NavigationManager Navigation
+
+<PageTitle>Login</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Small">
+    <MudPaper Elevation="3" Class="pa-8 mt-8">
+        <MudText Typo="Typo.h4" Class="mb-6" Align="Align.Center">Login</MudText>
+
+        <MudTabs Rounded="true" ApplyEffectsToContainer="true" TabPanelsClass="pa-6">
+            <MudTabPanel Text="Admin" Icon="@Icons.Material.Filled.AdminPanelSettings">
+                <MudTextField @bind-Value="adminPassword"
+                              Label="Admin Password"
+                              InputType="InputType.Password"
+                              Variant="Variant.Outlined"
+                              Class="mb-4"
+                              OnKeyDown="OnAdminKeyDown"/>
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           FullWidth="true"
+                           OnClick="LoginAdmin"
+                           Disabled="isLoading">
+                    @if (isLoading)
+                    {
+                        <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
+                        <MudText Class="ms-2">Logging in...</MudText>
+                    }
+                    else
+                    {
+                        <MudText>Login as Admin</MudText>
+                    }
+                </MudButton>
+            </MudTabPanel>
+            <MudTabPanel Text="Card" Icon="@Icons.Material.Filled.CreditCard">
+                <MudSelect T="long?"
+                           @bind-Value="selectedCardId"
+                           Label="Select Card"
+                           Variant="Variant.Outlined"
+                           Class="mb-4">
+                    @if (cards is not null)
+                    {
+                        @foreach (var card in cards)
+                        {
+                            <MudSelectItem T="long?" Value="card.CardId">@card.PlayerName (@card.CardId)</MudSelectItem>
+                        }
+                    }
+                </MudSelect>
+                <MudTextField @bind-Value="cardAccessCode"
+                              Label="Access Code"
+                              InputType="InputType.Password"
+                              Variant="Variant.Outlined"
+                              Class="mb-4"
+                              OnKeyDown="OnCardKeyDown"/>
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           FullWidth="true"
+                           OnClick="LoginCard"
+                           Disabled="isLoading || selectedCardId is null">
+                    @if (isLoading)
+                    {
+                        <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
+                        <MudText Class="ms-2">Logging in...</MudText>
+                    }
+                    else
+                    {
+                        <MudText>Login as Player</MudText>
+                    }
+                </MudButton>
+            </MudTabPanel>
+        </MudTabs>
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <MudAlert Severity="Severity.Error" Class="mt-4">@errorMessage</MudAlert>
+        }
+    </MudPaper>
+</MudContainer>
+
+@code {
+    private string adminPassword = string.Empty;
+    private long? selectedCardId;
+    private string cardAccessCode = string.Empty;
+    private string errorMessage = string.Empty;
+    private bool isLoading;
+    private List<ClientCardDto>? cards;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthState.IsAuthenticated)
+        {
+            Navigation.NavigateTo("/");
+            return;
+        }
+
+        var result = await Client.GetFromJsonAsync<ServiceResult<List<ClientCardDto>>>("api/Profiles");
+        if (result is { Succeeded: true })
+        {
+            cards = result.Data;
+        }
+    }
+
+    private async Task LoginAdmin()
+    {
+        isLoading = true;
+        errorMessage = string.Empty;
+
+        var result = await AuthState.LoginAdminAsync(adminPassword);
+        if (result is { Succeeded: true })
+        {
+            Navigation.NavigateTo("/");
+        }
+        else
+        {
+            errorMessage = result?.Error?.Message ?? "Login failed";
+        }
+
+        isLoading = false;
+    }
+
+    private async Task LoginCard()
+    {
+        if (selectedCardId is null) return;
+
+        isLoading = true;
+        errorMessage = string.Empty;
+
+        var result = await AuthState.LoginCardAsync(selectedCardId.Value, cardAccessCode);
+        if (result is { Succeeded: true })
+        {
+            Navigation.NavigateTo($"/Cards/Option/{selectedCardId.Value}");
+        }
+        else
+        {
+            errorMessage = result?.Error?.Message ?? "Login failed";
+        }
+
+        isLoading = false;
+    }
+
+    private async Task OnAdminKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter") await LoginAdmin();
+    }
+
+    private async Task OnCardKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter") await LoginCard();
+    }
+}

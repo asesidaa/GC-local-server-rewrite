@@ -1,4 +1,5 @@
 ﻿using Application.Api;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models;
 
@@ -6,6 +7,7 @@ namespace MainServer.Controllers.API;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class PlayOptionController : BaseController<PlayOptionController>
 {
     [HttpGet("{cardId:long}")]
