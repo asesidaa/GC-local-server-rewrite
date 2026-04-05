@@ -54,3 +54,19 @@ jobs:
         with:
           name: DatParser-win-x64
           path: publish/DatParser/
+
+      - name: Clean up old artifacts
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          # Get run IDs for this workflow, skip the 3 most recent, delete artifacts from the rest
+          old_runs=$(gh run list --workflow build.yml --json databaseId --jq '.[3:][].databaseId')
+          for run_id in $old_runs; do
+            echo "Deleting artifacts from run $run_id"
+            artifact_ids=$(gh api "repos/${{ github.repository }}/actions/runs/$run_id/artifacts" --jq '.artifacts[].id' 2>/dev/null || true)
+            for artifact_id in $artifact_ids; do
+              gh api -X DELETE "repos/${{ github.repository }}/actions/artifacts/$artifact_id" 2>/dev/null || true
+            done
+          done
