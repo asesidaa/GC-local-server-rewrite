@@ -2,15 +2,15 @@ using Shared.Dto.Api;
 
 namespace Application.Api;
 
-public record GetPlayerCoinsQuery(long CardId) : IRequestWrapper<PlayerCoinDto>;
+public record GetPlayerCoinsQuery(long CardId) : IQueryWrapper<PlayerCoinDto>;
 
-public class GetPlayerCoinsQueryHandler : RequestHandlerBase<GetPlayerCoinsQuery, PlayerCoinDto>
+public class GetPlayerCoinsQueryHandler : QueryHandlerBase<GetPlayerCoinsQuery, PlayerCoinDto>
 {
     public GetPlayerCoinsQueryHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {
     }
 
-    public override async Task<ServiceResult<PlayerCoinDto>> Handle(GetPlayerCoinsQuery request,
+    public override async ValueTask<ServiceResult<PlayerCoinDto>> Handle(GetPlayerCoinsQuery request,
         CancellationToken cancellationToken)
     {
         var coin = await CardDbContext.PlayerCoins

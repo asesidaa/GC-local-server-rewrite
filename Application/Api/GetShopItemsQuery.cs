@@ -3,15 +3,15 @@ using Shared.Dto.Api;
 
 namespace Application.Api;
 
-public record GetShopItemsQuery : IRequestWrapper<List<ShopItemDto>>;
+public record GetShopItemsQuery : IQueryWrapper<List<ShopItemDto>>;
 
-public class GetShopItemsQueryHandler : RequestHandlerBase<GetShopItemsQuery, List<ShopItemDto>>
+public class GetShopItemsQueryHandler : QueryHandlerBase<GetShopItemsQuery, List<ShopItemDto>>
 {
     public GetShopItemsQueryHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {
     }
 
-    public override async Task<ServiceResult<List<ShopItemDto>>> Handle(GetShopItemsQuery request,
+    public override async ValueTask<ServiceResult<List<ShopItemDto>>> Handle(GetShopItemsQuery request,
         CancellationToken cancellationToken)
     {
         var shopItems = await CardDbContext.ShopItems

@@ -1,9 +1,9 @@
 namespace Application.Game.Card.Read;
 
 
-public record ReadCoinQuery(long CardId) : IRequestWrapper<string>;
+public record ReadCoinQuery(long CardId) : IQueryWrapper<string>;
 
-public class ReadCoinQueryHandler : RequestHandlerBase<ReadCoinQuery, string>
+public class ReadCoinQueryHandler : QueryHandlerBase<ReadCoinQuery, string>
 {
     private const string COIN_XPATH = "/root/coin";
 
@@ -11,7 +11,7 @@ public class ReadCoinQueryHandler : RequestHandlerBase<ReadCoinQuery, string>
     {
     }
 
-    public override async Task<ServiceResult<string>> Handle(ReadCoinQuery request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<string>> Handle(ReadCoinQuery request, CancellationToken cancellationToken)
     {
         var dto = new CoinDto
         {

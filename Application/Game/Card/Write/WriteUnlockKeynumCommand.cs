@@ -1,14 +1,14 @@
 namespace Application.Game.Card.Write;
 
-public record WriteUnlockKeynumCommand(long CardId, string Data) : IRequestWrapper<string>;
+public record WriteUnlockKeynumCommand(long CardId, string Data) : ICommandWrapper<string>;
 
-public class WriteUnlockKeynumCommandHandler : RequestHandlerBase<WriteUnlockKeynumCommand, string>
+public class WriteUnlockKeynumCommandHandler : CommandHandlerBase<WriteUnlockKeynumCommand, string>
 {
     public WriteUnlockKeynumCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate) {}
 
-    public override Task<ServiceResult<string>> Handle(WriteUnlockKeynumCommand request, CancellationToken cancellationToken)
+    public override ValueTask<ServiceResult<string>> Handle(WriteUnlockKeynumCommand request, CancellationToken cancellationToken)
     {
         // TODO: Add proper implementation
-        return Task.FromResult(new ServiceResult<string>(request.Data));
+        return ValueTask.FromResult(new ServiceResult<string>(request.Data));
     }
 }

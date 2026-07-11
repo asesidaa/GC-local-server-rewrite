@@ -5,9 +5,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Game.Card.Management;
 
-public record CardRegisterCommand(long CardId, string Data) : IRequestWrapper<string>;
+public record CardRegisterCommand(long CardId, string Data) : ICommandWrapper<string>;
 
-public class RegisterCommandHandler : RequestHandlerBase<CardRegisterCommand, string>
+public class RegisterCommandHandler : CommandHandlerBase<CardRegisterCommand, string>
 {
     private readonly ILogger<RegisterCommandHandler> logger;
     public RegisterCommandHandler(ICardDependencyAggregate aggregate, ILogger<RegisterCommandHandler> logger) : base(aggregate)
@@ -15,7 +15,7 @@ public class RegisterCommandHandler : RequestHandlerBase<CardRegisterCommand, st
         this.logger = logger;
     }
 
-    public override async Task<ServiceResult<string>> Handle(CardRegisterCommand request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<string>> Handle(CardRegisterCommand request, CancellationToken cancellationToken)
     {
         var exists = CardDbContext.CardMains.Any(card => card.CardId == request.CardId);
         if (exists)

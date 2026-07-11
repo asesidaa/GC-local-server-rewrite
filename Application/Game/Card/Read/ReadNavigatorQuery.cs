@@ -4,9 +4,9 @@ using Domain.Enums;
 namespace Application.Game.Card.Read;
 
 
-public record ReadNavigatorQuery(long CardId) : IRequestWrapper<string>;
+public record ReadNavigatorQuery(long CardId) : IQueryWrapper<string>;
 
-public class ReadNavigatorQueryHandler : RequestHandlerBase<ReadNavigatorQuery, string>
+public class ReadNavigatorQueryHandler : QueryHandlerBase<ReadNavigatorQuery, string>
 {
     private const string NAVIGATOR_XPATH = "/root/navigator/record";
 
@@ -14,7 +14,7 @@ public class ReadNavigatorQueryHandler : RequestHandlerBase<ReadNavigatorQuery, 
     {
     }
 
-    public override async Task<ServiceResult<string>> Handle(ReadNavigatorQuery request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<string>> Handle(ReadNavigatorQuery request, CancellationToken cancellationToken)
     {
         var count = Config.NavigatorCount;
         var bitset = await LoadBitset(request.CardId, UnlockItemType.Navigator, count, cancellationToken);

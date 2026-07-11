@@ -5,15 +5,15 @@ using Shared.Dto.Api;
 
 namespace Application.Api;
 
-public record GetUnlockStateQuery(long CardId) : IRequestWrapper<List<UnlockStateDto>>;
+public record GetUnlockStateQuery(long CardId) : IQueryWrapper<List<UnlockStateDto>>;
 
-public class GetUnlockStateQueryHandler : RequestHandlerBase<GetUnlockStateQuery, List<UnlockStateDto>>
+public class GetUnlockStateQueryHandler : QueryHandlerBase<GetUnlockStateQuery, List<UnlockStateDto>>
 {
     public GetUnlockStateQueryHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {
     }
 
-    public override async Task<ServiceResult<List<UnlockStateDto>>> Handle(GetUnlockStateQuery request,
+    public override async ValueTask<ServiceResult<List<UnlockStateDto>>> Handle(GetUnlockStateQuery request,
         CancellationToken cancellationToken)
     {
         var playerStates = await CardDbContext.PlayerUnlockStates

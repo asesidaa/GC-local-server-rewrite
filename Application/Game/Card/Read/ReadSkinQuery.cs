@@ -4,9 +4,9 @@ using Domain.Enums;
 namespace Application.Game.Card.Read;
 
 
-public record ReadSkinQuery(long CardId) : IRequestWrapper<string>;
+public record ReadSkinQuery(long CardId) : IQueryWrapper<string>;
 
-public class ReadSkinQueryHandler : RequestHandlerBase<ReadSkinQuery, string>
+public class ReadSkinQueryHandler : QueryHandlerBase<ReadSkinQuery, string>
 {
     private const string SKIN_XPATH = "/root/skin/record";
 
@@ -14,7 +14,7 @@ public class ReadSkinQueryHandler : RequestHandlerBase<ReadSkinQuery, string>
     {
     }
 
-    public override async Task<ServiceResult<string>> Handle(ReadSkinQuery request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<string>> Handle(ReadSkinQuery request, CancellationToken cancellationToken)
     {
         var count = Config.SkinCount;
         var bitset = await LoadBitset(request.CardId, UnlockItemType.Skin, count, cancellationToken);

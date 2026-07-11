@@ -1,15 +1,15 @@
 namespace Application.Game.Card.OnlineMatching;
 
-public record UploadOnlineMatchingResultCommand(long CardId, string Data) : IRequestWrapper<string>;
+public record UploadOnlineMatchingResultCommand(long CardId, string Data) : ICommandWrapper<string>;
 
-public class UploadOnlineMatchingResultCommandHandler : IRequestHandlerWrapper<UploadOnlineMatchingResultCommand, string>
+public class UploadOnlineMatchingResultCommandHandler : ICommandHandlerWrapper<UploadOnlineMatchingResultCommand, string>
 {
     private const string XPATH = "/root/online_battle_result";
 
-    public Task<ServiceResult<string>> Handle(UploadOnlineMatchingResultCommand request, CancellationToken cancellationToken)
+    public ValueTask<ServiceResult<string>> Handle(UploadOnlineMatchingResultCommand request, CancellationToken cancellationToken)
     {
         var result = new OnlineMatchingResult { Status = 1 }.SerializeCardData(XPATH);
-        return Task.FromResult(new ServiceResult<string>(result));
+        return ValueTask.FromResult(new ServiceResult<string>(result));
     }
 }
 

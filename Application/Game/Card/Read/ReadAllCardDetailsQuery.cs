@@ -5,9 +5,9 @@ using Microsoft.Extensions.Logging;
 namespace Application.Game.Card.Read;
 
 
-public record ReadAllCardDetailsQuery(long CardId) : IRequestWrapper<string>;
+public record ReadAllCardDetailsQuery(long CardId) : IQueryWrapper<string>;
 
-public class ReadAllDetailsQueryHandler : RequestHandlerBase<ReadAllCardDetailsQuery, string>
+public class ReadAllDetailsQueryHandler : QueryHandlerBase<ReadAllCardDetailsQuery, string>
 {
     private const string CARD_DETAILS_XPATH = "/root/card_detail";
     private const string RECORD_XPATH = $"{CARD_DETAILS_XPATH}/record";
@@ -21,7 +21,7 @@ public class ReadAllDetailsQueryHandler : RequestHandlerBase<ReadAllCardDetailsQ
 
     [SuppressMessage("ReSharper.DPA", "DPA0007: Large number of DB records", 
         Justification = "Card details will return all records by design, which results in a large number of DB records")]
-    public override async Task<ServiceResult<string>> Handle(ReadAllCardDetailsQuery request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<string>> Handle(ReadAllCardDetailsQuery request, CancellationToken cancellationToken)
     {
         var exists = await CardDbContext.CardMains.AnyAsync(card => card.CardId == request.CardId, cancellationToken: cancellationToken);
         if (!exists)

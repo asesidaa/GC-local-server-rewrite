@@ -2,15 +2,15 @@ using Shared.Dto.Api;
 
 namespace Application.Api;
 
-public record GetMusicListQuery : IRequestWrapper<List<MusicItemDto>>;
+public record GetMusicListQuery : IQueryWrapper<List<MusicItemDto>>;
 
-public class GetMusicListQueryHandler : RequestHandlerBase<GetMusicListQuery, List<MusicItemDto>>
+public class GetMusicListQueryHandler : QueryHandlerBase<GetMusicListQuery, List<MusicItemDto>>
 {
     public GetMusicListQueryHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {
     }
 
-    public override async Task<ServiceResult<List<MusicItemDto>>> Handle(GetMusicListQuery request,
+    public override async ValueTask<ServiceResult<List<MusicItemDto>>> Handle(GetMusicListQuery request,
         CancellationToken cancellationToken)
     {
         var musicList = await MusicDbContext.MusicUnlocks

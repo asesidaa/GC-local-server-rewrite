@@ -4,15 +4,15 @@ using Shared.Dto.Api;
 
 namespace Application.Api;
 
-public record GetDefaultUnlockStateQuery : IRequestWrapper<List<DefaultUnlockStateDto>>;
+public record GetDefaultUnlockStateQuery : IQueryWrapper<List<DefaultUnlockStateDto>>;
 
-public class GetDefaultUnlockStateQueryHandler : RequestHandlerBase<GetDefaultUnlockStateQuery, List<DefaultUnlockStateDto>>
+public class GetDefaultUnlockStateQueryHandler : QueryHandlerBase<GetDefaultUnlockStateQuery, List<DefaultUnlockStateDto>>
 {
     public GetDefaultUnlockStateQueryHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {
     }
 
-    public override async Task<ServiceResult<List<DefaultUnlockStateDto>>> Handle(GetDefaultUnlockStateQuery request,
+    public override async ValueTask<ServiceResult<List<DefaultUnlockStateDto>>> Handle(GetDefaultUnlockStateQuery request,
         CancellationToken cancellationToken)
     {
         var defaults = await CardDbContext.DefaultUnlockStates

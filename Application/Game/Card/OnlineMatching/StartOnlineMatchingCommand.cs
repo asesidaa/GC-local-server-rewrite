@@ -3,9 +3,9 @@ using Application.Mappers;
 
 namespace Application.Game.Card.OnlineMatching;
 
-public record StartOnlineMatchingCommand(long CardId, string Data) : IRequestWrapper<string>;
+public record StartOnlineMatchingCommand(long CardId, string Data) : ICommandWrapper<string>;
 
-public class StartOnlineMatchingCommandHandler : IRequestHandlerWrapper<StartOnlineMatchingCommand, string>
+public class StartOnlineMatchingCommandHandler : ICommandHandlerWrapper<StartOnlineMatchingCommand, string>
 {
     private readonly IOnlineMatchingService matchingService;
 
@@ -14,7 +14,7 @@ public class StartOnlineMatchingCommandHandler : IRequestHandlerWrapper<StartOnl
         this.matchingService = matchingService;
     }
 
-    public Task<ServiceResult<string>> Handle(StartOnlineMatchingCommand request, CancellationToken cancellationToken)
+    public ValueTask<ServiceResult<string>> Handle(StartOnlineMatchingCommand request, CancellationToken cancellationToken)
     {
         var dto = request.Data.DeserializeCardData<OnlineMatchEntryDto>();
         dto.CardId = request.CardId;
@@ -27,6 +27,6 @@ public class StartOnlineMatchingCommandHandler : IRequestHandlerWrapper<StartOnl
         var entry = dto.DtoToMatchEntry();
         var snapshot = matchingService.JoinOrCreateRoom(entry);
 
-        return Task.FromResult(new ServiceResult<string>(snapshot.SerializeEntries()));
+        return ValueTask.FromResult(new ServiceResult<string>(snapshot.SerializeEntries()));
     }
 }

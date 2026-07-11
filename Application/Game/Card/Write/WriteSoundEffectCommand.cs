@@ -1,14 +1,14 @@
 namespace Application.Game.Card.Write;
 
-public record WriteSoundEffectCommand(long CardId, string Data) : IRequestWrapper<string>;
+public record WriteSoundEffectCommand(long CardId, string Data) : ICommandWrapper<string>;
 
-public class WriteSoundEffectCommandHandler : RequestHandlerBase<WriteSoundEffectCommand, string>
+public class WriteSoundEffectCommandHandler : CommandHandlerBase<WriteSoundEffectCommand, string>
 {
     public WriteSoundEffectCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate) {}
 
-    public override Task<ServiceResult<string>> Handle(WriteSoundEffectCommand request, CancellationToken cancellationToken)
+    public override ValueTask<ServiceResult<string>> Handle(WriteSoundEffectCommand request, CancellationToken cancellationToken)
     {
         // TODO: Add proper implementation
-        return Task.FromResult(new ServiceResult<string>(request.Data));
+        return ValueTask.FromResult(new ServiceResult<string>(request.Data));
     }
 }

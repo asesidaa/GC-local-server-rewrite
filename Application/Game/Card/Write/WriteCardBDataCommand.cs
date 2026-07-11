@@ -1,12 +1,12 @@
-﻿using Domain.Entities;
+using Domain.Entities;
 using Domain.Enums;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Game.Card.Write;
 
-public record WriteCardBDataCommand(long CardId, string Data) : IRequestWrapper<string>;
+public record WriteCardBDataCommand(long CardId, string Data) : ICommandWrapper<string>;
 
-public class WriteBDataCommandHandler : RequestHandlerBase<WriteCardBDataCommand, string>
+public class WriteBDataCommandHandler : CommandHandlerBase<WriteCardBDataCommand, string>
 {
     private readonly ILogger<WriteBDataCommandHandler> logger;
 
@@ -15,7 +15,7 @@ public class WriteBDataCommandHandler : RequestHandlerBase<WriteCardBDataCommand
         this.logger = logger;
     }
 
-    public override async Task<ServiceResult<string>> Handle(WriteCardBDataCommand request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<string>> Handle(WriteCardBDataCommand request, CancellationToken cancellationToken)
     {
         var exists = await CardDbContext.CardMains.AnyAsync(card => card.CardId == request.CardId, cancellationToken: cancellationToken);
         if (!exists)

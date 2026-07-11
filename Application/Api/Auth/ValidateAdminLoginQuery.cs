@@ -3,9 +3,9 @@ using Microsoft.Extensions.Options;
 
 namespace Application.Api.Auth;
 
-public record ValidateAdminLoginQuery(string Password) : IRequestWrapper<bool>;
+public record ValidateAdminLoginQuery(string Password) : IQueryWrapper<bool>;
 
-public class ValidateAdminLoginQueryHandler : IRequestHandlerWrapper<ValidateAdminLoginQuery, bool>
+public class ValidateAdminLoginQueryHandler : IQueryHandlerWrapper<ValidateAdminLoginQuery, bool>
 {
     private readonly WebAuthConfig config;
 
@@ -14,14 +14,14 @@ public class ValidateAdminLoginQueryHandler : IRequestHandlerWrapper<ValidateAdm
         config = options.Value;
     }
 
-    public Task<ServiceResult<bool>> Handle(ValidateAdminLoginQuery request, CancellationToken cancellationToken)
+    public ValueTask<ServiceResult<bool>> Handle(ValidateAdminLoginQuery request, CancellationToken cancellationToken)
     {
         if (string.IsNullOrEmpty(config.AdminPassword))
-            return Task.FromResult(ServiceResult.Failed<bool>(ServiceError.CustomMessage("Admin login is not configured")));
+            return ValueTask.FromResult(ServiceResult.Failed<bool>(ServiceError.CustomMessage("Admin login is not configured")));
 
         var valid = request.Password == config.AdminPassword;
         return valid
-            ? Task.FromResult(new ServiceResult<bool>(true))
-            : Task.FromResult(ServiceResult.Failed<bool>(ServiceError.CustomMessage("Invalid password")));
+            ? ValueTask.FromResult(new ServiceResult<bool>(true))
+            : ValueTask.FromResult(ServiceResult.Failed<bool>(ServiceError.CustomMessage("Invalid password")));
     }
 }

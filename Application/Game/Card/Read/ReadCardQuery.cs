@@ -1,11 +1,11 @@
-﻿using Domain.Enums;
+using Domain.Enums;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Game.Card.Read;
 
-public record ReadCardQuery(long CardId) : IRequestWrapper<string>;
+public record ReadCardQuery(long CardId) : IQueryWrapper<string>;
 
-public class ReadQueryHandler : RequestHandlerBase<ReadCardQuery, string>
+public class ReadQueryHandler : QueryHandlerBase<ReadCardQuery, string>
 {
     private readonly ILogger<ReadQueryHandler> logger;
 
@@ -13,7 +13,7 @@ public class ReadQueryHandler : RequestHandlerBase<ReadCardQuery, string>
         this.logger = logger;
     }
     
-    public override async Task<ServiceResult<string>> Handle(ReadCardQuery request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<string>> Handle(ReadCardQuery request, CancellationToken cancellationToken)
     {
         var card = await CardDbContext.CardMains.FirstOrDefaultAsync(card => card.CardId == request.CardId, cancellationToken: cancellationToken);
         if (card is null)

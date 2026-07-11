@@ -1,12 +1,12 @@
-﻿using Application.Common.Helpers;
+using Application.Common.Helpers;
 
 namespace Application.Game.Rank;
 
-public record GetEventRankQuery() : IRequestWrapper<string>;
+public record GetEventRankQuery() : IQueryWrapper<string>;
 
-public class GetEventRankQueryHandler : IRequestHandlerWrapper<GetEventRankQuery, string>
+public class GetEventRankQueryHandler : IQueryHandlerWrapper<GetEventRankQuery, string>
 {
-    public Task<ServiceResult<string>> Handle(GetEventRankQuery request, CancellationToken cancellationToken)
+    public ValueTask<ServiceResult<string>> Handle(GetEventRankQuery request, CancellationToken cancellationToken)
     {
         var container = new EventRankContainer
         {
@@ -21,7 +21,7 @@ public class GetEventRankQueryHandler : IRequestHandlerWrapper<GetEventRankQuery
             }
         };
 
-        return Task.FromResult(new ServiceResult<string>(container.SerializeCardData()));
+        return ValueTask.FromResult(new ServiceResult<string>(container.SerializeCardData()));
     }
 }
 

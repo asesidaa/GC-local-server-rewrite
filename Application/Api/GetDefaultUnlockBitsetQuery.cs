@@ -4,15 +4,15 @@ using Shared.Dto.Api;
 
 namespace Application.Api;
 
-public record GetDefaultUnlockBitsetQuery(UnlockItemType ItemType) : IRequestWrapper<DefaultUnlockDetailDto>;
+public record GetDefaultUnlockBitsetQuery(UnlockItemType ItemType) : IQueryWrapper<DefaultUnlockDetailDto>;
 
-public class GetDefaultUnlockBitsetQueryHandler : RequestHandlerBase<GetDefaultUnlockBitsetQuery, DefaultUnlockDetailDto>
+public class GetDefaultUnlockBitsetQueryHandler : QueryHandlerBase<GetDefaultUnlockBitsetQuery, DefaultUnlockDetailDto>
 {
     public GetDefaultUnlockBitsetQueryHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {
     }
 
-    public override async Task<ServiceResult<DefaultUnlockDetailDto>> Handle(GetDefaultUnlockBitsetQuery request,
+    public override async ValueTask<ServiceResult<DefaultUnlockDetailDto>> Handle(GetDefaultUnlockBitsetQuery request,
         CancellationToken cancellationToken)
     {
         var itemCount = await GetItemCountAsync(request.ItemType, cancellationToken);

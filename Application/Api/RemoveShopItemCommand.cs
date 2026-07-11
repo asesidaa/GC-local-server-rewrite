@@ -1,14 +1,14 @@
 namespace Application.Api;
 
-public record RemoveShopItemCommand(int ShopItemId) : IRequestWrapper<bool>;
+public record RemoveShopItemCommand(int ShopItemId) : ICommandWrapper<bool>;
 
-public class RemoveShopItemCommandHandler : RequestHandlerBase<RemoveShopItemCommand, bool>
+public class RemoveShopItemCommandHandler : CommandHandlerBase<RemoveShopItemCommand, bool>
 {
     public RemoveShopItemCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {
     }
 
-    public override async Task<ServiceResult<bool>> Handle(RemoveShopItemCommand request,
+    public override async ValueTask<ServiceResult<bool>> Handle(RemoveShopItemCommand request,
         CancellationToken cancellationToken)
     {
         var shopItem = await CardDbContext.ShopItems

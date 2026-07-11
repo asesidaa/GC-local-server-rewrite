@@ -1,11 +1,11 @@
-﻿using System.Text;
-using MediatR;
+using System.Text;
+using Mediator;
 
 namespace Application.Game.Server;
 
-public record GetDataQuery(string Host, string Scheme) : IRequest<string>;
+public record GetDataQuery(string Host, string Scheme) : IQuery<string>;
 
-public class GetDataQueryHandler : IRequestHandler<GetDataQuery, string>
+public class GetDataQueryHandler : IQueryHandler<GetDataQuery, string>
 {
     private readonly IEventManagerService eventManagerService;
 
@@ -14,15 +14,15 @@ public class GetDataQueryHandler : IRequestHandler<GetDataQuery, string>
         this.eventManagerService = eventManagerService;
     }
 
-    public Task<string> Handle(GetDataQuery request, CancellationToken cancellationToken)
+    public ValueTask<string> Handle(GetDataQuery request, CancellationToken cancellationToken)
     {
         var response = "count=0\n" +
                        "nexttime=180";
         if (!eventManagerService.UseEvents())
         {
-            return Task.FromResult(response);
+            return ValueTask.FromResult(response);
         }
-        
+
         var urlBase = $"{request.Scheme}://{request.Host}/events/";
         var dataString = new StringBuilder();
         var events = eventManagerService.GetEvents();
@@ -41,6 +41,6 @@ public class GetDataQueryHandler : IRequestHandler<GetDataQuery, string>
                    "nexttime=1\n" +
                    $"{dataString}";
 
-        return Task.FromResult(response);
+        return ValueTask.FromResult(response);
     }
 }

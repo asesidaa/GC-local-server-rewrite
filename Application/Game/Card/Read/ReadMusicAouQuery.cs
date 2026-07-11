@@ -3,9 +3,9 @@ using System.Diagnostics.CodeAnalysis;
 namespace Application.Game.Card.Read;
 
 
-public record ReadMusicAouQuery(long CardId) : IRequestWrapper<string>;
+public record ReadMusicAouQuery(long CardId) : IQueryWrapper<string>;
 
-public class ReadMusicAouQueryHandler : RequestHandlerBase<ReadMusicAouQuery, string>
+public class ReadMusicAouQueryHandler : QueryHandlerBase<ReadMusicAouQuery, string>
 {
     private const string MUSIC_AOU_XPATH = "/root/music_aou";
 
@@ -17,7 +17,7 @@ public class ReadMusicAouQueryHandler : RequestHandlerBase<ReadMusicAouQuery, st
 
     [SuppressMessage("ReSharper.DPA", "DPA0007: Large number of DB records", 
         Justification = "To return all musics, the whole table need to be returned")]
-    public override async Task<ServiceResult<string>> Handle(ReadMusicAouQuery request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<string>> Handle(ReadMusicAouQuery request, CancellationToken cancellationToken)
     {
         var musics = await MusicDbContext.MusicAous.ToListAsync(cancellationToken: cancellationToken);
         var dtoList = musics.Select((aou, i) =>

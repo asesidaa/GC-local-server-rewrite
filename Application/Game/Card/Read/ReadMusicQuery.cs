@@ -5,9 +5,9 @@ using Domain.Enums;
 namespace Application.Game.Card.Read;
 
 
-public record ReadMusicQuery(long CardId) : IRequestWrapper<string>;
+public record ReadMusicQuery(long CardId) : IQueryWrapper<string>;
 
-public class ReadMusicQueryHandler : RequestHandlerBase<ReadMusicQuery, string>
+public class ReadMusicQueryHandler : QueryHandlerBase<ReadMusicQuery, string>
 {
     private const string MUSIC_XPATH = "/root/music/record";
     public ReadMusicQueryHandler(ICardDependencyAggregate aggregate) : base(aggregate)
@@ -16,7 +16,7 @@ public class ReadMusicQueryHandler : RequestHandlerBase<ReadMusicQuery, string>
 
     [SuppressMessage("ReSharper.DPA", "DPA0007: Large number of DB records",
         Justification = "To return all musics, the whole table need to be returned")]
-    public override async Task<ServiceResult<string>> Handle(ReadMusicQuery request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<string>> Handle(ReadMusicQuery request, CancellationToken cancellationToken)
     {
         var musics = await MusicDbContext.MusicUnlocks.ToListAsync(cancellationToken: cancellationToken);
 

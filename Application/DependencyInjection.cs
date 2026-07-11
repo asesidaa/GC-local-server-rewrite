@@ -1,8 +1,7 @@
-﻿using System.Reflection;
 using Application.Common.Behaviours;
 using Application.Game.Card;
 using Application.Jobs;
-using MediatR;
+using Mediator;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 
@@ -12,10 +11,18 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services, int refreshIntervalHours = 24)
     {
-        services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+        services.AddMediator(options =>
+        {
+            options.Assemblies = [typeof(DependencyInjection)];
+            options.ServiceLifetime = ServiceLifetime.Scoped;
+            options.PipelineBehaviors =
+            [
+                typeof(LoggingBehaviour<,>),
+                typeof(UnhandledExceptionBehaviour<,>)
+            ];
+        });
 
         services.AddScoped<ICardDependencyAggregate, CardDependencyAggregate>();
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
         services.AddQuartz(q =>
         {
             q.AddJob<UpdatePlayNumRankJob>(options => options.WithIdentity(UpdatePlayNumRankJob.KEY));

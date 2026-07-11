@@ -5,15 +5,15 @@ using Shared.Dto.Api;
 
 namespace Application.Api;
 
-public record PurchaseItemCommand(long CardId, int ShopItemId) : IRequestWrapper<PlayerCoinDto>;
+public record PurchaseItemCommand(long CardId, int ShopItemId) : ICommandWrapper<PlayerCoinDto>;
 
-public class PurchaseItemCommandHandler : RequestHandlerBase<PurchaseItemCommand, PlayerCoinDto>
+public class PurchaseItemCommandHandler : CommandHandlerBase<PurchaseItemCommand, PlayerCoinDto>
 {
     public PurchaseItemCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {
     }
 
-    public override async Task<ServiceResult<PlayerCoinDto>> Handle(PurchaseItemCommand request,
+    public override async ValueTask<ServiceResult<PlayerCoinDto>> Handle(PurchaseItemCommand request,
         CancellationToken cancellationToken)
     {
         // 1. Load shop item

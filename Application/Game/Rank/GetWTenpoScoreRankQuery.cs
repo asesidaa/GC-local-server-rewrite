@@ -1,10 +1,10 @@
-﻿using Application.Common.Helpers;
+using Application.Common.Helpers;
 
 namespace Application.Game.Rank;
 
-public record GetWTenpoScoreRankQuery(int TenpoId, string Param) : IRequestWrapper<string>;
+public record GetWTenpoScoreRankQuery(int TenpoId, string Param) : IQueryWrapper<string>;
 
-public class GetWTenpoScoreRankQueryHandler : IRequestHandlerWrapper<GetWTenpoScoreRankQuery, string>
+public class GetWTenpoScoreRankQueryHandler : IQueryHandlerWrapper<GetWTenpoScoreRankQuery, string>
 {
     private readonly ICardDbContext cardDbContext;
 
@@ -13,7 +13,7 @@ public class GetWTenpoScoreRankQueryHandler : IRequestHandlerWrapper<GetWTenpoSc
         this.cardDbContext = cardDbContext;
     }
 
-    public async Task<ServiceResult<string>> Handle(GetWTenpoScoreRankQuery request, CancellationToken cancellationToken)
+    public async ValueTask<ServiceResult<string>> Handle(GetWTenpoScoreRankQuery request, CancellationToken cancellationToken)
     {
         var param = request.Param.DeserializeCardData<RankParam>();
         if (param.CardId == 0)

@@ -1,33 +1,36 @@
-﻿using MediatR;
+using Mediator;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Common.Behaviours;
 
-public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>
+public sealed class UnhandledExceptionBehaviour<TMessage, TResponse> : IPipelineBehavior<TMessage, TResponse>
+    where TMessage : notnull, IMessage
 {
-    private readonly ILogger<TRequest> logger;
+    private readonly ILogger<TMessage> logger;
 
-    // ReSharper disable once ContextualLoggerProblem
-    public UnhandledExceptionBehaviour(ILogger<TRequest> logger)
+    public UnhandledExceptionBehaviour(ILogger<TMessage> logger)
     {
         this.logger = logger;
     }
 
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,  CancellationToken cancellationToken)
+    public async ValueTask<TResponse> Handle(
+        TMessage message,
+        MessageHandlerDelegate<TMessage, TResponse> next,
+        CancellationToken cancellationToken)
     {
         try
         {
-            return await next();
+            return await next(message, cancellationToken);
         }
         catch (Exception ex)
         {
-            var requestName = typeof(TRequest).Name;
-
-            logger.LogError(ex, "Unhandled Exception for Request {Name} {@Request}", requestName, request);
+            logger.LogError(
+                ex,
+                "Unhandled Exception for Request {Name} {@Request}",
+                typeof(TMessage).Name,
+                message);
 
             throw;
         }
     }
-
 }

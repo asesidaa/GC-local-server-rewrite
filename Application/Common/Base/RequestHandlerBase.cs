@@ -1,19 +1,17 @@
-﻿using Application.Common.Helpers;
+using Application.Common.Helpers;
 using Domain.Config;
 using Domain.Enums;
 
 namespace Application.Common.Base;
 
-public abstract class RequestHandlerBase<TIn, TOut>: IRequestHandlerWrapper<TIn, TOut>
-    where TIn : IRequestWrapper<TOut>
+public abstract class RequestHandlerBase
 {
     protected ICardDbContext CardDbContext { get; }
     protected IMusicDbContext MusicDbContext { get; }
-
     protected GameConfig Config { get; }
     protected UnlockConfig UnlockConfig { get; }
 
-    public RequestHandlerBase(ICardDependencyAggregate aggregate)
+    protected RequestHandlerBase(ICardDependencyAggregate aggregate)
     {
         CardDbContext = aggregate.CardDbContext;
         MusicDbContext = aggregate.MusicDbContext;
@@ -21,11 +19,6 @@ public abstract class RequestHandlerBase<TIn, TOut>: IRequestHandlerWrapper<TIn,
         UnlockConfig = aggregate.UnlockOptions.Value;
     }
 
-    /// <summary>
-    /// Loads the unlock bitset for a player and item type.
-    /// Returns null when the lock system is disabled (meaning everything is unlocked).
-    /// Falls back to default unlock state when no player-specific state exists.
-    /// </summary>
     protected async Task<long[]?> LoadBitset(long cardId, UnlockItemType itemType, int itemCount,
         CancellationToken cancellationToken)
     {
@@ -33,7 +26,6 @@ public abstract class RequestHandlerBase<TIn, TOut>: IRequestHandlerWrapper<TIn,
             return null;
 
         var typeInt = (int)itemType;
-
         var playerState = await CardDbContext.PlayerUnlockStates
             .AsNoTracking()
             .FirstOrDefaultAsync(s => s.CardId == cardId && s.ItemType == typeInt, cancellationToken);
@@ -57,10 +49,6 @@ public abstract class RequestHandlerBase<TIn, TOut>: IRequestHandlerWrapper<TIn,
         return BitsetHelper.EnsureLength(bitset, itemCount);
     }
 
-    /// <summary>
-    /// Gets the item count (bitset size) for a given item type.
-    /// For Music, queries the max MusicId from the database.
-    /// </summary>
     protected async Task<int> GetItemCountAsync(UnlockItemType itemType, CancellationToken cancellationToken) => itemType switch
     {
         UnlockItemType.Avatar => Config.AvatarCount,
@@ -74,6 +62,4 @@ public abstract class RequestHandlerBase<TIn, TOut>: IRequestHandlerWrapper<TIn,
             : 0,
         _ => throw new ArgumentOutOfRangeException(nameof(itemType))
     };
-
-    public abstract Task<ServiceResult<TOut>> Handle(TIn request, CancellationToken cancellationToken);
 }

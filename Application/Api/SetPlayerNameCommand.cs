@@ -1,11 +1,11 @@
-﻿using Application.Common.Helpers;
+using Application.Common.Helpers;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Api;
 
-public record SetPlayerNameCommand(ClientCardDto Card) : IRequestWrapper<bool>;
+public record SetPlayerNameCommand(ClientCardDto Card) : ICommandWrapper<bool>;
 
-public class SetPlayerNameCommandHandler : RequestHandlerBase<SetPlayerNameCommand, bool>
+public class SetPlayerNameCommandHandler : CommandHandlerBase<SetPlayerNameCommand, bool>
 {
     private readonly ILogger<SetPlayerNameCommandHandler> logger;
     public SetPlayerNameCommandHandler(ICardDependencyAggregate aggregate, ILogger<SetPlayerNameCommandHandler> logger) : base(aggregate)
@@ -13,7 +13,7 @@ public class SetPlayerNameCommandHandler : RequestHandlerBase<SetPlayerNameComma
         this.logger = logger;
     }
 
-    public override async Task<ServiceResult<bool>> Handle(SetPlayerNameCommand request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<bool>> Handle(SetPlayerNameCommand request, CancellationToken cancellationToken)
     {
         var card = await CardDbContext.CardMains.FirstOrDefaultAsync(card => card.CardId == request.Card.CardId, cancellationToken: cancellationToken);
 

@@ -4,15 +4,15 @@ using Domain.Enums;
 
 namespace Application.Api;
 
-public record SetUnlockAllCommand(long CardId, UnlockItemType ItemType, bool Unlock) : IRequestWrapper<bool>;
+public record SetUnlockAllCommand(long CardId, UnlockItemType ItemType, bool Unlock) : ICommandWrapper<bool>;
 
-public class SetUnlockAllCommandHandler : RequestHandlerBase<SetUnlockAllCommand, bool>
+public class SetUnlockAllCommandHandler : CommandHandlerBase<SetUnlockAllCommand, bool>
 {
     public SetUnlockAllCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {
     }
 
-    public override async Task<ServiceResult<bool>> Handle(SetUnlockAllCommand request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<bool>> Handle(SetUnlockAllCommand request, CancellationToken cancellationToken)
     {
         var typeInt = (int)request.ItemType;
         var itemCount = await GetItemCountAsync(request.ItemType, cancellationToken);

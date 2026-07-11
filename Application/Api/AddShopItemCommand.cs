@@ -4,15 +4,15 @@ using Shared.Dto.Api;
 
 namespace Application.Api;
 
-public record AddShopItemCommand(UnlockItemType ItemType, int ItemId, int CoinCost) : IRequestWrapper<bool>;
+public record AddShopItemCommand(UnlockItemType ItemType, int ItemId, int CoinCost) : ICommandWrapper<bool>;
 
-public class AddShopItemCommandHandler : RequestHandlerBase<AddShopItemCommand, bool>
+public class AddShopItemCommandHandler : CommandHandlerBase<AddShopItemCommand, bool>
 {
     public AddShopItemCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {
     }
 
-    public override async Task<ServiceResult<bool>> Handle(AddShopItemCommand request,
+    public override async ValueTask<ServiceResult<bool>> Handle(AddShopItemCommand request,
         CancellationToken cancellationToken)
     {
         var itemCount = await GetItemCountAsync(request.ItemType, cancellationToken);

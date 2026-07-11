@@ -4,9 +4,9 @@ using Domain.Enums;
 namespace Application.Game.Card.Read;
 
 
-public record ReadTitleQuery(long CardId) : IRequestWrapper<string>;
+public record ReadTitleQuery(long CardId) : IQueryWrapper<string>;
 
-public class ReadTitleQueryHandler : RequestHandlerBase<ReadTitleQuery, string>
+public class ReadTitleQueryHandler : QueryHandlerBase<ReadTitleQuery, string>
 {
     private const string TITLE_XPATH = "/root/title/record";
 
@@ -14,7 +14,7 @@ public class ReadTitleQueryHandler : RequestHandlerBase<ReadTitleQuery, string>
     {
     }
 
-    public override async Task<ServiceResult<string>> Handle(ReadTitleQuery request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<string>> Handle(ReadTitleQuery request, CancellationToken cancellationToken)
     {
         var count = Config.TitleCount;
         var bitset = await LoadBitset(request.CardId, UnlockItemType.Title, count, cancellationToken);

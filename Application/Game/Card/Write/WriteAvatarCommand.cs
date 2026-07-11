@@ -1,14 +1,14 @@
 namespace Application.Game.Card.Write;
 
-public record WriteAvatarCommand(long CardId, string Data) : IRequestWrapper<string>;
+public record WriteAvatarCommand(long CardId, string Data) : ICommandWrapper<string>;
 
-public class WriteAvatarCommandHandler : RequestHandlerBase<WriteAvatarCommand, string>
+public class WriteAvatarCommandHandler : CommandHandlerBase<WriteAvatarCommand, string>
 {
     public WriteAvatarCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate) {}
 
-    public override Task<ServiceResult<string>> Handle(WriteAvatarCommand request, CancellationToken cancellationToken)
+    public override ValueTask<ServiceResult<string>> Handle(WriteAvatarCommand request, CancellationToken cancellationToken)
     {
         // TODO: Add proper implementation
-        return Task.FromResult(new ServiceResult<string>(request.Data));
+        return ValueTask.FromResult(new ServiceResult<string>(request.Data));
     }
 }

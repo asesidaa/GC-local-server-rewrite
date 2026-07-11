@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using Shared.Models;
 
 namespace Application.Api;
 
-public record GetTotalResultQuery(long CardId) : IRequestWrapper<TotalResultData>;
+public record GetTotalResultQuery(long CardId) : IQueryWrapper<TotalResultData>;
 
-public class GetTotalResultQueryHandler : RequestHandlerBase<GetTotalResultQuery, TotalResultData>
+public class GetTotalResultQueryHandler : QueryHandlerBase<GetTotalResultQuery, TotalResultData>
 {
     private const int S_SCORE = 900000;
     private const int SS_SCORE = 950000;
@@ -18,7 +18,7 @@ public class GetTotalResultQueryHandler : RequestHandlerBase<GetTotalResultQuery
         this.logger = logger;
     }
 
-    public override async Task<ServiceResult<TotalResultData>> Handle(GetTotalResultQuery request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<TotalResultData>> Handle(GetTotalResultQuery request, CancellationToken cancellationToken)
     {
         var card = await CardDbContext.CardMains.FirstOrDefaultAsync(card => card.CardId == request.CardId, cancellationToken);
         if (card is null)

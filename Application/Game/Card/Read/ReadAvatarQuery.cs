@@ -4,9 +4,9 @@ using Domain.Enums;
 namespace Application.Game.Card.Read;
 
 
-public record ReadAvatarQuery(long CardId) : IRequestWrapper<string>;
+public record ReadAvatarQuery(long CardId) : IQueryWrapper<string>;
 
-public class ReadAvatarQueryHandler : RequestHandlerBase<ReadAvatarQuery, string>
+public class ReadAvatarQueryHandler : QueryHandlerBase<ReadAvatarQuery, string>
 {
     private const string AVATAR_XPATH = "/root/avatar/record";
 
@@ -14,7 +14,7 @@ public class ReadAvatarQueryHandler : RequestHandlerBase<ReadAvatarQuery, string
     {
     }
 
-    public override async Task<ServiceResult<string>> Handle(ReadAvatarQuery request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<string>> Handle(ReadAvatarQuery request, CancellationToken cancellationToken)
     {
         var count = Config.AvatarCount;
         var bitset = await LoadBitset(request.CardId, UnlockItemType.Avatar, count, cancellationToken);

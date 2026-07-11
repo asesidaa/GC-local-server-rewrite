@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Application.Api.Auth;
 
-public record SetCardAccessCodeCommand(long CardId, string AccessCode) : IRequestWrapper<bool>;
+public record SetCardAccessCodeCommand(long CardId, string AccessCode) : ICommandWrapper<bool>;
 
-public class SetCardAccessCodeCommandHandler : RequestHandlerBase<SetCardAccessCodeCommand, bool>
+public class SetCardAccessCodeCommandHandler : CommandHandlerBase<SetCardAccessCodeCommand, bool>
 {
     private readonly IPasswordHasher<CardAccessCode> passwordHasher;
 
@@ -15,7 +15,7 @@ public class SetCardAccessCodeCommandHandler : RequestHandlerBase<SetCardAccessC
         this.passwordHasher = passwordHasher;
     }
 
-    public override async Task<ServiceResult<bool>> Handle(SetCardAccessCodeCommand request,
+    public override async ValueTask<ServiceResult<bool>> Handle(SetCardAccessCodeCommand request,
         CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(request.AccessCode))

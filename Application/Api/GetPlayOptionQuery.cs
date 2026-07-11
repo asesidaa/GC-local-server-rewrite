@@ -1,16 +1,16 @@
-﻿using Shared.Models;
+using Shared.Models;
 
 namespace Application.Api;
 
-public record GetPlayOptionQuery(long CardId) : IRequestWrapper<PlayOptionData>;
+public record GetPlayOptionQuery(long CardId) : IQueryWrapper<PlayOptionData>;
 
-public class GetPlayOptionQueryHandler : RequestHandlerBase<GetPlayOptionQuery, PlayOptionData>
+public class GetPlayOptionQueryHandler : QueryHandlerBase<GetPlayOptionQuery, PlayOptionData>
 {
     public GetPlayOptionQueryHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {
     }
 
-    public override async Task<ServiceResult<PlayOptionData>> Handle(GetPlayOptionQuery request,
+    public override async ValueTask<ServiceResult<PlayOptionData>> Handle(GetPlayOptionQuery request,
         CancellationToken                                                               cancellationToken)
     {
         var optionDetail1 = await CardDbContext.CardDetails.FirstOrDefaultAsync(detail =>

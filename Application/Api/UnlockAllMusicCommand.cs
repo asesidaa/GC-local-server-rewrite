@@ -6,9 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Api;
 
-public record UnlockAllMusicCommand(long CardId) : IRequestWrapper<bool>;
+public record UnlockAllMusicCommand(long CardId) : ICommandWrapper<bool>;
 
-public class UnlockAllMusicCommandHandler : RequestHandlerBase<UnlockAllMusicCommand, bool>
+public class UnlockAllMusicCommandHandler : CommandHandlerBase<UnlockAllMusicCommand, bool>
 {
     private readonly ILogger<UnlockAllMusicCommandHandler> logger;
 
@@ -20,7 +20,7 @@ public class UnlockAllMusicCommandHandler : RequestHandlerBase<UnlockAllMusicCom
 
     [SuppressMessage("ReSharper.DPA", "DPA0007: Large number of DB records")]
     [SuppressMessage("ReSharper.DPA", "DPA0006: Large number of DB commands")]
-    public override async Task<ServiceResult<bool>> Handle(UnlockAllMusicCommand request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<bool>> Handle(UnlockAllMusicCommand request, CancellationToken cancellationToken)
     {
         var exists = await CardDbContext.CardDetails.AnyAsync(
             detail => detail.CardId == request.CardId, cancellationToken);

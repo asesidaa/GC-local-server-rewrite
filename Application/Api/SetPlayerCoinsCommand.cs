@@ -3,15 +3,15 @@ using Shared.Dto.Api;
 
 namespace Application.Api;
 
-public record SetPlayerCoinsCommand(PlayerCoinDto Coins) : IRequestWrapper<bool>;
+public record SetPlayerCoinsCommand(PlayerCoinDto Coins) : ICommandWrapper<bool>;
 
-public class SetPlayerCoinsCommandHandler : RequestHandlerBase<SetPlayerCoinsCommand, bool>
+public class SetPlayerCoinsCommandHandler : CommandHandlerBase<SetPlayerCoinsCommand, bool>
 {
     public SetPlayerCoinsCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {
     }
 
-    public override async Task<ServiceResult<bool>> Handle(SetPlayerCoinsCommand request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<bool>> Handle(SetPlayerCoinsCommand request, CancellationToken cancellationToken)
     {
         var coin = await CardDbContext.PlayerCoins
             .FirstOrDefaultAsync(c => c.CardId == request.Coins.CardId, cancellationToken);
