@@ -26,21 +26,27 @@ dotnet ef migrations add <MigrationName> --project Infrastructure --startup-proj
 
 # Run tests
 dotnet test
+
+# Publish MainServer as self-contained single file (win-x64)
+dotnet publish MainServer/MainServer.csproj -c Release -r win-x64 --self-contained true -o publish/MainServer
+
+# Parse game data files to JSON (avatar/navigator/title/item/skin/se)
+dotnet run --project DatParser -- <type> <input.dat> [output.json]
 ```
 
 ## Architecture
 
-**Layered architecture with CQRS via MediatR:**
+**Layered architecture with CQRS via source-generated Mediator:**
 
 ```
 MainServer (ASP.NET Core host)
-  ├── Controllers dispatch to MediatR handlers
+  ├── Controllers dispatch to native Mediator handlers
   ├── Serves WebUI as static Blazor WASM files
   └── References: Application, Infrastructure
 
 Application (business logic)
-  ├── Game/Card/Read/   — MediatR query handlers
-  ├── Game/Card/Write/  — MediatR command handlers
+  ├── Game/Card/Read/   — native query handlers
+  ├── Game/Card/Write/  — native command handlers
   ├── Game/Card/Management/, Session/
   ├── Game/Card/OnlineMatching/ — in-memory matching (no DB, singleton service)
   ├── Api/              — Web UI query/command handlers
@@ -64,11 +70,15 @@ Shared (contracts between server and WebUI)
 WebUI (Blazor WebAssembly, references Shared only)
 
 GCRelayServer (standalone UDP relay, no project references)
+
+DatParser (CLI tool, no project references)
+  └── Parses binary .dat files (avatar/navigator/title/item/skin/SE) into JSON
+      Format specs in doc/parser/*.ksy; sample data in doc/parser/*.dat
 ```
 
 ## Key Patterns
 
-- **Request flow:** HTTP request hits a Controller, which sends a MediatR request. Most handlers inherit `RequestHandlerBase<TIn, TOut>` (provides `ICardDependencyAggregate` for DbContexts and config). Handlers that don't need DB access (e.g., OnlineMatching) implement `IRequestHandlerWrapper<TIn, TOut>` directly.
+- **Request flow:** HTTP requests hit controllers, which send native Mediator commands or queries. Card-dependent handlers inherit `QueryHandlerBase<TQuery, T>` or `CommandHandlerBase<TCommand, T>` for `ICardDependencyAggregate`; lightweight handlers implement `IQueryHandlerWrapper<TQuery, T>` or `ICommandHandlerWrapper<TCommand, T>` directly. `AddApplication()` configures source-generated, scoped dispatch plus logging and exception pipeline behaviors.
 - **CardController** (`MainServer/Controllers/Game/CardController.cs`) is the central game endpoint (`/service/card/cardn.cgi`). A large switch dispatches 40+ card operation types based on `CardCommandType` and `CardRequestType` enums.
 - **Object mapping:** Riok.Mapperly source-generated mappers in `Application/Mappers/` — no reflection.
 - **Return type:** Handlers return `ServiceResult<T>` wrapping either data or `ServiceError`.
@@ -83,6 +93,8 @@ All config files live in `MainServer/Configurations/`. Key ones:
 - `game.json` — avatar/navigator/item/skin/SE/title counts (version-specific)
 - `events.json` — event file list; event files go in `MainServer/wwwroot/events/`
 - `matching.json` — relay server IP/port for online matching
+- `unlock.json` — default unlock settings and coin defaults
+- `webauth.json` — admin password for WebUI auth
 
 ## Gotchas
 
@@ -90,6 +102,11 @@ All config files live in `MainServer/Configurations/`. Key ones:
 - **MudBlazor 9.x**: Requires `<MudPopoverProvider/>` in layout, uses `IMudDialogInstance`, `Href` not `Link`, `DialogResult` is nullable.
 - **`XmlSerializer` with custom `XmlRootAttribute`**: Must be cached (see `XmlSerializationExtensions.cs`) — runtime generates unbounded dynamic assemblies otherwise.
 - **Time format**: Use `HH:mm:ss` (24-hour), not `hh:mm:ss` (12-hour without AM/PM).
+- **`[DefaultValue]` on numeric XML properties**: Must use typed literals (`[DefaultValue(0L)]` not `[DefaultValue("0")]`). String default on `long` property causes `XmlSerializer` IL codegen crash.
+- **PublishSingleFile + Blazor WASM**: Set `<PublishSingleFile>` in MainServer.csproj `<PropertyGroup>`, not via `-p:` CLI flag — CLI flag propagates to WebUI which doesn't support it.
+- **MudBlazor 9.x** (additional): `ShowMessageBoxAsync` (not `ShowMessageBox`), `TabPanelsClass` (not `PanelClass`).
+- **Windows environment**: Use `python` not `python3` — `python3` opens MS Store.
+- **GitHub Actions**: Workflow in `.github/workflows/build.yml`. Check latest action versions via `gh api repos/{owner}/{repo}/releases/latest --jq '.tag_name'`.
 
 # Agent Guidance: dotnet-skills
 
