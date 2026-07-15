@@ -1,14 +1,14 @@
 namespace Application.Game.Card.Write;
 
-public record WriteCoinCommand(long CardId, string Data) : IRequestWrapper<string>;
+public record WriteCoinCommand(long CardId, string Data) : ICommandWrapper<string>;
 
-public class WriteCoinCommandHandler : RequestHandlerBase<WriteCoinCommand, string>
+public class WriteCoinCommandHandler : CommandHandlerBase<WriteCoinCommand, string>
 {
     public WriteCoinCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate) {}
 
-    public override Task<ServiceResult<string>> Handle(WriteCoinCommand request, CancellationToken cancellationToken)
+    public override ValueTask<ServiceResult<string>> Handle(WriteCoinCommand request, CancellationToken cancellationToken)
     {
         // TODO: Add proper implementation
-        return Task.FromResult(new ServiceResult<string>(request.Data));
+        return ValueTask.FromResult(new ServiceResult<string>(request.Data));
     }
 }

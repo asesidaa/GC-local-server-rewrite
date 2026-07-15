@@ -1,24 +1,25 @@
-﻿using MediatR.Pipeline;
+using Mediator;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Common.Behaviours;
 
-public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> where TRequest : notnull
+public sealed class LoggingBehaviour<TMessage, TResponse> : MessagePreProcessor<TMessage, TResponse>
+    where TMessage : notnull, IMessage
 {
-    private readonly ILogger<TRequest> logger;
+    private readonly ILogger<TMessage> logger;
 
-    // ReSharper disable once ContextualLoggerProblem
-    public LoggingBehaviour(ILogger<TRequest> logger)
+    public LoggingBehaviour(ILogger<TMessage> logger)
     {
         this.logger = logger;
     }
 
-    public Task Process(TRequest request, CancellationToken cancellationToken)
+    protected override ValueTask Handle(TMessage message, CancellationToken cancellationToken)
     {
-        var requestName = typeof(TRequest).Name;
+        logger.LogInformation(
+            "Received request: {RequestName}, content: {Request}",
+            typeof(TMessage).Name,
+            message);
 
-        logger.LogInformation("Received request: {RequestName}, content: {Request}", requestName, request);
-
-        return Task.CompletedTask;
+        return ValueTask.CompletedTask;
     }
 }

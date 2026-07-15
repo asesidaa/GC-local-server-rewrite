@@ -1,8 +1,8 @@
-﻿namespace Application.Game.Card.Session;
+namespace Application.Game.Card.Session;
 
-public record GetSessionCommand(long CardId, string Mac) : IRequestWrapper<string>;
+public record GetSessionCommand(long CardId, string Mac) : ICommandWrapper<string>;
 
-public class GetSessionCommandHandler : RequestHandlerBase<GetSessionCommand, string>
+public class GetSessionCommandHandler : CommandHandlerBase<GetSessionCommand, string>
 {
     private const string SESSION_XPATH = "/root/session";
     
@@ -10,7 +10,7 @@ public class GetSessionCommandHandler : RequestHandlerBase<GetSessionCommand, st
     {
     }
 
-    public override Task<ServiceResult<string>> Handle(GetSessionCommand request, CancellationToken cancellationToken)
+    public override ValueTask<ServiceResult<string>> Handle(GetSessionCommand request, CancellationToken cancellationToken)
     {
         var session = new SessionDto
         {
@@ -20,6 +20,6 @@ public class GetSessionCommandHandler : RequestHandlerBase<GetSessionCommand, st
             Expires = 9999,
             SessionId = "12345678901234567890123456789012"
         };
-        return Task.FromResult(new ServiceResult<string>(session.SerializeCardData(SESSION_XPATH)));
+        return ValueTask.FromResult(new ServiceResult<string>(session.SerializeCardData(SESSION_XPATH)));
     }
 }

@@ -1,19 +1,19 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Domain.Entities;
 using Domain.Enums;
 
 namespace Application.Api;
 
-public record GetSongPlayRecordsQuery(long cardId) : IRequestWrapper<List<SongPlayRecord>>;
+public record GetSongPlayRecordsQuery(long cardId) : IQueryWrapper<List<SongPlayRecord>>;
 
-public class GetSongPlayRecordsQueryHandler : RequestHandlerBase<GetSongPlayRecordsQuery, List<SongPlayRecord>>
+public class GetSongPlayRecordsQueryHandler : QueryHandlerBase<GetSongPlayRecordsQuery, List<SongPlayRecord>>
 {
     public GetSongPlayRecordsQueryHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {
     }
 
     [SuppressMessage("ReSharper.DPA", "DPA0007: Large number of DB records")]
-    public override async Task<ServiceResult<List<SongPlayRecord>>> Handle(GetSongPlayRecordsQuery request,
+    public override async ValueTask<ServiceResult<List<SongPlayRecord>>> Handle(GetSongPlayRecordsQuery request,
         CancellationToken cancellationToken)
     {
         var exists = await CardDbContext.CardDetails.AnyAsync(detail => detail.CardId == request.cardId);

@@ -1,14 +1,14 @@
-﻿namespace Application.Game.Card.Write;
+namespace Application.Game.Card.Write;
 
-public record WriteCondCommand(long CardId, string Data) : IRequestWrapper<string>;
+public record WriteCondCommand(long CardId, string Data) : ICommandWrapper<string>;
 
-public class WriteCondCommandHandler : RequestHandlerBase<WriteCondCommand, string>
+public class WriteCondCommandHandler : CommandHandlerBase<WriteCondCommand, string>
 {
     public WriteCondCommandHandler(ICardDependencyAggregate aggregate) : base(aggregate) {}
 
-    public override Task<ServiceResult<string>> Handle(WriteCondCommand request, CancellationToken cancellationToken)
+    public override ValueTask<ServiceResult<string>> Handle(WriteCondCommand request, CancellationToken cancellationToken)
     {
         // TODO: Add proper implementation
-        return Task.FromResult(new ServiceResult<string>(request.Data));
+        return ValueTask.FromResult(new ServiceResult<string>(request.Data));
     }
 }

@@ -1,11 +1,11 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using Application.Common.Helpers;
 
 namespace Application.Game.Rank;
 
-public record GetPlayNumRankQuery(): IRequestWrapper<string>;
+public record GetPlayNumRankQuery(): IQueryWrapper<string>;
 
-public class GetPlayNumRankQueryHandler : IRequestHandlerWrapper<GetPlayNumRankQuery, string>
+public class GetPlayNumRankQueryHandler : IQueryHandlerWrapper<GetPlayNumRankQuery, string>
 {
     private readonly ICardDbContext cardDbContext;
 
@@ -14,7 +14,7 @@ public class GetPlayNumRankQueryHandler : IRequestHandlerWrapper<GetPlayNumRankQ
         this.cardDbContext = cardDbContext;
     }
     
-    public async Task<ServiceResult<string>> Handle(GetPlayNumRankQuery request, CancellationToken cancellationToken)
+    public async ValueTask<ServiceResult<string>> Handle(GetPlayNumRankQuery request, CancellationToken cancellationToken)
     {
         var ranks = await cardDbContext.PlayNumRanks.OrderBy(rank => rank.Rank)
             .Take(30).ToListAsync(cancellationToken: cancellationToken);

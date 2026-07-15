@@ -1,5 +1,5 @@
 ﻿using MainServer.Results;
-using MediatR;
+using Mediator;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models;
 

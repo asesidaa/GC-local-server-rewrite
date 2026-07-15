@@ -7,6 +7,7 @@ public interface ICardDependencyAggregate
 {
     ICardDbContext CardDbContext { get; }
     IMusicDbContext MusicDbContext { get; }
-    
+
     IOptions<GameConfig> Options { get; }
+    IOptions<UnlockConfig> UnlockOptions { get; }
 }

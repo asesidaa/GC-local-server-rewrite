@@ -5,10 +5,10 @@ namespace Application.Game.Rank;
 public class RankParam
 {
     [XmlElement(ElementName = "card_id")]
-    [DefaultValue("0")]
+    [DefaultValue(0L)]
     public long CardId { get; set; }
-    
+
     [XmlElement(ElementName = "tenpo_id")]
-    [DefaultValue("0")]
+    [DefaultValue(0)]
     public int TenpoId { get; set; }
 }

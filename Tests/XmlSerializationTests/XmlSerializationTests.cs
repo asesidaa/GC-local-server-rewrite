@@ -257,6 +257,26 @@ public class XmlSerializationTests
     }
 
     [Fact]
+    public void DeserializeCardData_CardBDataWithEmptyCardId_UsesDefaultValue()
+    {
+        var xml = """
+            <root>
+                <data>
+                    <card_id></card_id>
+                    <bdata>payload</bdata>
+                    <bdata_size>446</bdata_size>
+                </data>
+            </root>
+            """;
+
+        var dto = xml.DeserializeCardData<CardBDatumDto>();
+
+        Assert.Equal(0, dto.CardId);
+        Assert.Equal("payload", dto.CardBdata);
+        Assert.Equal(446, dto.BDataSize);
+    }
+
+    [Fact]
     public void RoundTrip_SerializeAndDeserialize()
     {
         var original = new CardDto

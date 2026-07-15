@@ -1,14 +1,13 @@
-﻿using MediatR;
+using Mediator;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Game.Option;
 
-public record PlayCountQuery(long CardId) : IRequest<long>;
+public record PlayCountQuery(long CardId) : IQuery<long>;
 
-public class PlayCountQueryHandler : IRequestHandler<PlayCountQuery, long>
+public class PlayCountQueryHandler : IQueryHandler<PlayCountQuery, long>
 {
     private readonly ICardDbContext context;
-
     private readonly ILogger<PlayCountQueryHandler> logger;
 
     public PlayCountQueryHandler(ICardDbContext context, ILogger<PlayCountQueryHandler> logger)
@@ -17,7 +16,7 @@ public class PlayCountQueryHandler : IRequestHandler<PlayCountQuery, long>
         this.logger = logger;
     }
 
-    public async Task<long> Handle(PlayCountQuery request, CancellationToken cancellationToken)
+    public async ValueTask<long> Handle(PlayCountQuery request, CancellationToken cancellationToken)
     {
         return await GetPlayCount(request.CardId);
     }
@@ -29,7 +28,7 @@ public class PlayCountQueryHandler : IRequestHandler<PlayCountQuery, long>
         {
             return 0;
         }
-        
+
         var now = DateTime.Now;
         var lastPlayedTime = record.LastPlayedTime;
 

@@ -1,9 +1,9 @@
 namespace Application.Game.Card.Read;
 
 
-public record ReadUnlockRewardQuery(long CardId) : IRequestWrapper<string>;
+public record ReadUnlockRewardQuery(long CardId) : IQueryWrapper<string>;
 
-public class ReadUnlockRewardQueryHandler : RequestHandlerBase<ReadUnlockRewardQuery, string>
+public class ReadUnlockRewardQueryHandler : QueryHandlerBase<ReadUnlockRewardQuery, string>
 {
     private const string UNLOCK_REWARD_XPATH = "/root/unlock_reward/record";
     
@@ -11,7 +11,7 @@ public class ReadUnlockRewardQueryHandler : RequestHandlerBase<ReadUnlockRewardQ
     {
     }
 
-    public override Task<ServiceResult<string>> Handle(ReadUnlockRewardQuery request, CancellationToken cancellationToken)
+    public override ValueTask<ServiceResult<string>> Handle(ReadUnlockRewardQuery request, CancellationToken cancellationToken)
     {
         var config = Config.UnlockRewards;
         var list = config.Select((rewardConfig, i) => new UnlockRewardModel
@@ -38,7 +38,7 @@ public class ReadUnlockRewardQueryHandler : RequestHandlerBase<ReadUnlockRewardQ
 
         var result = list.SerializeCardDataList(UNLOCK_REWARD_XPATH);
 
-        return Task.FromResult(new ServiceResult<string>(result));
+        return ValueTask.FromResult(new ServiceResult<string>(result));
     }
 }
 

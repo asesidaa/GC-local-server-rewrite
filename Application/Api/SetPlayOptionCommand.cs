@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using Shared.Models;
 
 namespace Application.Api;
 
-public record SetPlayOptionCommand(PlayOptionData Data) : IRequestWrapper<bool>;
+public record SetPlayOptionCommand(PlayOptionData Data) : ICommandWrapper<bool>;
 
-public class SetPlayOptionCommandHandler : RequestHandlerBase<SetPlayOptionCommand, bool>
+public class SetPlayOptionCommandHandler : CommandHandlerBase<SetPlayOptionCommand, bool>
 {
     private readonly ILogger<SetPlayOptionCommandHandler> logger;
 
@@ -14,7 +14,7 @@ public class SetPlayOptionCommandHandler : RequestHandlerBase<SetPlayOptionComma
         this.logger = logger;
     }
 
-    public override async Task<ServiceResult<bool>> Handle(SetPlayOptionCommand request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<bool>> Handle(SetPlayOptionCommand request, CancellationToken cancellationToken)
     {
         var optionDetail1 = await CardDbContext.CardDetails.FirstOrDefaultAsync(detail =>
             detail.CardId == request.Data.CardId &&

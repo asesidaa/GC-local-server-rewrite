@@ -1,9 +1,9 @@
 namespace Application.Game.Card.Read;
 
 
-public record ReadCondQuery(long CardId) : IRequestWrapper<string>;
+public record ReadCondQuery(long CardId) : IQueryWrapper<string>;
 
-public class ReadCondQueryHandler : RequestHandlerBase<ReadCondQuery, string>
+public class ReadCondQueryHandler : QueryHandlerBase<ReadCondQuery, string>
 {
     private const string COND_XPATH = "/root/cond";
     
@@ -11,10 +11,10 @@ public class ReadCondQueryHandler : RequestHandlerBase<ReadCondQuery, string>
     {
     }
 
-    public override Task<ServiceResult<string>> Handle(ReadCondQuery request, CancellationToken cancellationToken)
+    public override ValueTask<ServiceResult<string>> Handle(ReadCondQuery request, CancellationToken cancellationToken)
     {
         var result = new object().SerializeCardData(COND_XPATH);
 
-        return Task.FromResult(new ServiceResult<string>(result));
+        return ValueTask.FromResult(new ServiceResult<string>(result));
     }
 }

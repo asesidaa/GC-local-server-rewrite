@@ -1,0 +1,160 @@
+@page "/Shop/{CardId:long}"
+@inject HttpClient Client
+@inject IDataService DataService
+@inject IDialogService DialogService
+@inject ISnackbar Snackbar
+
+<PageTitle>Shop</PageTitle>
+
+<MudBreadcrumbs Items="breadcrumbs" Class="px-0"/>
+
+<MudText Typo="Typo.h4" Class="mb-4">Shop</MudText>
+
+@if (errorMessage is not null)
+{
+    <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
+    return;
+}
+
+@if (shopItems is null || coinBalance is null)
+{
+    <MudStack>
+        <MudSkeleton Width="100%"/>
+        <MudSkeleton Width="100%"/>
+        <MudSkeleton Width="100%"/>
+    </MudStack>
+    return;
+}
+
+<MudPaper Elevation="2" Class="pa-4 mb-6">
+    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="4">
+        <MudIcon Icon="@Icons.Material.Filled.MonetizationOn" Color="Color.Warning" Size="Size.Large"/>
+        <MudText Typo="Typo.h5">@coinBalance.CurrentCoins.ToString("N0") Coins</MudText>
+    </MudStack>
+</MudPaper>
+
+@if (shopItems.Count == 0)
+{
+    <MudAlert Severity="Severity.Info">The shop is empty. An admin needs to add items first.</MudAlert>
+    return;
+}
+
+<MudTabs Rounded="true" ApplyEffectsToContainer="true" TabPanelsClass="pa-4">
+    @foreach (var group in shopItems.GroupBy(s => s.ItemType))
+    {
+        <MudTabPanel Text="@group.Key">
+            <MudGrid>
+                @foreach (var item in group)
+                {
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudCard Outlined="true">
+                            <MudCardContent>
+                                <MudText Typo="Typo.subtitle1">@ResolveItemName(item)</MudText>
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">@item.ItemType #@item.ItemId</MudText>
+                            </MudCardContent>
+                            <MudCardActions>
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Class="px-2 pb-2" Style="width:100%">
+                                    <MudIcon Icon="@Icons.Material.Filled.MonetizationOn" Color="Color.Warning" Size="Size.Small"/>
+                                    <MudText Typo="Typo.body1" Style="font-weight:bold">@item.CoinCost.ToString("N0")</MudText>
+                                    <MudSpacer/>
+                                    <MudButton Variant="Variant.Filled"
+                                               Color="Color.Primary"
+                                               Size="Size.Small"
+                                               OnClick="() => OnPurchase(item)"
+                                               Disabled="coinBalance.CurrentCoins < item.CoinCost">
+                                        Buy
+                                    </MudButton>
+                                </MudStack>
+                            </MudCardActions>
+                        </MudCard>
+                    </MudItem>
+                }
+            </MudGrid>
+        </MudTabPanel>
+    }
+</MudTabs>
+
+@code {
+    [Parameter]
+    public long CardId { get; set; }
+
+    private List<ShopItemDto>? shopItems;
+    private PlayerCoinDto? coinBalance;
+    private string? errorMessage;
+
+    private List<BreadcrumbItem> breadcrumbs = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        breadcrumbs =
+        [
+            new BreadcrumbItem("Cards", href: "/Cards"),
+            new BreadcrumbItem($"Card: {CardId}", href: $"/Cards/Option/{CardId}"),
+            new BreadcrumbItem("Shop", href: null, disabled: true)
+        ];
+
+        var shopTask = Client.GetFromJsonAsync<ServiceResult<List<ShopItemDto>>>("api/Shop");
+        var coinTask = Client.GetFromJsonAsync<ServiceResult<PlayerCoinDto>>($"api/Coin/{CardId}");
+
+        await Task.WhenAll(shopTask, coinTask);
+
+        var shopResult = shopTask.Result;
+        var coinResult = coinTask.Result;
+
+        if (shopResult is { Succeeded: true })
+            shopItems = shopResult.Data ?? [];
+        else
+            errorMessage = shopResult?.Error?.Message ?? "Failed to load shop";
+
+        if (coinResult is { Succeeded: true })
+            coinBalance = coinResult.Data;
+        else
+            coinBalance = new PlayerCoinDto { CardId = CardId, CurrentCoins = 0 };
+    }
+
+    private string ResolveItemName(ShopItemDto item)
+    {
+        // Music names come from the server
+        if (!string.IsNullOrEmpty(item.ItemName))
+            return item.ItemName;
+
+        // Other types resolved from DataService
+        return item.ItemType switch
+        {
+            "Avatar" => DataService.GetAvatarById((uint)item.ItemId)?.AvatarName ?? $"Avatar #{item.ItemId}",
+            "Navigator" => DataService.GetNavigatorById((uint)item.ItemId)?.NavigatorName ?? $"Navigator #{item.ItemId}",
+            "Title" => DataService.GetTitleById((uint)item.ItemId)?.TitleName ?? $"Title #{item.ItemId}",
+            "Item" => DataService.GetItemById((uint)item.ItemId)?.ItemName ?? $"Item #{item.ItemId}",
+            "Skin" => DataService.GetSkinById((uint)item.ItemId)?.SkinName ?? $"Skin #{item.ItemId}",
+            "SoundEffect" => DataService.GetSoundEffectById((uint)item.ItemId)?.SoundEffectName ?? $"SE #{item.ItemId}",
+            _ => $"{item.ItemType} #{item.ItemId}"
+        };
+    }
+
+    private async Task OnPurchase(ShopItemDto item)
+    {
+        var itemName = ResolveItemName(item);
+        var balanceAfter = coinBalance!.CurrentCoins - item.CoinCost;
+
+        var result = await DialogService.ShowMessageBoxAsync(
+            "Confirm Purchase",
+            $"Buy \"{itemName}\" for {item.CoinCost:N0} coins? Balance: {coinBalance.CurrentCoins:N0} → {balanceAfter:N0}",
+            yesText: "Buy", cancelText: "Cancel");
+
+        if (result != true) return;
+
+        var response = await Client.PostAsJsonAsync("api/Shop/Purchase",
+            new PurchaseRequest { CardId = CardId, ShopItemId = item.Id });
+        var purchaseResult = await response.Content.ReadFromJsonAsync<ServiceResult<PlayerCoinDto>>();
+
+        if (purchaseResult is { Succeeded: true, Data: not null })
+        {
+            coinBalance = purchaseResult.Data;
+            Snackbar.Add($"Purchased \"{itemName}\" successfully!", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add(purchaseResult?.Error?.Message ?? "Purchase failed", Severity.Error);
+        }
+    }
+}

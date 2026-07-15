@@ -33,6 +33,16 @@ public partial class CardDbContext : DbContext, ICardDbContext
     
     public virtual DbSet<ShopScoreRank> ShopScoreRanks { get; set; } = null!;
 
+    public virtual DbSet<DefaultUnlockState> DefaultUnlockStates { get; set; } = null!;
+
+    public virtual DbSet<PlayerUnlockState> PlayerUnlockStates { get; set; } = null!;
+
+    public virtual DbSet<PlayerCoin> PlayerCoins { get; set; } = null!;
+
+    public virtual DbSet<ShopItem> ShopItems { get; set; } = null!;
+
+    public virtual DbSet<CardAccessCode> CardAccessCodes { get; set; } = null!;
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (optionsBuilder.IsConfigured)
@@ -199,6 +209,75 @@ public partial class CardDbContext : DbContext, ICardDbContext
             entity.Property(e => e.Pref);
             entity.Property(e => e.TotalScore);
             entity.Property(e => e.PlayerName);
+        });
+
+        modelBuilder.Entity<DefaultUnlockState>(entity =>
+        {
+            entity.HasKey(e => e.ItemType);
+
+            entity.ToTable("default_unlock_state");
+
+            entity.Property(e => e.ItemType)
+                .ValueGeneratedNever()
+                .HasColumnName("item_type");
+            entity.Property(e => e.UnlockedBitset)
+                .HasColumnName("unlocked_bitset")
+                .HasDefaultValue("[]");
+        });
+
+        modelBuilder.Entity<PlayerUnlockState>(entity =>
+        {
+            entity.HasKey(e => new { e.CardId, e.ItemType });
+
+            entity.ToTable("player_unlock_state");
+
+            entity.Property(e => e.CardId).HasColumnName("card_id");
+            entity.Property(e => e.ItemType).HasColumnName("item_type");
+            entity.Property(e => e.UnlockedBitset)
+                .HasColumnName("unlocked_bitset")
+                .HasDefaultValue("[]");
+        });
+
+        modelBuilder.Entity<PlayerCoin>(entity =>
+        {
+            entity.HasKey(e => e.CardId);
+
+            entity.ToTable("player_coin");
+
+            entity.Property(e => e.CardId)
+                .ValueGeneratedNever()
+                .HasColumnName("card_id");
+            entity.Property(e => e.CurrentCoins).HasColumnName("current_coins");
+            entity.Property(e => e.TotalCoins).HasColumnName("total_coins");
+            entity.Property(e => e.MonthlyCoins).HasColumnName("monthly_coins");
+        });
+
+        modelBuilder.Entity<ShopItem>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.ToTable("shop_item");
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("id");
+            entity.Property(e => e.ItemType).HasColumnName("item_type");
+            entity.Property(e => e.ItemId).HasColumnName("item_id");
+            entity.Property(e => e.CoinCost).HasColumnName("coin_cost");
+
+            entity.HasIndex(e => new { e.ItemType, e.ItemId }).IsUnique();
+        });
+
+        modelBuilder.Entity<CardAccessCode>(entity =>
+        {
+            entity.HasKey(e => e.CardId);
+
+            entity.ToTable("card_access_code");
+
+            entity.Property(e => e.CardId)
+                .ValueGeneratedNever()
+                .HasColumnName("card_id");
+            entity.Property(e => e.HashedCode).HasColumnName("hashed_code");
         });
 
         OnModelCreatingPartial(modelBuilder);

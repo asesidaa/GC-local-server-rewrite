@@ -16,6 +16,22 @@ namespace Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.5");
 
+            modelBuilder.Entity("Domain.Entities.CardAccessCode", b =>
+                {
+                    b.Property<long>("CardId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("card_id");
+
+                    b.Property<string>("HashedCode")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("hashed_code");
+
+                    b.HasKey("CardId");
+
+                    b.ToTable("card_access_code", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Entities.CardBdatum", b =>
                 {
                     b.Property<long>("CardId")
@@ -174,6 +190,24 @@ namespace Infrastructure.Migrations
                     b.ToTable("CardPlayCount", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.DefaultUnlockState", b =>
+                {
+                    b.Property<int>("ItemType")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("item_type");
+
+                    b.Property<string>("UnlockedBitset")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("[]")
+                        .HasColumnName("unlocked_bitset");
+
+                    b.HasKey("ItemType");
+
+                    b.ToTable("default_unlock_state", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Entities.GlobalScoreRank", b =>
                 {
                     b.Property<long>("CardId")
@@ -313,6 +347,78 @@ namespace Infrastructure.Migrations
                     b.HasKey("MusicId");
 
                     b.ToTable("PlayNumRank", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.PlayerCoin", b =>
+                {
+                    b.Property<long>("CardId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("card_id");
+
+                    b.Property<int>("CurrentCoins")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("current_coins");
+
+                    b.Property<int>("MonthlyCoins")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("monthly_coins");
+
+                    b.Property<int>("TotalCoins")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("total_coins");
+
+                    b.HasKey("CardId");
+
+                    b.ToTable("player_coin", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.PlayerUnlockState", b =>
+                {
+                    b.Property<long>("CardId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("card_id");
+
+                    b.Property<int>("ItemType")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("item_type");
+
+                    b.Property<string>("UnlockedBitset")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("[]")
+                        .HasColumnName("unlocked_bitset");
+
+                    b.HasKey("CardId", "ItemType");
+
+                    b.ToTable("player_unlock_state", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.ShopItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("id");
+
+                    b.Property<int>("CoinCost")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("coin_cost");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("item_id");
+
+                    b.Property<int>("ItemType")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("item_type");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemType", "ItemId")
+                        .IsUnique();
+
+                    b.ToTable("shop_item", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.ShopScoreRank", b =>

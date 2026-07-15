@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Api;
 
-public record SetFavoriteMusicCommand(MusicFavoriteDto Data) : IRequestWrapper<bool>;
+public record SetFavoriteMusicCommand(MusicFavoriteDto Data) : ICommandWrapper<bool>;
 
-public class SetFavoriteMusicCommandHandler : RequestHandlerBase<SetFavoriteMusicCommand, bool>
+public class SetFavoriteMusicCommandHandler : CommandHandlerBase<SetFavoriteMusicCommand, bool>
 {
     private readonly ILogger<SetFavoriteMusicCommandHandler> logger;
 
@@ -13,7 +13,7 @@ public class SetFavoriteMusicCommandHandler : RequestHandlerBase<SetFavoriteMusi
         this.logger = logger;
     }
 
-    public override async Task<ServiceResult<bool>> Handle(SetFavoriteMusicCommand request,
+    public override async ValueTask<ServiceResult<bool>> Handle(SetFavoriteMusicCommand request,
         CancellationToken                                                          cancellationToken)
     {
         var musicDetail = await CardDbContext.CardDetails.FirstOrDefaultAsync(detail =>

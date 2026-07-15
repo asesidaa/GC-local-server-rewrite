@@ -1,5 +1,55 @@
-﻿@page "/"
+@page "/"
 
-<PageTitle>Index</PageTitle>
+<PageTitle>GC Local Server</PageTitle>
 
-<MudText Typo="Typo.h3" GutterBottom="true">Welcome to GC Local Server WebUI</MudText>
+<MudText Typo="Typo.h4" GutterBottom="true">Welcome to GC Local Server</MudText>
+<MudText Typo="Typo.body1" Class="mb-6" Color="Color.Secondary">
+    Groove Coaster arcade game local server with player management and shop.
+</MudText>
+
+<MudGrid>
+    <MudItem xs="12" sm="6" md="4">
+        <MudCard Outlined="true">
+            <MudCardContent>
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
+                    <MudIcon Icon="@Icons.Material.Filled.CreditCard" Size="Size.Large" Color="Color.Primary"/>
+                    <MudText Typo="Typo.h6">Cards</MudText>
+                </MudStack>
+                <MudText Typo="Typo.body2" Class="mt-2">Manage player cards, options, and view play records.</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary" Href="Cards">Go to Cards</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="12" sm="6" md="4">
+        <MudCard Outlined="true">
+            <MudCardContent>
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
+                    <MudIcon Icon="@Icons.Material.Filled.ShoppingCart" Size="Size.Large" Color="Color.Success"/>
+                    <MudText Typo="Typo.h6">Shop</MudText>
+                </MudStack>
+                <MudText Typo="Typo.body2" Class="mt-2">Purchase items, avatars, navigators, and more with coins.</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary" Href="Login">Login to Shop</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="12" sm="6" md="4">
+        <MudCard Outlined="true">
+            <MudCardContent>
+                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
+                    <MudIcon Icon="@Icons.Material.Filled.AdminPanelSettings" Size="Size.Large" Color="Color.Warning"/>
+                    <MudText Typo="Typo.h6">Admin</MudText>
+                </MudStack>
+                <MudText Typo="Typo.body2" Class="mt-2">Configure default unlocks and manage the shop catalog.</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary" Href="Login">Admin Login</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>

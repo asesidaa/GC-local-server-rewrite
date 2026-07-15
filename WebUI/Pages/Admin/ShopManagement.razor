@@ -1,0 +1,138 @@
+@page "/Admin/Shop"
+@inject HttpClient Client
+@inject IDataService DataService
+@inject IDialogService DialogService
+@inject ISnackbar Snackbar
+
+<PageTitle>Shop Management</PageTitle>
+
+<MudBreadcrumbs Items="breadcrumbs" Class="px-0"/>
+
+<MudStack Row="true" AlignItems="AlignItems.Center" Class="mb-4">
+    <MudText Typo="Typo.h4">Shop Management</MudText>
+    <MudSpacer/>
+    <MudButton Variant="Variant.Filled"
+               Color="Color.Primary"
+               StartIcon="@Icons.Material.Filled.Add"
+               OnClick="OpenAddDialog">
+        Add Item
+    </MudButton>
+</MudStack>
+
+@if (errorMessage is not null)
+{
+    <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
+    return;
+}
+
+@if (shopItems is null)
+{
+    <MudProgressLinear Indeterminate="true"/>
+    return;
+}
+
+@if (shopItems.Count == 0)
+{
+    <MudAlert Severity="Severity.Info">No shop items configured. Click "Add Item" to add one.</MudAlert>
+    return;
+}
+
+<MudDataGrid T="ShopItemDto" Items="shopItems" Dense="true" Hover="true" SortMode="SortMode.Single">
+    <Columns>
+        <PropertyColumn T="ShopItemDto" TProperty="string" Property="x => x.ItemType" Title="Type"/>
+        <PropertyColumn T="ShopItemDto" TProperty="int" Property="x => x.ItemId" Title="Item ID"/>
+        <TemplateColumn T="ShopItemDto" Title="Name">
+            <CellTemplate>
+                <MudText>@ResolveItemName(context.Item)</MudText>
+            </CellTemplate>
+        </TemplateColumn>
+        <PropertyColumn T="ShopItemDto" TProperty="int" Property="x => x.CoinCost" Title="Cost"/>
+        <TemplateColumn T="ShopItemDto" Title="Actions">
+            <CellTemplate>
+                <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                               Color="Color.Error"
+                               Size="Size.Small"
+                               OnClick="() => OnDelete(context.Item)"/>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+</MudDataGrid>
+
+@code {
+    private List<ShopItemDto>? shopItems;
+    private string? errorMessage;
+
+    private List<BreadcrumbItem> breadcrumbs =
+    [
+        new BreadcrumbItem("Admin", href: null, disabled: true),
+        new BreadcrumbItem("Shop Management", href: null, disabled: true)
+    ];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadShopItems();
+    }
+
+    private async Task LoadShopItems()
+    {
+        var result = await Client.GetFromJsonAsync<ServiceResult<List<ShopItemDto>>>("api/Shop");
+        if (result is { Succeeded: true })
+            shopItems = result.Data ?? [];
+        else
+            errorMessage = result?.Error?.Message ?? "Failed to load shop items";
+    }
+
+    private string ResolveItemName(ShopItemDto item)
+    {
+        if (!string.IsNullOrEmpty(item.ItemName))
+            return item.ItemName;
+
+        return item.ItemType switch
+        {
+            "Avatar" => DataService.GetAvatarById((uint)item.ItemId)?.AvatarName ?? $"#{item.ItemId}",
+            "Navigator" => DataService.GetNavigatorById((uint)item.ItemId)?.NavigatorName ?? $"#{item.ItemId}",
+            "Title" => DataService.GetTitleById((uint)item.ItemId)?.TitleName ?? $"#{item.ItemId}",
+            "Item" => DataService.GetItemById((uint)item.ItemId)?.ItemName ?? $"#{item.ItemId}",
+            "Skin" => DataService.GetSkinById((uint)item.ItemId)?.SkinName ?? $"#{item.ItemId}",
+            "SoundEffect" => DataService.GetSoundEffectById((uint)item.ItemId)?.SoundEffectName ?? $"#{item.ItemId}",
+            _ => $"#{item.ItemId}"
+        };
+    }
+
+    private async Task OpenAddDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
+        var dialog = await DialogService.ShowAsync<Dialogs.AddShopItemDialog>("Add Shop Item", options);
+        var result = await dialog.Result;
+        if (result is not null && !result.Canceled)
+        {
+            await LoadShopItems();
+            StateHasChanged();
+        }
+    }
+
+    private async Task OnDelete(ShopItemDto item)
+    {
+        var itemName = ResolveItemName(item);
+        var confirmed = await DialogService.ShowMessageBoxAsync(
+            "Delete Shop Item",
+            $"Remove \"{itemName}\" ({item.ItemType} #{item.ItemId}) from the shop?",
+            yesText: "Delete", cancelText: "Cancel");
+
+        if (confirmed != true) return;
+
+        var response = await Client.DeleteAsync($"api/Shop/{item.Id}");
+        var result = await response.Content.ReadFromJsonAsync<ServiceResult<bool>>();
+
+        if (result is { Succeeded: true })
+        {
+            Snackbar.Add("Shop item removed", Severity.Success);
+            await LoadShopItems();
+            StateHasChanged();
+        }
+        else
+        {
+            Snackbar.Add(result?.Error?.Message ?? "Delete failed", Severity.Error);
+        }
+    }
+}

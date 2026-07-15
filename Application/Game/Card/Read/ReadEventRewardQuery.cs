@@ -1,9 +1,9 @@
 namespace Application.Game.Card.Read;
 
 
-public record ReadEventRewardQuery(long CardId) : IRequestWrapper<string>;
+public record ReadEventRewardQuery(long CardId) : IQueryWrapper<string>;
 
-public class ReadEventRewardQueryHandler : RequestHandlerBase<ReadEventRewardQuery, string>
+public class ReadEventRewardQueryHandler : QueryHandlerBase<ReadEventRewardQuery, string>
 {
     private const string EVENT_REWARD_XPATH = "/root/event_reward";
     
@@ -11,10 +11,10 @@ public class ReadEventRewardQueryHandler : RequestHandlerBase<ReadEventRewardQue
     {
     }
 
-    public override Task<ServiceResult<string>> Handle(ReadEventRewardQuery request, CancellationToken cancellationToken)
+    public override ValueTask<ServiceResult<string>> Handle(ReadEventRewardQuery request, CancellationToken cancellationToken)
     {
         var result = new object().SerializeCardData(EVENT_REWARD_XPATH);
 
-        return Task.FromResult(new ServiceResult<string>(result));
+        return ValueTask.FromResult(new ServiceResult<string>(result));
     }
 }

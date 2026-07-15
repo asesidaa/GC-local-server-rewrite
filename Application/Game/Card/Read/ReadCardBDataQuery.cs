@@ -4,9 +4,9 @@ using Microsoft.Extensions.Logging;
 namespace Application.Game.Card.Read;
 
 
-public record ReadCardBDataQuery(long CardId) : IRequestWrapper<string>;
+public record ReadCardBDataQuery(long CardId) : IQueryWrapper<string>;
 
-public class ReadBDataQueryHandler : RequestHandlerBase<ReadCardBDataQuery, string>
+public class ReadBDataQueryHandler : QueryHandlerBase<ReadCardBDataQuery, string>
 {
     private const string CARD_BDATA_XPATH = "/root/card_bdata";
     
@@ -17,7 +17,7 @@ public class ReadBDataQueryHandler : RequestHandlerBase<ReadCardBDataQuery, stri
         this.logger = logger;
     }
 
-    public override async Task<ServiceResult<string>> Handle(ReadCardBDataQuery request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<string>> Handle(ReadCardBDataQuery request, CancellationToken cancellationToken)
     {
         var exists = await CardDbContext.CardMains.AnyAsync(card => card.CardId == request.CardId, cancellationToken: cancellationToken);
         if (!exists)

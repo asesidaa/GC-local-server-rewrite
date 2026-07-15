@@ -25,6 +25,12 @@ public static class XmlSerializationExtensions
         var dataElement = doc.Root?.Element("data");
         dataElement.ThrowIfNull();
 
+        // The previous ChoETL parser ignored empty field values. Treat empty leaf fields as absent
+        // so XmlSerializer leaves value types at their defaults instead of parsing an empty number.
+        dataElement.Elements()
+            .Where(element => !element.HasElements && string.IsNullOrWhiteSpace(element.Value))
+            .Remove();
+
         var serializer = GetCachedSerializer(typeof(T), "data");
         using var reader = dataElement.CreateReader();
         var result = serializer.Deserialize(reader) as T;

@@ -5,10 +5,13 @@ using System.Text;
 using Application;
 using Application.Interfaces;
 using Domain.Config;
+using Domain.Entities;
 using Infrastructure;
 using Infrastructure.Common;
 using Infrastructure.Persistence;
 using MainServer.Filters;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -45,7 +48,9 @@ try
         .AddJsonFile($"{configurationsDirectory}/matching.json", optional: true, reloadOnChange: false)
         .AddJsonFile($"{configurationsDirectory}/auth.json", optional: true, reloadOnChange: false)
         .AddJsonFile($"{configurationsDirectory}/rank.json", optional: true, reloadOnChange: false)
-        .AddJsonFile($"{configurationsDirectory}/server.json", optional: true, reloadOnChange: false);
+        .AddJsonFile($"{configurationsDirectory}/server.json", optional: true, reloadOnChange: false)
+        .AddJsonFile($"{configurationsDirectory}/unlock.json", optional: true, reloadOnChange: false)
+        .AddJsonFile($"{configurationsDirectory}/webauth.json", optional: true, reloadOnChange: false);
     
     builder.Services.Configure<EventConfig>(
         builder.Configuration.GetSection(EventConfig.EVENT_SECTION));
@@ -55,6 +60,10 @@ try
         builder.Configuration.GetSection(GameConfig.GAME_SECTION));
     builder.Services.Configure<AuthConfig>(
         builder.Configuration.GetSection(AuthConfig.AUTH_SECTION));
+    builder.Services.Configure<UnlockConfig>(
+        builder.Configuration.GetSection(UnlockConfig.UNLOCK_SECTION));
+    builder.Services.Configure<WebAuthConfig>(
+        builder.Configuration.GetSection(WebAuthConfig.WEB_AUTH_SECTION));
     builder.Services.AddOptions<RankConfig>()
         .Bind(builder.Configuration.GetSection(RankConfig.RANK_SECTION))
         .ValidateDataAnnotations()
@@ -84,6 +93,29 @@ try
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+
+    builder.Services.AddSingleton<IPasswordHasher<CardAccessCode>, PasswordHasher<CardAccessCode>>();
+
+    builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(options =>
+        {
+            options.Cookie.HttpOnly = true;
+            options.Cookie.SameSite = SameSiteMode.Strict;
+            options.ExpireTimeSpan = TimeSpan.FromDays(30);
+            options.SlidingExpiration = true;
+            // Return 401/403 JSON instead of redirecting to a login page
+            options.Events.OnRedirectToLogin = context =>
+            {
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                return Task.CompletedTask;
+            };
+            options.Events.OnRedirectToAccessDenied = context =>
+            {
+                context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                return Task.CompletedTask;
+            };
+        });
+    builder.Services.AddAuthorization();
 
     var refreshIntervalHours = builder.Configuration.GetSection(RankConfig.RANK_SECTION).
         GetValue<int>("RefreshIntervalHours");
@@ -140,6 +172,9 @@ try
     {
         ContentTypeProvider = contentTypeProvider
     });
+
+    app.UseAuthentication();
+    app.UseAuthorization();
 
     app.MapControllers();
     app.MapFallbackToFile("index.html");

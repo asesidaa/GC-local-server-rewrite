@@ -1,4 +1,36 @@
-﻿<MudNavMenu>
+@inject AuthStateService AuthState
+@implements IDisposable
+
+<MudNavMenu>
     <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
     <MudNavLink Href="Cards" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.CreditCard">Cards</MudNavLink>
+
+    @if (AuthState.IsAuthenticated)
+    {
+        @if (AuthState.IsPlayer && AuthState.CardId.HasValue)
+        {
+            <MudNavLink Href="@($"Shop/{AuthState.CardId.Value}")" Icon="@Icons.Material.Filled.ShoppingCart">Shop</MudNavLink>
+        }
+
+        @if (AuthState.IsAdmin)
+        {
+            <MudDivider Class="my-2"/>
+            <MudNavGroup Title="Admin" Icon="@Icons.Material.Filled.AdminPanelSettings" Expanded="true">
+                <MudNavLink Href="Admin/DefaultUnlocks" Icon="@Icons.Material.Filled.LockOpen">Default Unlocks</MudNavLink>
+                <MudNavLink Href="Admin/Shop" Icon="@Icons.Material.Filled.Store">Shop Management</MudNavLink>
+            </MudNavGroup>
+        }
+    }
 </MudNavMenu>
+
+@code {
+    protected override void OnInitialized()
+    {
+        AuthState.OnAuthStateChanged += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        AuthState.OnAuthStateChanged -= StateHasChanged;
+    }
+}

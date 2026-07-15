@@ -1,10 +1,10 @@
-﻿using Application.Common.Helpers;
+using Application.Common.Helpers;
 
 namespace Application.Game.Rank;
 
-public record GetMonthlyScoreRankQuery() : IRequestWrapper<string>;
+public record GetMonthlyScoreRankQuery() : IQueryWrapper<string>;
 
-public class GetMonthlyScoreRankQueryHandler : IRequestHandlerWrapper<GetMonthlyScoreRankQuery, string>
+public class GetMonthlyScoreRankQueryHandler : IQueryHandlerWrapper<GetMonthlyScoreRankQuery, string>
 {
     private readonly ICardDbContext cardDbContext;
 
@@ -13,7 +13,7 @@ public class GetMonthlyScoreRankQueryHandler : IRequestHandlerWrapper<GetMonthly
         this.cardDbContext = cardDbContext;
     }
 
-    public async Task<ServiceResult<string>> Handle(GetMonthlyScoreRankQuery request, CancellationToken cancellationToken)
+    public async ValueTask<ServiceResult<string>> Handle(GetMonthlyScoreRankQuery request, CancellationToken cancellationToken)
     {
         var ranks = await cardDbContext.MonthlyScoreRanks.OrderBy(rank => rank.Rank)
             .Take(30).ToListAsync(cancellationToken: cancellationToken);

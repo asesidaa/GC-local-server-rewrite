@@ -1,11 +1,11 @@
-﻿using Application.Common.Helpers;
+using Application.Common.Helpers;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Game.Card.Write;
 
-public record WriteCardCommand(long CardId, string Data) : IRequestWrapper<string>;
+public record WriteCardCommand(long CardId, string Data) : ICommandWrapper<string>;
 
-public class WriteCommandHandler : RequestHandlerBase<WriteCardCommand, string>
+public class WriteCommandHandler : CommandHandlerBase<WriteCardCommand, string>
 {
     private readonly ILogger<WriteCommandHandler> logger;
 
@@ -14,7 +14,7 @@ public class WriteCommandHandler : RequestHandlerBase<WriteCardCommand, string>
         this.logger = logger;
     }
 
-    public override async Task<ServiceResult<string>> Handle(WriteCardCommand request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<string>> Handle(WriteCardCommand request, CancellationToken cancellationToken)
     {
         var dto = request.Data.DeserializeCardData<CardDto>();
         dto.CardId = request.CardId;

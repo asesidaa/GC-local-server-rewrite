@@ -1,9 +1,9 @@
 namespace Application.Game.Card.Read;
 
 
-public record ReadMusicExtraQuery(long CardId) : IRequestWrapper<string>;
+public record ReadMusicExtraQuery(long CardId) : IQueryWrapper<string>;
 
-public class ReadMusicExtraQueryHandler : RequestHandlerBase<ReadMusicExtraQuery, string>
+public class ReadMusicExtraQueryHandler : QueryHandlerBase<ReadMusicExtraQuery, string>
 {
     private const string MUSIC_EXTRA_XPATH = "/root/music_extra";
 
@@ -13,7 +13,7 @@ public class ReadMusicExtraQueryHandler : RequestHandlerBase<ReadMusicExtraQuery
     {
     }
 
-    public override async Task<ServiceResult<string>> Handle(ReadMusicExtraQuery request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<string>> Handle(ReadMusicExtraQuery request, CancellationToken cancellationToken)
     {
         var musics = await MusicDbContext.MusicExtras.ToListAsync(cancellationToken: cancellationToken);
         var dtoList = musics.Select((aou, i) =>

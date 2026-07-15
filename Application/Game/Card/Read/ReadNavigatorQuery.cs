@@ -1,9 +1,12 @@
+using Application.Common.Helpers;
+using Domain.Enums;
+
 namespace Application.Game.Card.Read;
 
 
-public record ReadNavigatorQuery(long CardId) : IRequestWrapper<string>;
+public record ReadNavigatorQuery(long CardId) : IQueryWrapper<string>;
 
-public class ReadNavigatorQueryHandler : RequestHandlerBase<ReadNavigatorQuery, string>
+public class ReadNavigatorQueryHandler : QueryHandlerBase<ReadNavigatorQuery, string>
 {
     private const string NAVIGATOR_XPATH = "/root/navigator/record";
 
@@ -11,10 +14,11 @@ public class ReadNavigatorQueryHandler : RequestHandlerBase<ReadNavigatorQuery, 
     {
     }
 
-    public override Task<ServiceResult<string>> Handle(ReadNavigatorQuery request, CancellationToken cancellationToken)
+    public override async ValueTask<ServiceResult<string>> Handle(ReadNavigatorQuery request, CancellationToken cancellationToken)
     {
         var count = Config.NavigatorCount;
-        
+        var bitset = await LoadBitset(request.CardId, UnlockItemType.Navigator, count, cancellationToken);
+
         var list = new List<NavigatorDto>();
         for (int i = 0; i < count; i++)
         {
@@ -26,13 +30,13 @@ public class ReadNavigatorQueryHandler : RequestHandlerBase<ReadNavigatorQuery, 
                 Created = "2013-01-01 08:00:00",
                 Modified = "2013-01-01 08:00:00",
                 NewFlag = 0,
-                UseFlag = 1
+                UseFlag = bitset is null ? 1 : BitsetHelper.IsUnlocked(bitset, i + 1) ? 1 : 0
             };
             list.Add(navigator);
         }
 
         var result = list.SerializeCardDataList(NAVIGATOR_XPATH);
 
-        return Task.FromResult(new ServiceResult<string>(result));
+        return new ServiceResult<string>(result);
     }
 }

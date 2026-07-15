@@ -1,0 +1,72 @@
+name: Build and Publish
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.x'
+          dotnet-quality: 'preview'
+
+      - name: Restore dependencies
+        run: dotnet restore GC-local-server-rewrite.sln
+
+      - name: Build solution
+        run: dotnet build GC-local-server-rewrite.sln -c Release --no-restore
+
+      - name: Run tests
+        run: dotnet test GC-local-server-rewrite.sln -c Release --no-build
+
+      - name: Publish MainServer
+        run: dotnet publish MainServer/MainServer.csproj -c Release -r win-x64 --self-contained true -o publish/MainServer
+
+      - name: Publish GCRelayServer
+        run: dotnet publish GCRelayServer/GCRelayServer.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -o publish/GCRelayServer
+
+      - name: Publish DatParser
+        run: dotnet publish DatParser/DatParser.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -o publish/DatParser
+
+      - name: Upload MainServer artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: MainServer-win-x64
+          path: publish/MainServer/
+
+      - name: Upload GCRelayServer artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: GCRelayServer-win-x64
+          path: publish/GCRelayServer/
+
+      - name: Upload DatParser artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: DatParser-win-x64
+          path: publish/DatParser/
+
+      - name: Clean up old artifacts
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          # Get run IDs for this workflow, skip the 3 most recent, delete artifacts from the rest
+          old_runs=$(gh run list --workflow build.yml --json databaseId --jq '.[3:][].databaseId')
+          for run_id in $old_runs; do
+            echo "Deleting artifacts from run $run_id"
+            artifact_ids=$(gh api "repos/${{ github.repository }}/actions/runs/$run_id/artifacts" --jq '.artifacts[].id' 2>/dev/null || true)
+            for artifact_id in $artifact_ids; do
+              gh api -X DELETE "repos/${{ github.repository }}/actions/artifacts/$artifact_id" 2>/dev/null || true
+            done
+          done

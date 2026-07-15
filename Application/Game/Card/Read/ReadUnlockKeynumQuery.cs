@@ -1,16 +1,16 @@
 namespace Application.Game.Card.Read;
 
 
-public record ReadUnlockKeynumQuery(long CardId) : IRequestWrapper<string>;
+public record ReadUnlockKeynumQuery(long CardId) : IQueryWrapper<string>;
 
-public class ReadUnlockKeynumQueryHandler : RequestHandlerBase<ReadUnlockKeynumQuery, string>
+public class ReadUnlockKeynumQueryHandler : QueryHandlerBase<ReadUnlockKeynumQuery, string>
 {
     private const string UNLOCK_KEYNUM_XPATH = "/root/unlock_keynum/record";
     public ReadUnlockKeynumQueryHandler(ICardDependencyAggregate aggregate) : base(aggregate)
     {
     }
 
-    public override Task<ServiceResult<string>> Handle(ReadUnlockKeynumQuery request, CancellationToken cancellationToken)
+    public override ValueTask<ServiceResult<string>> Handle(ReadUnlockKeynumQuery request, CancellationToken cancellationToken)
     {
         var unlockables = Config.UnlockRewards;
         var list = unlockables.Select((unlockable, index) => new UnlockKeyNumDto
@@ -29,7 +29,7 @@ public class ReadUnlockKeynumQueryHandler : RequestHandlerBase<ReadUnlockKeynumQ
             .ToList();
         var result = list.SerializeCardDataList(UNLOCK_KEYNUM_XPATH);
 
-        return Task.FromResult(new ServiceResult<string>(result));
+        return ValueTask.FromResult(new ServiceResult<string>(result));
 
     }
 }

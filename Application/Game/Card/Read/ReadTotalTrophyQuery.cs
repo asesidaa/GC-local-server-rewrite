@@ -1,9 +1,9 @@
 namespace Application.Game.Card.Read;
 
 
-public record ReadTotalTrophyQuery(long CardId) : IRequestWrapper<string>;
+public record ReadTotalTrophyQuery(long CardId) : IQueryWrapper<string>;
 
-public class ReadTotalTrophyQueryHandler : RequestHandlerBase<ReadTotalTrophyQuery, string>
+public class ReadTotalTrophyQueryHandler : QueryHandlerBase<ReadTotalTrophyQuery, string>
 {
     private const string TOTAL_TROPHY_XPATH = "/root/total_trophy";
     
@@ -11,7 +11,7 @@ public class ReadTotalTrophyQueryHandler : RequestHandlerBase<ReadTotalTrophyQue
     {
     }
 
-    public override Task<ServiceResult<string>> Handle(ReadTotalTrophyQuery request, CancellationToken cancellationToken)
+    public override ValueTask<ServiceResult<string>> Handle(ReadTotalTrophyQuery request, CancellationToken cancellationToken)
     {
         var trophy = new TotalTrophyDto
         {
@@ -21,6 +21,6 @@ public class ReadTotalTrophyQueryHandler : RequestHandlerBase<ReadTotalTrophyQue
 
         var result = trophy.SerializeCardData(TOTAL_TROPHY_XPATH);
 
-        return Task.FromResult(new ServiceResult<string>(result));
+        return ValueTask.FromResult(new ServiceResult<string>(result));
     }
 }

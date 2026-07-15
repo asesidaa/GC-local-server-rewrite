@@ -1,10 +1,10 @@
-﻿using Application.Common.Helpers;
+using Application.Common.Helpers;
 
 namespace Application.Game.Rank;
 
-public record GetGlobalScoreRankQuery(string Param) : IRequestWrapper<string>;
+public record GetGlobalScoreRankQuery(string Param) : IQueryWrapper<string>;
 
-public class GetGlobalScoreRankQueryHandler : IRequestHandlerWrapper<GetGlobalScoreRankQuery, string>
+public class GetGlobalScoreRankQueryHandler : IQueryHandlerWrapper<GetGlobalScoreRankQuery, string>
 {
     private readonly ICardDbContext cardDbContext;
 
@@ -13,7 +13,7 @@ public class GetGlobalScoreRankQueryHandler : IRequestHandlerWrapper<GetGlobalSc
         this.cardDbContext = cardDbContext;
     }
 
-    public async Task<ServiceResult<string>> Handle(GetGlobalScoreRankQuery request, CancellationToken cancellationToken)
+    public async ValueTask<ServiceResult<string>> Handle(GetGlobalScoreRankQuery request, CancellationToken cancellationToken)
     {
         var param = request.Param.DeserializeCardData<RankParam>();
         return param switch
