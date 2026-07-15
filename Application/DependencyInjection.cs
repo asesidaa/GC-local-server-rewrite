@@ -61,18 +61,6 @@ public static class DependencyInjection
                     });
             });
             
-            q.AddJob<MaintainNullValuesJob>(options => options.WithIdentity(MaintainNullValuesJob.KEY));
-            q.AddTrigger(options =>
-            {
-                options.ForJob(MaintainNullValuesJob.KEY)
-                    .WithIdentity("MaintainNullValuesJob-trigger")
-                    .StartNow()
-                    .WithSimpleSchedule(x =>
-                    {
-                        x.WithIntervalInHours(refreshIntervalHours).RepeatForever();
-                    });
-            });
-
             q.AddJob<CleanupOnlineMatchesJob>(options => options.WithIdentity(CleanupOnlineMatchesJob.KEY));
             q.AddTrigger(options =>
             {
