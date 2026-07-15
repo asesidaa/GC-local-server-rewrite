@@ -58,22 +58,53 @@ public class UnlockAllMusicCommandHandler : CommandHandlerBase<UnlockAllMusicCom
             }
         }
 
-        // Also upsert CardDetail rows for compatibility
-        var unlockables = Config.UnlockRewards
+        // Also maintain CardDetail rows for compatibility
+        var musicIds = Config.UnlockRewards
             .Where(config => config.RewardType == RewardType.Music)
-            .Select(config => new CardDetailDto
-            {
-                CardId = request.CardId,
-                Pcol1 = 10,
-                Pcol2 = config.TargetId,
-                Pcol3 = 0,
-                LastPlayTenpoId = "1337",
-                LastPlayTime = DateTime.Now,
-                ScoreUi2 = 1,
-                ScoreUi6 = 1
-            }.DtoToCardDetail());
+            .Select(config => (long)config.TargetId)
+            .Distinct()
+            .ToArray();
 
-        await CardDbContext.CardDetails.UpsertRange(unlockables).RunAsync(cancellationToken);
+        if (musicIds.Length > 0)
+        {
+            var existingDetails = await CardDbContext.CardDetails
+                .Where(detail => detail.CardId == request.CardId &&
+                                 detail.Pcol1 == 10 &&
+                                 detail.Pcol3 == 0 &&
+                                 musicIds.Contains(detail.Pcol2))
+                .ToDictionaryAsync(detail => detail.Pcol2, cancellationToken);
+            var playedMusicIds = await CardDbContext.CardDetails
+                .Where(detail => detail.CardId == request.CardId &&
+                                 detail.Pcol1 == 20 &&
+                                 musicIds.Contains(detail.Pcol2))
+                .Select(detail => detail.Pcol2)
+                .Distinct()
+                .ToHashSetAsync(cancellationToken);
+
+            foreach (var musicId in musicIds)
+            {
+                var unplayedFlag = playedMusicIds.Contains(musicId) ? 0 : 1;
+                if (existingDetails.TryGetValue(musicId, out var detail))
+                {
+                    detail.ScoreUi2 = 1;
+                    detail.ScoreUi6 = unplayedFlag;
+                    continue;
+                }
+
+                CardDbContext.CardDetails.Add(new CardDetail
+                {
+                    CardId = request.CardId,
+                    Pcol1 = 10,
+                    Pcol2 = musicId,
+                    Pcol3 = 0,
+                    LastPlayTenpoId = "1337",
+                    LastPlayTime = DateTime.Now,
+                    ScoreUi2 = 1,
+                    ScoreUi6 = unplayedFlag
+                });
+            }
+        }
+
         await CardDbContext.SaveChangesAsync(cancellationToken);
 
         return new ServiceResult<bool>(true);
