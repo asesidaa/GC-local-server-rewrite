@@ -19,16 +19,16 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="FlexLabs.EntityFrameworkCore.Upsert" Version="10.0.0" />
-      <PackageReference Include="Mediator.Abstractions" Version="3.0.2" />
-      <PackageReference Include="Mediator.SourceGenerator" Version="3.0.2">
+      <PackageReference Include="FlexLabs.EntityFrameworkCore.Upsert" />
+      <PackageReference Include="Mediator.Abstractions" />
+      <PackageReference Include="Mediator.SourceGenerator">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
-      <PackageReference Include="Quartz.AspNetCore" Version="3.16.1" />
-      <PackageReference Include="Riok.Mapperly" Version="5.0.0-next.3" />
-      <PackageReference Include="Throw" Version="1.4.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" />
+      <PackageReference Include="Quartz.AspNetCore" />
+      <PackageReference Include="Riok.Mapperly" />
+      <PackageReference Include="Throw" />
     </ItemGroup>
 
 </Project>

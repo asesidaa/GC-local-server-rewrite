@@ -13,18 +13,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="CertificateManager" Version="1.0.9" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.5" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.5" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.5">
+        <PackageReference Include="CertificateManager" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
-        <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
-        <PackageReference Include="Serilog.Expressions" Version="5.1.0-dev-02309" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
-        <PackageReference Include="Throw" Version="1.4.0" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
+        <PackageReference Include="Serilog.AspNetCore" />
+        <PackageReference Include="Serilog.Expressions" />
+        <PackageReference Include="Swashbuckle.AspNetCore" />
+        <PackageReference Include="Throw" />
     </ItemGroup>
 
     <ItemGroup>
