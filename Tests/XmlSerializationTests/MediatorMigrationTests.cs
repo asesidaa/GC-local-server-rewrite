@@ -40,7 +40,7 @@ public class MediatorMigrationTests
         using var scope = provider.CreateScope();
         var sender = scope.ServiceProvider.GetRequiredService<ISender>();
 
-        var result = await sender.Send(query);
+        var result = await sender.Send(query, TestContext.Current.CancellationToken);
 
         Assert.True(result.Succeeded);
         Assert.True(result.Data);
@@ -56,7 +56,7 @@ public class MediatorMigrationTests
         using var scope = provider.CreateScope();
         var sender = scope.ServiceProvider.GetRequiredService<ISender>();
 
-        var result = await sender.Send(command);
+        var result = await sender.Send(command, TestContext.Current.CancellationToken);
 
         Assert.Equal("error=0", result);
     }

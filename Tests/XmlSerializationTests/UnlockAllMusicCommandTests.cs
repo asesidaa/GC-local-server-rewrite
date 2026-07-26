@@ -43,16 +43,19 @@ public class UnlockAllMusicCommandTests
                 LastPlayTenpoId = "9001",
                 LastPlayTime = lastPlayTime
             });
-        await database.Cards.SaveChangesAsync();
+        await database.Cards.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var handler = CreateHandler(database, 101);
-        var result = await handler.Handle(new UnlockAllMusicCommand(CardId), CancellationToken.None);
+        var result = await handler.Handle(
+            new UnlockAllMusicCommand(CardId),
+            TestContext.Current.CancellationToken);
 
         Assert.True(result.Succeeded);
         Assert.True(result.Data);
         database.Cards.ChangeTracker.Clear();
-        var detail = await database.Cards.CardDetails.SingleAsync(row =>
-            row.CardId == CardId && row.Pcol1 == 10 && row.Pcol2 == 101 && row.Pcol3 == 0);
+        var detail = await database.Cards.CardDetails.SingleAsync(
+            row => row.CardId == CardId && row.Pcol1 == 10 && row.Pcol2 == 101 && row.Pcol3 == 0,
+            TestContext.Current.CancellationToken);
         Assert.Equal(1, detail.ScoreUi2);
         Assert.Equal(0, detail.ScoreUi6);
         Assert.Equal(17, detail.ScoreI1);
@@ -78,15 +81,18 @@ public class UnlockAllMusicCommandTests
             LastPlayTenpoId = "8123",
             LastPlayTime = new DateTime(2026, 7, 14, 8, 0, 0)
         });
-        await database.Cards.SaveChangesAsync();
+        await database.Cards.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var handler = CreateHandler(database, 202);
-        var result = await handler.Handle(new UnlockAllMusicCommand(CardId), CancellationToken.None);
+        var result = await handler.Handle(
+            new UnlockAllMusicCommand(CardId),
+            TestContext.Current.CancellationToken);
 
         Assert.True(result.Succeeded);
         database.Cards.ChangeTracker.Clear();
-        var detail = await database.Cards.CardDetails.SingleAsync(row =>
-            row.CardId == CardId && row.Pcol1 == 10 && row.Pcol2 == 202 && row.Pcol3 == 0);
+        var detail = await database.Cards.CardDetails.SingleAsync(
+            row => row.CardId == CardId && row.Pcol1 == 10 && row.Pcol2 == 202 && row.Pcol3 == 0,
+            TestContext.Current.CancellationToken);
         Assert.Equal(1, detail.ScoreUi2);
         Assert.Equal(1, detail.ScoreUi6);
         Assert.Equal(9, detail.ScoreI1);
@@ -117,17 +123,19 @@ public class UnlockAllMusicCommandTests
                 LastPlayTenpoId = "1337",
                 LastPlayTime = DateTime.Now
             });
-        await database.Cards.SaveChangesAsync();
+        await database.Cards.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var handler = CreateHandler(database, 303, 303, 404);
-        var result = await handler.Handle(new UnlockAllMusicCommand(CardId), CancellationToken.None);
+        var result = await handler.Handle(
+            new UnlockAllMusicCommand(CardId),
+            TestContext.Current.CancellationToken);
 
         Assert.True(result.Succeeded);
         database.Cards.ChangeTracker.Clear();
         var details = await database.Cards.CardDetails
             .Where(row => row.CardId == CardId && row.Pcol1 == 10)
             .OrderBy(row => row.Pcol2)
-            .ToListAsync();
+            .ToListAsync(TestContext.Current.CancellationToken);
         Assert.Collection(details,
             played =>
             {
