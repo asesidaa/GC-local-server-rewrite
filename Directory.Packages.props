@@ -1,6 +1,7 @@
 <Project>
     <PropertyGroup>
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+        <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
     </PropertyGroup>
 
     <ItemGroup>
@@ -26,7 +27,6 @@
         <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.10" />
         <PackageVersion Include="Microsoft.Extensions.Options" Version="10.0.10" />
         <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.8.1" />
-        <PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
         <PackageVersion Include="MudBlazor" Version="9.7.0" />
         <PackageVersion Include="NetCoreServer" Version="8.0.7" />
         <PackageVersion Include="NetEscapades.EnumGenerators" Version="1.0.0-beta21" />
@@ -36,6 +36,7 @@
         <PackageVersion Include="Serilog.AspNetCore" Version="10.0.0" />
         <PackageVersion Include="Serilog.Expressions" Version="5.1.0-dev-02309" />
         <PackageVersion Include="Serilog.Sinks.Console" Version="6.1.1" />
+        <PackageVersion Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.12" />
         <PackageVersion Include="Swashbuckle.AspNetCore" Version="10.2.3" />
         <PackageVersion Include="Throw" Version="1.4.0" />
         <PackageVersion Include="Validation" Version="2.6.68" />
