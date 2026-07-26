@@ -16,8 +16,16 @@ public class GetPlayNumRankQueryHandler : IQueryHandlerWrapper<GetPlayNumRankQue
     
     public async ValueTask<ServiceResult<string>> Handle(GetPlayNumRankQuery request, CancellationToken cancellationToken)
     {
-        var ranks = await cardDbContext.PlayNumRanks.OrderBy(rank => rank.Rank)
-            .Take(30).ToListAsync(cancellationToken: cancellationToken);
+        var orderedRanks = await cardDbContext.PlayNumRanks
+            .OrderBy(rank => rank.Rank)
+            .ToListAsync(cancellationToken: cancellationToken);
+        var playedRanks = orderedRanks.Where(rank => rank.PlayCount > 0).ToList();
+        var fillerRanks = orderedRanks.Where(rank => rank.PlayCount == 0).ToArray();
+
+        // The client filters unavailable songs before requiring 30 entries.
+        // Keep real rankings first, then provide randomized zero-play candidates.
+        Random.Shared.Shuffle(fillerRanks);
+        var ranks = playedRanks.Concat(fillerRanks).ToList();
 
         var status = new RankStatus
         {
@@ -32,6 +40,7 @@ public class GetPlayNumRankQueryHandler : IQueryHandlerWrapper<GetPlayNumRankQue
         {
             var dto = rank.PlayNumRankToDto();
             dto.Id = i;
+            dto.Rank = i + 1;
             return dto;
         }).ToList();
 
