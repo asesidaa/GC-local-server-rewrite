@@ -20,13 +20,13 @@ jobs:
           dotnet-quality: 'preview'
 
       - name: Restore dependencies
-        run: dotnet restore GC-local-server-rewrite.sln
+        run: dotnet restore GC-local-server-rewrite.slnx
 
       - name: Build solution
-        run: dotnet build GC-local-server-rewrite.sln -c Release --no-restore
+        run: dotnet build GC-local-server-rewrite.slnx -c Release --no-restore
 
       - name: Run tests
-        run: dotnet test GC-local-server-rewrite.sln -c Release --no-build
+        run: dotnet test GC-local-server-rewrite.slnx -c Release --no-build
 
       - name: Publish MainServer
         run: dotnet publish MainServer/MainServer.csproj -c Release -r win-x64 --self-contained true -o publish/MainServer

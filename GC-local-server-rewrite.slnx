@@ -1,0 +1,18 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Tests/">
+    <Project Path="Tests/XmlSerializationTests/XmlSerializationTests.csproj" />
+  </Folder>
+  <Project Path="Application/Application.csproj" />
+  <Project Path="DatParser/DatParser.csproj" />
+  <Project Path="Domain/Domain.csproj" />
+  <Project Path="GCRelayServer/GCRelayServer.csproj" />
+  <Project Path="Infrastructure/Infrastructure.csproj" />
+  <Project Path="MainServer/MainServer.csproj" />
+  <Project Path="Shared/Shared.csproj" />
+  <Project Path="WebUI/WebUI.csproj" />
+</Solution>

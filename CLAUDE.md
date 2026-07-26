@@ -10,7 +10,7 @@ GC local server rewrite — a .NET 10.0 reimplementation of a Groove Coaster arc
 
 ```bash
 # Build entire solution
-dotnet build GC-local-server-rewrite.sln
+dotnet build GC-local-server-rewrite.slnx
 
 # Build specific project
 dotnet build MainServer/MainServer.csproj
