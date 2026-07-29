@@ -438,6 +438,8 @@ FodyWeavers.xsd
 # Ignore card db since we should start from scratch
 /db/card.db3
 
+.codex
+
 
 .idea
 identifier.sqlite
