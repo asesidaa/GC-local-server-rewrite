@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Config;
 
-public sealed class OnlineMatchingConfig
+public sealed record OnlineMatchingConfig
 {
     public const string SECTION = "OnlineMatching";
 

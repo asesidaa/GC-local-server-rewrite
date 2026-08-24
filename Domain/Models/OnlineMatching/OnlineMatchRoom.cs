@@ -64,6 +64,13 @@ public sealed class OnlineMatchRoom
 
     public int ParticipantCount => participants.Count;
 
+    public bool CanAccept(DateTimeOffset now)
+    {
+        Advance(now);
+        return Phase is OnlineMatchPhase.Searching or OnlineMatchPhase.Forming &&
+               participants.Count < options.MaxPlayers;
+    }
+
     public OnlineMatchJoinOutcome TryJoin(OnlineMatchParticipant participant, DateTimeOffset now)
     {
         ArgumentNullException.ThrowIfNull(participant);
@@ -117,6 +124,97 @@ public sealed class OnlineMatchRoom
         return OnlineMatchJoinOutcome.Joined;
     }
 
+    public OnlineMatchJoinOutcome RefreshParticipant(OnlineMatchParticipant participant, DateTimeOffset now)
+    {
+        ArgumentNullException.ThrowIfNull(participant);
+        var state = participants.FirstOrDefault(candidate => candidate.Profile.CardId == participant.CardId);
+        if (state is null)
+        {
+            return participants.Any(candidate => candidate.Profile.MachineId == participant.MachineId)
+                ? OnlineMatchJoinOutcome.MachineConflict
+                : OnlineMatchJoinOutcome.CardConflict;
+        }
+
+        if (state.Profile.MachineId != participant.MachineId || participant.EventId != EventId ||
+            !HasSameStableProfile(state.Profile, participant))
+        {
+            return OnlineMatchJoinOutcome.CardConflict;
+        }
+
+        state.Profile = state.Profile with { MessageId = participant.MessageId };
+        LastActivityAt = now;
+        Advance(now);
+        return OnlineMatchJoinOutcome.AlreadyJoined;
+    }
+
+    public bool TryUpdateMessage(long cardId, uint messageId, DateTimeOffset now)
+    {
+        Advance(now);
+        var state = participants.FirstOrDefault(candidate => candidate.Profile.CardId == cardId);
+        if (state is null)
+        {
+            return false;
+        }
+
+        state.Profile = state.Profile with { MessageId = messageId };
+        LastActivityAt = now;
+        return true;
+    }
+
+    public OnlineMatchParticipantSnapshot? FindParticipant(long cardId, DateTimeOffset now)
+    {
+        return CreateSnapshot(now).Participants.FirstOrDefault(participant => participant.CardId == cardId);
+    }
+
+    public OnlineMatchResultOutcome TrySubmitResult(
+        long cardId,
+        OnlineMatchResultSubmission submission,
+        DateTimeOffset now)
+    {
+        ArgumentNullException.ThrowIfNull(submission);
+        Advance(now);
+
+        var state = participants.FirstOrDefault(candidate => candidate.Profile.CardId == cardId);
+        if (state is null)
+        {
+            return OnlineMatchResultOutcome.NotMember;
+        }
+
+        if (state.Result is not null)
+        {
+            return state.Result == submission
+                ? OnlineMatchResultOutcome.Duplicate
+                : OnlineMatchResultOutcome.ConflictingResult;
+        }
+
+        if (Phase != OnlineMatchPhase.Ready)
+        {
+            return OnlineMatchResultOutcome.InvalidPhase;
+        }
+
+        state.Result = submission;
+        LastActivityAt = now;
+
+        if (participants.All(candidate => candidate.Result is not null))
+        {
+            Phase = OnlineMatchPhase.Closed;
+            ClosedAt = now;
+        }
+
+        return OnlineMatchResultOutcome.Accepted;
+    }
+
+    public void Close(DateTimeOffset now)
+    {
+        if (Phase == OnlineMatchPhase.Closed)
+        {
+            return;
+        }
+
+        Phase = OnlineMatchPhase.Closed;
+        ClosedAt = now;
+    }
+
     public void Advance(DateTimeOffset now)
     {
         if (Phase is OnlineMatchPhase.Searching or OnlineMatchPhase.Forming && now >= phaseDeadline)
@@ -148,7 +246,7 @@ public sealed class OnlineMatchRoom
                 state.Profile.Pref,
                 state.Profile.MessageId,
                 state.Profile.EntryStart,
-                state.HasResult))
+                state.Result is not null))
             .ToArray();
 
         return new OnlineMatchRoomSnapshot(MatchingId, EventId, Phase, timing, participantSnapshots);
@@ -171,7 +269,22 @@ public sealed class OnlineMatchRoom
     {
         Phase = OnlineMatchPhase.Ready;
         ReadyAt = now;
-        LastActivityAt = now;
+    }
+
+    private static bool HasSameStableProfile(OnlineMatchParticipant left, OnlineMatchParticipant right)
+    {
+        return left.CardId == right.CardId &&
+               left.MachineId == right.MachineId &&
+               left.EventId == right.EventId &&
+               left.PlayerName == right.PlayerName &&
+               left.AvatarId == right.AvatarId &&
+               left.TitleId == right.TitleId &&
+               left.ClassId == right.ClassId &&
+               left.GroupId == right.GroupId &&
+               left.TenpoId == right.TenpoId &&
+               left.TenpoName == right.TenpoName &&
+               left.PrefId == right.PrefId &&
+               left.Pref == right.Pref;
     }
 
     private sealed class ParticipantState(uint entryNumber, OnlineMatchParticipant profile)
@@ -180,6 +293,6 @@ public sealed class OnlineMatchRoom
 
         public OnlineMatchParticipant Profile { get; set; } = profile;
 
-        public bool HasResult { get; set; }
+        public OnlineMatchResultSubmission? Result { get; set; }
     }
 }
