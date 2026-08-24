@@ -21,7 +21,16 @@ public sealed class RelayRouter(RelayRoomRegistry registry)
             RelayMessageType.Announcement => HandleAnnouncement(source, datagram),
             RelayMessageType.Registration => HandleRegistration(source, datagram),
             RelayMessageType.Leave => HandleLeave(source, datagram),
-            RelayMessageType.Start => RouteStart(source, datagram),
+            RelayMessageType.PhaseBarrier or
+            RelayMessageType.MusicSelection or
+            RelayMessageType.MusicSelectionCommit or
+            RelayMessageType.DifficultyAndItem or
+            RelayMessageType.LiveTuneSnapshot or
+            RelayMessageType.ResultRecord or
+            RelayMessageType.PresetMessage or
+            RelayMessageType.GuestLiveness or
+            RelayMessageType.HostStatus or
+            RelayMessageType.Start => RouteRegistered(source, datagram),
             _ => RelayRouteResult.Rejected(new RelayRejection(
                 RelayRejectionCode.InvalidTarget,
                 $"Routing for {datagram.MessageType} is not active."))
@@ -95,24 +104,25 @@ public sealed class RelayRouter(RelayRoomRegistry registry)
             : RelayRouteResult.Rejected(removal.Rejection!.Value);
     }
 
-    private RelayRouteResult RouteStart(IPEndPoint source, RelayDatagram datagram)
+    private RelayRouteResult RouteRegistered(IPEndPoint source, RelayDatagram datagram)
     {
-        var sender = registry.ResolveSender(source, datagram);
-        if (!sender.IsSuccess)
-        {
-            return RelayRouteResult.Rejected(sender.Rejection!.Value);
-        }
-
-        if (sender.Sender!.EntryNumber != 0)
+        if (datagram.MessageType == RelayMessageType.Start &&
+            datagram.TargetMachineId is not (0 or uint.MaxValue))
         {
             return RelayRouteResult.Rejected(new RelayRejection(
-                RelayRejectionCode.SenderRoleMismatch,
-                "Only stable entry zero may send the host start message."));
+                RelayRejectionCode.InvalidTarget,
+                "The native host start message is a room broadcast."));
+        }
+
+        var routing = registry.ResolveRoute(source, datagram, RelayProtocol.GetSenderRole(datagram));
+        if (!routing.IsSuccess)
+        {
+            return RelayRouteResult.Rejected(routing.Rejection!.Value);
         }
 
         return RelayRouteResult.Accepted(
             RelayRouteDisposition.Routed,
-            sender.OtherMembers
+            routing.Targets
                 .Select(member => new RelayTransmission(member.Endpoint, datagram))
                 .ToArray());
     }

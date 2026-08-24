@@ -139,7 +139,10 @@ public sealed class RelayRoomRegistry
         }
     }
 
-    public RelaySenderResolution ResolveSender(IPEndPoint endpoint, RelayDatagram datagram)
+    public RelayRoutingResolution ResolveRoute(
+        IPEndPoint endpoint,
+        RelayDatagram datagram,
+        RelaySenderRole senderRole)
     {
         ArgumentNullException.ThrowIfNull(endpoint);
         ArgumentNullException.ThrowIfNull(datagram);
@@ -150,12 +153,12 @@ public sealed class RelayRoomRegistry
             if (!rooms.TryGetValue(datagram.MatchingId, out var room) || room.IsExpired(now, idleExpiry))
             {
                 rooms.Remove(datagram.MatchingId);
-                return RelaySenderResolution.Failure(new RelayRejection(
+                return RelayRoutingResolution.Failure(new RelayRejection(
                     RelayRejectionCode.RoomNotFound,
                     $"Relay room {datagram.MatchingId} does not exist."));
             }
 
-            return room.ResolveSender(endpoint, datagram, now);
+            return room.ResolveRoute(endpoint, datagram, senderRole, now);
         }
     }
 

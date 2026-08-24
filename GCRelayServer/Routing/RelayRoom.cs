@@ -27,16 +27,16 @@ public sealed record RelayMembershipOperationResult(bool IsSuccess, RelayMember?
     public static RelayMembershipOperationResult Failure(RelayRejection rejection) => new(false, null, rejection);
 }
 
-public sealed record RelaySenderResolution(
+public sealed record RelayRoutingResolution(
     bool IsSuccess,
     RelayMember? Sender,
-    IReadOnlyList<RelayMember> OtherMembers,
+    IReadOnlyList<RelayMember> Targets,
     RelayRejection? Rejection)
 {
-    public static RelaySenderResolution Success(RelayMember sender, IReadOnlyList<RelayMember> otherMembers) =>
-        new(true, sender, otherMembers, null);
+    public static RelayRoutingResolution Success(RelayMember sender, IReadOnlyList<RelayMember> targets) =>
+        new(true, sender, targets, null);
 
-    public static RelaySenderResolution Failure(RelayRejection rejection) => new(false, null, [], rejection);
+    public static RelayRoutingResolution Failure(RelayRejection rejection) => new(false, null, [], rejection);
 }
 
 public sealed class RelayRoom
@@ -162,9 +162,10 @@ public sealed class RelayRoom
         }
     }
 
-    public RelaySenderResolution ResolveSender(
+    public RelayRoutingResolution ResolveRoute(
         IPEndPoint endpoint,
         RelayDatagram datagram,
+        RelaySenderRole senderRole,
         DateTimeOffset now)
     {
         lock (gate)
@@ -172,25 +173,55 @@ public sealed class RelayRoom
             if (!membersByMachine.TryGetValue(datagram.SenderMachineId, out var member) ||
                 member.EntryNumber != datagram.EntryNumber)
             {
-                return RelaySenderResolution.Failure(new RelayRejection(
+                return RelayRoutingResolution.Failure(new RelayRejection(
                     RelayRejectionCode.SenderNotRegistered,
                     "Sender machine and entry are not registered in this room."));
             }
 
             if (!member.IsEndpoint(endpoint))
             {
-                return RelaySenderResolution.Failure(new RelayRejection(
+                return RelayRoutingResolution.Failure(new RelayRejection(
                     RelayRejectionCode.SenderEndpointMismatch,
                     "Sender endpoint does not match registration."));
             }
 
+            var roleMatches = senderRole switch
+            {
+                RelaySenderRole.AnyMember => true,
+                RelaySenderRole.Host => member.EntryNumber == 0,
+                RelaySenderRole.Guest => member.EntryNumber != 0,
+                _ => false
+            };
+            if (!roleMatches)
+            {
+                return RelayRoutingResolution.Failure(new RelayRejection(
+                    RelayRejectionCode.SenderRoleMismatch,
+                    $"Entry {member.EntryNumber} cannot send {datagram.MessageType}/{datagram.Mode}."));
+            }
+
+            RelayMember[] targets;
+            if (datagram.TargetMachineId is 0 or uint.MaxValue)
+            {
+                targets = membersByMachine.Values
+                    .Where(candidate => candidate.MachineId != member.MachineId)
+                    .OrderBy(candidate => candidate.EntryNumber)
+                    .ToArray();
+            }
+            else if (datagram.TargetMachineId == member.MachineId ||
+                     !membersByMachine.TryGetValue(datagram.TargetMachineId, out var target))
+            {
+                return RelayRoutingResolution.Failure(new RelayRejection(
+                    RelayRejectionCode.TargetNotFound,
+                    $"Target machine {datagram.TargetMachineId} is not another member of this room."));
+            }
+            else
+            {
+                targets = [target];
+            }
+
             member.Touch(now);
             lastActivityAt = now;
-            var others = membersByMachine.Values
-                .Where(candidate => candidate.MachineId != member.MachineId)
-                .OrderBy(candidate => candidate.EntryNumber)
-                .ToArray();
-            return RelaySenderResolution.Success(member, others);
+            return RelayRoutingResolution.Success(member, targets);
         }
     }
 
