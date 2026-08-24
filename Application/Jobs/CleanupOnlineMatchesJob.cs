@@ -19,7 +19,7 @@ public class CleanupOnlineMatchesJob : IJob
 
     public Task Execute(IJobExecutionContext context)
     {
-        logger.LogInformation("Starting cleanup of stale online match rooms");
+        logger.LogInformation("Advancing and cleaning online match rooms and matching ID tombstones");
         matchingService.CleanupStaleRooms();
         return Task.CompletedTask;
     }

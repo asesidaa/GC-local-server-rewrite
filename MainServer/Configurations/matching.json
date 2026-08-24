@@ -2,5 +2,14 @@
   "Relay": {
     "RelayServer": "127.0.0.1",
     "RelayPort": 3333
+  },
+  "OnlineMatching": {
+    "SearchTimeoutSeconds": 99,
+    "FormationTimeoutSeconds": 40,
+    "PollIntervalSeconds": 10,
+    "RoomIdleExpirySeconds": 600,
+    "TerminalRetentionSeconds": 120,
+    "MatchingIdReuseGuardSeconds": 600,
+    "MaxPlayers": 4
   }
 }

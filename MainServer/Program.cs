@@ -56,6 +56,10 @@ try
         builder.Configuration.GetSection(EventConfig.EVENT_SECTION));
     builder.Services.Configure<RelayConfig>(
         builder.Configuration.GetSection(RelayConfig.RELAY_SECTION));
+    builder.Services.AddOptions<OnlineMatchingConfig>()
+        .Bind(builder.Configuration.GetSection(OnlineMatchingConfig.SECTION))
+        .ValidateDataAnnotations()
+        .ValidateOnStart();
     builder.Services.Configure<GameConfig>(
         builder.Configuration.GetSection(GameConfig.GAME_SECTION));
     builder.Services.Configure<AuthConfig>(

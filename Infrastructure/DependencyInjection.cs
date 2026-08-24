@@ -5,6 +5,7 @@ using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Infrastructure;
 
@@ -13,6 +14,8 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<IEventManagerService, EventManagerService>();
+        services.TryAddSingleton(TimeProvider.System);
+        services.TryAddSingleton<IMatchingIdGenerator, RandomMatchingIdGenerator>();
         services.AddSingleton<IOnlineMatchingService, OnlineMatchingService>();
         
         services.AddDbContext<MusicDbContext>(option =>
