@@ -66,6 +66,13 @@ public sealed class RelayRoomRegistry
                 "Membership requires a 256-byte participant profile."));
         }
 
+        if (profileIdentity.EventId == 0)
+        {
+            return RelayRegistrationResult.Rejected(new RelayRejection(
+                RelayRejectionCode.InvalidPayloadContract,
+                "Membership profile requires a nonzero event ID."));
+        }
+
         var now = timeProvider.GetUtcNow();
         lock (gate)
         {

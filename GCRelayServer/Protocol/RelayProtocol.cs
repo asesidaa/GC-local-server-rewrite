@@ -64,7 +64,49 @@ public static class RelayProtocol
             return false;
         }
 
-        return TryValidateContract(datagram, rule, out rejection);
+        if (!TryValidateContract(datagram, rule, out rejection))
+        {
+            return false;
+        }
+
+        if (datagram.SenderMachineId == 0)
+        {
+            rejection = new RelayRejection(
+                RelayRejectionCode.InvalidMachineId,
+                "Client messages require a nonzero sender machine ID.");
+            return false;
+        }
+
+        if (datagram.MessageType != RelayMessageType.HeartbeatRequest)
+        {
+            if (datagram.MatchingId == 0)
+            {
+                rejection = new RelayRejection(
+                    RelayRejectionCode.InvalidMatchingId,
+                    "Room messages require a nonzero matching ID.");
+                return false;
+            }
+
+            if (datagram.EntryNumber >= 4)
+            {
+                rejection = new RelayRejection(
+                    RelayRejectionCode.InvalidEntryNumber,
+                    "Room message entry must be in 0..3.");
+                return false;
+            }
+        }
+
+        if (IsRelayControl(datagram.MessageType) &&
+            datagram.TargetMachineId is not (0 or uint.MaxValue))
+        {
+            rejection = new RelayRejection(
+                RelayRejectionCode.InvalidTarget,
+                $"{datagram.MessageType} does not support a concrete target machine ID.");
+            return false;
+        }
+
+        rejection = RelayRejection.None;
+        return true;
     }
 
     public static bool TryValidateForEncoding(RelayDatagram datagram, out RelayRejection rejection)
@@ -114,6 +156,15 @@ public static class RelayProtocol
 
         rejection = RelayRejection.None;
         return true;
+    }
+
+    private static bool IsRelayControl(RelayMessageType messageType)
+    {
+        return messageType is RelayMessageType.Registration
+            or RelayMessageType.Leave
+            or RelayMessageType.Announcement
+            or RelayMessageType.Start
+            or RelayMessageType.HeartbeatRequest;
     }
 
     private static RelayMessageRule Client(

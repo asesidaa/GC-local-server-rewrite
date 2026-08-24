@@ -127,6 +127,20 @@ public class RelayRoomRegistryTests
         Assert.Equal(0, fixture.Registry.RoomCount);
     }
 
+    [Fact]
+    public void Registration_RejectsProfileWithoutEventIdentity()
+    {
+        var fixture = CreateFixture();
+
+        var result = fixture.Registry.Register(
+            Endpoint(1),
+            Announcement(1001, 0, eventId: 0, cardId: "CARD000000000001"));
+
+        Assert.Equal(RelayRegistrationOutcome.Rejected, result.Outcome);
+        Assert.Equal(RelayRejectionCode.InvalidPayloadContract, result.Rejection!.Value.Code);
+        Assert.Equal(0, fixture.Registry.RoomCount);
+    }
+
     private static Fixture CreateFixture(TimeSpan? expiry = null)
     {
         var clock = new ManualTimeProvider(Start);

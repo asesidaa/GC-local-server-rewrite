@@ -129,6 +129,60 @@ public class RelayDatagramCodecTests
         Assert.Equal(8, BinaryPrimitives.ReadUInt16BigEndian(encoded.AsSpan(0x10, 2)));
     }
 
+    [Theory]
+    [InlineData(RelayMessageType.Registration, 0, 256)]
+    [InlineData(RelayMessageType.Leave, 0, 8)]
+    [InlineData(RelayMessageType.Announcement, 4, 256)]
+    [InlineData(RelayMessageType.Start, 1, 8)]
+    [InlineData(RelayMessageType.HeartbeatRequest, 0, 8)]
+    public void MembershipAndRelayControl_RejectConcreteTargets(
+        RelayMessageType type,
+        ushort mode,
+        int payloadSize)
+    {
+        var fixture = CreateFixture(type, mode, new byte[payloadSize], targetMachineId: 2002);
+
+        var decoded = RelayDatagramCodec.TryDecodeClient(fixture, out _, out var rejection);
+
+        Assert.False(decoded);
+        Assert.Equal(RelayRejectionCode.InvalidTarget, rejection.Code);
+    }
+
+    [Fact]
+    public void ClientMessages_RequireNonzeroSenderMachineId()
+    {
+        var fixture = CreateFixture(
+            RelayMessageType.HeartbeatRequest,
+            0,
+            new byte[8],
+            senderMachineId: 0);
+
+        var decoded = RelayDatagramCodec.TryDecodeClient(fixture, out _, out var rejection);
+
+        Assert.False(decoded);
+        Assert.Equal(RelayRejectionCode.InvalidMachineId, rejection.Code);
+    }
+
+    [Fact]
+    public void NonHeartbeatMessages_RequireNonzeroMatchingIdAndEntryInRange()
+    {
+        var zeroMatchingId = CreateFixture(
+            RelayMessageType.PhaseBarrier,
+            4,
+            new byte[4],
+            matchingId: 0);
+        var invalidEntry = CreateFixture(
+            RelayMessageType.PhaseBarrier,
+            4,
+            new byte[4],
+            entryNumber: 4);
+
+        Assert.False(RelayDatagramCodec.TryDecodeClient(zeroMatchingId, out _, out var matchingRejection));
+        Assert.False(RelayDatagramCodec.TryDecodeClient(invalidEntry, out _, out var entryRejection));
+        Assert.Equal(RelayRejectionCode.InvalidMatchingId, matchingRejection.Code);
+        Assert.Equal(RelayRejectionCode.InvalidEntryNumber, entryRejection.Code);
+    }
+
     public static TheoryData<byte[], RelayRejectionCode> StructuralRejections()
     {
         var tooShort = new byte[35];
