@@ -9,7 +9,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="BinarySerializer" />
       <PackageReference Include="NetCoreServer" />
       <PackageReference Include="Serilog" />
       <PackageReference Include="Serilog.Sinks.Console" />

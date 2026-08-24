@@ -1,17 +1,17 @@
 using System.Net;
 using System.Net.Sockets;
-using BinarySerialization;
+using GCRelayServer.Routing;
 using Serilog;
 
 namespace GCRelayServer;
 
-public class RelayServer : NetCoreServer.UdpServer
+public sealed class RelayServer : NetCoreServer.UdpServer
 {
-    private readonly RoomManager roomManager;
+    private readonly RelayPacketProcessor processor;
 
-    public RelayServer(IPAddress address, int port, RoomManager roomManager) : base(address, port)
+    public RelayServer(IPAddress address, int port, RelayPacketProcessor processor) : base(address, port)
     {
-        this.roomManager = roomManager;
+        this.processor = processor;
     }
 
     protected override void OnStarted()
@@ -23,124 +23,60 @@ public class RelayServer : NetCoreServer.UdpServer
     {
         try
         {
-            RelayPacket packet;
-            try
+            if (endpoint is not IPEndPoint source)
             {
-                var serializer = new BinarySerializer();
-                var inputStream = new MemoryStream(buffer, (int)offset, (int)size, false);
-                packet = serializer.Deserialize<RelayPacket>(inputStream);
-            }
-            catch (Exception ex)
-            {
-                Log.Warning(ex, "Failed to deserialize packet from {Endpoint} ({Size} bytes)", endpoint, size);
+                Log.Warning("Rejected relay datagram from non-IP endpoint {Endpoint}", endpoint);
                 return;
             }
 
-            if (!IsValidPacket(packet))
+            if (offset < 0 || size < 0 || offset > int.MaxValue || size > int.MaxValue ||
+                offset + size > buffer.LongLength)
             {
-                Log.Warning("Received malformed packet from {Endpoint}", endpoint);
+                Log.Warning(
+                    "Rejected relay receive bounds from {Endpoint}: offset {Offset}, size {Size}, buffer {BufferSize}",
+                    endpoint,
+                    offset,
+                    size,
+                    buffer.LongLength);
                 return;
             }
 
-            if (endpoint is not IPEndPoint ipEndPoint)
+            var result = processor.Process(source, buffer.AsSpan((int)offset, (int)size));
+            if (result.Rejection is { } rejection)
             {
-                Log.Error("Endpoint is not an IPEndPoint — this should not happen");
+                Log.Warning(
+                    "Rejected relay datagram from {Endpoint}: {Code} ({Detail})",
+                    source,
+                    rejection.Code,
+                    rejection.Detail);
                 return;
             }
 
-            Log.Debug("Received packet from {Endpoint}, type 0x{SubType:X2}, match {MatchingId:X8}",
-                endpoint, packet.RequestSubType, packet.MatchingId);
+            var datagram = result.Datagram!;
+            Log.Debug(
+                "Relay {Disposition}: type 0x{MessageType:X4}, match {MatchingId:X8}, machine {MachineId:X8}, " +
+                "entry {EntryNumber}, source {Endpoint}, targets {TargetCount}",
+                result.Disposition,
+                (ushort)datagram.MessageType,
+                datagram.MatchingId,
+                datagram.SenderMachineId,
+                datagram.EntryNumber,
+                source,
+                result.Transmissions.Count);
 
-            switch (packet.RequestSubType)
+            foreach (var transmission in result.Transmissions)
             {
-                case RelayPacketTypes.HEART_BEAT:
-                    HandleHeartbeat(ipEndPoint, packet);
-                    break;
-
-                case RelayPacketTypes.START_MATCHING:
-                    HandleStartMatching(ipEndPoint, packet);
-                    break;
-
-                case RelayPacketTypes.REGISTER_MATCHING:
-                    HandleRegisterMatching(ipEndPoint, packet);
-                    break;
-
-                default:
-                    HandleRelay(ipEndPoint, packet);
-                    break;
+                SendAsync(transmission.Target, transmission.Bytes, 0, transmission.Bytes.Length);
             }
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "Unhandled relay receive failure from {Endpoint}", endpoint);
         }
         finally
         {
             ReceiveAsync();
         }
-    }
-
-    private void HandleHeartbeat(IPEndPoint sender, RelayPacket packet)
-    {
-        SendPacket(sender, packet, RelayPacketTypes.HEART_BEAT_RESPONSE);
-        SendPacket(sender, packet, RelayPacketTypes.HEART_BEAT_RESPONSE);
-    }
-
-    private void HandleStartMatching(IPEndPoint sender, RelayPacket packet)
-    {
-        roomManager.GetOrCreateRoom(packet.MatchingId, sender);
-        SendPacket(sender, packet, RelayPacketTypes.START_MATCHING_RESPONSE);
-        SendPacket(sender, packet, RelayPacketTypes.START_MATCHING_RESPONSE);
-    }
-
-    private void HandleRegisterMatching(IPEndPoint sender, RelayPacket packet)
-    {
-        var room = roomManager.GetOrCreateRoom(packet.MatchingId, sender);
-        var others = room.GetEndpointsExcluding(sender);
-        foreach (var other in others)
-        {
-            SendPacket(other, packet, packet.RequestSubType);
-        }
-    }
-
-    private void HandleRelay(IPEndPoint sender, RelayPacket packet)
-    {
-        var room = roomManager.TryGetRoom(packet.MatchingId);
-        if (room is null)
-        {
-            return;
-        }
-
-        var others = room.GetEndpointsExcluding(sender);
-        foreach (var other in others)
-        {
-            SendPacket(other, packet, packet.RequestSubType);
-        }
-    }
-
-    private void SendPacket(EndPoint target, RelayPacket packet, ushort subType)
-    {
-        // Serialize with the desired subType without mutating the shared packet object
-        var originalSubType = packet.RequestSubType;
-        packet.RequestSubType = subType;
-
-        var serializer = new BinarySerializer();
-        var sendStream = new MemoryStream(1024);
-        serializer.Serialize(sendStream, packet);
-
-        // Restore original to avoid corrupting concurrent readers
-        packet.RequestSubType = originalSubType;
-
-        Log.Debug("Sending packet to {Endpoint}, type 0x{SubType:X2}", target, subType);
-        SendAsync(target, sendStream.GetBuffer(), 0, sendStream.Length);
-    }
-
-    private static bool IsValidPacket(RelayPacket packet)
-    {
-        var totalSize = packet.Magic + packet.RemainingSize;
-        var actualSize = 36 + packet.Data.Length;
-        if (totalSize != actualSize)
-        {
-            return false;
-        }
-
-        return packet.Data.Length == packet.DataSize;
     }
 
     protected override void OnError(SocketError error)

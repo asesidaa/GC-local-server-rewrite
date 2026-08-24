@@ -5,7 +5,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageVersion Include="BinarySerializer" Version="10.1.0" />
         <PackageVersion Include="CertificateManager" Version="1.0.10" />
         <PackageVersion Include="coverlet.collector" Version="10.0.1" />
         <PackageVersion Include="FlexLabs.EntityFrameworkCore.Upsert" Version="10.0.0" />

@@ -1,4 +1,5 @@
 using System.Net;
+using GCRelayServer.Routing;
 using Serilog;
 
 namespace GCRelayServer;
@@ -20,8 +21,9 @@ public static class Program
 
             Log.Information("UDP relay server port: {Port}", port);
 
-            var roomManager = new RoomManager();
-            var server = new RelayServer(IPAddress.Any, port, roomManager);
+            var registry = new RelayRoomRegistry(TimeProvider.System, TimeSpan.FromMinutes(10));
+            var router = new RelayRouter(registry);
+            var server = new RelayServer(IPAddress.Any, port, new RelayPacketProcessor(router));
 
             Console.CancelKeyPress += (_, e) =>
             {
