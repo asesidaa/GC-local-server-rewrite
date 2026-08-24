@@ -245,58 +245,6 @@ public sealed class OnlineMatchingService : IOnlineMatchingService
         }
     }
 
-    public MatchRoomSnapshot JoinOrCreateRoom(MatchEntry entry)
-    {
-        var participant = new OnlineMatchParticipant(
-            entry.CardId,
-            checked((uint)entry.MachineId),
-            checked((uint)entry.EventId),
-            entry.PlayerName,
-            checked((uint)entry.AvatarId),
-            checked((uint)entry.TitleId),
-            checked((uint)entry.ClassId),
-            checked((uint)entry.GroupId),
-            checked((uint)entry.TenpoId),
-            entry.TenpoName,
-            checked((uint)entry.PrefId),
-            entry.Pref,
-            checked((uint)entry.MessageId),
-            new DateTimeOffset(entry.StartTime));
-        var result = Enter(participant);
-        if (!result.IsSuccess)
-        {
-            throw new InvalidOperationException(result.Message);
-        }
-
-        return ToLegacySnapshot(result.Value!);
-    }
-
-    public MatchRoomSnapshot? UpdateRoom(long matchId, long cardId, long messageId)
-    {
-        if (matchId is <= 0 or > uint.MaxValue || messageId is < 0 or > uint.MaxValue)
-        {
-            return null;
-        }
-
-        var now = timeProvider.GetUtcNow();
-        lock (gate)
-        {
-            if (!rooms.TryGetValue((uint)matchId, out var room))
-            {
-                return null;
-            }
-
-            var participant = room.FindParticipant(cardId, now);
-            if (participant is null)
-            {
-                return ToLegacySnapshot(room.CreateSnapshot(now));
-            }
-
-            room.TryUpdateMessage(cardId, (uint)messageId, now);
-            return ToLegacySnapshot(room.CreateSnapshot(now));
-        }
-    }
-
     private uint AllocateMatchingId()
     {
         for (var attempt = 0; attempt < MaxIdAllocationAttempts; attempt++)
@@ -368,32 +316,4 @@ public sealed class OnlineMatchingService : IOnlineMatchingService
             $"Card {participant.CardId} or machine {participant.MachineId} is already matching with another identity.");
     }
 
-    private static MatchRoomSnapshot ToLegacySnapshot(OnlineMatchRoomSnapshot snapshot)
-    {
-        var entries = snapshot.Participants.Select(participant => new MatchEntry
-        {
-            MatchId = snapshot.MatchingId,
-            EntryId = participant.EntryNumber,
-            MachineId = participant.MachineId,
-            EventId = participant.EventId,
-            StartTime = participant.EntryStart.LocalDateTime,
-            Status = snapshot.Phase is OnlineMatchPhase.Searching or OnlineMatchPhase.Forming ? 1 : 3,
-            CardId = participant.CardId,
-            PlayerName = participant.PlayerName,
-            AvatarId = participant.AvatarId,
-            TitleId = participant.TitleId,
-            ClassId = participant.ClassId,
-            GroupId = participant.GroupId,
-            TenpoId = participant.TenpoId,
-            TenpoName = participant.TenpoName,
-            PrefId = participant.PrefId,
-            Pref = participant.Pref,
-            MessageId = participant.MessageId,
-            MatchTimeout = snapshot.Timing.Timeout,
-            MatchWaitTime = snapshot.Timing.Wait,
-            MatchRemainingTime = snapshot.Timing.Remaining
-        }).ToList();
-        var isOpen = snapshot.Phase is OnlineMatchPhase.Searching or OnlineMatchPhase.Forming;
-        return new MatchRoomSnapshot(snapshot.MatchingId, isOpen, entries);
-    }
 }
