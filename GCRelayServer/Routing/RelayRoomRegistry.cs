@@ -139,6 +139,26 @@ public sealed class RelayRoomRegistry
         }
     }
 
+    public RelaySenderResolution ResolveSender(IPEndPoint endpoint, RelayDatagram datagram)
+    {
+        ArgumentNullException.ThrowIfNull(endpoint);
+        ArgumentNullException.ThrowIfNull(datagram);
+        var now = timeProvider.GetUtcNow();
+
+        lock (gate)
+        {
+            if (!rooms.TryGetValue(datagram.MatchingId, out var room) || room.IsExpired(now, idleExpiry))
+            {
+                rooms.Remove(datagram.MatchingId);
+                return RelaySenderResolution.Failure(new RelayRejection(
+                    RelayRejectionCode.RoomNotFound,
+                    $"Relay room {datagram.MatchingId} does not exist."));
+            }
+
+            return room.ResolveSender(endpoint, datagram, now);
+        }
+    }
+
     public int EvictExpiredRooms()
     {
         var now = timeProvider.GetUtcNow();

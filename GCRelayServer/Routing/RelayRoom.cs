@@ -27,6 +27,18 @@ public sealed record RelayMembershipOperationResult(bool IsSuccess, RelayMember?
     public static RelayMembershipOperationResult Failure(RelayRejection rejection) => new(false, null, rejection);
 }
 
+public sealed record RelaySenderResolution(
+    bool IsSuccess,
+    RelayMember? Sender,
+    IReadOnlyList<RelayMember> OtherMembers,
+    RelayRejection? Rejection)
+{
+    public static RelaySenderResolution Success(RelayMember sender, IReadOnlyList<RelayMember> otherMembers) =>
+        new(true, sender, otherMembers, null);
+
+    public static RelaySenderResolution Failure(RelayRejection rejection) => new(false, null, [], rejection);
+}
+
 public sealed class RelayRoom
 {
     private const int MaximumMembers = 4;
@@ -147,6 +159,38 @@ public sealed class RelayRoom
         lock (gate)
         {
             return membersByMachine.Values.OrderBy(member => member.EntryNumber).ToArray();
+        }
+    }
+
+    public RelaySenderResolution ResolveSender(
+        IPEndPoint endpoint,
+        RelayDatagram datagram,
+        DateTimeOffset now)
+    {
+        lock (gate)
+        {
+            if (!membersByMachine.TryGetValue(datagram.SenderMachineId, out var member) ||
+                member.EntryNumber != datagram.EntryNumber)
+            {
+                return RelaySenderResolution.Failure(new RelayRejection(
+                    RelayRejectionCode.SenderNotRegistered,
+                    "Sender machine and entry are not registered in this room."));
+            }
+
+            if (!member.IsEndpoint(endpoint))
+            {
+                return RelaySenderResolution.Failure(new RelayRejection(
+                    RelayRejectionCode.SenderEndpointMismatch,
+                    "Sender endpoint does not match registration."));
+            }
+
+            member.Touch(now);
+            lastActivityAt = now;
+            var others = membersByMachine.Values
+                .Where(candidate => candidate.MachineId != member.MachineId)
+                .OrderBy(candidate => candidate.EntryNumber)
+                .ToArray();
+            return RelaySenderResolution.Success(member, others);
         }
     }
 

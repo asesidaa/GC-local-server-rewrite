@@ -42,5 +42,10 @@ public sealed class RelayMember
         LastSeenAt = now;
     }
 
+    internal void Touch(DateTimeOffset now)
+    {
+        LastSeenAt = now;
+    }
+
     private static IPEndPoint CopyEndpoint(IPEndPoint endpoint) => new(endpoint.Address, endpoint.Port);
 }
