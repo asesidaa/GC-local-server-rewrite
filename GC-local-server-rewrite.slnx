@@ -5,6 +5,7 @@
     <Platform Name="x86" />
   </Configurations>
   <Folder Name="/Tests/">
+    <Project Path="Tests/MultiplayerTests/MultiplayerTests.csproj" />
     <Project Path="Tests/XmlSerializationTests/XmlSerializationTests.csproj" />
   </Folder>
   <Project Path="Application/Application.csproj" />
