@@ -287,7 +287,8 @@ member records:
 - the latest profile payload;
 - last-seen timestamp.
 
-Machine ID and entry number must both be unique within a room. A known member's
+Machine ID, entry number, and card fingerprint must each be unique within a
+room, and all members must carry the same nonzero event ID. A known member's
 later datagram must come from its bound endpoint and use the same entry number.
 Profile reannouncements may update dynamic profile words but may not replace
 the stable identity fingerprint. The relay does not attempt to make the UDP
@@ -406,4 +407,3 @@ elapsed-time state transitions, and pure routing decisions.
 It does not prove real-cabinet acceptance or official-service timing parity.
 Those remain explicit follow-up checks using packet captures and two- through
 four-cabinet sessions.
-

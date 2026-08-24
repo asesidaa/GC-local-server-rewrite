@@ -141,6 +141,25 @@ public class RelayRoomRegistryTests
         Assert.Equal(0, fixture.Registry.RoomCount);
     }
 
+    [Theory]
+    [InlineData(8, "CARD000000000002")]
+    [InlineData(7, "CARD000000000001")]
+    public void NewMember_RejectsDifferentEventOrDuplicateCardIdentity(uint eventId, string cardId)
+    {
+        var fixture = CreateFixture();
+        fixture.Registry.Register(
+            Endpoint(1),
+            Announcement(1001, 0, eventId: 7, cardId: "CARD000000000001"));
+
+        var result = fixture.Registry.Register(
+            Endpoint(2),
+            Announcement(2002, 1, eventId: eventId, cardId: cardId));
+
+        Assert.Equal(RelayRegistrationOutcome.Rejected, result.Outcome);
+        Assert.Equal(RelayRejectionCode.MemberConflict, result.Rejection!.Value.Code);
+        Assert.Equal([1001u], GetRoom(fixture.Registry).GetMembers().Select(member => member.MachineId));
+    }
+
     private static Fixture CreateFixture(TimeSpan? expiry = null)
     {
         var clock = new ManualTimeProvider(Start);

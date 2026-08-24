@@ -382,8 +382,10 @@ duplicates them can be established only by a packet capture.
 
 The relay must reject malformed lengths, non-channel-6 traffic, unsupported
 inbound response subtypes, invalid subtype/mode/payload combinations, spoofed
-sender identity, conflicting machine/entry membership, and a fifth member. A
-capacity rejection must never clear an existing room.
+sender identity, conflicting machine/entry membership, and a fifth member. As
+an anti-confusion boundary for the HTTP-installed roster, every member of one
+matching ID must carry the same nonzero event ID and a unique card fingerprint.
+A capacity rejection must never clear an existing room.
 
 ## Reliability and expiry facts
 
@@ -433,4 +435,3 @@ The remaining acceptance work is:
    duplicates `A1`/`B1` or applies additional admission rules.
 3. Run two-, three-, and four-cabinet sessions through matching, selection,
    gameplay, result upload, participant leave, relay loss, and expiry.
-

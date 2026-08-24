@@ -45,7 +45,9 @@ public sealed class RelayRoom
     private readonly Lock gate = new();
     private readonly Dictionary<uint, RelayMember> membersByMachine = [];
     private readonly Dictionary<uint, RelayMember> membersByEntry = [];
+    private readonly HashSet<(ulong High, ulong Low)> cardIdentities = [];
     private DateTimeOffset lastActivityAt;
+    private uint? eventId;
 
     internal RelayRoom(uint matchingId, DateTimeOffset now)
     {
@@ -95,8 +97,26 @@ public sealed class RelayRoom
                 return new RelayRegistrationResult(
                     RelayRegistrationOutcome.Refreshed,
                     existing,
-                    membersByMachine.Values.Where(member => member.MachineId != existing.MachineId).ToArray(),
+                    membersByMachine.Values
+                        .Where(member => member.MachineId != existing.MachineId)
+                        .OrderBy(member => member.EntryNumber)
+                        .ToArray(),
                     null);
+            }
+
+            if (eventId is { } roomEventId && roomEventId != profileIdentity.EventId)
+            {
+                return RelayRegistrationResult.Rejected(new RelayRejection(
+                    RelayRejectionCode.MemberConflict,
+                    $"Profile event {profileIdentity.EventId} does not match room event {roomEventId}."));
+            }
+
+            var cardIdentity = (profileIdentity.CardIdHigh, profileIdentity.CardIdLow);
+            if (cardIdentities.Contains(cardIdentity))
+            {
+                return RelayRegistrationResult.Rejected(new RelayRejection(
+                    RelayRejectionCode.MemberConflict,
+                    "Profile card identity already belongs to another room member."));
             }
 
             if (membersByMachine.Count >= MaximumMembers)
@@ -123,6 +143,8 @@ public sealed class RelayRoom
                 now);
             membersByMachine.Add(added.MachineId, added);
             membersByEntry.Add(added.EntryNumber, added);
+            cardIdentities.Add(cardIdentity);
+            eventId ??= profileIdentity.EventId;
             lastActivityAt = now;
             return new RelayRegistrationResult(RelayRegistrationOutcome.Added, added, existingMembers, null);
         }
@@ -149,6 +171,7 @@ public sealed class RelayRoom
 
             membersByMachine.Remove(member.MachineId);
             membersByEntry.Remove(member.EntryNumber);
+            cardIdentities.Remove((member.ProfileIdentity.CardIdHigh, member.ProfileIdentity.CardIdLow));
             lastActivityAt = now;
             return RelayMembershipOperationResult.Success(member);
         }

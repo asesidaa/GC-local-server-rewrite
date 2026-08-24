@@ -106,14 +106,6 @@ public sealed class RelayRouter(RelayRoomRegistry registry)
 
     private RelayRouteResult RouteRegistered(IPEndPoint source, RelayDatagram datagram)
     {
-        if (datagram.MessageType == RelayMessageType.Start &&
-            datagram.TargetMachineId is not (0 or uint.MaxValue))
-        {
-            return RelayRouteResult.Rejected(new RelayRejection(
-                RelayRejectionCode.InvalidTarget,
-                "The native host start message is a room broadcast."));
-        }
-
         var routing = registry.ResolveRoute(source, datagram, RelayProtocol.GetSenderRole(datagram));
         if (!routing.IsSuccess)
         {
