@@ -6,7 +6,7 @@ namespace GCRelayServer;
 
 public static class Program
 {
-    public static void Main(string[] args)
+    public static async Task<int> Main(string[] args)
     {
         Log.Logger = new LoggerConfiguration()
 #if DEBUG
@@ -17,70 +17,69 @@ public static class Program
 
         try
         {
-            var port = ParsePort(args);
-
-            Log.Information("UDP relay server port: {Port}", port);
-
-            var registry = new RelayRoomRegistry(TimeProvider.System, TimeSpan.FromMinutes(10));
-            var router = new RelayRouter(registry);
-            var server = new RelayServer(IPAddress.Any, port, new RelayPacketProcessor(router));
-
-            Console.CancelKeyPress += (_, e) =>
+            if (!RelayServerOptions.TryParse(args, out var options, out var error))
             {
-                e.Cancel = true;
-                Log.Information("Ctrl+C received, shutting down...");
-                server.Stop();
-            };
-
-            Log.Information("Server starting...");
-            server.Start();
-            Log.Information("Server started. Press Ctrl+C to stop or Enter to exit.");
-
-            for (;;)
-            {
-                var line = Console.ReadLine();
-                if (string.IsNullOrEmpty(line))
-                {
-                    break;
-                }
-
-                if (line == "!")
-                {
-                    Log.Information("Server restarting...");
-                    server.Restart();
-                    Log.Information("Server restarted");
-                }
+                Log.Error("{Error}", error);
+                return 2;
             }
 
-            Log.Information("Server stopping...");
-            server.Stop();
-            Log.Information("Server stopped");
+            Log.Information(
+                "UDP relay port {Port}, room expiry {RoomExpiry}, cleanup interval {CleanupInterval}",
+                options!.Port,
+                options.RoomExpiry,
+                options.CleanupInterval);
+
+            var timeProvider = TimeProvider.System;
+            var registry = new RelayRoomRegistry(timeProvider, options.RoomExpiry);
+            var router = new RelayRouter(registry);
+            var server = new RelayServer(
+                IPAddress.Any,
+                options.Port,
+                new RelayPacketProcessor(router));
+            var cleanupWorker = new RelayCleanupWorker(registry, options.CleanupInterval, timeProvider);
+            using var shutdown = new CancellationTokenSource();
+
+            Console.CancelKeyPress += (_, eventArgs) =>
+            {
+                eventArgs.Cancel = true;
+                Log.Information("Ctrl+C received; stopping relay server");
+                shutdown.Cancel();
+            };
+
+            Log.Information("Relay server starting");
+            if (!server.Start())
+            {
+                throw new InvalidOperationException("NetCoreServer failed to start the UDP relay socket.");
+            }
+
+            var cleanupTask = cleanupWorker.RunAsync(shutdown.Token);
+            Log.Information("Relay server started");
+            try
+            {
+                await Task.Delay(Timeout.InfiniteTimeSpan, shutdown.Token);
+            }
+            catch (OperationCanceledException) when (shutdown.IsCancellationRequested)
+            {
+                // Normal Ctrl+C shutdown.
+            }
+            finally
+            {
+                shutdown.Cancel();
+                server.Stop();
+                await cleanupTask;
+            }
+
+            Log.Information("Relay server stopped");
+            return 0;
         }
         catch (Exception ex)
         {
             Log.Fatal(ex, "Relay server terminated unexpectedly");
+            return 1;
         }
         finally
         {
-            Log.CloseAndFlush();
+            await Log.CloseAndFlushAsync();
         }
-    }
-
-    private static int ParsePort(string[] args)
-    {
-        const int defaultPort = 3333;
-
-        if (args.Length == 0)
-        {
-            return defaultPort;
-        }
-
-        if (!int.TryParse(args[0], out var port) || port is < 1 or > 65535)
-        {
-            Log.Warning("Invalid port '{Arg}', using default {Default}", args[0], defaultPort);
-            return defaultPort;
-        }
-
-        return port;
     }
 }
