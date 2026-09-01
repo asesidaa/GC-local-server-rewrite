@@ -77,25 +77,25 @@ public class OnlineMatchingServiceTests
     }
 
     [Fact]
-    public void Update_ValidatesMembershipEventAndEntryDependentAction()
+    public void Update_ValidatesMembershipEventAndNativeActionZero()
     {
         var fixture = CreateFixture([101]);
         fixture.Service.Enter(CreateParticipant(1));
         fixture.Service.Enter(CreateParticipant(2));
 
-        var hostWrongAction = fixture.Service.Update(101, 7, 1, 2, 500);
-        var guestWrongAction = fixture.Service.Update(101, 7, 2, 1, 500);
-        var wrongEvent = fixture.Service.Update(101, 8, 1, 1, 500);
-        var unknownCard = fixture.Service.Update(101, 7, 99, 2, 500);
-        var valid = fixture.Service.Update(101, 7, 2, 2, 777);
+        var hostValid = fixture.Service.Update(101, 7, 1, 0, 776);
+        var guestValid = fixture.Service.Update(101, 7, 2, 0, 777);
+        var nonNativeAction = fixture.Service.Update(101, 7, 2, 2, 500);
+        var wrongEvent = fixture.Service.Update(101, 8, 1, 0, 500);
+        var unknownCard = fixture.Service.Update(101, 7, 99, 0, 500);
 
-        Assert.Equal(OnlineMatchingServiceError.InvalidAction, hostWrongAction.Error);
-        Assert.Equal(OnlineMatchingServiceError.InvalidAction, guestWrongAction.Error);
+        Assert.True(hostValid.IsSuccess);
+        Assert.True(guestValid.IsSuccess);
+        Assert.Equal(OnlineMatchingServiceError.InvalidAction, nonNativeAction.Error);
         Assert.Equal(OnlineMatchingServiceError.EventMismatch, wrongEvent.Error);
         Assert.Equal(OnlineMatchingServiceError.NotMember, unknownCard.Error);
-        Assert.True(valid.IsSuccess);
-        Assert.Equal(70u, valid.Value!.Participants.Single(p => p.CardId == 1).MessageId);
-        Assert.Equal(777u, valid.Value.Participants.Single(p => p.CardId == 2).MessageId);
+        Assert.Equal(776u, guestValid.Value!.Participants.Single(p => p.CardId == 1).MessageId);
+        Assert.Equal(777u, guestValid.Value.Participants.Single(p => p.CardId == 2).MessageId);
     }
 
     [Fact]
@@ -106,12 +106,12 @@ public class OnlineMatchingServiceTests
         fixture.Clock.Advance(TimeSpan.FromSeconds(5));
 
         var repeated = Enumerable.Range(0, 20)
-            .Select(index => fixture.Service.Update(101, 7, 1, 1, checked((uint)index)))
+            .Select(index => fixture.Service.Update(101, 7, 1, 0, checked((uint)index)))
             .ToArray();
 
         Assert.All(repeated, result => Assert.Equal(new OnlineMatchTiming(94, 10, 84), result.Value!.Timing));
         fixture.Clock.Advance(TimeSpan.FromSeconds(1));
-        var oneSecondLater = fixture.Service.Update(101, 7, 1, 1, 21);
+        var oneSecondLater = fixture.Service.Update(101, 7, 1, 0, 21);
         Assert.Equal(new OnlineMatchTiming(93, 10, 83), oneSecondLater.Value!.Timing);
     }
 
@@ -122,14 +122,14 @@ public class OnlineMatchingServiceTests
         var fixture = CreateFixture([101], options);
         fixture.Service.Enter(CreateParticipant(1));
         fixture.Clock.Advance(TimeSpan.FromSeconds(9));
-        fixture.Service.Update(101, 7, 1, 1, 80);
+        fixture.Service.Update(101, 7, 1, 0, 80);
         fixture.Clock.Advance(TimeSpan.FromSeconds(9));
 
         fixture.Service.CleanupStaleRooms();
-        var stillPresent = fixture.Service.Update(101, 7, 1, 1, 81);
+        var stillPresent = fixture.Service.Update(101, 7, 1, 0, 81);
         fixture.Clock.Advance(TimeSpan.FromSeconds(11));
         fixture.Service.CleanupStaleRooms();
-        var removed = fixture.Service.Update(101, 7, 1, 1, 82);
+        var removed = fixture.Service.Update(101, 7, 1, 0, 82);
 
         Assert.True(stillPresent.IsSuccess);
         Assert.Equal(OnlineMatchingServiceError.RoomNotFound, removed.Error);

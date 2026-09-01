@@ -52,9 +52,9 @@ public static class OnlineMatchingXml
     {
         ArgumentNullException.ThrowIfNull(dto);
         var action = ToUInt32(dto.Action, "action");
-        if (action is not (1 or 2))
+        if (action != 0)
         {
-            throw new OnlineMatchingProtocolException("action", "must be 1 for entry zero or 2 for a guest");
+            throw new OnlineMatchingProtocolException("action", "must be the native value 0");
         }
 
         return new OnlineMatchingUpdateValues(
@@ -75,15 +75,15 @@ public static class OnlineMatchingXml
             ToUInt32(dto.ResultScore, "result_score"),
             ToUInt32(dto.ResultStar, "result_star"),
             ToUInt32(dto.ResultRank, "result_rank"),
-            ToUInt32(dto.MusicId1, "music_id_1"),
-            ToUInt32(dto.MusicId2, "music_id_2"),
-            ToUInt32(dto.MusicId3, "music_id_3"),
-            ToUInt32(dto.DifficultyLevel1, "difficulty_lv_1"),
-            ToUInt32(dto.DifficultyLevel2, "difficulty_lv_2"),
-            ToUInt32(dto.DifficultyLevel3, "difficulty_lv_3"),
-            ToUInt32(dto.ItemId1, "item_id_1"),
-            ToUInt32(dto.ItemId2, "item_id_2"),
-            ToUInt32(dto.ItemId3, "item_id_3"));
+            ToUInt32(dto.MusicId1, "music_id_1st"),
+            ToUInt32(dto.MusicId2, "music_id_2nd"),
+            ToUInt32(dto.MusicId3, "music_id_3rd"),
+            ToUInt32(dto.DifficultyLevel1, "difficulty_lv_1st"),
+            ToUInt32(dto.DifficultyLevel2, "difficulty_lv_2nd"),
+            ToUInt32(dto.DifficultyLevel3, "difficulty_lv_3rd"),
+            ToUInt32(dto.ItemId1, "item_id_1st"),
+            ToUInt32(dto.ItemId2, "item_id_2nd"),
+            ToUInt32(dto.ItemId3, "item_id_3rd"));
     }
 
     public static string SerializeSnapshot(OnlineMatchRoomSnapshot snapshot)

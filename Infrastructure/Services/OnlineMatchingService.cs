@@ -145,12 +145,11 @@ public sealed class OnlineMatchingService : IOnlineMatchingService
                     $"Card {cardId} does not belong to online match {matchingId}.");
             }
 
-            var expectedAction = participant.EntryNumber == 0 ? 1u : 2u;
-            if (action != expectedAction)
+            if (action != 0)
             {
                 return OnlineMatchingServiceResult<OnlineMatchRoomSnapshot>.Failure(
                     OnlineMatchingServiceError.InvalidAction,
-                    $"Entry {participant.EntryNumber} requires action {expectedAction}.");
+                    $"Online matching update action must be the native value 0, received {action}.");
             }
 
             room.TryUpdateMessage(cardId, messageId, now);

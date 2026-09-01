@@ -36,11 +36,11 @@ public class OnlineMatchingXmlTests
     }
 
     [Fact]
-    public void UpdateRequest_DeserializesOnly8961Fields()
+    public void UpdateRequest_DeserializesNativeActionZero()
     {
         const string xml = """
                            <root><data>
-                             <action>2</action><event_id>7</event_id>
+                             <action>0</action><event_id>7</event_id>
                              <matching_id>305419896</matching_id><message_id>99</message_id>
                            </data></root>
                            """;
@@ -48,7 +48,7 @@ public class OnlineMatchingXmlTests
         var dto = xml.DeserializeCardData<OnlineMatchingUpdateRequestDto>();
         var update = OnlineMatchingXml.ToUpdate(dto);
 
-        Assert.Equal(new OnlineMatchingUpdateValues(2, 7, 305419896, 99), update);
+        Assert.Equal(new OnlineMatchingUpdateValues(0, 7, 305419896, 99), update);
     }
 
     [Fact]
@@ -59,9 +59,9 @@ public class OnlineMatchingXmlTests
                              <event_id>7</event_id><matching_id>101</matching_id>
                              <class_id>3</class_id><group_id>4</group_id>
                              <result_score>100000</result_score><result_star>500</result_star><result_rank>2</result_rank>
-                             <music_id_1>11</music_id_1><music_id_2>12</music_id_2><music_id_3>13</music_id_3>
-                             <difficulty_lv_1>0</difficulty_lv_1><difficulty_lv_2>1</difficulty_lv_2><difficulty_lv_3>3</difficulty_lv_3>
-                             <item_id_1>21</item_id_1><item_id_2>22</item_id_2><item_id_3>23</item_id_3>
+                             <music_id_1st>11</music_id_1st><music_id_2nd>12</music_id_2nd><music_id_3rd>13</music_id_3rd>
+                             <difficulty_lv_1st>0</difficulty_lv_1st><difficulty_lv_2nd>1</difficulty_lv_2nd><difficulty_lv_3rd>3</difficulty_lv_3rd>
+                             <item_id_1st>21</item_id_1st><item_id_2nd>22</item_id_2nd><item_id_3rd>23</item_id_3rd>
                            </data></root>
                            """;
 
@@ -125,7 +125,8 @@ public class OnlineMatchingXmlTests
     }
 
     [Theory]
-    [InlineData(0)]
+    [InlineData(1)]
+    [InlineData(2)]
     [InlineData(3)]
     [InlineData(-1)]
     [InlineData(4294967296)]

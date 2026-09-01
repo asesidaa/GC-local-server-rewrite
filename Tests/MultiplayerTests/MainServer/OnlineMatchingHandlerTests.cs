@@ -46,7 +46,7 @@ public class OnlineMatchingHandlerTests
     }
 
     [Fact]
-    public async Task Update_ForwardsActionEventMatchAndMessage()
+    public async Task Update_AcceptsNativeActionZeroForEveryEntry()
     {
         var fixture = CreateFixture();
         var start = new StartOnlineMatchingCommandHandler(fixture.Service, fixture.Clock);
@@ -62,16 +62,20 @@ public class OnlineMatchingHandlerTests
             fixture.Service,
             NullLogger<UpdateOnlineMatchingCommandHandler>.Instance);
 
-        var result = await handler.Handle(
-            new UpdateOnlineMatchingCommand(2, UpdateXml(2, 7, matchingId, 777)),
+        var hostResult = await handler.Handle(
+            new UpdateOnlineMatchingCommand(1, UpdateXml(0, 7, matchingId, 776)),
+            TestContext.Current.CancellationToken);
+        var guestResult = await handler.Handle(
+            new UpdateOnlineMatchingCommand(2, UpdateXml(0, 7, matchingId, 777)),
             TestContext.Current.CancellationToken);
         var invalidAction = await handler.Handle(
-            new UpdateOnlineMatchingCommand(2, UpdateXml(1, 7, matchingId, 888)),
+            new UpdateOnlineMatchingCommand(2, UpdateXml(2, 7, matchingId, 888)),
             TestContext.Current.CancellationToken);
 
-        Assert.True(result.Succeeded);
-        var records = XDocument.Parse(result.Data!).Root!.Element("online_matching")!.Elements("record").ToArray();
-        Assert.Equal("70", records.Single(record => record.Element("card_id")!.Value == "1").Element("message_id")!.Value);
+        Assert.True(hostResult.Succeeded);
+        Assert.True(guestResult.Succeeded);
+        var records = XDocument.Parse(guestResult.Data!).Root!.Element("online_matching")!.Elements("record").ToArray();
+        Assert.Equal("776", records.Single(record => record.Element("card_id")!.Value == "1").Element("message_id")!.Value);
         Assert.Equal("777", records.Single(record => record.Element("card_id")!.Value == "2").Element("message_id")!.Value);
         Assert.False(invalidAction.Succeeded);
         Assert.Contains("action", invalidAction.Error!.Message, StringComparison.OrdinalIgnoreCase);
@@ -152,9 +156,9 @@ public class OnlineMatchingHandlerTests
                   <event_id>{eventId}</event_id><matching_id>{matchingId}</matching_id>
                   <class_id>30</class_id><group_id>40</group_id>
                   <result_score>{score}</result_score><result_star>500</result_star><result_rank>1</result_rank>
-                  <music_id_1>11</music_id_1><music_id_2>12</music_id_2><music_id_3>13</music_id_3>
-                  <difficulty_lv_1>0</difficulty_lv_1><difficulty_lv_2>1</difficulty_lv_2><difficulty_lv_3>2</difficulty_lv_3>
-                  <item_id_1>21</item_id_1><item_id_2>22</item_id_2><item_id_3>23</item_id_3>
+                  <music_id_1st>11</music_id_1st><music_id_2nd>12</music_id_2nd><music_id_3rd>13</music_id_3rd>
+                  <difficulty_lv_1st>0</difficulty_lv_1st><difficulty_lv_2nd>1</difficulty_lv_2nd><difficulty_lv_3rd>2</difficulty_lv_3rd>
+                  <item_id_1st>21</item_id_1st><item_id_2nd>22</item_id_2nd><item_id_3rd>23</item_id_3rd>
                 </data></root>
                 """;
     }

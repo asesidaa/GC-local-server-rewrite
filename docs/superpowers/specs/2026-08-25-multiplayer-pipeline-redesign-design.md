@@ -209,9 +209,10 @@ The update request gets a dedicated DTO containing only `action`, `event_id`,
 
 Runtime correction, 2026-09-02: a one-player cabinet sent 18 consecutive
 `action = 0` updates. The original entry-dependent `1`/`2` interpretation was
-wrong and currently prevents the elapsed-time timeout from being returned to
-the client. Entry role remains validated from the server-owned room roster, not
-from this request word.
+wrong and prevented the elapsed-time timeout from being returned to the client.
+The implementation and regression tests now accept only the native zero value.
+Entry role remains validated from the server-owned room roster, not from this
+request word.
 
 Only the caller's `message_id` and last-activity time change. An absent or
 invalid caller cannot advance or mutate the room. Time progression depends
@@ -219,7 +220,10 @@ only on `TimeProvider`.
 
 ### `8709` result handling
 
-The result request gets a typed DTO for every binary-confirmed field. The
+The result request gets a typed DTO for every binary-confirmed field. Its nine
+ordinal tags are exactly `music_id_1st/2nd/3rd`,
+`difficulty_lv_1st/2nd/3rd`, and `item_id_1st/2nd/3rd`; the pre-redesign model
+already had those names, and shortened numeric suffixes are invalid. The
 handler validates matching ID, event ID, card membership, and numeric field
 ranges, then associates the submission with the participant in the in-memory
 room. Repeated identical submissions are idempotent; a conflicting second
@@ -258,6 +262,13 @@ sensitive; direct `BinaryPrimitives` code makes every offset and length check
 visible.
 
 ### Codec and protocol validation
+
+The validation table deliberately describes the relay's accepted game471
+emission contract. The native outer receiver itself does not check the outer
+channel parameter/reserved dword, and its routed decoder does not enforce every
+subtype mode or payload length. Those stricter relay checks are compatible
+allowlisting and hardening, not claims about native receiver validation or the
+retired official relay.
 
 Parsing copies the received payload out of NetCoreServer's buffer and rejects:
 
@@ -305,6 +316,12 @@ A rejected fifth member leaves all four existing members untouched. Room
 capacity never resets or clears a live room.
 
 ### Routing state machine
+
+This state machine is reconstructed compatibility policy derived from native
+client emission order and receive transitions. The official relay
+implementation is absent from the game binary, so exact official admission,
+broadcast, fallback, and acknowledgement-duplication policy remains externally
+unverified.
 
 The router applies these rules:
 
@@ -395,8 +412,9 @@ required.
 
 ## Migration and compatibility
 
-- Card request type numbers, controller routes, XML field names, and
-  certification relay fields remain unchanged.
+- Card request type numbers, controller routes, and certification relay fields
+  remain unchanged. The redesign regression that shortened known 8709 ordinal
+  XML names is corrected back to the pre-redesign/native names.
 - Existing `Relay:RelayServer` and `Relay:RelayPort` configuration remains
   valid.
 - Matching state is already transient, so no database migration is required.
