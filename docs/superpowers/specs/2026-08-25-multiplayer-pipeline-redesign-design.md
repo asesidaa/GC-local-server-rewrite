@@ -58,7 +58,7 @@ The processes share protocol invariants, not memory or service calls:
 MainServer ----------------------------------------------------------+
     |                                                               |
     | 8705: allocate event room, uint32 matching_id, entry_no        |
-    | 8961: validate participant/action, return elapsed-time state   |
+    | 8961: validate participant, accept action 0, return state      |
     | 8709: validate and associate result                            |
     v                                                               v
 game471.exe  -----------------------------------------------> GCRelayServer
@@ -204,8 +204,14 @@ The update request gets a dedicated DTO containing only `action`, `event_id`,
 
 - the matching ID exists and event ID agrees with the room;
 - the calling card belongs to that room;
-- `action = 1` for entry zero and `action = 2` for a nonzero entry;
+- `action = 0`, as initialized and emitted by the audited native class;
 - the request cannot change machine, entry, or stable profile identity.
+
+Runtime correction, 2026-09-02: a one-player cabinet sent 18 consecutive
+`action = 0` updates. The original entry-dependent `1`/`2` interpretation was
+wrong and currently prevents the elapsed-time timeout from being returned to
+the client. Entry role remains validated from the server-owned room roster, not
+from this request word.
 
 Only the caller's `message_id` and last-activity time change. An absent or
 invalid caller cannot advance or mutate the room. Time progression depends
@@ -360,7 +366,7 @@ independent.
   do not reset it; the fourth participant makes the room ready immediately.
 - A single participant becomes ready at the 99-second search deadline.
 - Uneven or concurrent polling does not change elapsed-time countdown speed.
-- `8961` validates membership, event, and entry-dependent action and changes
+- `8961` accepts native action zero, validates membership and event, and changes
   only the caller's message ID.
 - `8709` parses all fields, associates the correct participant, and handles
   identical/conflicting retries.

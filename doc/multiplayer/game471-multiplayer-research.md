@@ -122,6 +122,12 @@ The matching-update request (`8961`) serializes `action`, `event_id`,
 `result_star`, `result_rank`, three `music_id_*` fields, three
 `difficulty_lv_*` fields, and three `item_id_*` fields.
 
+The `CNesysOnlineMatching` object initializes the `action` source word at
+offset `+0x90` to zero. Its worker reads that word unchanged when calling
+`NesysCard_RequestOnlineMatchingUpdate_8961`; the audited class contains no
+later writer. MainServer runtime logging on 2026-09-02 independently confirms
+`action = 0` for every observed one-player update request.
+
 Each `/root/online_matching/record` response element contains:
 
 | `COnlineMatching` offset | XML field | Native representation |
@@ -159,8 +165,8 @@ the client copies status, timeout, and wait time. In state `0x80000` it:
 
 - exits HTTP polling when status is `3`;
 - waits `matching_wait_time * 1000` milliseconds between update requests;
-- sends update `action = 1` for entry number `0` and `action = 2` for every
-  nonzero entry number;
+- sends update `action = 0` from the unchanged `CNesysOnlineMatching +0x90`
+  field;
 - reannounces `A6` immediately before each selector-`1902` update request.
 
 The native worker does not use `matching_remaining_time` as its control clock;
@@ -172,6 +178,14 @@ The public-online client has no fixed local HTTP-matching deadline. Static
 binary evidence proves that the service controls progress through `status` and
 controls the next poll through `matching_wait_time`. The binary cannot reveal
 the original service's room-scheduling algorithm.
+
+Live evidence closes the client-timeout question. On 2026-09-02 one player
+entered matching at `03:30:59.707`, then sent 18 updates at roughly ten-second
+intervals from `03:31:09.707` through `03:33:59.699`. Every update carried
+`action = 0`; polling continued past 99 seconds and stopped only with the
+MainServer process. The redesigned room aggregate would become ready after 99
+elapsed seconds, but current `1`/`2` action validation prevents these native
+polls from reaching that aggregate and returning `status = 3`.
 
 Operator/video observation supplied on 2026-08-25: the UI often appears to show
 `99` while searching; official timing varies, and after another participant

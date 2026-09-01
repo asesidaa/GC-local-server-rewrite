@@ -89,8 +89,11 @@ Request `8961` serializes:
 action, event_id, matching_id, message_id
 ```
 
-The game sends `action = 1` for `entry_no = 0` and `action = 2` for every
-nonzero entry number.
+`CNesysOnlineMatching` initializes its request-action field at object offset
+`+0x90` to zero and passes that unchanged field to every selector-`1902`
+request. No writer to that field exists in the audited class. A live one-player
+run on 2026-09-02 confirms `action = 0` on all 18 observed `8961` polls. The
+earlier entry-dependent `1`/`2` interpretation was incorrect.
 
 Request `8709` serializes:
 
@@ -141,6 +144,19 @@ Binary-confirmed behavior:
 - The public client has no fixed local HTTP matching deadline.
 - The client reannounces its UDP `A6` participant profile immediately before
   each `8961` update.
+
+Live MainServer evidence on 2026-09-02 matches that control model. One player
+entered at `03:30:59.707`; the cabinet then issued 18 `8961` requests from
+`03:31:09.707` through `03:33:59.699`, all with `action = 0` and approximately
+ten seconds apart. Polling continued well beyond the configured 99-second
+search window and ended only when the server process was stopped. The client
+therefore does not convert the displayed/countdown value into a local timeout.
+
+The current redesigned server has an elapsed-time one-player deadline, but its
+entry-dependent action validation rejects the native `action = 0` before
+`OnlineMatchingService.Update` can return the ready snapshot. Until that
+validation is corrected, the client retains the prior active response and
+continues polling indefinitely.
 
 The original service's scheduling algorithm is therefore not present in the
 client binary. Observed official behavior often displays `99` while searching
