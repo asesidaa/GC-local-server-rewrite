@@ -28,7 +28,7 @@ public class GetWTenpoScoreRankQueryHandler : IQueryHandlerWrapper<GetWTenpoScor
         var rank = await cardDbContext.GlobalScoreRanks.FirstOrDefaultAsync(scoreRank => scoreRank.CardId == cardId &&
             scoreRank.LastPlayTenpoId == tenpoId, 
             cancellationToken: cancellationToken);
-        var container = new TenpoScoreRankContainer
+        var container = new WTenpoScoreRankContainer
         {
             Ranks = new List<ScoreRankDto>(),
             Status = new RankStatus

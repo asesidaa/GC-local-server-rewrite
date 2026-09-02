@@ -66,6 +66,24 @@ public class WorldScoreRankQueryTests
         Assert.Equal(2, records.Count);
     }
 
+    [Fact]
+    public async Task Handle_PersonalWorldShopScore_EmitsWorldTenpoRoot()
+    {
+        await using var database = await TestDatabase.CreateAsync();
+        database.Cards.GlobalScoreRanks.Add(CreateRank(1001, 1, 500_000, 20));
+        await database.Cards.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        var handler = new GetWTenpoScoreRankQueryHandler(database.Cards);
+        var result = await handler.Handle(
+            new GetWTenpoScoreRankQuery(20, CreateParam(cardId: 1001)),
+            TestContext.Current.CancellationToken);
+
+        var root = ParseRoot(result);
+        Assert.NotNull(root.Element("w_t_score_rank"));
+        Assert.Null(root.Element("t_score_rank"));
+        Assert.Equal("1001", root.Element("w_t_score_rank")?.Element("record")?.Element("card_id")?.Value);
+    }
+
     private static string CreateParam(long cardId = 0, int tenpoId = 0)
     {
         return new RankParam
