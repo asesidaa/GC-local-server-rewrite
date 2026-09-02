@@ -3,6 +3,7 @@ using Application.Interfaces;
 using Domain.Config;
 using Domain.Models;
 using Infrastructure.Exceptions;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -11,8 +12,6 @@ namespace Infrastructure.Services;
 public class EventManagerService : IEventManagerService
 {
     #region Constants
-
-    private const string WWWROOT = "wwwroot";
 
     private const string EVENT_FOLDER = "events";
 
@@ -27,16 +26,20 @@ public class EventManagerService : IEventManagerService
     #endregion
 
     private readonly ILogger<EventManagerService> logger;
-    
+
+    private readonly IFileProvider fileProvider;
+
     private readonly EventConfig config;
 
     private readonly List<Event> events;
 
     private readonly bool useEvents;
 
-    public EventManagerService(IOptions<EventConfig> config, ILogger<EventManagerService> logger)
+    public EventManagerService(IOptions<EventConfig> config, ILogger<EventManagerService> logger,
+        IFileProvider fileProvider)
     {
         this.logger = logger;
+        this.fileProvider = fileProvider;
         this.config = config.Value;
         events = new List<Event>();
         useEvents = this.config.UseEvents;
@@ -60,15 +63,17 @@ public class EventManagerService : IEventManagerService
         }
         foreach (var eventData in config.EventFiles)
         {
-            var filePath = Path.Combine(WWWROOT, EVENT_FOLDER, eventData.FileName);
-            if (!File.Exists(filePath))
+            var filePath = $"{EVENT_FOLDER}/{eventData.FileName}";
+            var fileInfo = fileProvider.GetFileInfo(filePath);
+            if (!fileInfo.Exists)
             {
                 logger.LogError("Event file {File} not found at path {Path}!", eventData.FileName,
                     filePath);
                 throw new EventFileNotFoundException();
             }
 
-            var md5 = ComputeFileMd5(filePath);
+            using var file = fileInfo.CreateReadStream();
+            var md5 = ComputeFileMd5(file);
             var @event = new Event
             {
                 Name = eventData.FileName,
@@ -142,9 +147,8 @@ public class EventManagerService : IEventManagerService
         throw new EventFileTypeUnknownException();
     }
 
-    private static string ComputeFileMd5(string filePath)
+    private static string ComputeFileMd5(Stream file)
     {
-        using var file = File.OpenRead(filePath);
         var hash = MD5.HashData(file);
         var result = BitConverter.ToString(hash).Replace("-", "").ToLower();
 

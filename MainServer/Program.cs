@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Serilog;
 using Serilog.Extensions.Logging;
 using Throw;
@@ -126,8 +127,11 @@ try
     refreshIntervalHours.Throw().IfLessThanOrEqualTo(0);
     Log.Information("Rank refresh interval: {RefreshIntervalHours} hours", refreshIntervalHours);
     builder.Services.AddApplication(refreshIntervalHours);
+    // Event metadata and static responses must resolve through the same web-root provider.
+    builder.Services.AddSingleton<IFileProvider>(serviceProvider =>
+        serviceProvider.GetRequiredService<IWebHostEnvironment>().WebRootFileProvider);
     builder.Services.AddInfrastructure(builder.Configuration);
-    
+
     builder.Services.AddResponseCompression(options =>
     {
         options.EnableForHttps = true;
