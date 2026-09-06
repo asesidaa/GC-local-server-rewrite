@@ -446,3 +446,5 @@ identifier.sqlite
 .claude
 *.db3-shm
 *.db3-wal
+
+runs
