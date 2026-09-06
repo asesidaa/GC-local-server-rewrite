@@ -25,6 +25,9 @@ builder.Services.AddSingleton<AuthStateService>();
 
 var host = builder.Build();
 
+// Resolve the server's auth mode before rendering navigation or the login page.
+await host.Services.GetRequiredService<AuthStateService>().CheckAuthAsync();
+
 var service = host.Services.GetRequiredService<IDataService>();
 await service.InitializeAsync();
 

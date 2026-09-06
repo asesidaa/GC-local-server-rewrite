@@ -1,5 +1,6 @@
 {
   "WebAuth": {
+    "Enabled": false,
     "AdminPassword": "admin"
   }
 }

@@ -11,6 +11,7 @@ public class AuthStateService
         this.client = client;
     }
 
+    public bool AuthenticationEnabled { get; private set; } = true;
     public bool IsAuthenticated { get; private set; }
     public bool IsAdmin { get; private set; }
     public bool IsPlayer { get; private set; }
@@ -64,11 +65,12 @@ public class AuthStateService
     public async Task LogoutAsync()
     {
         await client.PostAsync("api/Auth/Logout", null);
-        ClearState();
+        await CheckAuthAsync();
     }
 
     private void ApplyStatus(AuthStatusDto status)
     {
+        AuthenticationEnabled = status.AuthenticationEnabled;
         IsAuthenticated = status.IsAuthenticated;
         IsAdmin = status.Role == "Admin";
         IsPlayer = status.Role == "Player";
@@ -78,6 +80,7 @@ public class AuthStateService
 
     private void ClearState()
     {
+        AuthenticationEnabled = true;
         IsAuthenticated = false;
         IsAdmin = false;
         IsPlayer = false;

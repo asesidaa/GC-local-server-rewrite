@@ -21,6 +21,8 @@ public class SetAccessCodeRequest
 
 public class AuthStatusDto
 {
+    public bool AuthenticationEnabled { get; set; } = true;
+
     public bool IsAuthenticated { get; set; }
 
     public string? Role { get; set; }

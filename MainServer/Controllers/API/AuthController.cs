@@ -1,9 +1,11 @@
 using System.Security.Claims;
 using Application.Api.Auth;
+using Domain.Config;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Shared.Dto.Api;
 using Shared.Models;
 
@@ -11,11 +13,14 @@ namespace MainServer.Controllers.API;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController : BaseController<AuthController>
+public class AuthController(IOptions<WebAuthConfig> config) : BaseController<AuthController>
 {
     [HttpPost("LoginAdmin")]
     public async Task<ServiceResult<AuthStatusDto>> LoginAdmin(AdminLoginRequest request)
     {
+        if (!config.Value.Enabled)
+            return GetAuthStatus();
+
         var result = await Mediator.Send(new ValidateAdminLoginQuery(request.Password));
         if (!result.Succeeded)
             return ServiceResult.Failed<AuthStatusDto>(result.Error!);
@@ -41,6 +46,9 @@ public class AuthController : BaseController<AuthController>
     [HttpPost("LoginCard")]
     public async Task<ServiceResult<AuthStatusDto>> LoginCard(CardLoginRequest request)
     {
+        if (!config.Value.Enabled)
+            return GetAuthStatus();
+
         var result = await Mediator.Send(new ValidateCardLoginQuery(request.CardId, request.AccessCode));
         if (!result.Succeeded)
             return ServiceResult.Failed<AuthStatusDto>(result.Error!);
@@ -80,6 +88,7 @@ public class AuthController : BaseController<AuthController>
         {
             return new ServiceResult<AuthStatusDto>(new AuthStatusDto
             {
+                AuthenticationEnabled = config.Value.Enabled,
                 IsAuthenticated = false
             });
         }
@@ -90,6 +99,7 @@ public class AuthController : BaseController<AuthController>
 
         return new ServiceResult<AuthStatusDto>(new AuthStatusDto
         {
+            AuthenticationEnabled = config.Value.Enabled,
             IsAuthenticated = true,
             Role = role,
             CardId = cardId

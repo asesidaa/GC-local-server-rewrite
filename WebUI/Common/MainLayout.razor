@@ -12,7 +12,7 @@
         <MudText Typo="Typo.subtitle1" Class="ml-2">GC Local Server</MudText>
         <MudSpacer/>
 
-        @if (AuthState.IsAuthenticated)
+        @if (AuthState.AuthenticationEnabled && AuthState.IsAuthenticated)
         {
             @if (AuthState.IsAdmin)
             {
@@ -26,7 +26,7 @@
                 <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" OnClick="Logout"/>
             </MudTooltip>
         }
-        else
+        else if (AuthState.AuthenticationEnabled)
         {
             <MudButton Href="/Login" Variant="Variant.Text" Color="Color.Inherit"
                        StartIcon="@Icons.Material.Filled.Login" Size="Size.Small">

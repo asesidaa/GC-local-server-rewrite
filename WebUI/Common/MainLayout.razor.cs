@@ -22,7 +22,6 @@ public partial class MainLayout : IDisposable
         if (firstRender)
         {
             IsDarkMode = await MudThemeProvider.GetSystemDarkModeAsync();
-            await AuthState.CheckAuthAsync();
             StateHasChanged();
         }
     }

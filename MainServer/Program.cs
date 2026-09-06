@@ -9,8 +9,8 @@ using Domain.Entities;
 using Infrastructure;
 using Infrastructure.Common;
 using Infrastructure.Persistence;
+using MainServer.Authentication;
 using MainServer.Filters;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
@@ -101,26 +101,7 @@ try
 
     builder.Services.AddSingleton<IPasswordHasher<CardAccessCode>, PasswordHasher<CardAccessCode>>();
 
-    builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-        .AddCookie(options =>
-        {
-            options.Cookie.HttpOnly = true;
-            options.Cookie.SameSite = SameSiteMode.Strict;
-            options.ExpireTimeSpan = TimeSpan.FromDays(30);
-            options.SlidingExpiration = true;
-            // Return 401/403 JSON instead of redirecting to a login page
-            options.Events.OnRedirectToLogin = context =>
-            {
-                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                return Task.CompletedTask;
-            };
-            options.Events.OnRedirectToAccessDenied = context =>
-            {
-                context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                return Task.CompletedTask;
-            };
-        });
-    builder.Services.AddAuthorization();
+    builder.Services.AddWebAuthentication();
 
     var refreshIntervalHours = builder.Configuration.GetSection(RankConfig.RANK_SECTION).
         GetValue<int>("RefreshIntervalHours");

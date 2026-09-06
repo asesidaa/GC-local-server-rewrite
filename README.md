@@ -51,6 +51,8 @@ New config is distributed in files located in the `Configurations` folder.
 
 - `game.json`: This files controls settings for game. You can get the corresponding count for a specified version in `data/boot/*.dat` file. It is the first 2 bytes (uint16) encoded in big endian. Since everything is unlock by default, the `UnlockRewards` is just a demo for future unlock functionality.
 
+- `webauth.json`: Set `WebAuth.Enabled` to `true` to require the existing admin/card login. It defaults to `false`, including when the file or setting is omitted. With authentication disabled, anyone who can reach the WebUI or its `/api` endpoints can manage all cards, unlocks, coins, and shop settings without logging in. Login/logout controls are hidden. Set `WebAuth.AdminPassword` when enabling authentication. Restart the server and reload the WebUI after changing this file.
+
 - Other config files do not need to be modified currently
 
 ## Missing functions

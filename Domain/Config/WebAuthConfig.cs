@@ -4,5 +4,7 @@ public class WebAuthConfig
 {
     public const string WEB_AUTH_SECTION = "WebAuth";
 
+    public bool Enabled { get; set; } = false;
+
     public string AdminPassword { get; set; } = string.Empty;
 }
